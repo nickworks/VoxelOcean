@@ -59,7 +59,7 @@ public class VoxelChunk : MonoBehaviour
         float val = Noise.Sample(pos); // simplex.noise(pos.x, pos.y, pos.z);
 
         // use the vertical position to influence the density:
-        val -= pos.y * VoxelUniverse.main.flattenAmount; // as this number gets larger, the terrain flattens out
+        val -= (pos.y + VoxelUniverse.main.verticalOffset) * VoxelUniverse.main.flattenAmount; // as this number gets larger, the terrain flattens out
         return val;
     }
     /// <summary>
@@ -75,7 +75,6 @@ public class VoxelChunk : MonoBehaviour
             {
                 for (int z = 0; z < data.GetLength(2); z++)
                 {
-
                     if (IsSolid(x,y,z))
                     {
                         bool isSolidRight = IsSolid(x + 1, y, z);
@@ -99,7 +98,7 @@ public class VoxelChunk : MonoBehaviour
         for (int i = 0; i < combine.Length; i++)
         {
             combine[i].mesh = mesh.sharedMesh;
-            combine[i].transform = Matrix4x4.Translate(voxels[i] * VoxelUniverse.main.separation);
+            combine[i].transform = Matrix4x4.Translate(voxels[i] * VoxelUniverse.VOXEL_SEPARATION);
         }
         // combine all of the meshes together into one mesh:
         mesh.mesh.CombineMeshes(combine, true);
