@@ -17,6 +17,16 @@ public class VoxelChunk : MonoBehaviour
     /// The mesh to render out.
     /// </summary>
     MeshFilter mesh;
+    /// <summary>
+    /// Whether or not this mesh is completely empty.
+    /// </summary>
+    public bool isEmpty
+    {
+        get
+        {
+            return (mesh.mesh.vertexCount == 0);
+        }
+    }
 
     /// <summary>
     /// When called, this function generates noise data and rebuilds the mesh.
@@ -123,6 +133,7 @@ public class VoxelChunk : MonoBehaviour
         // combine all of the meshes together into one mesh:
         mesh.mesh.CombineMeshes(combine, true);
     }
+
     /// <summary>
     /// This function checks a particular position and returns whether or not that position is "Solid"
     /// </summary>

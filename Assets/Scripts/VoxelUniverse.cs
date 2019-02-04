@@ -81,7 +81,7 @@ public class VoxelUniverse : MonoBehaviour
         if (!main) return; // don't run if Start() hasn't been called yet
         
         SpawnChunks();
-        Rebuild();
+        //Rebuild();
     }
     /// <summary>
     /// Spawns chunks of voxels.
@@ -102,19 +102,17 @@ public class VoxelUniverse : MonoBehaviour
                 {
                     Vector3 pos = new Vector3(x, y, z) * resPerChunk;
                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity);
-                    chunks.Add(chunk);
+                    chunk.Rebuild();
+                    if (chunk.isEmpty)
+                    {
+                        Destroy(chunk.gameObject);
+                    }
+                    else
+                    {
+                        chunks.Add(chunk);
+                    }
                 }
             }
-        }
-    }
-    /// <summary>
-    /// This function tells each chunk to regenerate.
-    /// </summary>
-    void Rebuild()
-    {
-        foreach (VoxelChunk chunk in chunks)
-        {
-            chunk.Rebuild();
         }
     }
 
@@ -126,6 +124,7 @@ public class VoxelUniverse : MonoBehaviour
         {
             fields.Add(SignalField.Random());
         }
+        fields[0].type = SignalType.AddOnly;
         signalFields = fields.ToArray();
     }
 
