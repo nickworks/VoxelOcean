@@ -54,13 +54,33 @@ public class VoxelChunk : MonoBehaviour
     /// <returns>The density of the given position. Depending on the noise function used, this should be in the -1 to +1 range.</returns>
     float GetDensitySample(Vector3 pos)
     {
-        pos += transform.position; // convert to world position
-        pos /= VoxelUniverse.main.zoom; // "zoom" in/out of the noise
-        float val = Noise.Sample(pos); // simplex.noise(pos.x, pos.y, pos.z);
+        float res = 0;
+        foreach (VoxelUniverse.SignalField field in VoxelUniverse.main.signalFields)
+        {
+            Vector3 p = pos + transform.position; // convert to world position
+            p /= field.zoom; // "zoom" in/out of the noise
+            float val = Noise.Sample(p); // simplex.noise(pos.x, pos.y, pos.z);
 
-        // use the vertical position to influence the density:
-        val -= (pos.y + VoxelUniverse.main.verticalOffset) * VoxelUniverse.main.flattenAmount; // as this number gets larger, the terrain flattens out
-        return val;
+            // use the vertical position to influence the density:
+            val -= (p.y + field.verticalOffset) * field.flattenAmount;
+            val -= field.densityBias;
+            switch (field.type)
+            {
+                case VoxelUniverse.SignalType.AddOnly:
+                    if (Mathf.Sign(val) == Mathf.Sign(res)) res += val;
+                    break;
+                case VoxelUniverse.SignalType.SubtractOnly:
+                    if (Mathf.Sign(val) != Mathf.Sign(res)) res += val;
+                    break;
+                case VoxelUniverse.SignalType.Multiply:
+                    res *= val;
+                    break;
+                case VoxelUniverse.SignalType.Average:
+                    res = (val + res) / 2;
+                    break;
+            }
+        }
+        return res;
     }
     /// <summary>
     /// This function builds the mesh by copying the cube over and over again
@@ -125,6 +145,6 @@ public class VoxelChunk : MonoBehaviour
             val = data[x, y, z];
         }
 
-        return (val > VoxelUniverse.main.thresholdBias);
+        return (val > 0);
     }
 }

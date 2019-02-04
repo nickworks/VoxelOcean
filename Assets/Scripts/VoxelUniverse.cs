@@ -13,6 +13,36 @@ public class VoxelUniverse : MonoBehaviour
     /// </summary>
     public const float VOXEL_SEPARATION = 1;
 
+    public enum SignalType
+    {
+        AddOnly,
+        SubtractOnly,
+        Multiply,
+        Average
+    }
+
+    [System.Serializable]
+    public class SignalField
+    {
+        public SignalType type;
+        [Range(1, 100)] public float zoom = 20;
+        [Range(-0.2f, 0.2f)] public float densityBias = 0;
+        [Range(0, 1)] public float flattenAmount = 0;
+        [Range(-1, 1)] public float verticalOffset = 0;
+
+        static public SignalField Random()
+        {
+            SignalField res = new SignalField();
+            res.zoom = UnityEngine.Random.Range(1f, 100);
+            res.densityBias = UnityEngine.Random.Range(-0.2f, 0.2f);
+            res.flattenAmount = UnityEngine.Random.Range(0f, 1);
+            res.verticalOffset = 0;
+            res.type = (SignalType) UnityEngine.Random.Range(0, 3);
+            return res;
+        }
+    }
+
+
     /// <summary>
     /// The universe singleton.
     /// </summary>
@@ -30,17 +60,7 @@ public class VoxelUniverse : MonoBehaviour
     [Tooltip("The prefab to use when spawning chunks.")]
     public VoxelChunk voxelChunkPrefab;
 
-    [Tooltip("How far to zoom into the noise data.")]
-    [Range(1, 100)] public float zoom = 20;
-    [Tooltip("Influences the density threshold. Controls where the solid/non-solid boundary is.")]
-    [Range(-1, 1)] public float thresholdBias = 0;
-
-    /// <summary>
-    /// How much to "flatten out" the universe. Later, this should be moved somewhere else... probably.
-    /// </summary>
-    [Tooltip("How much to flatten out the universe.")]
-    [Range(0, 1)] public float flattenAmount = 0.3f;
-    [Range(-100, 100)] public float verticalOffset = 0f;
+    public SignalField[] signalFields;
 
     /// <summary>
     /// The currently generated list of chunks.
@@ -97,16 +117,34 @@ public class VoxelUniverse : MonoBehaviour
             chunk.Rebuild();
         }
     }
+
+    public void RandomizeFields()
+    {
+        int fieldCount = Random.Range(1, 8);
+        List<SignalField> fields = new List<SignalField>();
+        for(int i = 0; i < fieldCount; i++)
+        {
+            fields.Add(SignalField.Random());
+        }
+        signalFields = fields.ToArray();
+    }
+
     [CustomEditor(typeof(VoxelUniverse))]
     class VoxelUniverseEditor : Editor
     {
         override public void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            if (GUILayout.Button("Create"))
+
+            if (GUILayout.Button("Randomize Noise"))
+            {
+                (target as VoxelUniverse).RandomizeFields();
+            }
+            if (GUILayout.Button("Build Universe"))
             {
                 (target as VoxelUniverse).Create();
             }
+            
         }
     }
 }
