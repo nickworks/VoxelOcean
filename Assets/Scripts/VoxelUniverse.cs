@@ -62,6 +62,9 @@ public class VoxelUniverse : MonoBehaviour
 
     public SignalField[] signalFields;
 
+    public bool isGenerating { get; private set; }
+    public float percentGenerated { get; private set; }
+
     /// <summary>
     /// The currently generated list of chunks.
     /// </summary>
@@ -79,21 +82,33 @@ public class VoxelUniverse : MonoBehaviour
     {
 
         if (!main) return; // don't run if Start() hasn't been called yet
-        
-        SpawnChunks();
-        //Rebuild();
+        if (isGenerating) return;
+
+        StartCoroutine(SpawnChunks());
     }
     /// <summary>
     /// Spawns chunks of voxels.
     /// </summary>
-    void SpawnChunks()
+    IEnumerator SpawnChunks()
     {
+        isGenerating = true;
+        percentGenerated = 0;
+
         foreach(VoxelChunk chunk in chunks)
         {
             Destroy(chunk.gameObject);
         }
         chunks.Clear();
 
+        int numChunks = (renderDistance * 2 + 1);
+        numChunks *= numChunks;
+        numChunks *= (renderDistanceVertical * 2 + 1);
+
+        // renderdistance = 1
+        // renderdistancevertical = 1
+        // result = 3x3x3
+
+        int i = 0;
         for(int x = -renderDistance; x <= renderDistance; x++)
         {
             for (int y = -renderDistanceVertical; y <= renderDistanceVertical; y++)
@@ -101,7 +116,7 @@ public class VoxelUniverse : MonoBehaviour
                 for (int z = -renderDistance; z <= renderDistance; z++)
                 {
                     Vector3 pos = new Vector3(x, y, z) * resPerChunk;
-                    VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity);
+                    VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
                     chunk.Rebuild();
                     if (chunk.isEmpty)
                     {
@@ -111,9 +126,13 @@ public class VoxelUniverse : MonoBehaviour
                     {
                         chunks.Add(chunk);
                     }
+                    i++;
+                    percentGenerated = i / (float)numChunks;
+                    yield return null;
                 }
             }
         }
+        isGenerating = false;
     }
 
     public void RandomizeFields()
