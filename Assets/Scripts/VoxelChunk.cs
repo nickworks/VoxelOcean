@@ -88,6 +88,8 @@ public class VoxelChunk : MonoBehaviour
                 case VoxelUniverse.SignalType.Average:
                     res = (val + res) / 2;
                     break;
+                case VoxelUniverse.SignalType.None:
+                    break;
             }
         }
         return res;

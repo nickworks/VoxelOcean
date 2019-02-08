@@ -18,7 +18,8 @@ public class VoxelUniverse : MonoBehaviour
         AddOnly,
         SubtractOnly,
         Multiply,
-        Average
+        Average,
+        None
     }
 
     [System.Serializable]

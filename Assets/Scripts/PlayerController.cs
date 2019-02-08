@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
     private void Look()
     {
+        if (!Input.GetMouseButton(0)) return;
+
         float lookX = Input.GetAxis("Look X") * (flipHorizontal ? -1 : 1);
         float lookY = Input.GetAxis("Look Y") * (flipVertical ? -1 : 1);
 
