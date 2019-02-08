@@ -22,15 +22,14 @@ public class GenerateHUD : MonoBehaviour
     {
         if (universe)
         {
+            button.gameObject.SetActive(true);
             if (universe.isGenerating)
             {
-                button.gameObject.SetActive(false);
                 percentText.gameObject.SetActive(true);
                 percentText.text = Mathf.Round(100 * universe.percentGenerated) + "%";
             }
             else
             {
-                button.gameObject.SetActive(true);
                 percentText.gameObject.SetActive(false);
             }
         } else

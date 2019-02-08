@@ -70,6 +70,8 @@ public class VoxelUniverse : MonoBehaviour
     /// </summary>
     List<VoxelChunk> chunks = new List<VoxelChunk>();
 
+    Coroutine coroutine;
+
     void Start()
     {
         main = this;
@@ -80,11 +82,23 @@ public class VoxelUniverse : MonoBehaviour
     /// </summary>
     public void Create()
     {
-
         if (!main) return; // don't run if Start() hasn't been called yet
-        if (isGenerating) return;
+        //if (isGenerating) return;
 
-        StartCoroutine(SpawnChunks());
+        // stop active generation:
+        if (coroutine != null) StopCoroutine(coroutine);
+        // destroy existing chunks:
+        DestroyChunks();
+        // begin asyncronous generation:
+        coroutine = StartCoroutine(SpawnChunks());
+    }
+    void DestroyChunks()
+    {
+        foreach (VoxelChunk chunk in chunks)
+        {
+            Destroy(chunk.gameObject);
+        }
+        chunks.Clear();
     }
     /// <summary>
     /// Spawns chunks of voxels.
@@ -93,12 +107,6 @@ public class VoxelUniverse : MonoBehaviour
     {
         isGenerating = true;
         percentGenerated = 0;
-
-        foreach(VoxelChunk chunk in chunks)
-        {
-            Destroy(chunk.gameObject);
-        }
-        chunks.Clear();
 
         int numChunks = (renderDistance * 2 + 1);
         numChunks *= numChunks;
