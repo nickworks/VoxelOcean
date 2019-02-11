@@ -54,10 +54,8 @@ public class VoxelUniverse : MonoBehaviour
     [Tooltip("How many layers of chunks to spawn above and below the middle layer. For example, a value of 1 will spawn 3 layers of chunks.")]
     [Range(0,3)] public int renderDistanceVertical = 1;
     [Tooltip("How many voxels should be in each dimension of each chunk. For example, a value of 10 will produce chunks that have 10 x 10 x 10 voxels.")]
-    [Range(1,20)] public int resPerChunk = 10;
+    [Range(1,40)] public int resPerChunk = 10;
 
-    [Tooltip("The mesh to use for our voxels. Fewer vertices is better!")]
-    public Mesh voxelMesh;
     [Tooltip("The prefab to use when spawning chunks.")]
     public VoxelChunk voxelChunkPrefab;
 
