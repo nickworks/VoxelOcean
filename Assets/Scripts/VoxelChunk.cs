@@ -69,7 +69,7 @@ public class VoxelChunk : MonoBehaviour
             List<int> tris = new List<int>();
             List<Color> colors = new List<Color>();
 
-            Color color =Color.HSVToRGB(biome/13f, 1, 1);
+            Color color = Color.HSVToRGB(biome / (float) VoxelUniverse.BIOME_COUNT, 1, 1);
 
             MakeAFace addFace = (FaceDirection dir) =>
             {
@@ -240,10 +240,27 @@ public class VoxelChunk : MonoBehaviour
     {
         // pick biome, associate with color:
         pos += transform.position;
-        float val = Noise.Sample(pos / 150);
-        val += .5f;
-        val *= 200;
-        return (int)(val % 13); // 13 students, 13 biomes
+        pos /= 25;
+
+        Vector3 offsetR = new Vector3(123, 456, 789);
+        Vector3 offsetG = new Vector3(-99, 999, 300);
+        Vector3 offsetB = new Vector3(900, 100, -99);
+
+        float r = Noise.Sample(pos + offsetR) * 2.5f + 0.5f;
+        float g = Noise.Sample(pos + offsetG) * 2.5f + 0.5f;
+        float b = Noise.Sample(pos + offsetB) * 2.5f + 0.5f;
+
+        float h = 0;
+        float s = 0;
+        float v = 0;
+
+        Color.RGBToHSV(new Color(r,g,b),out h, out s, out v);
+
+        //posterize the noise:
+        h = Mathf.Round(h * VoxelUniverse.BIOME_COUNT);
+        int biome_num = (int)h;
+        
+        return biome_num;
     }
     /// <summary>
     /// This function builds the mesh by copying the cube over and over again

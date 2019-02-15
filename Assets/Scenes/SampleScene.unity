@@ -222,12 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe33604c194a5584182aaa8972e346e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedForward: 0
-  speedRight: 0
   maxSpeed: 5
   acceleration: 10
-  easeMultiplier: 30
-  drag: 1
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +343,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 105.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

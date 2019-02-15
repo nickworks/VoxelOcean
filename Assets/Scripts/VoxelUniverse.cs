@@ -13,6 +13,8 @@ public class VoxelUniverse : MonoBehaviour
     /// </summary>
     public const float VOXEL_SEPARATION = 1;
 
+    public const int BIOME_COUNT = 13;
+
     public enum SignalType
     {
         AddOnly,
