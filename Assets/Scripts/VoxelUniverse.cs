@@ -60,6 +60,9 @@ public class VoxelUniverse : MonoBehaviour
 
     [Tooltip("The prefab to use when spawning chunks.")]
     public VoxelChunk voxelChunkPrefab;
+    
+    // how large to make the biomes
+    [Range(3, 200)] public float biomeScaling = 25;
 
     public SignalField[] signalFields;
 

@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe33604c194a5584182aaa8972e346e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  acceleration: 10
+  maxSpeed: 50
+  acceleration: 50
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,6 +813,7 @@ MonoBehaviour:
   resPerChunk: 20
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
+  biomeScaling: 50
   signalFields:
   - type: 0
     zoom: 20.442778

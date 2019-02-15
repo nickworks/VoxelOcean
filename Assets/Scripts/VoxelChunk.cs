@@ -240,15 +240,24 @@ public class VoxelChunk : MonoBehaviour
     {
         // pick biome, associate with color:
         pos += transform.position;
-        pos /= 25;
+        pos /= VoxelUniverse.main.biomeScaling;
 
         Vector3 offsetR = new Vector3(123, 456, 789);
         Vector3 offsetG = new Vector3(-99, 999, 300);
-        Vector3 offsetB = new Vector3(900, 100, -99);
+        Vector3 offsetB = new Vector3(900, 500, -99);
 
-        float r = Noise.Sample(pos + offsetR) * 2.5f + 0.5f;
-        float g = Noise.Sample(pos + offsetG) * 2.5f + 0.5f;
-        float b = Noise.Sample(pos + offsetB) * 2.5f + 0.5f;
+        float r = Noise.Sample(pos + offsetR) * 5.5f;
+        float g = Noise.Sample(pos + offsetG) * 5.5f;
+        float b = Noise.Sample(pos + offsetB) * 5.5f;
+
+        r *= r;
+        g *= g;
+        b *= b;
+
+        r += .5f;
+        g += .5f;
+        b += .5f;
+
 
         float h = 0;
         float s = 0;
