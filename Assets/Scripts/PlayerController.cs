@@ -12,50 +12,59 @@ public class PlayerController : MonoBehaviour
     bool flipHorizontal = false;
 
     Vector3 velocity = Vector3.zero;
-    public float maxSpeed = 5;
 
-    void Start()
-    {
-        
-    }
+    public float maxSpeed = 5;
+    public float acceleration = 10f;
 
     // Update is called once per frame
     void Update()
     {
         Look();
         Move();
-
     }
 
     private void Move()
     {
-        float f = Input.GetAxis("Vertical");
-        float r = Input.GetAxis("Horizontal");
+        float f = Input.GetAxis("MoveForward");
+        float r = Input.GetAxis("MoveRight");
+        float u = Input.GetAxis("MoveUp");
 
-        float u = Input.GetAxis("Jump");
+        Vector3 a = new Vector3(f, r, u) * Time.deltaTime * this.acceleration;
 
-        Vector3 move = Vector3.zero;
-        move += f * transform.forward;
-        move += r * transform.right;
-        move += u * Vector3.up;
+        velocity += a.x * transform.forward;
+        velocity += a.y * transform.right;
+        velocity += a.z * transform.up;
 
+        Drag();
 
-        if (move.sqrMagnitude < .5f)
-        {
-            velocity -= velocity.normalized * Time.deltaTime * 10;
-        }
-        else
-        {
-            velocity += move * Time.deltaTime * 5;
-        }
-        if (velocity.sqrMagnitude > maxSpeed * maxSpeed) velocity = velocity.normalized * maxSpeed;
         transform.position += velocity * Time.deltaTime;
     }
+    private void Slow(ref float speed)
+    {
+        if (speed > 0)
+        {
+            speed -= Time.deltaTime * acceleration;
+            if (speed < 0) speed = 0;
+        }
+        if (speed < 0)
+        {
+            speed += Time.deltaTime * acceleration;
+            if (speed > 0) speed = 0;
+        }
+    }
+    private void Drag()
+    {
+        float densityOfFluid = 1;
+        float friction = 1f;
 
+        float k = (densityOfFluid * friction)/2;
+        Vector3 force = -k * velocity.sqrMagnitude * velocity.normalized;
+        
+        float mass = 1;
+        velocity += (force / mass) * Time.deltaTime;
+    }
     private void Look()
     {
-        if (!Input.GetMouseButton(0)) return;
-
         float lookX = Input.GetAxis("Look X") * (flipHorizontal ? -1 : 1);
         float lookY = Input.GetAxis("Look Y") * (flipVertical ? -1 : 1);
 

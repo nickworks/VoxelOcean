@@ -222,7 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe33604c194a5584182aaa8972e346e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedForward: 0
+  speedRight: 0
   maxSpeed: 5
+  acceleration: 10
+  easeMultiplier: 30
+  drag: 1
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +815,6 @@ MonoBehaviour:
   renderDistance: 3
   renderDistanceVertical: 3
   resPerChunk: 20
-  voxelMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   signalFields:

@@ -240,7 +240,7 @@ public class VoxelChunk : MonoBehaviour
     {
         // pick biome, associate with color:
         pos += transform.position;
-        float val = Noise.Sample(pos / 100);
+        float val = Noise.Sample(pos / 150);
         val += .5f;
         val *= 200;
         return (int)(val % 13); // 13 students, 13 biomes
@@ -268,6 +268,7 @@ public class VoxelChunk : MonoBehaviour
                 }
             }
         }
+
         // combine all of the meshes together into one mesh:
         mesh.mesh.CombineMeshes(voxels.ToArray(), true);
     }
