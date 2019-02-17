@@ -10,58 +10,59 @@ using UnityEditor;
 public class VoxelChunk : MonoBehaviour
 {
 
-    struct VoxelData
+    [Range(-.2f, .2f)] public float threshold = 0;
+
+    struct VoxelData2
     {
-        enum FaceDirection
-        {
-            Front,
-            Back,
-            Left,
-            Right,
-            Top,
-            Bottom
-        }
-        delegate void MakeAFace(FaceDirection dir);
-        static Vector3[] cube = new Vector3[] {
-            new Vector3(0, 0, 0), //LBF 0
-            new Vector3(0, 1, 0), //LTF 1
-            new Vector3(1, 1, 0), //RTF 2
-            new Vector3(1, 0, 0), //RBF 3
-            new Vector3(0, 0, 1), //LBB 4
-            new Vector3(0, 1, 1), //LTB 5
-            new Vector3(1, 1, 1), //RTB 6
-            new Vector3(1, 0, 1)  //RBB 7
-        };
-
-        public Vector3 pos;
-        public float density;
+        public Vector3 center;
+        public Vector3[] positions;
+        public float[] densities;
         public int biome;
+        private Color biomecolor;
 
-        public bool isSolid { get { return density > 0; } }
-        public bool isHidden { get { return (isSolidAbove && isSolidBack && isSolidBelow && isSolidFront && isSolidLeft && isSolidRight);  } }
-
-        public bool isSolidRight;
-        public bool isSolidLeft;
-        public bool isSolidAbove;
-        public bool isSolidBelow;
-        public bool isSolidFront;
-        public bool isSolidBack;
-
-        public VoxelData(float density, Vector3 pos, int biome)
+        public VoxelData2(Vector3 pos, int biome)
         {
-            this.density = density;
-            this.pos = pos;
+            this.center = pos;
             this.biome = biome;
-            isSolidRight = isSolidLeft = isSolidAbove = isSolidBelow = isSolidBack = isSolidFront = false;
+            this.biomecolor = new Color();
+            this.positions = new Vector3[] {
+                new Vector3(+0.5f, +0.5f, -0.5f), // R T F
+                new Vector3(-0.5f, +0.5f, -0.5f), // L T F
+                new Vector3(+0.5f, +0.5f, +0.5f), // R T B
+                new Vector3(-0.5f, +0.5f, +0.5f), // L T B
+                new Vector3(+0.5f, -0.5f, -0.5f), // R B F
+                new Vector3(-0.5f, -0.5f, -0.5f), // L B F
+                new Vector3(+0.5f, -0.5f, +0.5f), // R B B
+                new Vector3(-0.5f, -0.5f, +0.5f)  // L B B
+            };
+
+
+            this.densities = new float[this.positions.Length];
         }
-        public CombineInstance MakeVoxel()
+        public void SetDensity(int index, float value)
+        {
+            densities[index] = value;
+        }
+        public bool IsHidden(float threshold = 0)
+        {
+            int solidness = -1;
+            foreach(float density in densities)
+            {
+                bool isSolid = (density > threshold);
+                if (solidness == 0 && isSolid == true) return false; // a mix of solid & unsolid
+                if (solidness == 1 && isSolid == false) return false; // a mix of solid & unsolid
+                if (solidness == -1) solidness = isSolid ? 1 : 0;
+            }
+            return true; // all densities were solid or were unsolid
+        }
+        public CombineInstance MakeMesh(float densityThreshold = 0)
         {
             CombineInstance voxel = new CombineInstance();
-            voxel.mesh = MakeGeometry();
-            voxel.transform = Matrix4x4.Translate(pos * VoxelUniverse.VOXEL_SEPARATION);
+            voxel.mesh = MakeGeometry(densityThreshold);
+            voxel.transform = Matrix4x4.Translate(center * VoxelUniverse.VOXEL_SEPARATION);
             return voxel;
         }
-        public Mesh MakeGeometry()
+        private Mesh MakeGeometry(float densityThreshold = 0)
         {
             List<Vector3> verts = new List<Vector3>();
             List<Vector2> uvs = new List<Vector2>();
@@ -69,66 +70,226 @@ public class VoxelChunk : MonoBehaviour
             List<int> tris = new List<int>();
             List<Color> colors = new List<Color>();
 
-            Color color = Color.HSVToRGB(biome / (float) VoxelUniverse.BIOME_COUNT, 1, 1);
+            biomecolor = Color.HSVToRGB(biome / (float)VoxelUniverse.BIOME_COUNT, 1, 1);
 
-            MakeAFace addFace = (FaceDirection dir) =>
-            {
-                int index = verts.Count;
-                if (dir == FaceDirection.Back) verts.AddRange(new Vector3[] { cube[0], cube[1], cube[2], cube[3] });
-                if (dir == FaceDirection.Front) verts.AddRange(new Vector3[] { cube[4], cube[7], cube[6], cube[5] });
-                if (dir == FaceDirection.Left) verts.AddRange(new Vector3[] { cube[0], cube[4], cube[5], cube[1] });
-                if (dir == FaceDirection.Right) verts.AddRange(new Vector3[] { cube[3], cube[2], cube[6], cube[7] });
-                if (dir == FaceDirection.Top) verts.AddRange(new Vector3[] { cube[1], cube[5], cube[6], cube[2] });
-                if (dir == FaceDirection.Bottom) verts.AddRange(new Vector3[] { cube[0], cube[3], cube[7], cube[4] });
-                Vector3 normal = Vector3.zero;
-                if (dir == FaceDirection.Back) normal = Vector3.back;
-                if (dir == FaceDirection.Front) normal = Vector3.forward;
-                if (dir == FaceDirection.Left) normal = Vector3.left;
-                if (dir == FaceDirection.Right) normal = Vector3.right;
-                if (dir == FaceDirection.Top) normal = Vector3.up;
-                if (dir == FaceDirection.Bottom) normal = Vector3.down;
-                normals.Add(normal);
-                normals.Add(normal);
-                normals.Add(normal);
-                normals.Add(normal);
-                uvs.Add(new Vector2(0, 0));
-                uvs.Add(new Vector2(0, 1));
-                uvs.Add(new Vector2(1, 1));
-                uvs.Add(new Vector2(1, 0));
-                colors.Add(color);
-                colors.Add(color);
-                colors.Add(color);
-                colors.Add(color);
-                tris.Add(index + 0);
-                tris.Add(index + 1);
-                tris.Add(index + 2);
-                tris.Add(index + 2);
-                tris.Add(index + 3);
-                tris.Add(index + 0);
-            };
+            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 2, 3, 7);
+            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 6, 2, 7);
+            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 4, 6, 7);
+            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 5, 4, 7);
+            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 1, 5, 7);
+            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 3, 1, 7);
 
-            if (!isSolidBack) addFace(FaceDirection.Back);
-            if (!isSolidBelow) addFace(FaceDirection.Bottom);
-            if (!isSolidFront) addFace(FaceDirection.Front);
-            if (!isSolidLeft) addFace(FaceDirection.Left);
-            if (!isSolidRight) addFace(FaceDirection.Right);
-            if (!isSolidAbove) addFace(FaceDirection.Top);
 
             Mesh mesh = new Mesh();
             mesh.SetVertices(verts);
-            mesh.SetUVs(0, uvs);
-            mesh.SetNormals(normals);
             mesh.SetTriangles(tris, 0);
+            //mesh.SetUVs(0, uvs);
+            //mesh.SetNormals(normals);
             mesh.SetColors(colors);
             return mesh;
         }
+        private void MarchTetrahedron(float iso, List<Vector3> verts, List<Color> colors, List<int> tris, int i0, int i1, int i2, int i3)
+        {
 
+            int offset = verts.Count;
+            byte bitfield = 0;
+            if (densities[i0] > iso) bitfield |= 1;
+            if (densities[i1] > iso) bitfield |= 2;
+            if (densities[i2] > iso) bitfield |= 4;
+            if (densities[i3] > iso) bitfield |= 8;
+
+            switch (bitfield)
+            {
+                case 0x00: // 0000
+                case 0x0F: // 1111
+                    break;
+                case 0x0E: // 1110
+                case 0x01: // 0001
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]));
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]));
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3]));
+                    if (bitfield == 0x01)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                    } else
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+                case 0x0D: // 1101
+                case 0x02: // 0010
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i0], densities[i1], densities[i0]));
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]));
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2]));
+                    if (bitfield == 0x02)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                    } else
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+                case 0x0C: // 1100 
+                case 0x03: // 0011
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3])); //0
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2])); //1
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3])); //2
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2])); //3
+                    if(bitfield == 0x0C)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 3);
+                    } else {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 3);
+                        tris.Add(offset + 1);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+                case 0x0B: // 1011
+                case 0x04: // 0100
+                    verts.Add(LerpEdge(iso, positions[i2], positions[i0], densities[i2], densities[i0]));
+                    verts.Add(LerpEdge(iso, positions[i2], positions[i1], densities[i2], densities[i1]));
+                    verts.Add(LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]));
+                    if (bitfield == 0x04)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                    } else
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+                case 0x0A: // 1010
+                case 0x05: // 0101
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1])); // 0
+                    verts.Add(LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3])); // 1
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3])); // 2
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2])); // 3
+                    
+                    if (bitfield == 0x05)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 3);
+                        tris.Add(offset + 1);
+                    }
+                    else
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 3);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+                case 0x09: // 1001
+                case 0x06: // 0110
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]));
+                    verts.Add(LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]));
+                    verts.Add(LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]));
+                    verts.Add(LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]));
+                    if (bitfield == 0x06)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 3);
+                    }
+                    else
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 3);
+                        tris.Add(offset + 2);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+                case 0x07: // 0111
+                case 0x08: // 1000
+                    verts.Add(LerpEdge(iso, positions[i3], positions[i0], densities[i3], densities[i0]));
+                    verts.Add(LerpEdge(iso, positions[i3], positions[i2], densities[i3], densities[i2]));
+                    verts.Add(LerpEdge(iso, positions[i3], positions[i1], densities[i3], densities[i1]));
+                    if (bitfield == 0x08)
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 1);
+                        tris.Add(offset + 2);
+                    }
+                    else
+                    {
+                        tris.Add(offset + 0);
+                        tris.Add(offset + 2);
+                        tris.Add(offset + 1);
+                    }
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    colors.Add(biomecolor);
+                    break;
+            }
+
+
+        }
+        private Vector3 LerpEdge(float iso, Vector3 p1, Vector3 p2, float val1, float val2)
+        {
+
+            if (Mathf.Abs(iso - val1) < 0.00001f) return p1; // if p1 is very close to the threshold, just return p1
+            if (Mathf.Abs(iso - val2) < 0.00001f) return p2; // if p2 is very close to the threshold, just return p2
+            if (Mathf.Abs(val1 - val2) < 0.00001f) return p1; // if val1 and val2 are (almost) the same density
+            float percent = (iso - val1) / (val2 - val1);
+
+            return Vector3.Lerp(p1, p2, percent);
+        }
     }
-
+    
     /// <summary>
     /// Cached noise data. This is used as "density" to determin whether or not voxels are solid.
     /// </summary>
-    VoxelData[,,] data;
+    VoxelData2[,,] data;
     /// <summary>
     /// The mesh to render out.
     /// </summary>
@@ -161,7 +322,7 @@ public class VoxelChunk : MonoBehaviour
     void GenerateNoiseData()
     {
         int res = VoxelUniverse.main.resPerChunk;
-        data = new VoxelData[res, res, res];
+        data = new VoxelData2[res, res, res];
 
         int sizeX = data.GetLength(0);
         int sizeY = data.GetLength(1);
@@ -174,26 +335,13 @@ public class VoxelChunk : MonoBehaviour
                 for (int z = 0; z < sizeZ; z++)
                 {
                     Vector3 pos = new Vector3(x, y, z);
-                    float density = GetDensitySample(pos);
                     int biome = PickBiomeAtPos(pos);
-                    data[x, y, z] = new VoxelData(density, pos, biome);
-                }
-            }
-        }
-
-        // update each voxel to store whether or not each neighbor is solid:
-        for (int x = 0; x < sizeX; x++)
-        {
-            for (int y = 0; y < sizeY; y++)
-            {
-                for (int z = 0; z < sizeZ; z++)
-                {
-                    data[x, y, z].isSolidRight = IsSolid(x + 1, y, z);
-                    data[x, y, z].isSolidAbove = IsSolid(x, y + 1, z);
-                    data[x, y, z].isSolidFront = IsSolid(x, y, z + 1);
-                    data[x, y, z].isSolidLeft  = IsSolid(x - 1, y, z);
-                    data[x, y, z].isSolidBelow = IsSolid(x, y - 1, z);
-                    data[x, y, z].isSolidBack  = IsSolid(x, y, z - 1);
+                    VoxelData2 voxel = new VoxelData2(pos, biome);
+                    // set the densities of the 8 corners of the cube:
+                    for (int i = 0; i < voxel.positions.Length; i++)
+                        voxel.densities[i] = GetDensitySample(voxel.center + voxel.positions[i]);
+                    // store the data:
+                    data[x, y, z] = voxel;
                 }
             }
         }
@@ -278,7 +426,7 @@ public class VoxelChunk : MonoBehaviour
     {
         mesh.mesh = new Mesh();
 
-        List<CombineInstance> voxels = new List<CombineInstance>();
+        List<CombineInstance> meshes = new List<CombineInstance>();
 
         for (int x = 0; x < data.GetLength(0); x++)
         {
@@ -286,40 +434,17 @@ public class VoxelChunk : MonoBehaviour
             {
                 for (int z = 0; z < data.GetLength(2); z++)
                 {
-                    if (data[x,y,z].isSolid && !data[x,y,z].isHidden)
+                    if (!data[x,y,z].IsHidden(threshold))
                     {
                         // make a voxel mesh
-                        voxels.Add(data[x, y, z].MakeVoxel());
+                        meshes.Add(data[x, y, z].MakeMesh(threshold));
                     }
                 }
             }
         }
 
         // combine all of the meshes together into one mesh:
-        mesh.mesh.CombineMeshes(voxels.ToArray(), true);
-    }
-    /// <summary>
-    /// This function checks a particular position and returns whether or not that position is "Solid"
-    /// </summary>
-    /// <param name="x">x coordinate</param>
-    /// <param name="y">y coordinate</param>
-    /// <param name="z">z coordinate</param>
-    /// <returns>If true, a voxel should be rendered at this location.</returns>
-    bool IsSolid(int x, int y, int z)
-    {
-
-        float val = 0; 
-
-        if (x < 0 || x >= data.GetLength(0) ||
-            y < 0 || y >= data.GetLength(1) ||
-            z < 0 || z >= data.GetLength(2))
-        {
-            val = GetDensitySample(new Vector3(x, y, z));
-        } else
-        {
-            val = data[x, y, z].density;
-        }
-
-        return (val > 0);
+        mesh.mesh.CombineMeshes(meshes.ToArray(), true);
+        mesh.mesh.RecalculateNormals(); // TODO: calculate our normals by hand instead
     }
 }

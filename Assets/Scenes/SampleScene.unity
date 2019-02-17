@@ -808,8 +808,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b0fe9a48af9784a9f6919c20016d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderDistance: 3
-  renderDistanceVertical: 3
+  renderDistance: 1
+  renderDistanceVertical: 0
   resPerChunk: 20
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
