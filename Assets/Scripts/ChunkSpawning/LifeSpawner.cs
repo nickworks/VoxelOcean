@@ -70,22 +70,35 @@ public class LifeSpawner : MonoBehaviour
 
         for(int i = 0; i < amt; i++)
         {
-            int index = Random.Range(0, mesh.mesh.vertexCount);
-            SpawnLifeAtVertex(index);
+            int attempts = 0;
+            while (attempts < 5) // try 5 times:
+            {
+                int index = Random.Range(0, mesh.mesh.vertexCount);
+                bool success = SpawnLifeAtVertex(index);
+                if (success) break;
+                attempts++;
+            }
         }
     }
-    void SpawnLifeAtVertex(int index)
+    /// <summary>
+    /// Tries to spawn life at a given mesh vertex.
+    /// </summary>
+    /// <param name="index">The index of the vertex to use as a spawn point.</param>
+    /// <returns>If successful, return true. Otherwise, return false.</returns>
+    bool SpawnLifeAtVertex(int index)
     {
-        if (index < 0) return;
-        if (index >= mesh.mesh.vertexCount) return;
+        if (index < 0) return false;
+        if (index >= mesh.mesh.vertexCount) return false;
 
-        Vector3 pos = mesh.mesh.vertices[index];
+        Vector3 pos = mesh.mesh.vertices[index] + transform.position;
         Color color = mesh.mesh.colors[index];
         Vector3 normal = mesh.mesh.normals[index];
 
         Biome biome = Biome.FromColor(color);
 
         print("Spawning life in " + biome.owner + "'s biome...");
+
+        // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
         switch (biome.owner)
         {
@@ -116,5 +129,7 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Zach:
                 break;
         }
+
+        return true;
     }
 }
