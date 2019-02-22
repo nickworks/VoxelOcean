@@ -10,6 +10,7 @@ using UnityEditor;
 public class VoxelChunk : MonoBehaviour
 {
 
+
     [Range(-.2f, .2f)] public float threshold = 0;
 
     struct VoxelData2
@@ -19,6 +20,49 @@ public class VoxelChunk : MonoBehaviour
         public float[] densities;
         public int biome;
         private Color biomecolor;
+
+        struct Tri
+        {
+            public Vector3 a;
+            public Vector3 b;
+            public Vector3 c;
+            public Color color;
+            public Tri(Vector3 a, Vector3 b, Vector3 c)
+            {
+                this.a = a;
+                this.b = b;
+                this.c = c;
+                this.color = Color.white;
+            }
+            public Tri(Vector3 a, Vector3 b, Vector3 c, Color color)
+            {
+                this.a = a;
+                this.b = b;
+                this.c = c;
+                this.color = color;
+            }
+            Vector3 normal
+            {
+                get { return Vector3.Cross(b - a, c - a).normalized; }
+            }
+            public void AddTo(List<Vector3> verts, List<int> tris, List<Color> colors, List<Vector3> normals, bool flip = false)
+            {
+                int offset = verts.Count;
+                verts.Add(a);
+                verts.Add(flip ? c : b);
+                verts.Add(flip ? b : c);
+                tris.Add(offset + 0);
+                tris.Add(offset + 1);
+                tris.Add(offset + 2);
+                colors.Add(color);
+                colors.Add(color);
+                colors.Add(color);
+                Vector3 normal = this.normal;
+                normals.Add(normal);
+                normals.Add(normal);
+                normals.Add(normal);
+            }
+        }
 
         public VoxelData2(Vector3 pos, int biome)
         {
@@ -72,13 +116,15 @@ public class VoxelChunk : MonoBehaviour
 
             biomecolor = Color.HSVToRGB(biome / (float)VoxelUniverse.BIOME_COUNT, 1, 1);
 
-            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 2, 3, 7);
-            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 6, 2, 7);
-            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 4, 6, 7);
-            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 5, 4, 7);
-            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 1, 5, 7);
-            MarchTetrahedron(densityThreshold, verts, colors, tris, 0, 3, 1, 7);
+            MarchTetrahedron(densityThreshold, verts, normals, colors, tris, 0, 2, 3, 7);
+            MarchTetrahedron(densityThreshold, verts, normals, colors, tris, 0, 6, 2, 7);
+            MarchTetrahedron(densityThreshold, verts, normals, colors, tris, 0, 4, 6, 7);
+            MarchTetrahedron(densityThreshold, verts, normals, colors, tris, 0, 5, 4, 7);
+            MarchTetrahedron(densityThreshold, verts, normals, colors, tris, 0, 1, 5, 7);
+            MarchTetrahedron(densityThreshold, verts, normals, colors, tris, 0, 3, 1, 7);
 
+            // TODO: remove duplicate verts?
+            // TODO: calculate normals from tris?
 
             Mesh mesh = new Mesh();
             mesh.SetVertices(verts);
@@ -88,7 +134,7 @@ public class VoxelChunk : MonoBehaviour
             mesh.SetColors(colors);
             return mesh;
         }
-        private void MarchTetrahedron(float iso, List<Vector3> verts, List<Color> colors, List<int> tris, int i0, int i1, int i2, int i3)
+        private void MarchTetrahedron(float iso, List<Vector3> verts, List<Vector3> normals, List<Color> colors, List<int> tris, int i0, int i1, int i2, int i3)
         {
 
             int offset = verts.Count;
@@ -98,178 +144,92 @@ public class VoxelChunk : MonoBehaviour
             if (densities[i2] > iso) bitfield |= 4;
             if (densities[i3] > iso) bitfield |= 8;
 
-            switch (bitfield)
+            List<Tri> geom = new List<Tri>();
+
+            switch (bitfield) // generate Tri objects
             {
                 case 0x00: // 0000
                 case 0x0F: // 1111
                     break;
                 case 0x0E: // 1110
                 case 0x01: // 0001
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]));
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]));
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3]));
-                    if (bitfield == 0x01)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                    } else
-                    {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
+                        Vector3 a = LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]);
+                        Vector3 b = LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]);
+                        Vector3 c = LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3]);
+                        geom.Add(new Tri(a, b, c, biomecolor));
                     }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
+                
                 case 0x0D: // 1101
                 case 0x02: // 0010
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i0], densities[i1], densities[i0]));
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]));
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2]));
-                    if (bitfield == 0x02)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                    } else
-                    {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
+                        Vector3 a = LerpEdge(iso, positions[i1], positions[i0], densities[i1], densities[i0]);
+                        Vector3 b = LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]);
+                        Vector3 c = LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2]);
+                        geom.Add(new Tri(a, b, c, biomecolor));
                     }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
                 case 0x0C: // 1100 
                 case 0x03: // 0011
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3])); //0
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2])); //1
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3])); //2
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2])); //3
-                    if(bitfield == 0x0C)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 3);
-                    } else {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 3);
-                        tris.Add(offset + 1);
+                        Vector3 a = LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3]); //0
+                        Vector3 b = LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]); //1
+                        Vector3 c = LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]); //2
+                        Vector3 d = LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2]); //3
+                        geom.Add(new Tri(a, c, b, biomecolor));
+                        geom.Add(new Tri(c, d, b, biomecolor));
                     }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
                 case 0x0B: // 1011
                 case 0x04: // 0100
-                    verts.Add(LerpEdge(iso, positions[i2], positions[i0], densities[i2], densities[i0]));
-                    verts.Add(LerpEdge(iso, positions[i2], positions[i1], densities[i2], densities[i1]));
-                    verts.Add(LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]));
-                    if (bitfield == 0x04)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                    } else
-                    {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
+                        Vector3 a = LerpEdge(iso, positions[i2], positions[i0], densities[i2], densities[i0]);
+                        Vector3 b = LerpEdge(iso, positions[i2], positions[i1], densities[i2], densities[i1]);
+                        Vector3 c = LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]);
+                        geom.Add(new Tri(a, b, c, biomecolor));
                     }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
                 case 0x0A: // 1010
                 case 0x05: // 0101
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1])); // 0
-                    verts.Add(LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3])); // 1
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3])); // 2
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2])); // 3
-                    
-                    if (bitfield == 0x05)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 3);
-                        tris.Add(offset + 1);
+                        Vector3 a = LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]); // 0
+                        Vector3 b = LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]); // 1
+                        Vector3 c = LerpEdge(iso, positions[i0], positions[i3], densities[i0], densities[i3]); // 2
+                        Vector3 d = LerpEdge(iso, positions[i1], positions[i2], densities[i1], densities[i2]); // 3
+                        geom.Add(new Tri(a, b, c, biomecolor));
+                        geom.Add(new Tri(a, d, b, biomecolor));
                     }
-                    else
-                    {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 3);
-                    }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
                 case 0x09: // 1001
                 case 0x06: // 0110
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]));
-                    verts.Add(LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]));
-                    verts.Add(LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]));
-                    verts.Add(LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]));
-                    if (bitfield == 0x06)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 3);
+                        Vector3 a = LerpEdge(iso, positions[i0], positions[i1], densities[i0], densities[i1]);
+                        Vector3 b = LerpEdge(iso, positions[i1], positions[i3], densities[i1], densities[i3]);
+                        Vector3 c = LerpEdge(iso, positions[i2], positions[i3], densities[i2], densities[i3]);
+                        Vector3 d = LerpEdge(iso, positions[i0], positions[i2], densities[i0], densities[i2]);
+                        geom.Add(new Tri(a, b, c, biomecolor));
+                        geom.Add(new Tri(a, c, d, biomecolor));
                     }
-                    else
-                    {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 3);
-                        tris.Add(offset + 2);
-                    }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
                 case 0x07: // 0111
                 case 0x08: // 1000
-                    verts.Add(LerpEdge(iso, positions[i3], positions[i0], densities[i3], densities[i0]));
-                    verts.Add(LerpEdge(iso, positions[i3], positions[i2], densities[i3], densities[i2]));
-                    verts.Add(LerpEdge(iso, positions[i3], positions[i1], densities[i3], densities[i1]));
-                    if (bitfield == 0x08)
                     {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 1);
-                        tris.Add(offset + 2);
+                        Vector3 a = LerpEdge(iso, positions[i3], positions[i0], densities[i3], densities[i0]);
+                        Vector3 b = LerpEdge(iso, positions[i3], positions[i2], densities[i3], densities[i2]);
+                        Vector3 c = LerpEdge(iso, positions[i3], positions[i1], densities[i3], densities[i1]);
+                        geom.Add(new Tri(a, c, b, biomecolor));
                     }
-                    else
-                    {
-                        tris.Add(offset + 0);
-                        tris.Add(offset + 2);
-                        tris.Add(offset + 1);
-                    }
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
-                    colors.Add(biomecolor);
                     break;
+                    /*
+                    /**/
+                    
+            }
+
+            bool flipWindingOrder = (bitfield >= 0x08);
+            foreach(Tri t in geom)
+            {
+                t.AddTo(verts, tris, colors, normals, flipWindingOrder);
             }
 
 
