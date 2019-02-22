@@ -7,6 +7,7 @@ using UnityEditor;
 /// One chunk of voxels.
 /// </summary>
 [RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
 public class VoxelChunk : MonoBehaviour
 {
 
@@ -35,7 +36,7 @@ public class VoxelChunk : MonoBehaviour
 
         public Vector3 pos;
         public float density;
-        public int biome;
+        public LifeSpawner.Biome biome;
 
         public bool isSolid { get { return density > 0; } }
         public bool isHidden { get { return (isSolidAbove && isSolidBack && isSolidBelow && isSolidFront && isSolidLeft && isSolidRight);  } }
@@ -47,7 +48,7 @@ public class VoxelChunk : MonoBehaviour
         public bool isSolidFront;
         public bool isSolidBack;
 
-        public VoxelData(float density, Vector3 pos, int biome)
+        public VoxelData(float density, Vector3 pos, LifeSpawner.Biome biome)
         {
             this.density = density;
             this.pos = pos;
@@ -69,7 +70,7 @@ public class VoxelChunk : MonoBehaviour
             List<int> tris = new List<int>();
             List<Color> colors = new List<Color>();
 
-            Color color = Color.HSVToRGB(biome / (float) VoxelUniverse.BIOME_COUNT, 1, 1);
+            Color color = biome.GetVertexColor();
 
             MakeAFace addFace = (FaceDirection dir) =>
             {
@@ -175,7 +176,7 @@ public class VoxelChunk : MonoBehaviour
                 {
                     Vector3 pos = new Vector3(x, y, z);
                     float density = GetDensitySample(pos);
-                    int biome = PickBiomeAtPos(pos);
+                    LifeSpawner.Biome biome = PickBiomeAtPos(pos);
                     data[x, y, z] = new VoxelData(density, pos, biome);
                 }
             }
@@ -236,40 +237,49 @@ public class VoxelChunk : MonoBehaviour
         return res;
     }
 
-    int PickBiomeAtPos(Vector3 pos)
+    LifeSpawner.Biome PickBiomeAtPos(Vector3 pos)
     {
-        // pick biome, associate with color:
+        // TODO: maybe a bunch of this logic can be moved into the LifeSpawner.Biome struct?
+
         pos += transform.position;
         pos /= VoxelUniverse.main.biomeScaling;
 
+        // SAMPLE 1 noisefield at 3 arbitrary locations:
         Vector3 offsetR = new Vector3(123, 456, 789);
         Vector3 offsetG = new Vector3(-99, 999, 300);
         Vector3 offsetB = new Vector3(900, 500, -99);
+        float r = Noise.Sample(pos + offsetR);
+        float g = Noise.Sample(pos + offsetG);
+        float b = Noise.Sample(pos + offsetB);
 
-        float r = Noise.Sample(pos + offsetR) * 5.5f;
-        float g = Noise.Sample(pos + offsetG) * 5.5f;
-        float b = Noise.Sample(pos + offsetB) * 5.5f;
+        // TODO: redo/improve the calculations below
 
+        // convert values from approx. (-.2 to .2) to (-1.1 to 1.1):
+        r *= 5.5f;
+        g *= 5.5f;
+        b *= 5.5f;
+        // redistribute values non-linearly:
         r *= r;
         g *= g;
         b *= b;
-
+        // shift range from (+- 1.21) to (+- .5):
+        r /= 2.4f;
+        g /= 2.4f;
+        b /= 2.4f;
+        // shift from range from (+- .5) to (0 to 1):
         r += .5f;
         g += .5f;
         b += .5f;
 
+        // Convert from RGB to HSV:
+        Color.RGBToHSV(new Color(r,g,b),out float h, out float s, out float v);
 
-        float h = 0;
-        float s = 0;
-        float v = 0;
-
-        Color.RGBToHSV(new Color(r,g,b),out h, out s, out v);
-
-        //posterize the noise:
-        h = Mathf.Round(h * VoxelUniverse.BIOME_COUNT);
+        //posterize the hue value:
+        h = Mathf.Round(h * LifeSpawner.Biome.COUNT);
         int biome_num = (int)h;
-        
-        return biome_num;
+
+        // create and return the biome:
+        return new LifeSpawner.Biome(biome_num);
     }
     /// <summary>
     /// This function builds the mesh by copying the cube over and over again
