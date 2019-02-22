@@ -57,6 +57,8 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
 
+    public GameObject prefabCoralTubeWorms;
+
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -93,6 +95,7 @@ public class LifeSpawner : MonoBehaviour
         Vector3 pos = mesh.mesh.vertices[index] + transform.position;
         Color color = mesh.mesh.colors[index];
         Vector3 normal = mesh.mesh.normals[index];
+        Quaternion rot = Quaternion.FromToRotation(Vector3.up, normal);
 
         Biome biome = Biome.FromColor(color);
 
@@ -107,6 +110,7 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Cameron:
                 break;
             case BiomeOwner.Christopher:
+                //Instantiate(prefabCoralTubeWorms, pos, rot, transform);
                 break;
             case BiomeOwner.Dominc:
                 break;
