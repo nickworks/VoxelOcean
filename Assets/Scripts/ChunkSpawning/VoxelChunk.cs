@@ -155,6 +155,9 @@ public class VoxelChunk : MonoBehaviour
         mesh = GetComponent<MeshFilter>();
         GenerateNoiseData();
         GenerateMesh();
+
+        LifeSpawner spawner = GetComponent<LifeSpawner>();
+        if (spawner) spawner.SpawnSomeLife();
     }
     /// <summary>
     /// Generate noise data and cache in a huge array
@@ -279,7 +282,7 @@ public class VoxelChunk : MonoBehaviour
         int biome_num = (int)h;
 
         // create and return the biome:
-        return new LifeSpawner.Biome(biome_num);
+        return LifeSpawner.Biome.FromInt(biome_num);
     }
     /// <summary>
     /// This function builds the mesh by copying the cube over and over again
