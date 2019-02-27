@@ -4,31 +4,19 @@ using UnityEngine;
 
 struct VoxelData
 {
-    struct Tri
+    public struct Tri
     {
         public Vector3 a;
         public Vector3 b;
         public Vector3 c;
-        public Color color;
         public Tri(Vector3 a, Vector3 b, Vector3 c)
         {
             this.a = a;
             this.b = b;
             this.c = c;
-            this.color = Color.white;
         }
-        public Tri(Vector3 a, Vector3 b, Vector3 c, Color color)
-        {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-            this.color = color;
-        }
-        Vector3 normal
-        {
-            get { return Vector3.Cross(b - a, c - a).normalized; }
-        }
-        public void AddTo(List<Vector3> verts, List<int> tris, List<Color> colors, List<Vector3> normals, bool flip = false)
+        //Vector3 normal { get { return Vector3.Cross(b - a, c - a).normalized; }}
+        public void AddTo(List<Vector3> verts, List<int> tris, bool flip = false)
         {
             int offset = verts.Count;
             verts.Add(a);
@@ -37,13 +25,6 @@ struct VoxelData
             tris.Add(offset + 0);
             tris.Add(offset + 1);
             tris.Add(offset + 2);
-            colors.Add(color);
-            colors.Add(color);
-            colors.Add(color);
-            Vector3 normal = this.normal;
-            normals.Add(normal);
-            normals.Add(normal);
-            normals.Add(normal);
         }
         public override string ToString()
         {
@@ -343,27 +324,24 @@ struct VoxelData
             {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}
         };
+    static public Vector3[] positions = new Vector3[] {
+        new Vector3(-0.5f, -0.5f, +0.5f), // L B B
+        new Vector3(+0.5f, -0.5f, +0.5f), // R B B
+        new Vector3(+0.5f, -0.5f, -0.5f), // R B F
+        new Vector3(-0.5f, -0.5f, -0.5f), // L B F
+        new Vector3(-0.5f, +0.5f, +0.5f), // L T B
+        new Vector3(+0.5f, +0.5f, +0.5f), // R T B
+        new Vector3(+0.5f, +0.5f, -0.5f), // R T F
+        new Vector3(-0.5f, +0.5f, -0.5f)  // L T F
+    };
 
     public Vector3 center;
-    public Vector3[] positions;
     public float[] densities;
-    public LifeSpawner.Biome biome;
 
-    public VoxelData(Vector3 pos, LifeSpawner.Biome biome)
+    public VoxelData(Vector3 pos)
     {
         this.center = pos;
-        this.positions = new Vector3[] {
-            new Vector3(-0.5f, -0.5f, +0.5f), // L B B
-            new Vector3(+0.5f, -0.5f, +0.5f), // R B B
-            new Vector3(+0.5f, -0.5f, -0.5f), // R B F
-            new Vector3(-0.5f, -0.5f, -0.5f), // L B F
-            new Vector3(-0.5f, +0.5f, +0.5f), // L T B
-            new Vector3(+0.5f, +0.5f, +0.5f), // R T B
-            new Vector3(+0.5f, +0.5f, -0.5f), // R T F
-            new Vector3(-0.5f, +0.5f, -0.5f)  // L T F
-        };
-        this.biome = biome;
-        this.densities = new float[this.positions.Length];
+        this.densities = new float[positions.Length];
     }
     public void SetDensity(int index, float value)
     {
@@ -381,43 +359,8 @@ struct VoxelData
         }
         return true; // all densities were solid or were unsolid
     }
-    public CombineInstance MakeMesh(float densityThreshold = 0)
-    {
-        CombineInstance voxel = new CombineInstance();
-        voxel.mesh = MakeGeometry(densityThreshold);
-        voxel.transform = Matrix4x4.Translate(center * VoxelUniverse.VOXEL_SEPARATION);
-        return voxel;
-    }
-    private Mesh MakeGeometry(float densityThreshold = 0)
-    {
-        List<Tri> geom = MarchCube(densityThreshold);
-        return MakeMeshFromTriangleList(geom);
-    }
-    private Mesh MakeMeshFromTriangleList(List<Tri> geom)
-    {
-        List<Vector3> verts = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
-        List<Vector3> normals = new List<Vector3>();
-        List<int> tris = new List<int>();
-        List<Color> colors = new List<Color>();
-
-        // TODO: remove duplicate verts?
-        // TODO: calculate normals from tris?
-
-        foreach (Tri t in geom)
-        {
-            t.AddTo(verts, tris, colors, normals);
-        }
-
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(verts);
-        mesh.SetTriangles(tris, 0);
-        //mesh.SetUVs(0, uvs);
-        mesh.SetNormals(normals);
-        mesh.SetColors(colors);
-        return mesh;
-    }
-    private List<Tri> MarchCube(float iso)
+  
+    public void MarchCube(float iso, List<Tri> geom)
     {
         int bitfield = 0;
         if (densities[0] < iso) bitfield |= 1;
@@ -430,7 +373,7 @@ struct VoxelData
         if (densities[7] < iso) bitfield |= 128;
 
         // Cube is entirely in/out of the surface 
-        if (edgeTable[bitfield] == 0) return new List<Tri>();
+        if (edgeTable[bitfield] == 0) return;
 
         // Find the vertices where the surface intersects the cube 
         Vector3[] vertlist = new Vector3[12];
@@ -447,16 +390,14 @@ struct VoxelData
         if ((edgeTable[bitfield] & 1024) > 0) vertlist[10] = LerpEdge(iso, positions[2], positions[6], densities[2], densities[6]);
         if ((edgeTable[bitfield] & 2048) > 0) vertlist[11] = LerpEdge(iso, positions[3], positions[7], densities[3], densities[7]);
 
-        // Create the triangle 
-        List<Tri> geom = new List<Tri>();
         for (int i = 0; triTable[bitfield, i] != -1; i += 3)
         {
-            Vector3 a = vertlist[triTable[bitfield, i + 0]];
-            Vector3 b = vertlist[triTable[bitfield, i + 1]];
-            Vector3 c = vertlist[triTable[bitfield, i + 2]];
-            geom.Add(new Tri(a, b, c, biome.GetVertexColor()));
+            Vector3 a = vertlist[triTable[bitfield, i + 0]] + center;
+            Vector3 b = vertlist[triTable[bitfield, i + 1]] + center;
+            Vector3 c = vertlist[triTable[bitfield, i + 2]] + center;
+            geom.Add(new Tri(a, b, c));
         }
-        return geom;
+        
     }
     private Vector3 LerpEdge(float iso, Vector3 p1, Vector3 p2, float val1, float val2)
     {

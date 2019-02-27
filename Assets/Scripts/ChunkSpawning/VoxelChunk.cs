@@ -64,10 +64,10 @@ public class VoxelChunk : MonoBehaviour
                 for (int z = 0; z < sizeZ; z++)
                 {
                     Vector3 pos = new Vector3(x, y, z);
-                    VoxelData voxel = new VoxelData(pos, PickBiomeAtPos(pos));
+                    VoxelData voxel = new VoxelData(pos);
                     // set the densities of the 8 corners of the cube:
-                    for (int i = 0; i < voxel.positions.Length; i++)
-                        voxel.densities[i] = GetDensitySample(voxel.center + voxel.positions[i]);
+                    for (int i = 0; i < VoxelData.positions.Length; i++)
+                        voxel.densities[i] = GetDensitySample(voxel.center + VoxelData.positions[i]);
                     // store the data:
                     data[x, y, z] = voxel;
                 }
@@ -165,9 +165,7 @@ public class VoxelChunk : MonoBehaviour
     /// </summary>
     void GenerateMesh()
     {
-        mesh.mesh = new Mesh();
-
-        List<CombineInstance> meshes = new List<CombineInstance>();
+        List<VoxelData.Tri> geom = new List<VoxelData.Tri>();
 
         for (int x = 0; x < data.GetLength(0); x++)
         {
@@ -177,15 +175,95 @@ public class VoxelChunk : MonoBehaviour
                 {
                     if (!data[x, y, z].IsHidden(threshold))
                     {
-                        // make a voxel mesh
-                        meshes.Add(data[x, y, z].MakeMesh(threshold));
+                        data[x, y, z].MarchCube(threshold, geom);
                     }
                 }
             }
         }
 
-        // combine all of the meshes together into one mesh:
-        mesh.mesh.CombineMeshes(meshes.ToArray(), true);
-        mesh.mesh.RecalculateNormals(); // TODO: calculate our normals by hand instead
+        // combine all of the tris together into one mesh:
+        Mesh mesh = MakeMeshFromTris(geom);
+
+        // remove duplicate vertices:
+        this.mesh.mesh = RemoveDuplicates(mesh);
+
+        // calculate those normals:
+        this.mesh.mesh.RecalculateNormals();
+
+        SetVertexColors();
+    }
+    private Mesh MakeMeshFromTris(List<VoxelData.Tri> geom)
+    {
+
+        List<Vector3> verts = new List<Vector3>();
+        List<int> tris = new List<int>();
+
+        for (int i = 0; i < geom.Count; i++)
+        {
+            int index = verts.Count;
+            verts.Add(geom[i].a);
+            verts.Add(geom[i].b);
+            verts.Add(geom[i].c);
+            tris.Add(index + 0);
+            tris.Add(index + 1);
+            tris.Add(index + 2);
+        }
+
+        // create a mesh from the verts and tris:
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(verts);
+        mesh.SetTriangles(tris, 0);
+        return mesh;
+    }
+    private Mesh RemoveDuplicates(Mesh complexMesh, bool printDebug = false)
+    {
+        List<Vector3> verts = new List<Vector3>();
+        List<int> tris = new List<int>();
+
+        complexMesh.GetVertices(verts);
+        complexMesh.GetTriangles(tris, 0);
+
+        int count1 = verts.Count;
+
+        for (int i = 0; i < verts.Count; i++)
+        {
+            // find duplicates:
+            for (int j = 0; j < verts.Count; j++)
+            {
+                if (i == j) continue;
+                if (j >= verts.Count) break;
+                if (i >= verts.Count) break;
+                if (verts[i] == verts[j]) // if a duplicate vert:
+                {
+                    verts.RemoveAt(j); // remove it
+                    for(int k = 0; k < tris.Count; k++)
+                    {
+                        if (tris[k] == j) tris[k] = i;
+                        if (tris[k] > j) tris[k] = tris[k] - 1;
+                    }
+                }
+            }
+        }
+        int count2 = verts.Count;
+
+        if(printDebug) print($"{count1} reduced to {count2}");
+
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(verts);
+        mesh.SetTriangles(tris, 0);
+        return mesh;
+
+    } // RemoveDuplicates()
+
+    void SetVertexColors()
+    {
+        List<Color> colors = new List<Color>();
+        foreach (Vector3 p in mesh.mesh.vertices)
+        {
+            //Vector3 pos = p + transform.position;
+            LifeSpawner.Biome biome = PickBiomeAtPos(p);
+            colors.Add(biome.GetVertexColor());
+        }
+        mesh.mesh.SetColors(colors);
     }
 }
