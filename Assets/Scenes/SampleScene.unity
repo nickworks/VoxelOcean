@@ -810,7 +810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderDistance: 4
   renderDistanceVertical: 2
-  resPerChunk: 20
+  resPerChunk: 10
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   biomeScaling: 50

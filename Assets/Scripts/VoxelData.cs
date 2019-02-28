@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This object represents one "voxel" of world density data. It also contains the logic to execute the Cube Marching algorithm.
+/// The class was created by Nick Pattison with contributions from Justin Dickinson.
+/// This is based on Paul Bourke's work http://paulbourke.net/geometry/polygonise/
+/// </summary>
 struct VoxelData
 {
+    /// <summary>
+    /// A struct to hold 3 vertices
+    /// </summary>
     public struct Tri
     {
         public Vector3 a;
@@ -15,23 +23,11 @@ struct VoxelData
             this.b = b;
             this.c = c;
         }
-        //Vector3 normal { get { return Vector3.Cross(b - a, c - a).normalized; }}
-        public void AddTo(List<Vector3> verts, List<int> tris, bool flip = false)
-        {
-            int offset = verts.Count;
-            verts.Add(a);
-            verts.Add(flip ? c : b);
-            verts.Add(flip ? b : c);
-            tris.Add(offset + 0);
-            tris.Add(offset + 1);
-            tris.Add(offset + 2);
-        }
-        public override string ToString()
-        {
-            return a.ToString() + " " + b.ToString() + " " + c.ToString();
-        }
     }
 
+    /// <summary>
+    /// A big list of edge bitfields to use for Cube Marching. DO NOT EDIT.
+    /// </summary>
     static int[] edgeTable = new int[256] {
             0x000, 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c,
             0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
@@ -66,6 +62,9 @@ struct VoxelData
             0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c,
             0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x000
         };
+    /// <summary>
+    /// A big list of lists of triangle indices for Cube Marching. DO NOT EDIT.
+    /// </summary>
     static int[,] triTable = new int[256, 16]{
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -324,6 +323,9 @@ struct VoxelData
             {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}
         };
+    /// <summary>
+    /// The local positions of each voxel's 8 corners
+    /// </summary>
     static public Vector3[] positions = new Vector3[] {
         new Vector3(-0.5f, -0.5f, +0.5f), // L B B
         new Vector3(+0.5f, -0.5f, +0.5f), // R B B
@@ -335,7 +337,13 @@ struct VoxelData
         new Vector3(-0.5f, +0.5f, -0.5f)  // L T F
     };
 
+    /// <summary>
+    /// The center point of the voxel, in world space
+    /// </summary>
     public Vector3 center;
+    /// <summary>
+    /// A list to hold the 8 density values of the 8 corners of the voxel
+    /// </summary>
     public float[] densities;
 
     public VoxelData(Vector3 pos)
@@ -343,10 +351,11 @@ struct VoxelData
         this.center = pos;
         this.densities = new float[positions.Length];
     }
-    public void SetDensity(int index, float value)
-    {
-        densities[index] = value;
-    }
+    /// <summary>
+    /// Whether or not this voxel is completely hidden.
+    /// </summary>
+    /// <param name="threshold"></param>
+    /// <returns></returns>
     public bool IsHidden(float threshold = 0)
     {
         int solidness = -1;
@@ -359,7 +368,11 @@ struct VoxelData
         }
         return true; // all densities were solid or were unsolid
     }
-  
+    /// <summary>
+    /// For this voxel, execute the Cube Marching algorithm and add Tri objects to a list of Tris
+    /// </summary>
+    /// <param name="iso">The density threshold for deciding where the surface should be.</param>
+    /// <param name="geom">The list of Tri objects to add the resulting Tris to.</param>
     public void MarchCube(float iso, List<Tri> geom)
     {
         int bitfield = 0;
@@ -399,6 +412,15 @@ struct VoxelData
         }
         
     }
+    /// <summary>
+    /// Finds the best-fit position to place the surface between 2 other points.
+    /// </summary>
+    /// <param name="iso">The density threshold</param>
+    /// <param name="p1">One corner of the voxel</param>
+    /// <param name="p2">Another corner of the voxel</param>
+    /// <param name="val1">The density value at p1</param>
+    /// <param name="val2">The density value at p2</param>
+    /// <returns></returns>
     private Vector3 LerpEdge(float iso, Vector3 p1, Vector3 p2, float val1, float val2)
     {
 

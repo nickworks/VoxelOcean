@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEditor;
 
 /// <summary>
-/// One chunk of voxels. Each chunk contains a bunch of "voxels". 
+/// This class generates the mesh and biome data of one "chunk" of the world. Each chunk contains a bunch of VoxelData objects that contain density data about the universe.
 /// </summary>
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class VoxelChunk : MonoBehaviour
 {
+    /// <summary>
+    /// The density threshold to use to find where the surface lies.
+    /// </summary>
     [Range(-.2f, .2f)] public float threshold = 0;
-
     /// <summary>
     /// Cached noise data. This is used as "density" to determin whether or not voxels are solid.
     /// </summary>
@@ -115,7 +117,11 @@ public class VoxelChunk : MonoBehaviour
         }
         return res;
     }
-
+    /// <summary>
+    /// Generates a Biome at a given position
+    /// </summary>
+    /// <param name="pos">The position to sample the biome field, in local space.</param>
+    /// <returns>A Biome object with data about which biome inhabits this space.</returns>
     LifeSpawner.Biome PickBiomeAtPos(Vector3 pos)
     {
         // TODO: maybe a bunch of this logic can be moved into the LifeSpawner.Biome struct?
@@ -161,9 +167,9 @@ public class VoxelChunk : MonoBehaviour
         return LifeSpawner.Biome.FromInt(biome_num);
     }
     /// <summary>
-    /// This function builds the mesh by copying the cube over and over again
+    /// This function builds the mesh by implementing a Cube Marching algorithm, removing duplicate vertices, calculating normals, and generating biome-based vertex colors.
     /// </summary>
-    void GenerateMesh()
+    private void GenerateMesh()
     {
         List<VoxelData.Tri> geom = new List<VoxelData.Tri>();
 
@@ -192,6 +198,11 @@ public class VoxelChunk : MonoBehaviour
 
         SetVertexColors();
     }
+    /// <summary>
+    /// This function makes a Mesh from a list of Tri objects.
+    /// </summary>
+    /// <param name="geom">The list of Tris to use</param>
+    /// <returns>the generated mesh object.</returns>
     private Mesh MakeMeshFromTris(List<VoxelData.Tri> geom)
     {
 
@@ -215,6 +226,12 @@ public class VoxelChunk : MonoBehaviour
         mesh.SetTriangles(tris, 0);
         return mesh;
     }
+    /// <summary>
+    /// Removes duplicate vertices from a mesh by "welding" together vertices that are EXACTLY the same.
+    /// </summary>
+    /// <param name="complexMesh">The mesh from which to remove duplicate vertices.</param>
+    /// <param name="printDebug">Whether or not to output to the console the before/after vertex count.</param>
+    /// <returns>A copy of the complexMesh, with vertices removed. NOTE: The copy contains no UVs, vertex colors, or normals.</returns>
     private Mesh RemoveDuplicates(Mesh complexMesh, bool printDebug = false)
     {
         List<Vector3> verts = new List<Vector3>();
@@ -254,8 +271,10 @@ public class VoxelChunk : MonoBehaviour
         return mesh;
 
     } // RemoveDuplicates()
-
-    void SetVertexColors()
+    /// <summary>
+    /// Generates vertex colors for every vertex in the MeshFilter's mesh.
+    /// </summary>
+    private void SetVertexColors()
     {
         List<Color> colors = new List<Color>();
         foreach (Vector3 p in mesh.mesh.vertices)
