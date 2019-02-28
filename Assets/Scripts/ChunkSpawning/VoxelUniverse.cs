@@ -41,6 +41,7 @@ public class VoxelUniverse : MonoBehaviour
             res.type = (SignalType) UnityEngine.Random.Range(0, 3);
             return res;
         }
+
     }
 
 

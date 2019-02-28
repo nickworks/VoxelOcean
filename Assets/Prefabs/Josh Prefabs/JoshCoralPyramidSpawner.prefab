@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8198810764069784714
+--- !u!1 &8856533629082828895
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,59 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8198810764069784712}
-  - component: {fileID: 8198810764069784715}
-  - component: {fileID: 8198810764069784718}
-  - component: {fileID: 8198810764069784713}
-  - component: {fileID: 3645109132574243547}
+  - component: {fileID: 8856533629082828891}
+  - component: {fileID: 8856533629082828890}
+  - component: {fileID: 8856533629082828893}
+  - component: {fileID: 8856533629082828892}
   m_Layer: 0
-  m_Name: VoxelChunk
+  m_Name: JoshCoralPyramidSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8198810764069784712
+--- !u!4 &8856533629082828891
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 8.5, z: 8.5}
+  m_GameObject: {fileID: 8856533629082828895}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 3.074, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8198810764069784715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!33 &8198810764069784718
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!33 &8856533629082828890
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Mesh: {fileID: 0}
---- !u!23 &8198810764069784713
+  m_GameObject: {fileID: 8856533629082828895}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8856533629082828893
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 8856533629082828895}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -71,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,20 +78,27 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3645109132574243547
+--- !u!114 &8856533629082828892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 8856533629082828895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2af4c092ed731064e9b1520af79f060f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeAmountMin: 1
-  lifeAmountMax: 5
-  prefabCoralTubeWorms: {fileID: 0}
-  prefabCoralPyramid: {fileID: 8856533629082828895, guid: 28013e49a404f4243abe910b6bb4ce60,
+  pyramidMesh: {fileID: 7582523416606775353, guid: 3ce7fd6d685026e43b4ee10a74079aeb,
     type: 3}
+  prismMesh: {fileID: 2533957084980682736, guid: 537ed4ace78a2464daa321cc74e04f8f,
+    type: 3}
+  iterations: 5
+  flipEveryNth: 3
+  rotationPerSegment: 63.4
+  smallerIterations: 1
+  usePrism: 1
+  branches: 1
+  randomVars: 1
+  seed: 0
