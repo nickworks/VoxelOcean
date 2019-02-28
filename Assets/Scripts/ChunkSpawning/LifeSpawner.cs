@@ -108,6 +108,7 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Cameron:
                 break;
             case BiomeOwner.Christopher:
+                //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
                 HydrothermicBiomSpawner hydrothermicBiomSpawner = GameObject.FindObjectOfType<HydrothermicBiomSpawner>();
                 hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
                 break;

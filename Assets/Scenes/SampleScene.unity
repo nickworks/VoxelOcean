@@ -811,7 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderDistance: 3
   renderDistanceVertical: 3
-  resPerChunk: 20
+  resPerChunk: 34
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   biomeScaling: 50
@@ -869,9 +869,9 @@ MonoBehaviour:
   tubeWormSegmentLength: 2
   wormBonusIter: 5
   seed: 0
-  rockPrefab: {fileID: 33424624180062908, guid: e6a0c3050443a3740a2c4e6b2b3aa8ea,
+  rockPrefab: {fileID: 2881934186644748434, guid: e6a0c3050443a3740a2c4e6b2b3aa8ea,
     type: 3}
   wormPrefab: {fileID: 33468178300371448, guid: 5c327da19862f61408f7b4302ef73176,
     type: 3}
-  tubePrefab: {fileID: 33056630738198798, guid: 4c882e814ab4c9d4f85a80b685cbb6f1,
+  tubePrefab: {fileID: 5298450886448364052, guid: 4c882e814ab4c9d4f85a80b685cbb6f1,
     type: 3}
