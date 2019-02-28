@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class CoralTree : MonoBehaviour
 {
+    //decides how complicated
     [Range(2, 8)] public int iterations = 3;
 
     public Vector3 branchScale = new Vector3(.25f, 1, .25f);
@@ -12,7 +13,8 @@ public class CoralTree : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //make the coral
+        Build();
     }
 
     // Update is called once per frame
@@ -44,8 +46,10 @@ public class CoralTree : MonoBehaviour
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
         Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(.5f, .5f, 0));
 
+        //decide the amount of branches
         int ran = Random.Range(0, 4);
 
+        //one branch
         if (ran == 0)
         {
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(30, 90), Random.Range(0, 45));
@@ -54,6 +58,7 @@ public class CoralTree : MonoBehaviour
             print("0");
         }
 
+        //four branches
         if (ran == 1)
         {
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(30, 90), Random.Range(0, 45));
@@ -68,6 +73,7 @@ public class CoralTree : MonoBehaviour
             print("1");
         }
 
+        //three branches
         if (ran == 2)
         {
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(0, 90), Random.Range(0, 45));
@@ -80,6 +86,7 @@ public class CoralTree : MonoBehaviour
             print("2");
         }
 
+        //two branches
         if (ran == 3)
         {
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(0, 90), Random.Range(0, 45));
@@ -221,6 +228,7 @@ public class CoralTree : MonoBehaviour
         tris.Add(23);
         tris.Add(20);
 
+        //random vertex colors
         float hueMin = Random.Range(.4f, .7f);
         float hueMax = Random.Range(.7f, 1f);
 
@@ -245,17 +253,18 @@ public class CoralTree : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(CoralTree))]
-public class CoralMeshEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        if (GUILayout.Button("GROW!"))
-        {
-            CoralTree b = (target as CoralTree);
-            b.Build();
-        }
-    }
-}
+//Grow Button
+//[CustomEditor(typeof(CoralTree))]
+//public class CoralMeshEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        base.OnInspectorGUI();
+//
+//        if (GUILayout.Button("GROW!"))
+//        {
+//            CoralTree b = (target as CoralTree);
+//            b.Build();
+//        }
+//    }
+//}

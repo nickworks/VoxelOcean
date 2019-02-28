@@ -118,7 +118,7 @@ public class LifeSpawner : MonoBehaviour
                 break;
             case BiomeOwner.Eric:
                 Instantiate(prefabCoralTree, pos, rot, transform);
-                print("tree");
+                //print("tree");
                 break;
             case BiomeOwner.Jess:
                 break;
