@@ -87,23 +87,35 @@ public class VoxelChunk : MonoBehaviour
         foreach (VoxelUniverse.SignalField field in VoxelUniverse.main.signalFields)
         {
             Vector3 p = pos + transform.position; // convert from local coordinates to world coordinates
-            p /= field.zoom; // "zoom" in/out of the noise
-            float val = Noise.Sample(p); // simplex.noise(pos.x, pos.y, pos.z);
+            float val = Noise.Sample(p / field.zoom); // simplex.noise(pos.x, pos.y, pos.z);
 
-            // use the vertical position to influence the density:
-            val -= (p.y + field.verticalOffset) * field.flattenAmount;
+
+            if (field.type == VoxelUniverse.SignalType.Sphere)
+            {
+                float size = 8 + field.flattenOffset;
+                size *= size;
+                float d = p.sqrMagnitude;
+                val -= (d/size - size) * field.flattenAmount * .05f;
+            }
+            else
+            {
+                // use the vertical position to influence the density:
+                val -= (p.y + field.flattenOffset) * field.flattenAmount * .05f;
+            }
+
 
             // adjust the final density using the densityBias:
-            val -= field.densityBias;
+            val += field.densityBias;
 
             // adjust how various fields are mixed together:
             switch (field.type)
             {
+                case VoxelUniverse.SignalType.Sphere:
                 case VoxelUniverse.SignalType.AddOnly:
-                    if (Mathf.Sign(val) == Mathf.Sign(res)) res += val;
+                    if (val > 0 || res == 0) res += val;
                     break;
                 case VoxelUniverse.SignalType.SubtractOnly:
-                    if (Mathf.Sign(val) != Mathf.Sign(res)) res += val;
+                    if (val < 0 || res == 0) res += val;
                     break;
                 case VoxelUniverse.SignalType.Multiply:
                     res *= val;

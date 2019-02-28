@@ -808,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b0fe9a48af9784a9f6919c20016d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderDistance: 4
+  renderDistance: 5
   renderDistanceVertical: 2
   resPerChunk: 10
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
@@ -818,18 +818,18 @@ MonoBehaviour:
   - type: 0
     zoom: 20.442778
     densityBias: -0.106763974
-    flattenAmount: 0.4197994
-    verticalOffset: 0
+    flattenAmount: 0.308
+    flattenOffset: 0
   - type: 0
     zoom: 82.969284
     densityBias: -0.17424001
-    flattenAmount: 0.92235804
-    verticalOffset: 0
+    flattenAmount: 0.304
+    flattenOffset: 0
   - type: 3
     zoom: 27.2
     densityBias: -0.098
-    flattenAmount: 0.521
-    verticalOffset: 0
+    flattenAmount: 0.385
+    flattenOffset: 0
 --- !u!4 &2135429414
 Transform:
   m_ObjectHideFlags: 0
