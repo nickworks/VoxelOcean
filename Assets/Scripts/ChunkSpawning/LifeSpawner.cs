@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(VoxelChunk))]
 [RequireComponent(typeof(MeshFilter))]
+
 public class LifeSpawner : MonoBehaviour
 {
     public enum BiomeOwner
@@ -58,7 +59,8 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMax = 5;
 
     public GameObject prefabCoralTubeWorms;
-
+    public GameObject prefabCoralTree;
+   
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -115,6 +117,8 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Dominc:
                 break;
             case BiomeOwner.Eric:
+                Instantiate(prefabCoralTree, pos, rot, transform);
+                print("tree");
                 break;
             case BiomeOwner.Jess:
                 break;
