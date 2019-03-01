@@ -56,7 +56,8 @@ public class LifeSpawner : MonoBehaviour
 
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
-
+    
+    public GameObject prefabCoralCrystal;
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -107,6 +108,7 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Andrew:
                 break;
             case BiomeOwner.Cameron:
+                Instantiate(prefabCoralCrystal, pos, rot, transform);
                 break;
             case BiomeOwner.Christopher:
                 //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
