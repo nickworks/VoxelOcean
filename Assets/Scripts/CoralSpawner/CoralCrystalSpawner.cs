@@ -13,6 +13,8 @@ using UnityEditor;
 /// </summary>
 public class CoralCrystalSpawner : MonoBehaviour
 {
+    // TODO: please write these comments in documentation style
+
     [Range(2, 8)] public int iterations = 3;// Iterations of the object
     [Range(0, 45)] public int angle1 = 25; // Tendril 1's Angle of origin
     [Range(0, 45)] public int angle2 = 25; // Tendril 2's angle of origin
@@ -20,12 +22,15 @@ public class CoralCrystalSpawner : MonoBehaviour
     [Range(.1f, .85f)] public float scalar = 0.5f; //scale
     [Range(.25f, .8f)] public float objpos = 0.5f;
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
+
+    // TODO: please use a documentation style comment to document some of what this function does.
     // Start is called before the first frame update
     void Start()
     {
         Build();
     }
 
+    // TODO: please use a documentation style comment to document some of what this function does.
     // Update is called once per frame
     void Update()
     {
@@ -38,6 +43,7 @@ public class CoralCrystalSpawner : MonoBehaviour
         }
     }
 
+    // TODO: please use a documentation style comment to document some of what this function does.
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
@@ -52,6 +58,7 @@ public class CoralCrystalSpawner : MonoBehaviour
 
     }
 
+    // TODO: please use a documentation style comment to document some of what this function does.
     private void Grow(List<CombineInstance> meshes, int num, Vector3 pos, Quaternion rot, float scale)
     { 
 

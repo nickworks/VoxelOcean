@@ -16,6 +16,8 @@ using UnityEditor;
 /// </summary>
 public class CoralCrystalFlowerSpawn : MonoBehaviour
 {
+
+    // TODO: please use a documentation style comment to document some of what these properties are for.
     [Range(2, 10)] public int iterations = 3;
     [Range(0, 50)] public int angle1 = 45;
     [Range(0, 50)] public int angle2 = 45;
@@ -23,18 +25,22 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     [Range(0, 1)] public float scalar = 0.5f;
     [Range(.25f, .8f)] public float objpos = 0.5f;
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
+
+    // TODO: please use a documentation style comment to document some of what this function does.
     // Start is called before the first frame update
     void Start()
     {
         Build();
     }
 
+    // TODO: please use a documentation style comment to document some of what this function does.
     // Update is called once per frame
     void Update()
     {
         
     }
 
+    // TODO: please use a documentation style comment to document some of what this function does.
     public void Build ()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
