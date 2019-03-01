@@ -5,11 +5,13 @@ using UnityEditor;
 
 public class CoralTree : MonoBehaviour
 {
+    // TODO: need documentation for variables:
     //decides how complicated
     [Range(2, 8)] public int iterations = 3;
 
     public Vector3 branchScale = new Vector3(.25f, 1, .25f);
 
+    // TODO: Need documentation for every function: Start, Build, Grow, & MakeCube
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +101,7 @@ public class CoralTree : MonoBehaviour
 
         scale *= scale;
     }
-
+    // TODO: Better description and naming for "num"; I have no idea what it's for.
     private Mesh MakeCube(int num)
     {
         List<Vector3> verts = new List<Vector3>();
@@ -252,6 +254,8 @@ public class CoralTree : MonoBehaviour
         return mesh;
     }
 }
+
+// FIX: Take out the UI Button if you aren't going to use it.
 
 //Grow Button
 //[CustomEditor(typeof(CoralTree))]
