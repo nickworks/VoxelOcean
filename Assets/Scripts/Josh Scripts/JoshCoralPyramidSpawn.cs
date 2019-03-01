@@ -6,34 +6,52 @@ using UnityEditor;
 public class JoshCoralPyramidSpawn : MonoBehaviour
 {
 
+    //the meshes we're going to use for generation
     public MeshFilter pyramidMesh;
     public MeshFilter prismMesh;
 
+    //parameters to tweak
+    [Tooltip("How many iterations to have.")]
     [Range(1, 20)] public int iterations = 5;
+    [Tooltip("How often the mesh will reverse direction.")]
     [Range(1, 7)] public int flipEveryNth = 3;
+    [Tooltip("How far each segment will rotate.")]
     public float rotationPerSegment = 63.4f;
+    [Tooltip("Whether to make each subsequent segment smaller.")]
     public bool smallerIterations = true;
+    [Tooltip("Leave this on to use Prism mesh, else it will use Pyramid.")]
     public bool usePrism = true;
+    [Tooltip("Whether additional branches can spawn or not.")]
     public bool branches = true;
 
+    [Tooltip("Uncheck this to turn off randomness or use custom seed.")]
     public bool randomVars = true;
+    [Tooltip("Current Seed.")]
     public int seed;
 
-    
+    /// <summary>
+    /// Instantiates the build
+    /// </summary>
     void Start()
     {
         Build();
-        Debug.Log("building for josh");
+     //   Debug.Log("building for josh");
     }
-
+    /// <summary>
+    /// Thsi function initiates the iterative building process.
+    /// Creates a list for mesh storage
+    /// and generates the final mesh from the list.
+    /// </summary>
     public void Build()
     {
+        //randomize seed
         if (randomVars)
         {
             seed = Random.Range(0, 50000000);
         }
         Random.InitState(seed);
 
+        //use random variables if boolean is set
         if (randomVars)
         {
             Randomize();
@@ -54,6 +72,9 @@ public class JoshCoralPyramidSpawn : MonoBehaviour
         MeshFilter filter = GetComponent<MeshFilter>();
         filter.mesh = mesh;
     }
+    /// <summary>
+    /// This function randomizes the base parameters to permit various spawning patterns
+    /// </summary>
     void Randomize()
     {
         iterations = Random.Range(4, 15);
@@ -76,9 +97,18 @@ public class JoshCoralPyramidSpawn : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// This is where the core of the iterative spawning
+    /// </summary>
+    /// <param name="number">recursive avlue for how many pieces left to grow.</param>
+    /// <param name="isClockwise">bool for current orientation.</param>
+    /// <param name="meshes">Reverence to the list of meshes</param>
+    /// <param name="pos">the position to instantiate the current segment at</param>
+    /// <param name="rot">the rotation to instantiate the current segment at</param>
+    /// <param name="scale">the scale to instantiate the current segment at</param>
     void Grow(int number, bool isClockwise, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
-
+        //TODO: pick up from here
         if (number >= iterations) return;
 
         CombineInstance inst = new CombineInstance();
