@@ -17,7 +17,16 @@ using UnityEditor;
 public class CoralCrystalFlowerSpawn : MonoBehaviour
 {
 
-    // TODO: please use a documentation style comment to document some of what these properties are for.
+    /// <summary>
+    /// Variables
+    /// Iterations : how many times the object is repeated
+    /// Angle1 : what angle an object is pointed to rotated by
+    /// Angle2 : What angle2 an object is pointed to rotated by (alternate)
+    /// Angle3 : what angle3 an object is pointed to rotated by
+    /// Scalar : Scale of the object, that decreases over time based on per iteration
+    /// OBJPOS : is the object position of the spawner
+    /// branchScale : is the scale of each branch object / transform scale
+    /// </summary>
     [Range(2, 10)] public int iterations = 3;
     [Range(0, 50)] public int angle1 = 45;
     [Range(0, 50)] public int angle2 = 45;
@@ -25,22 +34,35 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     [Range(0, 1)] public float scalar = 0.5f;
     [Range(.25f, .8f)] public float objpos = 0.5f;
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
-
-    // TODO: please use a documentation style comment to document some of what this function does.
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start / Build Function
+    /// Creates the object and coral mesh
+    /// Created in Firstframe
+    /// </summary>
     void Start()
     {
         Build();
     }
-
-    // TODO: please use a documentation style comment to document some of what this function does.
-    // Update is called once per frame
+    
+    /// <summary>
+    /// Update
+    /// Called once a frame
+    /// Once per a frame there is an update increasing and decreasing the Scalar or scale of the object.
+    /// Does nothing currently
+    /// TODO: Will add in functionality for glowing and parasitic abilities
+    /// </summary>
     void Update()
     {
         
     }
 
-    // TODO: please use a documentation style comment to document some of what this function does.
+    /// <summary>
+    /// Build
+    /// Builds the object from the meshes.
+    /// Gets a reference from the square function and uses it to build an object.
+    /// Combines meshes to reduce object count
+    /// Meshfilters it from reference
+    /// </summary>
     public void Build ()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();

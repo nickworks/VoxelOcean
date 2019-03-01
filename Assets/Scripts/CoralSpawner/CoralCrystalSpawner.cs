@@ -13,8 +13,16 @@ using UnityEditor;
 /// </summary>
 public class CoralCrystalSpawner : MonoBehaviour
 {
-    // TODO: please write these comments in documentation style
-
+    /// <summary>
+    /// Variables
+    /// Iterations : how many times the object is repeated
+    /// Angle1 : what angle an object is pointed to rotated by
+    /// Angle2 : What angle2 an object is pointed to rotated by (alternate)
+    /// Angle3 : what angle3 an object is pointed to rotated by
+    /// Scalar : Scale of the object, that decreases over time based on per iteration
+    /// OBJPOS : is the object position of the spawner
+    /// branchScale : is the scale of each branch object / transform scale
+    /// </summary>
     [Range(2, 8)] public int iterations = 3;// Iterations of the object
     [Range(0, 45)] public int angle1 = 25; // Tendril 1's Angle of origin
     [Range(0, 45)] public int angle2 = 25; // Tendril 2's angle of origin
@@ -22,16 +30,22 @@ public class CoralCrystalSpawner : MonoBehaviour
     [Range(.1f, .85f)] public float scalar = 0.5f; //scale
     [Range(.25f, .8f)] public float objpos = 0.5f;
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
-
-    // TODO: please use a documentation style comment to document some of what this function does.
-    // Start is called before the first frame update
+    
+/// <summary>
+/// Start / Build Function
+/// Creates the object and coral mesh
+/// </summary>
     void Start()
     {
         Build();
     }
 
-    // TODO: please use a documentation style comment to document some of what this function does.
     // Update is called once per frame
+    /// <summary>
+    /// Update
+    /// Called once a frame
+    /// Once per a frame there is an update increasing and decreasing the Scalar or scale of the object.
+    /// </summary>
     void Update()
     {
         if (scalar <= .25f)
@@ -43,7 +57,13 @@ public class CoralCrystalSpawner : MonoBehaviour
         }
     }
 
-    // TODO: please use a documentation style comment to document some of what this function does.
+    /// <summary>
+    /// Build
+    /// Builds the object from the meshes.
+    /// Gets a reference from the square function and uses it to build an object.
+    /// Combines meshes to reduce object count
+    /// Meshfilters it from reference
+    /// </summary>
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
@@ -58,7 +78,16 @@ public class CoralCrystalSpawner : MonoBehaviour
 
     }
 
-    // TODO: please use a documentation style comment to document some of what this function does.
+    /// <summary>
+    /// Grow
+    /// Grows objects from a single branch that is then randomized aned give iterations that the player can control.
+    /// Objects are controlled entirely in the grow function
+    /// </summary>
+    /// <param name="meshes"> mesh that it takes</param>
+    /// <param name="num"> number of meshes</param>
+    /// <param name="pos"> postion of the object</param>
+    /// <param name="rot"> rotation of the obj</param>
+    /// <param name="scale"> objects scale randomized</param>
     private void Grow(List<CombineInstance> meshes, int num, Vector3 pos, Quaternion rot, float scale)
     { 
 
