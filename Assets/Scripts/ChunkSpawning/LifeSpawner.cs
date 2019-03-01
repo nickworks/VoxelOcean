@@ -119,7 +119,7 @@ public class LifeSpawner : MonoBehaviour
                 //Instantiate(prefabCoralTubeWorms, pos, rot, transform);
                 break;
             case BiomeOwner.Dominc:
-                Instantiate(Prefab_Voronoi, pos, rot, transform);//Instantiate Vornoi Coral 
+                Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
                 break;
             case BiomeOwner.Eric:
                 break;
