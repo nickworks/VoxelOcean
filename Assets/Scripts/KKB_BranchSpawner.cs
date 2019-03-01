@@ -34,10 +34,10 @@ public class KKB_BranchSpawner : MonoBehaviour
         KKB_BranchSegment newBranch1 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, angle), t);
         KKB_BranchSegment newBranch2 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, 0), t);
         KKB_BranchSegment newBranch3 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, -angle), t);
-       
+
 
         /*sets the scale of the branches when they spawn in will gradually gets smaller as each iteration happens */
-        newBranch1.transform.localScale = Vector3.one * scale*scale
+        newBranch1.transform.localScale = Vector3.one * scale * scale;
         newBranch2.transform.localScale = Vector3.one * scale;
         newBranch3.transform.localScale = Vector3.one * scale*scale;
       
