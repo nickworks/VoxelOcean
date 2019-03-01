@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8198810764069784714
+--- !u!1 &4802542557500494251
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,59 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8198810764069784712}
-  - component: {fileID: 8198810764069784715}
-  - component: {fileID: 8198810764069784718}
-  - component: {fileID: 8198810764069784713}
-  - component: {fileID: 3645109132574243547}
+  - component: {fileID: 22840034763919006}
+  - component: {fileID: 931700159164454500}
+  - component: {fileID: 5283642371224753460}
+  - component: {fileID: 6709648242484893559}
   m_Layer: 0
-  m_Name: VoxelChunk
+  m_Name: prefabCoralSupreme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8198810764069784712
+--- !u!4 &22840034763919006
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4802542557500494251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 8.5, z: 8.5}
+  m_LocalPosition: {x: 4.498123, y: -5.634613, z: 1.9873574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8198810764069784715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!33 &8198810764069784718
+--- !u!33 &931700159164454500
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4802542557500494251}
   m_Mesh: {fileID: 0}
---- !u!23 &8198810764069784713
+--- !u!23 &5283642371224753460
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4802542557500494251}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -71,12 +58,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 2100000, guid: 1926c39d27d099040a7c5af96ca6c7f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
+  m_ProbeAnchor: {fileID: 22840034763919006}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
@@ -91,19 +78,23 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3645109132574243547
+--- !u!114 &6709648242484893559
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4802542557500494251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 37bcd72b723f79b498a867bb7ef37e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeAmountMin: 1
-  lifeAmountMax: 5
-  prefabCoralSupreme: {fileID: 4802542557500494251, guid: e238a3f3b38936742b2a0f5f0e798ec8,
-    type: 3}
+  iterations: 6
+  randomDir1Offset: 19
+  randomDir2Offset: 10
+  Spawn4thBranchChance: 22
+  Mut1Chance: 5
+  OldColor: {r: 0.8619798, g: 0.5801887, b: 1, a: 1}
+  YoungColor: {r: 0.6132076, g: 0.026032386, b: 0.37770945, a: 1}
+  branchScaling: {x: 0.25, y: 1, z: 0.25}

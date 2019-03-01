@@ -57,7 +57,7 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
 
-    public GameObject prefabCoralTubeWorms;
+    public GameObject prefabCoralSupreme;
 
     MeshFilter mesh;
 
@@ -131,6 +131,7 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Kyle:
                 break;
             case BiomeOwner.Zach:
+                Instantiate(prefabCoralSupreme, pos, rot, transform);
                 break;
         }
 
