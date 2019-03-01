@@ -3,7 +3,10 @@ guid: 672a511ec47a72140a70bfd070a476b4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - prefabCoralTubeWorms: {instanceID: 0}
+  - prefabCoralBroccoli: {fileID: 8878938568153803597, guid: 94d0c880b3dda174a9c55164c1fae5fb,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
