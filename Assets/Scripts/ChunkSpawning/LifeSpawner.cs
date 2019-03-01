@@ -7,6 +7,11 @@ using UnityEngine;
 
 public class LifeSpawner : MonoBehaviour
 {
+    /// <summary>
+    /// Socket for Dom's Vornoi Coral 
+    /// </summary>
+    public GameObject Prefab_Voronoi_Coral;
+
     public enum BiomeOwner
     {
         Andrew,
@@ -23,6 +28,7 @@ public class LifeSpawner : MonoBehaviour
         Kyle,
         Zach
     }
+
     public struct Biome
     {
         public static int COUNT = System.Enum.GetNames(typeof(BiomeOwner)).Length;
@@ -58,9 +64,14 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
 
+
     public GameObject prefabCoralTubeWorms;
     public GameObject prefabCoralTree;
    
+
+    
+    public GameObject prefabCoralCrystal;
+
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -88,8 +99,9 @@ public class LifeSpawner : MonoBehaviour
     /// Tries to spawn life at a given mesh vertex.
     /// </summary>
     /// <param name="index">The index of the vertex to use as a spawn point.</param>
+    /// <param name="printDebug">Whether or not to print out when spawning new life</param>
     /// <returns>If successful, return true. Otherwise, return false.</returns>
-    bool SpawnLifeAtVertex(int index)
+    bool SpawnLifeAtVertex(int index, bool printDebug = false)
     {
         if (index < 0) return false;
         if (index >= mesh.mesh.vertexCount) return false;
@@ -101,7 +113,7 @@ public class LifeSpawner : MonoBehaviour
 
         Biome biome = Biome.FromColor(color);
 
-        print("Spawning life in " + biome.owner + "'s biome...");
+        if(printDebug) print("Spawning life in " + biome.owner + "'s biome...");
 
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
@@ -110,11 +122,15 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Andrew:
                 break;
             case BiomeOwner.Cameron:
+                Instantiate(prefabCoralCrystal, pos, rot, transform);
                 break;
             case BiomeOwner.Christopher:
-                //Instantiate(prefabCoralTubeWorms, pos, rot, transform);
+                //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
+                HydrothermicBiomSpawner hydrothermicBiomSpawner = GameObject.FindObjectOfType<HydrothermicBiomSpawner>();
+                hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
                 break;
             case BiomeOwner.Dominc:
+                Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
                 break;
             case BiomeOwner.Eric:
                 Instantiate(prefabCoralTree, pos, rot, transform);
