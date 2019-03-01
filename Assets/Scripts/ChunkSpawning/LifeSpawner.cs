@@ -57,7 +57,6 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
 
-    public GameObject prefabCoralTubeWorms;
 	public GameObject prefabCoralBroccoli;
 
     MeshFilter mesh;

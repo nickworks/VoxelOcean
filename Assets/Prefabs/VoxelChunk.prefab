@@ -103,3 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeAmountMin: 1
+  lifeAmountMax: 5
+  prefabCoralBroccoli: {fileID: 8878938568153803597, guid: 94d0c880b3dda174a9c55164c1fae5fb,
+    type: 3}

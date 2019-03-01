@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8878938568153803595}
   - component: {fileID: 8878938568153803596}
   m_Layer: 0
-  m_Name: Coral
+  m_Name: Jessi_Coral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: baf5a09efabed1643a808f2e41eabe8d, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,8 +87,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8878938568153803597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97166adc0ed545d4084df451f4c1e59c, type: 3}
+  m_Script: {fileID: 11500000, guid: b83d61a3304cd204c926e515c4f6345a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 5
-  branchScaling: {x: 0.1, y: 0.25, z: 0.1}
+  iterations: 3
+  branchScaling: {x: 0.25, y: 1, z: 25}
