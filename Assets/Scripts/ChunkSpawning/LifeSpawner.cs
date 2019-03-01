@@ -58,11 +58,15 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMax = 5;
 
     public GameObject prefabCoralTubeWorms;
+    public GameObject prefabCoralPrecious;
+
+    private bool isColliding = false;
 
     MeshFilter mesh;
 
     public void SpawnSomeLife()
     {
+
         mesh = GetComponent<MeshFilter>();
         if (!mesh) return;
 
@@ -75,6 +79,7 @@ public class LifeSpawner : MonoBehaviour
             int attempts = 0;
             while (attempts < 5) // try 5 times:
             {
+                
                 int index = Random.Range(0, mesh.mesh.vertexCount);
                 bool success = SpawnLifeAtVertex(index);
                 if (success) break;
@@ -89,6 +94,7 @@ public class LifeSpawner : MonoBehaviour
     /// <returns>If successful, return true. Otherwise, return false.</returns>
     bool SpawnLifeAtVertex(int index)
     {
+
         if (index < 0) return false;
         if (index >= mesh.mesh.vertexCount) return false;
 
@@ -99,10 +105,10 @@ public class LifeSpawner : MonoBehaviour
 
         Biome biome = Biome.FromColor(color);
 
-        print("Spawning life in " + biome.owner + "'s biome...");
+        //print("Spawning life in " + biome.owner + "'s biome...");
 
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
-
+        
         switch (biome.owner)
         {
             case BiomeOwner.Andrew:
@@ -127,6 +133,19 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Kaylee:
                 break;
             case BiomeOwner.Keegan:
+                
+                
+                Detection();
+                if(isColliding == true)
+                {
+                    print("Hi Mom");
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Instantiate(prefabCoralPrecious, pos, rot, transform);
+                }
+
                 break;
             case BiomeOwner.Kyle:
                 break;
@@ -136,4 +155,13 @@ public class LifeSpawner : MonoBehaviour
 
         return true;
     }
+    void Detection()
+    {
+        
+        
+    }
+
 }
+
+
+
