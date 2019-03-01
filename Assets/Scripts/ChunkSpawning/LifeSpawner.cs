@@ -57,8 +57,6 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
 
-    public GameObject prefabCoralTubeWorms;
-
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -111,7 +109,9 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Cameron:
                 break;
             case BiomeOwner.Christopher:
-                //Instantiate(prefabCoralTubeWorms, pos, rot, transform);
+                //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
+                HydrothermicBiomSpawner hydrothermicBiomSpawner = GameObject.FindObjectOfType<HydrothermicBiomSpawner>();
+                hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
                 break;
             case BiomeOwner.Dominc:
                 break;
