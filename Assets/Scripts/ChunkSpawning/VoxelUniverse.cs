@@ -19,6 +19,7 @@ public class VoxelUniverse : MonoBehaviour
         SubtractOnly,
         Multiply,
         Average,
+        Sphere,
         None
     }
 
@@ -29,7 +30,7 @@ public class VoxelUniverse : MonoBehaviour
         [Range(1, 100)] public float zoom = 20;
         [Range(-0.2f, 0.2f)] public float densityBias = 0;
         [Range(0, 1)] public float flattenAmount = 0;
-        [Range(-1, 1)] public float verticalOffset = 0;
+        [Range(-20, 20)] public float flattenOffset = 0;
 
         static public SignalField Random()
         {
@@ -37,8 +38,8 @@ public class VoxelUniverse : MonoBehaviour
             res.zoom = UnityEngine.Random.Range(1f, 100);
             res.densityBias = UnityEngine.Random.Range(-0.2f, 0.2f);
             res.flattenAmount = UnityEngine.Random.Range(0f, 1);
-            res.verticalOffset = 0;
-            res.type = (SignalType) UnityEngine.Random.Range(0, 3);
+            res.flattenOffset = 0;
+            res.type = (SignalType) UnityEngine.Random.Range(0, 5);
             return res;
         }
     }
