@@ -31,20 +31,20 @@ public class KKB_BranchSpawner : MonoBehaviour
     {
         if (num <= 0) return;
         /* The different branches that spawn in when the grow button is hit. Each has a position rotation and angle it spawns into */
-        KKB_BranchSegment newBranch1 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, angle), t);
+        KKB_BranchSegment newBranch1 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, 45), t);
         KKB_BranchSegment newBranch2 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, 0), t);
-        KKB_BranchSegment newBranch3 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, -angle), t);
+        KKB_BranchSegment newBranch3 = Instantiate(prefabBranch, t.position, t.rotation * Quaternion.Euler(0, 0, -45), t);
        
 
         /*sets the scale of the branches when they spawn in will gradually gets smaller as each iteration happens */
-        newBranch1.transform.localScale = Vector3.one * scale;
+        newBranch1.transform.localScale = Vector3.one * scale*scale
         newBranch2.transform.localScale = Vector3.one * scale;
-        newBranch3.transform.localScale = Vector3.one * scale;
+        newBranch3.transform.localScale = Vector3.one * scale*scale;
       
 
-        /*sets each new branch to spawn at the endpoint that was previously set */
-        Grow(newBranch1.endPoint, num -1);
-        Grow(newBranch2.endPoint, num -1);
+       /*sets each new branch to spawn at the endpoint that was previously set */
+       Grow(newBranch1.endPoint, num -1);
+       Grow(newBranch2.endPoint, num -1);
        Grow(newBranch3.endPoint, num -1);
     
 
