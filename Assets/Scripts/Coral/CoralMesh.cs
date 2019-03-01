@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
-
+//TODO: Comment Class
+// TO DO : Change name of class and script to prevent scripting
 public class CoralMesh : MonoBehaviour
 {
-    
+    //TO DO Give comments to variables
     [Range(2, 8)] public int iterations = 6;
     [Range(0, 30)] public int randomDir1Offset = 0;
     [Range(0, 15)] public int randomDir2Offset = 0;
@@ -50,7 +51,8 @@ public class CoralMesh : MonoBehaviour
         
         
     }
-
+    //TODO: Name and Comment this section
+    // TO DO CHANGE NAME
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale, int maxNum)
     {
         if (num <= 0) return;
@@ -92,7 +94,7 @@ public class CoralMesh : MonoBehaviour
         }
         
     }
-
+    //TO DO COMMENT this CODE
     private Mesh MakeCube(int num, int maxNum)
     {
         List<Vector3> verts = new List<Vector3>();
@@ -265,7 +267,7 @@ public class CoralMesh : MonoBehaviour
 
 
     }
-
+    //TO DO COMMENT COLORS
     private Color[] GetColors(int num, int maxNum)
     {
 
@@ -280,6 +282,8 @@ public class CoralMesh : MonoBehaviour
     
 
 }
+
+//TODO: Comment this section
 [CustomEditor(typeof(CoralMesh))]
 public class CoralMeshEditor : Editor
 {
