@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(VoxelChunk))]
 [RequireComponent(typeof(MeshFilter))]
+
 public class LifeSpawner : MonoBehaviour
 {
     /// <summary>
@@ -62,8 +63,15 @@ public class LifeSpawner : MonoBehaviour
 
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
+
+
+    public GameObject prefabCoralTubeWorms;
+    public GameObject prefabCoralTree;
+   
+
     
     public GameObject prefabCoralCrystal;
+
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -125,6 +133,8 @@ public class LifeSpawner : MonoBehaviour
                 Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
                 break;
             case BiomeOwner.Eric:
+                Instantiate(prefabCoralTree, pos, rot, transform);
+                //print("tree");
                 break;
             case BiomeOwner.Jess:
                 break;
