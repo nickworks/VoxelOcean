@@ -5,40 +5,41 @@ using UnityEditor;
 
 public class CoralTree : MonoBehaviour
 {
-    // TODO: need documentation for variables:
-    //decides how complicated
-    [Range(2, 8)] public int iterations = 3;
+    //decides how many / long the branches grow
+    [Range(2, 8)] public int iterations = 6;
 
+    //decides the scale of the individual branches
     public Vector3 branchScale = new Vector3(.25f, 1, .25f);
 
-    // TODO: Need documentation for every function: Start, Build, Grow, & MakeCube
-    // Start is called before the first frame update
     void Start()
     {
-        //make the coral
+        //creates a random "tree" everytime it spawns
         Build();
     }
 
-    // Update is called once per frame
+    //builds the coral based on the Grow function
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
 
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
 
+        //combines the meshes
         Mesh mesh = new Mesh();
         mesh.CombineMeshes(meshes.ToArray());
 
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
-    }
 
+    }//end Build
+
+    //decides what each tree will look like
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
         if (num <= 0) return;//stop
 
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube(num);
+        inst.mesh = MakeCube();
         inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);
 
         meshes.Add(inst);
@@ -48,7 +49,7 @@ public class CoralTree : MonoBehaviour
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
         Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(.5f, .5f, 0));
 
-        //decide the amount of branches
+        //decide the amount of branches based on the number picked
         int ran = Random.Range(0, 4);
 
         //one branch
@@ -100,9 +101,11 @@ public class CoralTree : MonoBehaviour
         }
 
         scale *= scale;
-    }
-    // TODO: Better description and naming for "num"; I have no idea what it's for.
-    private Mesh MakeCube(int num)
+
+    }//end Grow
+
+    //creates a cube based on the location of each vertices
+    private Mesh MakeCube()
     {
         List<Vector3> verts = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
@@ -110,7 +113,7 @@ public class CoralTree : MonoBehaviour
         List<Color> colors = new List<Color>();
         List<int> tris = new List<int>();
 
-        //FRONT
+        //FRONT FACE
         verts.Add(new Vector3(-0.5f, 0, -0.5f));
         verts.Add(new Vector3(-0.5f, 1, -0.5f));
         verts.Add(new Vector3(+0.5f, 1, -0.5f));
@@ -130,7 +133,7 @@ public class CoralTree : MonoBehaviour
         tris.Add(3);
         tris.Add(0);
 
-        //BACK
+        //BACK FACE
         verts.Add(new Vector3(-0.5f, 0, +0.5f));
         verts.Add(new Vector3(+0.5f, 0, +0.5f));
         verts.Add(new Vector3(+0.5f, 1, +0.5f));
@@ -150,7 +153,7 @@ public class CoralTree : MonoBehaviour
         tris.Add(7);
         tris.Add(4);
 
-        //LEFT
+        //LEFT FACE
         verts.Add(new Vector3(-0.5f, 0, -0.5f));
         verts.Add(new Vector3(-0.5f, 0, +0.5f));
         verts.Add(new Vector3(-0.5f, 1, +0.5f));
@@ -170,7 +173,7 @@ public class CoralTree : MonoBehaviour
         tris.Add(11);
         tris.Add(8);
 
-        //RIGHT
+        //RIGHT FACE
         verts.Add(new Vector3(+0.5f, 0, -0.5f));
         verts.Add(new Vector3(+0.5f, 1, -0.5f));
         verts.Add(new Vector3(+0.5f, 1, +0.5f));
@@ -190,7 +193,7 @@ public class CoralTree : MonoBehaviour
         tris.Add(15);
         tris.Add(12);
 
-        //TOP
+        //TOP FACE
         verts.Add(new Vector3(-0.5f, 1, -0.5f));
         verts.Add(new Vector3(-0.5f, 1, +0.5f));
         verts.Add(new Vector3(+0.5f, 1, +0.5f));
@@ -210,7 +213,7 @@ public class CoralTree : MonoBehaviour
         tris.Add(19);
         tris.Add(16);
 
-        //BOTTOM
+        //BOTTOM FACE
         verts.Add(new Vector3(-0.5f, 0, -0.5f));
         verts.Add(new Vector3(+0.5f, 0, -0.5f));
         verts.Add(new Vector3(+0.5f, 0, +0.5f));
@@ -234,13 +237,13 @@ public class CoralTree : MonoBehaviour
         float hueMin = Random.Range(.4f, .7f);
         float hueMax = Random.Range(.7f, 1f);
 
-        float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
+        //blends between the min and max by way of the number of iterations
+        float hue = Mathf.Lerp(hueMin, hueMax, (float)iterations);
 
+        //applies the colors to each vertex
         foreach (Vector3 pos in verts)
         {
-            float tempHue = hue; //+ (1 / (float)iterations) * pos.y;
-
-            Color color = Color.HSVToRGB(tempHue, 1, 1);
+            Color color = Color.HSVToRGB(hue, 1, 1);
 
             colors.Add(color);
         }
@@ -252,23 +255,7 @@ public class CoralTree : MonoBehaviour
         mesh.SetTriangles(tris, 0);
         mesh.SetColors(colors);
         return mesh;
-    }
-}
 
-// FIX: Take out the UI Button if you aren't going to use it.
+    }//end MakeCube
 
-//Grow Button
-//[CustomEditor(typeof(CoralTree))]
-//public class CoralMeshEditor : Editor
-//{
-//    public override void OnInspectorGUI()
-//    {
-//        base.OnInspectorGUI();
-//
-//        if (GUILayout.Button("GROW!"))
-//        {
-//            CoralTree b = (target as CoralTree);
-//            b.Build();
-//        }
-//    }
-//}
+}//end CoralTree
