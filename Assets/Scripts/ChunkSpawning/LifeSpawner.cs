@@ -6,6 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class LifeSpawner : MonoBehaviour
 {
+    /// <summary>
+    /// Socket for Dom's Vornoi Coral 
+    /// </summary>
+    public GameObject Prefab_Voronoi_Coral;
+
     public enum BiomeOwner
     {
         Andrew,
@@ -22,6 +27,7 @@ public class LifeSpawner : MonoBehaviour
         Kyle,
         Zach
     }
+
     public struct Biome
     {
         public static int COUNT = System.Enum.GetNames(typeof(BiomeOwner)).Length;
@@ -116,6 +122,7 @@ public class LifeSpawner : MonoBehaviour
                 hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
                 break;
             case BiomeOwner.Dominc:
+                Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
                 break;
             case BiomeOwner.Eric:
                 break;
