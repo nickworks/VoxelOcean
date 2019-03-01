@@ -2,20 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-//This class makes The Broccoli Coral
-public class CoralMesh : MonoBehaviour {
-	//range for how many iterations we want to spawn out of each section
+/// <summary>
+/// Spawns Coral type Broccoli
+/// </summary>
+public class Coral_Broccoli : MonoBehaviour {
+
+    /// <summary>
+    /// how many iterations per branch we should spawn
+    /// </summary>
 	[Range(2, 8)]public int iterations = 3;
-	//The scaling for the size of each branch
-	public Vector3 branchScaling = new Vector3 (.25f, 1, 25f);
+    /// <summary>
+    /// the scale and size of each cube
+    /// </summary>
+	public Vector3 branchScaling = new Vector3 (.25f, 1, .25f);
 	// Use this for initialization
 	void Start () {
-		
-	}
+        Build();
+    }
 	
 	// Update is called once per frame
-	/// 
-	/// This combinds the mesh together and then continues to build it
+    /// <summary>
+    /// this combines all of the cubes into one mesh
+    /// </summary>
 	public void Build () {
 		List<CombineInstance> meshes = new List<CombineInstance> ();
 
@@ -27,12 +35,14 @@ public class CoralMesh : MonoBehaviour {
 		MeshFilter meshFilter = GetComponent<MeshFilter> ();
 		meshFilter.mesh = mesh;
 	}
-	///This actually makes the cubess
-	/// int num: number of iterations we want to put on each branch
-	/// List<CombineINstance>: a list of all of the objects we want to combine
-	/// Vector3 pos: the position we want to grow at
-	/// Quaterion rot: the rotation we want to give the objects
-	/// float scale: the scale we want to give the objects
+    /// <summary>
+    /// This is where the recursion occurs
+    /// </summary>
+    /// <param name="num">the number of iterations</param>
+    /// <param name="meshes">list of the meshes we combined</param>
+    /// <param name="pos">position of our meshes</param>
+    /// <param name="rot">rotation of our meshes</param>
+    /// <param name="scale">scale of our meshes</param>
 	private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale){
 
 		if(num <= 0) return;
@@ -48,10 +58,10 @@ public class CoralMesh : MonoBehaviour {
 
 		num--;
 
-		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));//decides how far away from the last cube the next one is
+		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));
 		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75));
 		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75));
-		scale *= .65f;
+		scale *= .75f;
 
 		Grow (num, meshes, pos, randomPosRot, scale);
 		Grow (num, meshes, pos, randomNegRot, scale);
@@ -60,6 +70,11 @@ public class CoralMesh : MonoBehaviour {
 		Grow (num, meshes, pos, randomNegRot, scale);
 		Grow (num, meshes, pos, randomPosRot, scale);
 	}
+    /// <summary>
+    /// This creates the actual mesh
+    /// </summary>
+    /// <param name="num">the number of iterations</param>
+    /// <returns></returns>
 	private Mesh MakeCube(int num){
 		List<Vector3> verts = new List<Vector3> ();
 		List<Vector2> uvs = new List<Vector2> ();
@@ -206,18 +221,3 @@ public class CoralMesh : MonoBehaviour {
 	}
 }
 
-
-[CustomEditor(typeof(CoralMesh))]
-public class CoralMeshEditor : Editor
-{
-	public override void OnInspectorGUI()
-	{
-		base.OnInspectorGUI ();
-
-		if(GUILayout.Button("Grow!"))
-		{
-			CoralMesh b = (target as CoralMesh);
-			b.Build();
-		}
-	}
-}

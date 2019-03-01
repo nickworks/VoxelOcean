@@ -105,5 +105,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeAmountMin: 1
   lifeAmountMax: 5
-  prefabCoralBroccoli: {fileID: 8878938568153803597, guid: 94d0c880b3dda174a9c55164c1fae5fb,
+  prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
     type: 3}
