@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class LifeSpawner : MonoBehaviour
 {
+    public GameObject Prefab_Voronoi;
+
     public enum BiomeOwner
     {
         Andrew,
@@ -22,6 +24,7 @@ public class LifeSpawner : MonoBehaviour
         Kyle,
         Zach
     }
+
     public struct Biome
     {
         public static int COUNT = System.Enum.GetNames(typeof(BiomeOwner)).Length;
@@ -113,6 +116,7 @@ public class LifeSpawner : MonoBehaviour
                 //Instantiate(prefabCoralTubeWorms, pos, rot, transform);
                 break;
             case BiomeOwner.Dominc:
+                Instantiate(Prefab_Voronoi, pos, rot, transform);
                 break;
             case BiomeOwner.Eric:
                 break;
