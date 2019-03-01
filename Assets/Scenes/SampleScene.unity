@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -789,6 +789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2135429414}
   - component: {fileID: 2135429413}
+  - component: {fileID: 2135429415}
   m_Layer: 0
   m_Name: VoxelUniverse
   m_TagString: Untagged
@@ -810,7 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderDistance: 3
   renderDistanceVertical: 3
-  resPerChunk: 20
+  resPerChunk: 34
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   biomeScaling: 50
@@ -845,3 +846,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135429415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135429412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905b65d0ec6681b40b21dbeb9485eb0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  baseIterations: 14
+  baseScale: 5
+  scaleRate: 0.9
+  tubeWormScale: 0.25
+  tubeWormSpawnRate: 0.25
+  tubeWormSpawnDelay: 0.5
+  tubeWormBranchChance: 0.05
+  tubeWormSegmentLength: 2
+  wormBonusIter: 5
+  seed: 0
+  rockPrefab: {fileID: 2881934186644748434, guid: e6a0c3050443a3740a2c4e6b2b3aa8ea,
+    type: 3}
+  wormPrefab: {fileID: 33468178300371448, guid: 5c327da19862f61408f7b4302ef73176,
+    type: 3}
+  tubePrefab: {fileID: 5298450886448364052, guid: 4c882e814ab4c9d4f85a80b685cbb6f1,
+    type: 3}
