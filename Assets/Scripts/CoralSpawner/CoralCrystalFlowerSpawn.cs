@@ -18,21 +18,32 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
 {
 
     /// <summary>
-    /// Variables
     /// Iterations : how many times the object is repeated
-    /// Angle1 : what angle an object is pointed to rotated by
-    /// Angle2 : What angle2 an object is pointed to rotated by (alternate)
-    /// Angle3 : what angle3 an object is pointed to rotated by
-    /// Scalar : Scale of the object, that decreases over time based on per iteration
-    /// OBJPOS : is the object position of the spawner
-    /// branchScale : is the scale of each branch object / transform scale
     /// </summary>
     [Range(2, 10)] public int iterations = 3;
+    /// <summary>
+    /// Angle1 : what angle an object is pointed to rotated by
+    /// </summary>
     [Range(0, 50)] public int angle1 = 45;
+    /// <summary>
+    /// Angle2 : What angle2 an object is pointed to rotated by (alternate)
+    /// </summary>
     [Range(0, 50)] public int angle2 = 45;
+    /// <summary>
+    /// what angle3 an object is pointed to rotated by
+    /// </summary>
     [Range(0, 50)] public int angle3 = 45;
+    /// <summary>
+    /// Scale of the object, that decreases over time based on per iteration
+    /// </summary>
     [Range(0, 1)] public float scalar = 0.5f;
+    /// <summary>
+    /// is the object position of the spawner
+    /// </summary>
     [Range(.25f, .8f)] public float objpos = 0.5f;
+    /// <summary>
+    /// is the scale of each branch object / transform scale
+    /// </summary>
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
     /// <summary>
     /// Start / Build Function

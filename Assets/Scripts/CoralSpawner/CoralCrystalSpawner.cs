@@ -14,21 +14,32 @@ using UnityEditor;
 public class CoralCrystalSpawner : MonoBehaviour
 {
     /// <summary>
-    /// Variables
     /// Iterations : how many times the object is repeated
-    /// Angle1 : what angle an object is pointed to rotated by
-    /// Angle2 : What angle2 an object is pointed to rotated by (alternate)
-    /// Angle3 : what angle3 an object is pointed to rotated by
-    /// Scalar : Scale of the object, that decreases over time based on per iteration
-    /// OBJPOS : is the object position of the spawner
-    /// branchScale : is the scale of each branch object / transform scale
     /// </summary>
     [Range(2, 8)] public int iterations = 3;// Iterations of the object
+    /// <summary>
+    /// Angle1 : what angle an object is pointed to rotated by
+    /// </summary>
     [Range(0, 45)] public int angle1 = 25; // Tendril 1's Angle of origin
+    /// <summary>
+    /// Angle2 : What angle2 an object is pointed to rotated by (alternate)
+    /// </summary>
     [Range(0, 45)] public int angle2 = 25; // Tendril 2's angle of origin
+    /// <summary>
+    /// Angle3 : what angle3 an object is pointed to rotated by
+    /// </summary>
     [Range(0, 45)] public int angle3 = 25; //tendril 3's angel of origin
+    /// <summary>
+    /// Scalar : Scale of the object, that decreases over time based on per iteration
+    /// </summary>
     [Range(.1f, .85f)] public float scalar = 0.5f; //scale
+    /// <summary>
+    /// OBJPOS : is the object position of the spawner
+    /// </summary>
     [Range(.25f, .8f)] public float objpos = 0.5f;
+    /// <summary>
+    /// branchScale : is the scale of each branch object / transform scale
+    /// </summary>
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
     
 /// <summary>
