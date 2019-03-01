@@ -6,7 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class LifeSpawner : MonoBehaviour
 {
-    public GameObject Prefab_Voronoi;
+    /// <summary>
+    /// Socket for Dom's Vornoi Coral 
+    /// </summary>
+    public GameObject Prefab_Voronoi_Coral;
 
     public enum BiomeOwner
     {
@@ -116,7 +119,7 @@ public class LifeSpawner : MonoBehaviour
                 //Instantiate(prefabCoralTubeWorms, pos, rot, transform);
                 break;
             case BiomeOwner.Dominc:
-                Instantiate(Prefab_Voronoi, pos, rot, transform);
+                Instantiate(Prefab_Voronoi, pos, rot, transform);//Instantiate Vornoi Coral 
                 break;
             case BiomeOwner.Eric:
                 break;
