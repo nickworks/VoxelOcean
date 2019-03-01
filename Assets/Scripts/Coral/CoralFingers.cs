@@ -5,17 +5,18 @@ using UnityEditor;
 public class CoralFingers : MonoBehaviour
 {
     MeshFilter meshFilter;
-
+    int iterations = 8;
     public Vector3 branchScaling = new Vector3(.25f, 1, .25f);
     void Start()
     {
-
+        Build();
     }
 
     // Update is called once per frame
     public void Build()
     {
-        int iterations = Random.Range(8, 11);
+        
+      
         List<CombineInstance> meshes = new List<CombineInstance>();
         Grow2(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
@@ -52,7 +53,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -116,7 +117,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -180,7 +181,7 @@ public class CoralFingers : MonoBehaviour
 
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -246,7 +247,7 @@ public class CoralFingers : MonoBehaviour
         int branch8 = Random.Range(5, 25);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -310,7 +311,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -374,7 +375,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -438,7 +439,7 @@ public class CoralFingers : MonoBehaviour
 
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -504,7 +505,7 @@ public class CoralFingers : MonoBehaviour
         int branch8 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -570,7 +571,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -634,7 +635,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -698,7 +699,7 @@ public class CoralFingers : MonoBehaviour
 
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -764,7 +765,7 @@ public class CoralFingers : MonoBehaviour
         int branch8 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -828,7 +829,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -892,7 +893,7 @@ public class CoralFingers : MonoBehaviour
         int branch6 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -956,7 +957,7 @@ public class CoralFingers : MonoBehaviour
 
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -1022,7 +1023,7 @@ public class CoralFingers : MonoBehaviour
         int branch8 = Random.Range(5, 10);
         if (num <= 0) return;
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube();
+        inst.mesh = MakeCube(num);
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
         meshes.Add(inst);
         num--;
@@ -1074,12 +1075,13 @@ public class CoralFingers : MonoBehaviour
         }
 
     }
-    private Mesh MakeCube()
+    private Mesh MakeCube(int num)
     {
 
         List<Vector3> verts = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
+        List<Color> colors = new List<Color>();
         List<int> tris = new List<int>();
         //front
         verts.Add(new Vector3(-0.5f, 0, -0.5f));
@@ -1214,13 +1216,23 @@ public class CoralFingers : MonoBehaviour
         tris.Add(23);
         tris.Add(20);
 
+        float hueMin = .1f;
+        float hueMax = .001f;
+        float hue = Mathf.Lerp(hueMin,hueMax, (num / (float)iterations));
+    
+        foreach(Vector3 pos in verts)
+        {
+            float tempHue = hue;// + (1/(float)iterations) * pos.y;
+              Color color = Color.HSVToRGB(tempHue, 1, 1);
+            colors.Add(color);
+        }
+
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
         mesh.SetUVs(0, uvs);
         mesh.SetNormals(normals);
-
-        mesh.SetTriangles(tris, 0);
-
+  mesh.SetTriangles(tris, 0);
+        mesh.SetColors(colors);
         return mesh;
     }
 }
