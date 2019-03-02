@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class CoralBauble : MonoBehaviour
 {
-
+    // TODO: Please update comments to be documentation style.  You can easily do this by starting your comment with "///".
 	[Range(1, 15)] public int iterations = 11;			//controls number of times the loop will run
 				
 	[Range(0, 1)] public float splitOdds = .5f;			//controls the odds of a branch splitting
