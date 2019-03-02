@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+
+// TODO: please comment your code in documentation style.  you can do this by starting a comment with "///".
 public class CoralFingers : MonoBehaviour
 {
     MeshFilter meshFilter;
