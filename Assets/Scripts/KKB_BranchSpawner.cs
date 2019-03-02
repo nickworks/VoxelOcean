@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class KKB_BranchSpawner : MonoBehaviour
 {
+    // TODO: please comment your code with documentation style comments.  you can add these comments easily by typing "///", at which point unity will auto-create a proper documentation style comment.
     /*sets the prefab this script is attached to */
     public KKB_BranchSegment prefabBranch;
     /*sets how many iterations are spawned of the branch */
