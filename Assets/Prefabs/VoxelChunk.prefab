@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  threshold: 0
 --- !u!33 &8198810764069784718
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103,13 +104,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Prefab_Voronoi_Coral: {fileID: 4817110474441004811, guid: 8772aa51e70c10846952c4f67d1f2e08,
+    type: 3}
   lifeAmountMin: 1
   lifeAmountMax: 5
   prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
     type: 3}
-
   prefabCoralTree: {fileID: 5941988385446936893, guid: 48d5d527875b128468ddd074645be838,
-
+    type: 3}
   prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
-
     type: 3}
