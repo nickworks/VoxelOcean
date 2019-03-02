@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - prefabCoralTubeWorms: {instanceID: 0}
-  - prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
+  - prefabCoralBroccoli: {fileID: 8878938568153803597, guid: 94d0c880b3dda174a9c55164c1fae5fb,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
