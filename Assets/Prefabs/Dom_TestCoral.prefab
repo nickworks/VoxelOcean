@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8198810764069784714
+--- !u!1 &4817110474441004811
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,59 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8198810764069784712}
-  - component: {fileID: 8198810764069784715}
-  - component: {fileID: 8198810764069784718}
-  - component: {fileID: 8198810764069784713}
-  - component: {fileID: 3645109132574243547}
+  - component: {fileID: 8387824215060474042}
+  - component: {fileID: 6183259348291943136}
+  - component: {fileID: 4174616497712387241}
+  - component: {fileID: 328028237203063674}
   m_Layer: 0
-  m_Name: VoxelChunk
+  m_Name: Dom_TestCoral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8198810764069784712
+--- !u!4 &8387824215060474042
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4817110474441004811}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 8.5, z: 8.5}
+  m_LocalPosition: {x: 74.26746, y: 918.70807, z: -58.106045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8198810764069784715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!33 &8198810764069784718
+--- !u!33 &6183259348291943136
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Mesh: {fileID: 0}
---- !u!23 &8198810764069784713
+  m_GameObject: {fileID: 4817110474441004811}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4174616497712387241
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4817110474441004811}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -71,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,25 +78,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3645109132574243547
-MonoBehaviour:
+--- !u!65 &328028237203063674
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 4817110474441004811}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeAmountMin: 1
-  lifeAmountMax: 5
-  prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
-    type: 3}
-
-  prefabCoralTree: {fileID: 5941988385446936893, guid: 48d5d527875b128468ddd074645be838,
-
-  prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
-
-    type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

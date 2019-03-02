@@ -4,8 +4,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(VoxelChunk))]
 [RequireComponent(typeof(MeshFilter))]
+
 public class LifeSpawner : MonoBehaviour
 {
+    /// <summary>
+    /// Socket for Dom's Vornoi Coral 
+    /// </summary>
+    public GameObject Prefab_Voronoi_Coral;
+
     public enum BiomeOwner
     {
         Andrew,
@@ -22,6 +28,7 @@ public class LifeSpawner : MonoBehaviour
         Kyle,
         Zach
     }
+
     public struct Biome
     {
         public static int COUNT = System.Enum.GetNames(typeof(BiomeOwner)).Length;
@@ -57,7 +64,13 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMin = 1;
     public int lifeAmountMax = 5;
 
-	public GameObject prefabCoralBroccoli;
+
+    public GameObject prefabCoralTubeWorms;
+    public GameObject prefabCoralTree;
+   
+
+    
+    public GameObject prefabCoralCrystal;
 
     MeshFilter mesh;
 
@@ -109,6 +122,7 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Andrew:
                 break;
             case BiomeOwner.Cameron:
+                Instantiate(prefabCoralCrystal, pos, rot, transform);
                 break;
             case BiomeOwner.Christopher:
                 //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
@@ -116,8 +130,11 @@ public class LifeSpawner : MonoBehaviour
                 hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
                 break;
             case BiomeOwner.Dominc:
+                Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
                 break;
             case BiomeOwner.Eric:
+                Instantiate(prefabCoralTree, pos, rot, transform);
+                //print("tree");
                 break;
             case BiomeOwner.Jess:
 			Instantiate(prefabCoralBroccoli, pos, rot, transform);
