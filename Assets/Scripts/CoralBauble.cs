@@ -7,72 +7,111 @@ using UnityEditor;
 public class CoralBauble : MonoBehaviour
 {
     // TODO: Please update comments to be documentation style.  You can easily do this by starting your comment with "///".
-	[Range(1, 15)] public int iterations = 11;			//controls number of times the loop will run
-				
-	[Range(0, 1)] public float splitOdds = .5f;			//controls the odds of a branch splitting
+    /// <summary>
+    /// controls number of times the loop will run
+    /// </summary>
+	[Range(1, 15)] public int iterations = 11;
 
-	[Range(0, 1)] public float ranRotOdds = .37f;		//control the chance of assigning a random rotation
+    /// <summary>
+    /// controls the odds of a branch splitting
+    /// </summary>
+    [Range(0, 1)] public float splitOdds = .5f;
+    ///<summary>
+    /// control the chance of assigning a random rotation
+    /// </summary>
+    [Range(0, 1)] public float ranRotOdds = .37f;
+    ///<summary>
+    /// controls the range of what the random rotations can be
+    /// </summary>                                                       
+    [Range(0, 360)] public float ranRotRange = 30f;
+    ///<summary>
+    ///controls the angle that causes the splits
+    /// </summary>
+    [Range(0, 360)] public float spread = 20f;
+    ///<summary>
+    //used to set the minimum for the range of hue values for the color
+    /// </summary>
+    [Range(0, 1)]  public float hueMin = 0f;
+    ///<summary>
+    ///used to set the maximum for the range of hue values for the color
+    /// </summary>
+    [Range(0, 1)] public float hueMax = 1f;
 
-	[Range(0, 360)] public float ranRotRange = 30f;		//controls the range of what the random rotations can be
 
-	[Range(0, 360)] public float spread = 20f;			//controls the angle that causes the splits
+    /// <summary>
+    /// controls the proportions of the boxes
+    /// </summary>
+    public Vector3 branchScale = new Vector3(.25f, 1f, .25f);
+    /// <summary>
+    /// controls hot the box scale changes between iterations
+    /// </summary>
+    [Range(0.1f, 1f)] public float scaleFactor = 0.9f;
+    /// <summary>
+    /// controls the normal distribution of branches's z rotation
+    /// </summary>
+    public float zRot = 0;
 
-    [Range(0, 1)]  public float hueMin = 0f;			//used to set the range of hue values for the color
-    [Range(0, 1)] public float hueMax = 1f; 
-
-
-
-	public Vector3 branchScale = new Vector3(.25f, 1f, .25f);	//controls the proportions of the boxes
-
-	[Range(0.1f, 1f)] public float scaleFactor = 0.9f;			//controls hot the box scale changes between iterations
-
-	public float zRot = 0;		//controls the normal distribution of branches using angles
-	public float xRot = -15;
-	public float yRot = -15;
-
-	void Start()
+    /// <summary>
+    /// controls the normal distribution of branches's x rotation
+    /// </summary>
+    public float xRot = -15;
+    /// <summary>
+    /// controls the normal distribution of branches's y rotation
+    /// </summary>
+    public float yRot = -15;    
+    ///<summary>Runs the Build() function</summary>
+    void Start()
 	{
-        Build();	//make a coral when this script is made
+        Build();	///make a coral when this script is made
 		
 	}
-
+    /// <summary>
+    /// Makes a new coral, and applies the mesh to itself
+    /// </summary>
 	public void Build()
 	{
 		List<CombineInstance> meshes = new List<CombineInstance>();
 
-		Grow(0, meshes, Vector3.zero, Quaternion.identity, 1);		//make the coral
-		GetComponent<Transform>().Rotate(0, Random.value * 360, 0);	//randomize y rotation of the coral
+		Grow(0, meshes, Vector3.zero, Quaternion.identity, 1);		///make the coral
+		GetComponent<Transform>().Rotate(0, Random.value * 360, 0);	///randomize y rotation of the coral
 
 		Mesh mesh = new Mesh();
-		mesh.CombineMeshes(meshes.ToArray());						//combine meshes
+		mesh.CombineMeshes(meshes.ToArray());						///combine meshes
 
-		MeshFilter meshFilter = GetComponent<MeshFilter>();			//change assigned mesh
+		MeshFilter meshFilter = GetComponent<MeshFilter>();			///change assigned mesh
 		meshFilter.mesh = mesh;
 
-		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	//show assigned mesh
+		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
 
 		//Material mat = (Material)mesh.colors; 
 
 		//meshRenderer.material = mesh.colors; 
 
 	}
-
+    /// <summary>
+    /// The iterative function that grows the coral
+    /// </summary>
+    /// <param number of iterations already performed="num"></param>
+    /// <param list of meshes that remembers what the other iteration added="meshes"></param>
+    /// <param where to spawn the object="pos"></param>
+    /// <param the rotation of the previous object="rot"></param>
+    /// <param how much smaller should this be than the last iteration="scale"></param>
 	private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
 	{
 		if (num > iterations) return;
 		int kids = 2;
-		if (num > iterations - 2) kids = 1; //makes the coral plant thinner near the end of the iterations
+		if (num > iterations - 2) kids = 1; ///makes the coral plant thinner near the end of the iterations
 
 		CombineInstance inst = new CombineInstance();
 		inst.mesh = MakeCube(num);
 		if (num == 0)
 		{
-			inst.transform = Matrix4x4.TRS(pos, Quaternion.Euler(0,0,0), new Vector3(.2f, 1f, .2f)); //sets the transform of the first piece
+			inst.transform = Matrix4x4.TRS(pos, Quaternion.Euler(0,0,0), new Vector3(.2f, 1f, .2f)); ///sets the transform of the first piece
 			num++;
 		}
 		else
 		{
-			inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);	//sets the transform of the later iterations
+			inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);	///sets the transform of the later iterations
 			num++;
 		}
 
@@ -112,11 +151,11 @@ public class CoralBauble : MonoBehaviour
 			Quaternion rot7 = Quaternion.identity;
 			Quaternion rot8 = Quaternion.identity;
 			
-			//TODO: allow a piece to know which side of its parent it is growing off
+			
 
 			if ( num == 1)
 			{
-																				//sets rotations of the second iteration
+																				///sets rotations of the second iteration
 				rtrot = rot * Quaternion.Euler(45, yRot + 180, -45);
 				lrot = rot * Quaternion.Euler(xRot, yRot, 45);
 				rbrot = rot * Quaternion.Euler(45, 0, 45);
@@ -144,7 +183,7 @@ public class CoralBauble : MonoBehaviour
 
 			if (num == 1)
 			{
-				Grow(num, meshes, lSidePos, lrot, scale);		//spawn all the branches off of the original
+				Grow(num, meshes, lSidePos, lrot, scale);		///spawn all the branches off of the original
 				Grow(num, meshes, lSidePos, rtrot, scale);
 				Grow(num, meshes, lSidePos, rbrot, scale);
 				Grow(num, meshes, lSidePos, rot4, scale);
@@ -169,7 +208,11 @@ public class CoralBauble : MonoBehaviour
 		}   
 
 	}
-
+    /// <summary>
+    /// Generates a cube with vertices, uvs, normals, triangles, and colors
+    /// </summary>
+    /// <param which iteration this is="num"></param>
+    /// <returns>a cube mesh</returns>
 	private Mesh MakeCube(int num)
 	{
 		List<Vector3> verts = new List<Vector3>();
