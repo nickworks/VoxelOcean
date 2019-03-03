@@ -114,44 +114,33 @@ public class LifeSpawner : MonoBehaviour
 
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
-        switch (biome.owner)
-        {
-            case BiomeOwner.Andrew:
-                break;
-            case BiomeOwner.Cameron:
-                Instantiate(prefabCoralCrystal, pos, rot, transform);
-                break;
-            case BiomeOwner.Christopher:
-                //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
-                HydrothermicBiomSpawner hydrothermicBiomSpawner = GameObject.FindObjectOfType<HydrothermicBiomSpawner>();
-                hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
-                break;
-            case BiomeOwner.Dominc:
-                Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
-                break;
-            case BiomeOwner.Eric:
-                Instantiate(prefabCoralTree, pos, rot, transform);
-                //print("tree");
-                break;
-            case BiomeOwner.Jess:
-			Instantiate(prefabCoralBroccoli, pos, rot, transform);
-                break;
-            case BiomeOwner.Jesse:
-                break;
-            case BiomeOwner.Josh:
-                break;
-            case BiomeOwner.Justin:
-                break;
-            case BiomeOwner.Kaylee:
-                break;
-            case BiomeOwner.Keegan:
-                break;
-            case BiomeOwner.Kyle:
-                break;
-            case BiomeOwner.Zach:
-                break;
-        }
+        GameObject prefab = null;
+        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
+        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
+        //if (biome.owner == BiomeOwner.Christopher) prefab = ;
+        if (biome.owner == BiomeOwner.Dominc) prefab = Prefab_Voronoi_Coral;
+        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
+        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
+        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
+        //if (biome.owner == BiomeOwner.Josh) prefab = ;
+        //if (biome.owner == BiomeOwner.Justin) prefab = ;
+        //if (biome.owner == BiomeOwner.Kaylee) prefab = ;
+        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
+        //if (biome.owner == BiomeOwner.Kyle) prefab = ;
+        //if (biome.owner == BiomeOwner.Zach) prefab = ;
+
+        if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
 
         return true;
+    }
+
+    void SpawnPrefab(GameObject prefab, Vector3 position, Quaternion? rotation = null, float scale = 1)
+    {
+        Quaternion rot = (rotation != null) ? (Quaternion)rotation : Quaternion.identity;
+        GameObject obj = Instantiate(prefab, position, rot, transform);
+        obj.transform.localScale = Vector3.one * scale;
+
+        // TODO: register the coral in a list of coral?
+
     }
 }
