@@ -7,12 +7,22 @@ using UnityEngine;
 /// It generates and colors a complex tube worm mesh, which it then instantiates and returns a reference to.
 /// Call Generate() to get a tube worm.
 /// </summary>
-public class Coral_TubeWormSpawner : MonoBehaviour
+public class CoralTubeWorm : MonoBehaviour
 {
     /// <summary>
     /// A reference to the VertexColor material, which will be applied to the mesh upon generation.
     /// </summary>
     public Material mat;
+
+    /// <summary>
+    /// The mesh filter which will be used for the output mesh upon generation.
+    /// </summary>
+    public MeshFilter filter;
+
+    /// <summary>
+    /// The mesh renderer which will be used for the output mesh upon generation.
+    /// </summary>
+    public MeshRenderer meshrenderer;
 
     /// <summary>
     /// The base for how many iterations of recursive generation should be used.
@@ -87,11 +97,20 @@ public class Coral_TubeWormSpawner : MonoBehaviour
     /// All of the generated meshes which will be combined into a single final mesh.
     /// </summary>
     private List<CombineInstance> meshes = new List<CombineInstance>();
+
+    /// <summary>
+    /// Function which runs once on instantiation.  Kicks off the generation of the mesh.
+    /// </summary>
+    private void Start()
+    {
+        Generate();
+    }
+
     /// <summary>
     /// The starting point for actual generation which initilizes the recursive loop.
     /// </summary>
     /// <returns>The resulting game object to be placed in the scene.</returns>
-    public GameObject Generate()
+    public void Generate()
     {
         meshes.Clear();
         seed = Random.Range(0, 255);
@@ -101,12 +120,11 @@ public class Coral_TubeWormSpawner : MonoBehaviour
 
         Mesh mesh = new Mesh();
         mesh.CombineMeshes(meshes.ToArray(), true);
+        
+        filter.mesh = mesh;
+        meshrenderer.material = mat;
 
-        GameObject ob = new GameObject();
-        ob.AddComponent<MeshFilter>().mesh = mesh;
-        ob.AddComponent<MeshRenderer>().material = mat;
-
-        return ob;
+        transform.localScale = Vector3.one * .1f;
     }
     /// <summary>
     /// Generate a rock, which will then either recursively create more rocks or create a tube worm.

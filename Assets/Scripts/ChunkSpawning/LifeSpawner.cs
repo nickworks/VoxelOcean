@@ -114,6 +114,10 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
     public GameObject prefabCoralCrystal;
+    /// <summary>
+    /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
+    /// </summary>
+    public GameObject prefabCoralTubeWorm;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -132,7 +136,7 @@ public class LifeSpawner : MonoBehaviour
 
         List<Vector3> pts = new List<Vector3>();
 
-        for(int i = 0; i < amt; i++)
+        for (int i = 0; i < amt; i++)
         {
             int attempts = 0;
             while (attempts < 5) // try 5 times:
@@ -162,47 +166,26 @@ public class LifeSpawner : MonoBehaviour
 
         Biome biome = Biome.FromColor(color);
 
-        if(printDebug) print("Spawning life in " + biome.owner + "'s biome...");
+        if (printDebug) print("Spawning life in " + biome.owner + "'s biome...");
 
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
-        switch (biome.owner)
-        {
-            case BiomeOwner.Andrew:
-                break;
-            case BiomeOwner.Cameron:
-                Instantiate(prefabCoralCrystal, pos, rot, transform);
-                break;
-            case BiomeOwner.Christopher:
-                //Instead of cluttering up the main script, instead pass the spawning logic along to a dedicated component attached to "VoxelUniverse"
-                HydrothermicBiomSpawner hydrothermicBiomSpawner = GameObject.FindObjectOfType<HydrothermicBiomSpawner>();
-                hydrothermicBiomSpawner.SpawnTubeWorms(pos, rot);
-                break;
-            case BiomeOwner.Dominc:
-                Instantiate(Prefab_Voronoi_Coral, pos, rot, transform);//Instantiate Vornoi Coral 
-                break;
-            case BiomeOwner.Eric:
-                Instantiate(prefabCoralTree, pos, rot, transform);
-                //print("tree");
-                break;
-            case BiomeOwner.Jess:
-			Instantiate(prefabCoralBroccoli, pos, rot, transform);
-                break;
-            case BiomeOwner.Jesse:
-                break;
-            case BiomeOwner.Josh:
-                break;
-            case BiomeOwner.Justin:
-                break;
-            case BiomeOwner.Kaylee:
-                break;
-            case BiomeOwner.Keegan:
-                break;
-            case BiomeOwner.Kyle:
-                break;
-            case BiomeOwner.Zach:
-                break;
-        }
+        GameObject prefab = null;
+        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
+        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
+        if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
+        if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
+        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
+        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
+        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
+        //if (biome.owner == BiomeOwner.Josh) prefab = ;
+        //if (biome.owner == BiomeOwner.Justin) prefab = ;
+        //if (biome.owner == BiomeOwner.Kaylee) prefab = ;
+        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
+        //if (biome.owner == BiomeOwner.Kyle) prefab = ;
+        //if (biome.owner == BiomeOwner.Zach) prefab = ;
+
+        if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
 
         return true;
     }
@@ -224,20 +207,3 @@ public class LifeSpawner : MonoBehaviour
 
     }
 }
-
-        GameObject prefab = null;
-        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
-        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
-        //if (biome.owner == BiomeOwner.Christopher) prefab = ;
-        if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
-        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
-        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
-        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
-        //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        //if (biome.owner == BiomeOwner.Justin) prefab = ;
-        //if (biome.owner == BiomeOwner.Kaylee) prefab = ;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
-        //if (biome.owner == BiomeOwner.Kyle) prefab = ;
-        //if (biome.owner == BiomeOwner.Zach) prefab = ;
-
-        if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
