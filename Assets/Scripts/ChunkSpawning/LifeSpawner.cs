@@ -118,6 +118,10 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
     public GameObject prefabCoralTubeWorm;
+    /// <summary>
+    /// Prefab for purple coral fan (Kaylee K's coral).
+    /// </summary>
+    public GameObject prefabCoralPurpleFan;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -180,7 +184,7 @@ public class LifeSpawner : MonoBehaviour
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         //if (biome.owner == BiomeOwner.Justin) prefab = ;
-        //if (biome.owner == BiomeOwner.Kaylee) prefab = ;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         //if (biome.owner == BiomeOwner.Kyle) prefab = ;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
