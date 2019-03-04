@@ -58,7 +58,8 @@ public class LifeSpawner : MonoBehaviour
     public int lifeAmountMax = 5;
 
     public GameObject prefabCoralTubeWorms;
-    public GameObject prefabCoralPyramid;
+    public GameObject PlantLeafSpawner;
+    public GameObject CoralPyramidSpawner;
 
     MeshFilter mesh;
 
@@ -122,7 +123,15 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Jesse:
                 break;
             case BiomeOwner.Josh:
-                Instantiate(prefabCoralPyramid, pos, rot, transform);
+                //chance of spawning pyramid, or plant
+                if(Random.Range(1,5) > 3)
+                {
+                Instantiate(CoralPyramidSpawner, pos, rot, transform);
+                }
+                else
+                {
+                Instantiate(PlantLeafSpawner, pos, rot, transform);
+                }
                 break;
             case BiomeOwner.Justin:
                 break;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class JoshCoralPyramidSpawn : MonoBehaviour
+public class CoralPyramidSpawn : MonoBehaviour
 {
 
     //the meshes we're going to use for generation
@@ -37,6 +37,7 @@ public class JoshCoralPyramidSpawn : MonoBehaviour
         Build();
      //   Debug.Log("building for josh");
     }
+
     /// <summary>
     /// Thsi function initiates the iterative building process.
     /// Creates a list for mesh storage
@@ -95,7 +96,6 @@ public class JoshCoralPyramidSpawn : MonoBehaviour
                 iterations -= Random.Range(5, 10);
             }
         }
-
     }
     /// <summary>
     /// This is where the core of the iterative spawning
@@ -116,22 +116,17 @@ public class JoshCoralPyramidSpawn : MonoBehaviour
 
         if (usePrism)
         {
-            inst.mesh = prismMesh.sharedMesh;
+            inst.mesh = prismMesh.sharedMesh; //use prism mesh
         }
         else
         {
-        inst.mesh = pyramidMesh.sharedMesh; // copy the mesh
-        }
-
-
-    
+        inst.mesh = pyramidMesh.sharedMesh; // use pyramid mesh
+        }                   
 
         inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(rotationPerSegment / 53 * scale, scale, rotationPerSegment / 53 * scale));
      
-
         meshes.Add(inst);
-
-
+        
         number++;
         bool shouldFlip = (number % flipEveryNth == 0);
         if (shouldFlip)
@@ -191,8 +186,10 @@ public class JoshCoralPyramidSpawn : MonoBehaviour
         }
     }
 }
-
-[CustomEditor(typeof(JoshCoralPyramidSpawn))]
+/// <summary>
+/// This provides the grow button for testing in editor
+/// </summary>
+[CustomEditor(typeof(CoralPyramidSpawn))]
 public class SpawnPyramidEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -200,7 +197,7 @@ public class SpawnPyramidEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("GROW!"))
         {
-            JoshCoralPyramidSpawn b = (target as JoshCoralPyramidSpawn);
+            CoralPyramidSpawn b = (target as CoralPyramidSpawn);
             b.Build();
         }
     }

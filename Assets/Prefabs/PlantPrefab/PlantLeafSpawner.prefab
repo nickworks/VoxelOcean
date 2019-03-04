@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8198810764069784714
+--- !u!1 &5078370866149129377
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,59 +8,63 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8198810764069784712}
-  - component: {fileID: 8198810764069784715}
-  - component: {fileID: 8198810764069784718}
-  - component: {fileID: 8198810764069784713}
-  - component: {fileID: 3645109132574243547}
+  - component: {fileID: 5078370866149129381}
+  - component: {fileID: 5078370866149129380}
+  - component: {fileID: 5078370866149129379}
+  - component: {fileID: 5078370866149129378}
   m_Layer: 0
-  m_Name: VoxelChunk
+  m_Name: PlantLeafSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8198810764069784712
+--- !u!4 &5078370866149129381
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 5078370866149129377}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 8.5, z: 8.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8198810764069784715
+--- !u!114 &5078370866149129380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 5078370866149129377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
+  m_Script: {fileID: 11500000, guid: 54a81210b17a36948a1d43d0ba98b126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!33 &8198810764069784718
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Mesh: {fileID: 0}
---- !u!23 &8198810764069784713
+  leafPrefab: {fileID: 3844196570331745669, guid: 172040fcab22ec648858c74ecf5841fc,
+    type: 3}
+  stemPrefab: {fileID: 6347859486127614871, guid: 652563669c73e3648acae12578df8a05,
+    type: 3}
+  iterations: 2
+  scale: 1
+  chanceForBranches: 20
+  leafVariance: 5
+  stemAngle: 5
+  numberOfLeaves: 3
+  scaleDownRate: 0.9
+  randomSeed: 1
+  seed: 0
+--- !u!23 &5078370866149129379
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 5078370866149129377}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,22 +95,11 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3645109132574243547
-MonoBehaviour:
+--- !u!33 &5078370866149129378
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeAmountMin: 1
-  lifeAmountMax: 5
-  prefabCoralTubeWorms: {fileID: 0}
-  PlantLeafSpawner: {fileID: 5078370866149129377, guid: 6846a9475805a6843b455aeb8456966e,
-    type: 3}
-  CoralPyramidSpawner: {fileID: 8856533629082828895, guid: 28013e49a404f4243abe910b6bb4ce60,
-    type: 3}
+  m_GameObject: {fileID: 5078370866149129377}
+  m_Mesh: {fileID: 0}
