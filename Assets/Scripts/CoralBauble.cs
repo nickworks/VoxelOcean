@@ -10,55 +10,67 @@ public class CoralBauble : MonoBehaviour
     /// <summary>
     /// controls number of times the loop will run
     /// </summary>
+	[Tooltip("controls number of times the loop will run")]
 	[Range(1, 15)] public int iterations = 11;
 
-    /// <summary>
-    /// controls the odds of a branch splitting
-    /// </summary>
-    [Range(0, 1)] public float splitOdds = .5f;
-    ///<summary>
-    /// control the chance of assigning a random rotation
-    /// </summary>
-    [Range(0, 1)] public float ranRotOdds = .37f;
-    ///<summary>
-    /// controls the range of what the random rotations can be
-    /// </summary>                                                       
-    [Range(0, 360)] public float ranRotRange = 30f;
-    ///<summary>
-    ///controls the angle that causes the splits
-    /// </summary>
-    [Range(0, 360)] public float spread = 20f;
-    ///<summary>
-    //used to set the minimum for the range of hue values for the color
-    /// </summary>
-    [Range(0, 1)]  public float hueMin = 0f;
-    ///<summary>
-    ///used to set the maximum for the range of hue values for the color
-    /// </summary>
-    [Range(0, 1)] public float hueMax = 1f;
+	/// <summary>
+	/// controls the odds of a branch splitting
+	/// </summary>
+	[Tooltip("controls the odds of a branch splitting")]
+	[Range(0, 1)] public float splitOdds = .5f;
+	///<summary>
+	/// controls the chance of assigning a random rotation
+	/// </summary>
+	[Tooltip("controls the chance of assigning a random rotation")]
+	[Range(0, 1)] public float ranRotOdds = .37f;
+	///<summary>
+	/// controls the range of what the random rotations can be
+	/// </summary>                                                       
+	[Tooltip("controls the range of what the random rotations can be")]
+	[Range(0, 360)] public float ranRotRange = 30f;
+	///<summary>
+	///controls the angle that causes the splits
+	/// </summary>
+	[Tooltip("controls the angle that causes the splits")]
+	[Range(0, 360)] public float spread = 20f;
+	///<summary>
+	///used to set the minimum for the range of hue values for the color
+	/// </summary>
+	[Tooltip("used to set the minimum for the range of hue values for the color")]
+	[Range(0, 1)]  public float hueMin = 0f;
+	///<summary>
+	///used to set the maximum for the range of hue values for the color
+	/// </summary>
+	[Tooltip("used to set the maximum for the range of hue values for the color")]
+	[Range(0, 1)] public float hueMax = 1f;
 
 
-    /// <summary>
-    /// controls the proportions of the boxes
-    /// </summary>
-    public Vector3 branchScale = new Vector3(.25f, 1f, .25f);
-    /// <summary>
-    /// controls hot the box scale changes between iterations
-    /// </summary>
-    [Range(0.1f, 1f)] public float scaleFactor = 0.9f;
-    /// <summary>
-    /// controls the normal distribution of branches's z rotation
-    /// </summary>
-    public float zRot = 0;
+	/// <summary>
+	/// controls the proportions of the boxes
+	/// </summary>
+	[Tooltip("controls the proportions of the boxes")]
+	public Vector3 branchScale = new Vector3(.25f, 1f, .25f);
+	/// <summary>
+	/// controls hot the box scale changes between iterations
+	/// </summary>
+	[Tooltip("controls hot the box scale changes between iterations")]
+	[Range(0.1f, 1f)] public float scaleFactor = 0.9f;
+	/// <summary>
+	/// controls the normal distribution of branches's z rotation
+	/// </summary>
+	[Tooltip("controls the normal distribution of branches's z rotation")]
+	public float zRot = 0;
 
-    /// <summary>
-    /// controls the normal distribution of branches's x rotation
-    /// </summary>
-    public float xRot = -15;
-    /// <summary>
-    /// controls the normal distribution of branches's y rotation
-    /// </summary>
-    public float yRot = -15;    
+	/// <summary>
+	/// controls the normal distribution of branches's x rotation
+	/// </summary>
+	[Tooltip("controls the normal distribution of branches's x rotation")]
+	public float xRot = -15;
+	/// <summary>
+	/// controls the normal distribution of branches's y rotation
+	/// </summary>
+	[Tooltip("controls the normal distribution of branches's y rotation")]
+	public float yRot = -15;    
     ///<summary>Runs the Build() function</summary>
     void Start()
 	{
