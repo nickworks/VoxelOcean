@@ -91,10 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be7eb677dd839d43b54361be1318f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabThis: {fileID: 4215765450872021454}
-  prefabOther: {fileID: 4215765450872021454}
-  iterations: 5
-  branches: 3
+  iterations: 2
+  branches: 1
   xScaling: 0.1
   yScaling: 0.5
   zScaling: 0.1

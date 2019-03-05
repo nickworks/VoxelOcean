@@ -39,91 +39,92 @@ public class CoralMesh : MonoBehaviour
 
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, branchScaling); // calls the grow function and plugs how many iterations, the mesh List<>, general Vector3, general Quaternion rotation, and branch scaling
                                                                                     
-        Mesh mesh = new Mesh();
-        mesh.CombineMeshes(meshes.ToArray());
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
-        meshFilter.mesh = mesh;
+        Mesh mesh = new Mesh(); // creates a new mesh object
+        mesh.CombineMeshes(meshes.ToArray()); // add the mesh to the meshes List<>
+        MeshFilter meshFilter = GetComponent<MeshFilter>(); // generates a new MeshFilter
+        meshFilter.mesh = mesh; // adds the MeshFilter to the new mesh object
     }
 
-
-    private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, Vector3 scale)
+    /**      
+      * This function spawns a branch based on the iterations
+      * @param num - passes in how many iterations this function should run
+      * @param meshes - passes in the list of meshes so that this function can use its data
+      * @param topPosition - passes in the current position of the object
+      * @param rot - passes in the current rotation of the object
+      * @param scale - passes in the current scale of the object
+      */ 
+    private void Grow(int num, List<CombineInstance> meshes, Vector3 topPosition, Quaternion rot, Vector3 scale)
     {
 
-        bool isTop = false;
-        bool isLeft = false;
-        bool isRight = false;
-        bool isFront = false;    
-        bool isBack = false;
-       
+        bool isTop = false; // bool to tell if a branch has spawned on top of the coral
+        bool isLeft = false; // bool to tell if a branch has spawned to the left of the coral
+        bool isRight = false; // bool to tell if a branch has spawned to the right of the coral
+        bool isFront = false; // bool to tell if a branch has spawned in front of the coral
+        bool isBack = false; // bool to tell if a branch has spawned in back of the coral
+
         if (num <= 0) return; // stop recursive function
 
-        CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube(num);
-        inst.transform = Matrix4x4.TRS(pos, rot, scale);
-        meshes.Add(inst);
-        num--;
+        CombineInstance inst = new CombineInstance(); // creates a new combined intance 
+        inst.mesh = MakeCube(num); // has instance call MakeCube function
+        inst.transform = Matrix4x4.TRS(topPosition, rot, scale); // places the intance on the coral and set the rotation and scale  
+        meshes.Add(inst); // adds the instance to the meshes List<>
+        num--; // decreases the current iteration
 
 
-        scale.x *= .8f;
-        scale.z *= .8f;
-        scale.y *= .65f;
+        scale.x *= .8f; // set the x scaling to slowly go down during each iteration
+        scale.z *= .8f; // set the z scaling to slowly go down during each iteration
+        scale.y *= .65f; // set the y scaling to slowly go down during each iteration
+
+        // face brach positions
+        topPosition = inst.transform.MultiplyPoint(new Vector3(0, .9f, 0));
+        Vector3 frontPosition = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
+        Vector3 backPosition = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
+        Vector3 leftPosition = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
+        Vector3 rightPosition = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
+
+        // face branch rotations
+        Quaternion topRotation = rot * Quaternion.Euler(Random.Range(-15, 15), Random.Range(-15, 15), Random.Range(-15, 15));
+        Quaternion frontRotation = rot * Quaternion.Euler(0, 0, Random.Range(45, 95));
+        Quaternion backRotation = rot * Quaternion.Euler(0, 0, Random.Range(-45, -95));
+        Quaternion leftRotation = rot * Quaternion.Euler(Random.Range(75, 95), 0, 0);
+        Quaternion rightRotation = rot * Quaternion.Euler(Random.Range(-75, -95), 0, 0);
 
 
-
-        pos = inst.transform.MultiplyPoint(new Vector3(0, .9f, 0));
-
-        // face positions
-        Vector3 sidePosition03 = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
-        Vector3 sidePosition04 = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
-        Vector3 sidePosition07 = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
-        Vector3 sidePosition08 = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
-
-        //top rotations
-        Quaternion rot1 = rot * Quaternion.Euler(Random.Range(-15, 15), Random.Range(-15, 15), Random.Range(-15, 15));
+        //int randomPicker = Random.Range(1, 6); // pick a random face of the coral to place a branch
 
 
-        // face rotations
-        Quaternion rot5 = rot * Quaternion.Euler(0, 0, Random.Range(45, 95));
-        Quaternion rot6 = rot * Quaternion.Euler(0, 0, Random.Range(-45, -95));
-        Quaternion rot9 = rot * Quaternion.Euler(Random.Range(75, 95), 0, 0);
-        Quaternion rot10 = rot * Quaternion.Euler(Random.Range(-75, -95), 0, 0);
-
-
-        int randomPicker = Random.Range(1, 6); // pick a random face of the coral to place a branch
-
-
-        //int randomPicker = 3;
+        int randomPicker = 4;
 
         for (int i = 0; i < branches; i++)
         {
             if (randomPicker == 1 && isFront == false)  // if (random picker = n) and (face = false) do this
             {
-                Grow(num, meshes, sidePosition03, rot5, scale); // spawn branch in this location
+                Grow(num, meshes, frontPosition, frontRotation, scale); // spawn branch in this location
                 isFront = true; // set That face to true. (this is saying "There is a branch already here")
             }
-            else if (randomPicker == 2 && isBack == false)
+            else if (randomPicker == 2 && isBack == false) // if (random picker = n) and (face = false) do this
             {
-                Grow(num, meshes, sidePosition04, rot6, scale);
-                isBack = true;
+                Grow(num, meshes, backPosition, backRotation, scale); // spawn branch in this location
+                isBack = true; // set That face to true. (this is saying "There is a branch already here")
             }
-            else if (randomPicker == 3 && isRight == false)
+            else if (randomPicker == 3 && isRight == false) // if (random picker = n) and (face = false) do this
             {
-                Grow(num, meshes, sidePosition07, rot9, scale);
-                isRight = true;
+                Grow(num, meshes, leftPosition, leftRotation, scale); // spawn branch in this location
+                isRight = true; // set That face to true. (this is saying "There is a branch already here")
             }
-            else if (randomPicker == 4 && isLeft == false)
+            else if (randomPicker == 4 && isLeft == false) // if (random picker = n) and (face = false) do this
             {
-                Grow(num, meshes, sidePosition08, rot10, scale);
-                isLeft = true;
+                Grow(num, meshes, rightPosition, rightRotation, scale); // spawn branch in this location
+                isLeft = true; // set That face to true. (this is saying "There is a branch already here")
             }
-            else if (randomPicker == 5 && isTop == false)
+            else if (randomPicker == 5 && isTop == false) // if (random picker = n) and (face = false) do this
             {
-                Grow(num, meshes, pos, rot1, scale);
-                isTop = true;
+                Grow(num, meshes, topPosition, topRotation, scale); // spawn branch in this location
+                isTop = true; // set That face to true. (this is saying "There is a branch already here")
             }
             else // if a face wasn't picked, pick again
             {
-                randomPicker = Random.Range(1, 6);
+                randomPicker = Random.Range(1, 6); // Pick a new random number
                 i--; // Reset that current turn
             }            
         }
