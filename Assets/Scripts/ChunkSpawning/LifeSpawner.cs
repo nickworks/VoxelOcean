@@ -60,8 +60,6 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralTubeWorms;
     public GameObject prefabCoralPrecious;
 
-    private bool isColliding = false;
-
     MeshFilter mesh;
 
     public void SpawnSomeLife()
@@ -74,9 +72,10 @@ public class LifeSpawner : MonoBehaviour
 
         List<Vector3> pts = new List<Vector3>();
 
+
         for(int i = 0; i < amt; i++)
         {
-            int attempts = 0;
+            int attempts = 0; // holds all attempts
             while (attempts < 5) // try 5 times:
             {
                 
@@ -106,8 +105,6 @@ public class LifeSpawner : MonoBehaviour
         Biome biome = Biome.FromColor(color);
 
         //print("Spawning life in " + biome.owner + "'s biome...");
-
-        // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
         
         switch (biome.owner)
         {
@@ -133,19 +130,9 @@ public class LifeSpawner : MonoBehaviour
             case BiomeOwner.Kaylee:
                 break;
             case BiomeOwner.Keegan:
+                // Spawns Keegan's coral into the voxel universe           
+                Instantiate(prefabCoralPrecious, pos, rot, transform);
                 
-                
-                Detection();
-                if(isColliding == true)
-                {
-                    print("Hi Mom");
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    Instantiate(prefabCoralPrecious, pos, rot, transform);
-                }
-
                 break;
             case BiomeOwner.Kyle:
                 break;
@@ -155,11 +142,8 @@ public class LifeSpawner : MonoBehaviour
 
         return true;
     }
-    void Detection()
-    {
-        
-        
-    }
+
+    
 
 }
 

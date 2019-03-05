@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4215765450872021453}
   - component: {fileID: 4215765450872021452}
   - component: {fileID: 4215765450872021455}
+  - component: {fileID: 1845664869135153651}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Spawner
@@ -90,8 +91,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be7eb677dd839d43b54361be1318f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabThis: {fileID: 4215765450872021454}
+  prefabOther: {fileID: 4215765450872021454}
   iterations: 5
   branches: 3
   xScaling: 0.1
   yScaling: 0.5
   zScaling: 0.1
+--- !u!135 &1845664869135153651
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215765450872021454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.4, z: 0}
