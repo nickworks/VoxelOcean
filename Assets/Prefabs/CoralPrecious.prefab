@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4215765450872021455}
   - component: {fileID: 1845664869135153651}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: CoralPrecious
   m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be7eb677dd839d43b54361be1318f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 2
-  branches: 1
+  iterations: 5
+  branches: 3
   xScaling: 0.1
   yScaling: 0.5
   zScaling: 0.1
