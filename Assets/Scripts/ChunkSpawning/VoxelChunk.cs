@@ -4,128 +4,16 @@ using UnityEngine;
 using UnityEditor;
 
 /// <summary>
-/// One chunk of voxels.
+/// This class generates the mesh and biome data of one "chunk" of the world. Each chunk contains a bunch of VoxelData objects that contain density data about the universe.
 /// </summary>
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class VoxelChunk : MonoBehaviour
 {
-
-    struct VoxelData
-    {
-        enum FaceDirection
-        {
-            Front,
-            Back,
-            Left,
-            Right,
-            Top,
-            Bottom
-        }
-        delegate void MakeAFace(FaceDirection dir);
-        static Vector3[] cube = new Vector3[] {
-            new Vector3(0, 0, 0), //LBF 0
-            new Vector3(0, 1, 0), //LTF 1
-            new Vector3(1, 1, 0), //RTF 2
-            new Vector3(1, 0, 0), //RBF 3
-            new Vector3(0, 0, 1), //LBB 4
-            new Vector3(0, 1, 1), //LTB 5
-            new Vector3(1, 1, 1), //RTB 6
-            new Vector3(1, 0, 1)  //RBB 7
-        };
-
-        public Vector3 pos;
-        public float density;
-        public LifeSpawner.Biome biome;
-
-        public bool isSolid { get { return density > 0; } }
-        public bool isHidden { get { return (isSolidAbove && isSolidBack && isSolidBelow && isSolidFront && isSolidLeft && isSolidRight);  } }
-
-        public bool isSolidRight;
-        public bool isSolidLeft;
-        public bool isSolidAbove;
-        public bool isSolidBelow;
-        public bool isSolidFront;
-        public bool isSolidBack;
-
-        public VoxelData(float density, Vector3 pos, LifeSpawner.Biome biome)
-        {
-            this.density = density;
-            this.pos = pos;
-            this.biome = biome;
-            isSolidRight = isSolidLeft = isSolidAbove = isSolidBelow = isSolidBack = isSolidFront = false;
-        }
-        public CombineInstance MakeVoxel()
-        {
-            CombineInstance voxel = new CombineInstance();
-            voxel.mesh = MakeGeometry();
-            voxel.transform = Matrix4x4.Translate(pos * VoxelUniverse.VOXEL_SEPARATION);
-            return voxel;
-        }
-        public Mesh MakeGeometry()
-        {
-            List<Vector3> verts = new List<Vector3>();
-            List<Vector2> uvs = new List<Vector2>();
-            List<Vector3> normals = new List<Vector3>();
-            List<int> tris = new List<int>();
-            List<Color> colors = new List<Color>();
-
-            Color color = biome.GetVertexColor();
-
-            MakeAFace addFace = (FaceDirection dir) =>
-            {
-                int index = verts.Count;
-                if (dir == FaceDirection.Back) verts.AddRange(new Vector3[] { cube[0], cube[1], cube[2], cube[3] });
-                if (dir == FaceDirection.Front) verts.AddRange(new Vector3[] { cube[4], cube[7], cube[6], cube[5] });
-                if (dir == FaceDirection.Left) verts.AddRange(new Vector3[] { cube[0], cube[4], cube[5], cube[1] });
-                if (dir == FaceDirection.Right) verts.AddRange(new Vector3[] { cube[3], cube[2], cube[6], cube[7] });
-                if (dir == FaceDirection.Top) verts.AddRange(new Vector3[] { cube[1], cube[5], cube[6], cube[2] });
-                if (dir == FaceDirection.Bottom) verts.AddRange(new Vector3[] { cube[0], cube[3], cube[7], cube[4] });
-                Vector3 normal = Vector3.zero;
-                if (dir == FaceDirection.Back) normal = Vector3.back;
-                if (dir == FaceDirection.Front) normal = Vector3.forward;
-                if (dir == FaceDirection.Left) normal = Vector3.left;
-                if (dir == FaceDirection.Right) normal = Vector3.right;
-                if (dir == FaceDirection.Top) normal = Vector3.up;
-                if (dir == FaceDirection.Bottom) normal = Vector3.down;
-                normals.Add(normal);
-                normals.Add(normal);
-                normals.Add(normal);
-                normals.Add(normal);
-                uvs.Add(new Vector2(0, 0));
-                uvs.Add(new Vector2(0, 1));
-                uvs.Add(new Vector2(1, 1));
-                uvs.Add(new Vector2(1, 0));
-                colors.Add(color);
-                colors.Add(color);
-                colors.Add(color);
-                colors.Add(color);
-                tris.Add(index + 0);
-                tris.Add(index + 1);
-                tris.Add(index + 2);
-                tris.Add(index + 2);
-                tris.Add(index + 3);
-                tris.Add(index + 0);
-            };
-
-            if (!isSolidBack) addFace(FaceDirection.Back);
-            if (!isSolidBelow) addFace(FaceDirection.Bottom);
-            if (!isSolidFront) addFace(FaceDirection.Front);
-            if (!isSolidLeft) addFace(FaceDirection.Left);
-            if (!isSolidRight) addFace(FaceDirection.Right);
-            if (!isSolidAbove) addFace(FaceDirection.Top);
-
-            Mesh mesh = new Mesh();
-            mesh.SetVertices(verts);
-            mesh.SetUVs(0, uvs);
-            mesh.SetNormals(normals);
-            mesh.SetTriangles(tris, 0);
-            mesh.SetColors(colors);
-            return mesh;
-        }
-
-    }
-
+    /// <summary>
+    /// The density threshold to use to find where the surface lies.
+    /// </summary>
+    [Range(-.2f, .2f)] public float threshold = 0;
     /// <summary>
     /// Cached noise data. This is used as "density" to determin whether or not voxels are solid.
     /// </summary>
@@ -178,26 +66,12 @@ public class VoxelChunk : MonoBehaviour
                 for (int z = 0; z < sizeZ; z++)
                 {
                     Vector3 pos = new Vector3(x, y, z);
-                    float density = GetDensitySample(pos);
-                    LifeSpawner.Biome biome = PickBiomeAtPos(pos);
-                    data[x, y, z] = new VoxelData(density, pos, biome);
-                }
-            }
-        }
-
-        // update each voxel to store whether or not each neighbor is solid:
-        for (int x = 0; x < sizeX; x++)
-        {
-            for (int y = 0; y < sizeY; y++)
-            {
-                for (int z = 0; z < sizeZ; z++)
-                {
-                    data[x, y, z].isSolidRight = IsSolid(x + 1, y, z);
-                    data[x, y, z].isSolidAbove = IsSolid(x, y + 1, z);
-                    data[x, y, z].isSolidFront = IsSolid(x, y, z + 1);
-                    data[x, y, z].isSolidLeft  = IsSolid(x - 1, y, z);
-                    data[x, y, z].isSolidBelow = IsSolid(x, y - 1, z);
-                    data[x, y, z].isSolidBack  = IsSolid(x, y, z - 1);
+                    VoxelData voxel = new VoxelData(pos);
+                    // set the densities of the 8 corners of the cube:
+                    for (int i = 0; i < VoxelData.positions.Length; i++)
+                        voxel.densities[i] = GetDensitySample(voxel.center + VoxelData.positions[i]);
+                    // store the data:
+                    data[x, y, z] = voxel;
                 }
             }
         }
@@ -213,19 +87,35 @@ public class VoxelChunk : MonoBehaviour
         foreach (VoxelUniverse.SignalField field in VoxelUniverse.main.signalFields)
         {
             Vector3 p = pos + transform.position; // convert from local coordinates to world coordinates
-            p /= field.zoom; // "zoom" in/out of the noise
-            float val = Noise.Sample(p); // simplex.noise(pos.x, pos.y, pos.z);
+            float val = Noise.Sample(p / field.zoom); // simplex.noise(pos.x, pos.y, pos.z);
 
-            // use the vertical position to influence the density:
-            val -= (p.y + field.verticalOffset) * field.flattenAmount;
-            val -= field.densityBias;
+
+            if (field.type == VoxelUniverse.SignalType.Sphere)
+            {
+                float size = 8 + field.flattenOffset;
+                size *= size;
+                float d = p.sqrMagnitude;
+                val -= (d/size - size) * field.flattenAmount * .05f;
+            }
+            else
+            {
+                // use the vertical position to influence the density:
+                val -= (p.y + field.flattenOffset) * field.flattenAmount * .05f;
+            }
+
+
+            // adjust the final density using the densityBias:
+            val += field.densityBias;
+
+            // adjust how various fields are mixed together:
             switch (field.type)
             {
+                case VoxelUniverse.SignalType.Sphere:
                 case VoxelUniverse.SignalType.AddOnly:
-                    if (Mathf.Sign(val) == Mathf.Sign(res)) res += val;
+                    if (val > 0 || res == 0) res += val;
                     break;
                 case VoxelUniverse.SignalType.SubtractOnly:
-                    if (Mathf.Sign(val) != Mathf.Sign(res)) res += val;
+                    if (val < 0 || res == 0) res += val;
                     break;
                 case VoxelUniverse.SignalType.Multiply:
                     res *= val;
@@ -239,7 +129,11 @@ public class VoxelChunk : MonoBehaviour
         }
         return res;
     }
-
+    /// <summary>
+    /// Generates a Biome at a given position
+    /// </summary>
+    /// <param name="pos">The position to sample the biome field, in local space.</param>
+    /// <returns>A Biome object with data about which biome inhabits this space.</returns>
     LifeSpawner.Biome PickBiomeAtPos(Vector3 pos)
     {
         // TODO: maybe a bunch of this logic can be moved into the LifeSpawner.Biome struct?
@@ -285,13 +179,11 @@ public class VoxelChunk : MonoBehaviour
         return LifeSpawner.Biome.FromInt(biome_num);
     }
     /// <summary>
-    /// This function builds the mesh by copying the cube over and over again
+    /// This function builds the mesh by implementing a Cube Marching algorithm, removing duplicate vertices, calculating normals, and generating biome-based vertex colors.
     /// </summary>
-    void GenerateMesh()
+    private void GenerateMesh()
     {
-        mesh.mesh = new Mesh();
-
-        List<CombineInstance> voxels = new List<CombineInstance>();
+        List<VoxelData.Tri> geom = new List<VoxelData.Tri>();
 
         for (int x = 0; x < data.GetLength(0); x++)
         {
@@ -299,40 +191,110 @@ public class VoxelChunk : MonoBehaviour
             {
                 for (int z = 0; z < data.GetLength(2); z++)
                 {
-                    if (data[x,y,z].isSolid && !data[x,y,z].isHidden)
+                    if (!data[x, y, z].IsHidden(threshold))
                     {
-                        // make a voxel mesh
-                        voxels.Add(data[x, y, z].MakeVoxel());
+                        data[x, y, z].MarchCube(threshold, geom);
                     }
                 }
             }
         }
 
-        // combine all of the meshes together into one mesh:
-        mesh.mesh.CombineMeshes(voxels.ToArray(), true);
+        // combine all of the tris together into one mesh:
+        Mesh mesh = MakeMeshFromTris(geom);
+
+        // remove duplicate vertices:
+        this.mesh.mesh = RemoveDuplicates(mesh);
+
+        // calculate those normals:
+        this.mesh.mesh.RecalculateNormals();
+
+        SetVertexColors();
     }
     /// <summary>
-    /// This function checks a particular position and returns whether or not that position is "Solid"
+    /// This function makes a Mesh from a list of Tri objects.
     /// </summary>
-    /// <param name="x">x coordinate</param>
-    /// <param name="y">y coordinate</param>
-    /// <param name="z">z coordinate</param>
-    /// <returns>If true, a voxel should be rendered at this location.</returns>
-    bool IsSolid(int x, int y, int z)
+    /// <param name="geom">The list of Tris to use</param>
+    /// <returns>the generated mesh object.</returns>
+    private Mesh MakeMeshFromTris(List<VoxelData.Tri> geom)
     {
 
-        float val = 0; 
+        List<Vector3> verts = new List<Vector3>();
+        List<int> tris = new List<int>();
 
-        if (x < 0 || x >= data.GetLength(0) ||
-            y < 0 || y >= data.GetLength(1) ||
-            z < 0 || z >= data.GetLength(2))
+        for (int i = 0; i < geom.Count; i++)
         {
-            val = GetDensitySample(new Vector3(x, y, z));
-        } else
-        {
-            val = data[x, y, z].density;
+            int index = verts.Count;
+            verts.Add(geom[i].a);
+            verts.Add(geom[i].b);
+            verts.Add(geom[i].c);
+            tris.Add(index + 0);
+            tris.Add(index + 1);
+            tris.Add(index + 2);
         }
 
-        return (val > 0);
+        // create a mesh from the verts and tris:
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(verts);
+        mesh.SetTriangles(tris, 0);
+        return mesh;
+    }
+    /// <summary>
+    /// Removes duplicate vertices from a mesh by "welding" together vertices that are EXACTLY the same.
+    /// </summary>
+    /// <param name="complexMesh">The mesh from which to remove duplicate vertices.</param>
+    /// <param name="printDebug">Whether or not to output to the console the before/after vertex count.</param>
+    /// <returns>A copy of the complexMesh, with vertices removed. NOTE: The copy contains no UVs, vertex colors, or normals.</returns>
+    private Mesh RemoveDuplicates(Mesh complexMesh, bool printDebug = false)
+    {
+        List<Vector3> verts = new List<Vector3>();
+        List<int> tris = new List<int>();
+
+        complexMesh.GetVertices(verts);
+        complexMesh.GetTriangles(tris, 0);
+
+        int count1 = verts.Count;
+
+        for (int i = 0; i < verts.Count; i++)
+        {
+            // find duplicates:
+            for (int j = 0; j < verts.Count; j++)
+            {
+                if (i == j) continue;
+                if (j >= verts.Count) break;
+                if (i >= verts.Count) break;
+                if (verts[i] == verts[j]) // if a duplicate vert:
+                {
+                    verts.RemoveAt(j); // remove it
+                    for(int k = 0; k < tris.Count; k++)
+                    {
+                        if (tris[k] == j) tris[k] = i;
+                        if (tris[k] > j) tris[k] = tris[k] - 1;
+                    }
+                }
+            }
+        }
+        int count2 = verts.Count;
+
+        if(printDebug) print($"{count1} reduced to {count2}");
+
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(verts);
+        mesh.SetTriangles(tris, 0);
+        return mesh;
+
+    } // RemoveDuplicates()
+    /// <summary>
+    /// Generates vertex colors for every vertex in the MeshFilter's mesh.
+    /// </summary>
+    private void SetVertexColors()
+    {
+        List<Color> colors = new List<Color>();
+        foreach (Vector3 p in mesh.mesh.vertices)
+        {
+            //Vector3 pos = p + transform.position;
+            LifeSpawner.Biome biome = PickBiomeAtPos(p);
+            colors.Add(biome.GetVertexColor());
+        }
+        mesh.mesh.SetColors(colors);
     }
 }
