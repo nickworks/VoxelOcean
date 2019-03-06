@@ -1,18 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-
+/// <summary>
+/// Spawns Coral type Fan 
+/// </summary>
 public class CoralPurpleFan : MonoBehaviour
 {
+    /// <summary>
+    /// The number of iterations spawned from the original
+    /// </summary>
     [Range(2, 8)] public int iterations = 3;
-    public Vector3 branchScaling = new Vector3(.25f, 1, .25f);
-    public Vector3 baseScaling = new Vector3(.25f, 1, .25f);
+    /// <summary>
+    /// How the scaling of the branches are for both the skeleton set and fan set
+    /// </summary>
+    public Vector3 branchScaling = new Vector3(.03f, .4f, .1f);
+    public Vector3 baseScaling = new Vector3(.5f, .5f, .05f);
     void Start()
     {
-        
+        //initalizes the spawn of the coral
+        Build();
     }
-
+    /// <summary>
+    /// Combines the meshes generated into one to get rid of the number
+    /// of meshes in the coral reef
+    /// </summary>
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
@@ -24,11 +35,19 @@ public class CoralPurpleFan : MonoBehaviour
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
     }
+    /// <summary>
+    /// Where the grow function generates the new branches 
+    /// </summary>
+    /// <param name="num">the number of iterations</param>
+    /// <param name="meshes">list of the meshes we combined</param>
+    /// <param name="pos">position of our meshes</param>
+    /// <param name="rot">rotation of our meshes</param>
+    /// <param name="scale">scale of our meshes</param>
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
         if (num <= 0) return; //stop recursive function
 
-        
+        //adds meshes to the coral list that have been generated
         CombineInstance inst = new CombineInstance();
         CombineInstance coralBase = new CombineInstance();
 
@@ -40,40 +59,43 @@ public class CoralPurpleFan : MonoBehaviour
 
 
         meshes.Add(coralBase);
-      
+
         meshes.Add(inst);
-       
+
 
         num--;
 
+        //where the branches will be positioned when spawning in
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
         Vector3 posLeft = inst.transform.MultiplyPoint(new Vector3(1, 0, 0));
         Vector3 posRight = inst.transform.MultiplyPoint(new Vector3(-1, 0, 0));
 
-
+        //rotation of the branches spawned
         Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(0, 75));
         Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(0, -75));
-
         Quaternion rotRight = rot * Quaternion.Euler(0, 0, Random.Range(0, 30));
         Quaternion rotLeft = rot * Quaternion.Euler(0, 0, Random.Range(0, -30));
 
+        //how each iteration of a branch will be generated
         scale *= .8f;
-       
+        //branches that spawn for the skeletal part of the coral
         Grow(num, meshes, posLeft, rotLeft, scale);
         Grow(num, meshes, posRight, rotRight, scale);
         Grow(num, meshes, pos, rot1, scale);
         Grow(num, meshes, pos, rot2, scale);
-       // Grow(num, meshes, pos, rot2, scale);
-       // Grow(num, meshes, pos, rot1, scale);
-        
-        
-        
+
+
+        //position for the fan 
         pos = coralBase.transform.MultiplyPoint(new Vector3(0, 1, 0));
+        //branches that spawn for the fan set of the coral
         Grow(num, meshes, pos, rot, scale);
         Grow(num, meshes, pos, rot, scale);
 
-        
+
     }
+    /// <summary>
+    /// creates the mesh of the cube that is generated
+    /// </summary>
     private Mesh MakeCube()
     {
         List<Vector3> verts = new List<Vector3>();
@@ -208,18 +230,5 @@ public class CoralPurpleFan : MonoBehaviour
         mesh.SetTriangles(tris, 0);
         return mesh;
 
-    }
-}
-[CustomEditor(typeof(CoralPurpleFan))]
-public class CoralPurpleFanEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        if (GUILayout.Button("GROW!"))
-        {
-            CoralPurpleFan b = (target as CoralPurpleFan);
-            b.Build();
-        }
     }
 }
