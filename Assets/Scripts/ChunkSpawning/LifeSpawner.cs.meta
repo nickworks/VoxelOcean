@@ -8,9 +8,9 @@ MonoImporter:
   - prefabCoralBroccoli: {instanceID: 0}
   - prefabCoralTree: {instanceID: 0}
   - prefabCoralCrystal: {instanceID: 0}
+  - prefabCoralBauble: {instanceID: 0}
+  - prefabCoralPurpleFan: {instanceID: 0}
   - prefabCoralTubeWorm: {instanceID: 0}
-  - prefabCoralPurpleFan: {fileID: 377820375716106876, guid: 41ac3c4f21bfe3c4fa6af8cfa21915ed,
-      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
