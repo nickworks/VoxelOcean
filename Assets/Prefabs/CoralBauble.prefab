@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8198810764069784714
+--- !u!1 &1751210088325410814
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,60 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8198810764069784712}
-  - component: {fileID: 8198810764069784715}
-  - component: {fileID: 8198810764069784718}
-  - component: {fileID: 8198810764069784713}
-  - component: {fileID: 3645109132574243547}
+  - component: {fileID: 1751210088325410754}
+  - component: {fileID: 1751210088325410755}
+  - component: {fileID: 1751210088325410752}
+  - component: {fileID: 1751210088325410753}
   m_Layer: 0
-  m_Name: VoxelChunk
+  m_Name: CoralBauble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8198810764069784712
+--- !u!4 &1751210088325410754
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 8.5, z: 8.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 1751210088325410814}
+  m_LocalRotation: {x: 0, y: -0.9343743, z: 0, w: 0.35629293}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8198810764069784715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  threshold: 0
---- !u!33 &8198810764069784718
+--- !u!33 &1751210088325410755
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 1751210088325410814}
   m_Mesh: {fileID: 0}
---- !u!23 &8198810764069784713
+--- !u!23 &1751210088325410752
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 1751210088325410814}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -92,32 +78,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3645109132574243547
+--- !u!114 &1751210088325410753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8198810764069784714}
+  m_GameObject: {fileID: 1751210088325410814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 73dfcfe58c94e2141814ec4df175ed9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeAmountMin: 1
-  lifeAmountMax: 5
-
-  prefabCoralVoronoi: {fileID: 0}
-  prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
-    type: 3}
-  prefabCoralTree: {fileID: 5941988385446936893, guid: 48d5d527875b128468ddd074645be838,
-    type: 3}
-  prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
-    type: 3}
-  prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
-    type: 3}
-  prefabCoralPurpleFan: {fileID: 377820375716106876, guid: 41ac3c4f21bfe3c4fa6af8cfa21915ed,
-    type: 3}
-  prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
-    type: 3}
-
+  iterations: 10
+  maxKids: 2
+  splitOdds: 0.5
+  ranRotOdds: 0.37
+  ranRotRange: 30
+  spread: 20
+  hueMin: 0
+  hueMax: 0.25
+  branchScale: {x: 0.25, y: 1, z: 0.25}
+  scaleFactor: 0.9
+  zRot: 0
+  xRot: -15
+  yRot: -15

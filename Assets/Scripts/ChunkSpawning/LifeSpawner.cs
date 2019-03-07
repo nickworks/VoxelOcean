@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -202,7 +202,6 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
-
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         //if (biome.owner == BiomeOwner.Kyle) prefab = ;
@@ -232,3 +231,4 @@ public class LifeSpawner : MonoBehaviour
 
     }
 }
+
