@@ -77,7 +77,7 @@ public class CoralPurpleFan : MonoBehaviour
         Quaternion rotLeft = rot * Quaternion.Euler(0, 0, Random.Range(0, -30));
 
         //how each iteration of a branch will be generated
-        scale *= .8f;
+        scale *= 4f;
         //branches that spawn for the skeletal part of the coral
         Grow(num, meshes, posLeft, rotLeft, scale);
         Grow(num, meshes, posRight, rotRight, scale);
