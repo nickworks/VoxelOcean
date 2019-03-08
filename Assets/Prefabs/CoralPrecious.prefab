@@ -91,10 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be7eb677dd839d43b54361be1318f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 5
-  branches: 3
+  iterations: 2
+  branches: 4
   xScaling: 0.1
-  yScaling: 0.5
+  yScaling: 0.4
   zScaling: 0.1
 --- !u!135 &1845664869135153651
 SphereCollider:

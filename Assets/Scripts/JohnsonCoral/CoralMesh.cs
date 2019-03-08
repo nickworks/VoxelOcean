@@ -73,7 +73,7 @@ public class CoralMesh : MonoBehaviour
 
         scale.x *= .8f; // set the x scaling to slowly go down during each iteration
         scale.z *= .8f; // set the z scaling to slowly go down during each iteration
-        scale.y *= .65f; // set the y scaling to slowly go down during each iteration
+        scale.y *= .76f; // set the y scaling to slowly go down during each iteration
 
         // face brach positions
         topPosition = inst.transform.MultiplyPoint(new Vector3(0, .9f, 0));
@@ -83,17 +83,17 @@ public class CoralMesh : MonoBehaviour
         Vector3 rightPosition = inst.transform.MultiplyPoint(new Vector3(0, Random.Range(0.5f, .8f), 0));
 
         // face branch rotations
-        Quaternion topRotation = rot * Quaternion.Euler(Random.Range(-15, 15), Random.Range(-15, 15), Random.Range(-15, 15));
-        Quaternion frontRotation = rot * Quaternion.Euler(0, 0, Random.Range(45, 95));
-        Quaternion backRotation = rot * Quaternion.Euler(0, 0, Random.Range(-45, -95));
-        Quaternion leftRotation = rot * Quaternion.Euler(Random.Range(75, 95), 0, 0);
-        Quaternion rightRotation = rot * Quaternion.Euler(Random.Range(-75, -95), 0, 0);
+        Quaternion topRotation = rot * Quaternion.Euler(0, 0, 0);
+        Quaternion frontRotation = rot * Quaternion.Euler(0, 0, Random.Range(55, 75));
+        Quaternion backRotation = rot * Quaternion.Euler(0, 0, Random.Range(-55, -75));
+        Quaternion leftRotation = rot * Quaternion.Euler(Random.Range(55, 75), 0, 0);
+        Quaternion rightRotation = rot * Quaternion.Euler(Random.Range(-55, -75), 0, 0);
 
 
-        //int randomPicker = Random.Range(1, 6); // pick a random face of the coral to place a branch
+        int randomPicker = Random.Range(1, 6); // pick a random face of the coral to place a branch
 
 
-        int randomPicker = 4;
+        //int randomPicker = 4;
 
         for (int i = 0; i < branches; i++)
         {
