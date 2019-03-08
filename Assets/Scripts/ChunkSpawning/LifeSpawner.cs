@@ -206,7 +206,7 @@ public class LifeSpawner : MonoBehaviour
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
-        //if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
+        if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
 
 
