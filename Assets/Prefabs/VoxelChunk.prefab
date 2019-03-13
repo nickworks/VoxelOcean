@@ -114,6 +114,8 @@ MonoBehaviour:
     type: 3}
   prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
     type: 3}
+  prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
+    type: 3}
   prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
     type: 3}
   prefabCoralPurpleFan: {fileID: 377820375716106876, guid: 41ac3c4f21bfe3c4fa6af8cfa21915ed,
