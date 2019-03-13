@@ -106,8 +106,6 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public int lifeAmountMax = 5;
 
-    public GameObject prefabCoralTubeWorms;
-
     /// <summary>
     /// Socket for Dom's Vornoi Coral 
     /// </summary>
@@ -115,6 +113,8 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
     public GameObject prefabCoralCrystal;
+    public GameObject prefabCoralBauble;
+    public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralPrecious;
     /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
@@ -179,15 +179,15 @@ public class LifeSpawner : MonoBehaviour
 
         GameObject prefab = null;
         //if (biome.owner == BiomeOwner.Andrew) prefab = ;
-        //if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
-        //if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
-        //if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
-        //if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
-        //if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
+        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
+        if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
+        if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
+        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
+        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        //if (biome.owner == BiomeOwner.Justin) prefab = ;
-        //if (biome.owner == BiomeOwner.Kaylee) prefab = ;
+        if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
         //if (biome.owner == BiomeOwner.Kyle) prefab = ;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;

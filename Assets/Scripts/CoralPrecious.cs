@@ -6,9 +6,9 @@ using UnityEditor;
 /**
   *This is the base class for the CoralMesh script 
   */
-public class CoralMesh : MonoBehaviour
+public class CoralPrecious : MonoBehaviour
 {
-    
+
     [Range(2, 6)] public int iterations = 3; // this allows the user to choose how many iterations they want in the editor
     [Range(1, 4)] public int branches = 5; // this allows the user to choose how many branches per iteration they want in the editor
 
@@ -21,7 +21,7 @@ public class CoralMesh : MonoBehaviour
       * This is the constructor function for this class
       */
     void Start()
-    {        
+    {
         Build(); // calls the Build function
         Detect(); // calls the Detect function
     }
@@ -38,7 +38,7 @@ public class CoralMesh : MonoBehaviour
         List<CombineInstance> meshes = new List<CombineInstance>(); // Creates a List<> to hold all meshes made and combine them into one coral
 
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, branchScaling); // calls the grow function and plugs how many iterations, the mesh List<>, general Vector3, general Quaternion rotation, and branch scaling
-                                                                                    
+
         Mesh mesh = new Mesh(); // creates a new mesh object
         mesh.CombineMeshes(meshes.ToArray()); // add the mesh to the meshes List<>
         MeshFilter meshFilter = GetComponent<MeshFilter>(); // generates a new MeshFilter
@@ -52,7 +52,7 @@ public class CoralMesh : MonoBehaviour
       * @param topPosition - passes in the current position of the object
       * @param rot - passes in the current rotation of the object
       * @param scale - passes in the current scale of the object
-      */ 
+      */
     private void Grow(int num, List<CombineInstance> meshes, Vector3 topPosition, Quaternion rot, Vector3 scale)
     {
 
@@ -126,7 +126,7 @@ public class CoralMesh : MonoBehaviour
             {
                 randomPicker = Random.Range(1, 6); // Pick a new random number
                 i--; // Reset that current turn
-            }            
+            }
         }
     }
 
@@ -134,7 +134,7 @@ public class CoralMesh : MonoBehaviour
       * This function generates a cube mesh by making the Vertices,
       * UVs, Normals, Triangles, and colors for the cube
       * @param num - this stores which iteration the mesh is currently on
-      */    
+      */
     private Mesh MakeCube(int num)
     {
 
@@ -329,7 +329,7 @@ public class CoralMesh : MonoBehaviour
 
 } // End CoralMesh monobehavior class
 
-[CustomEditor(typeof(CoralMesh))]
+[CustomEditor(typeof(CoralPrecious))]
 public class CoralMeshEditor : Editor // New Class
 {
     public override void OnInspectorGUI() // overiding the Inspector in Unity
@@ -338,7 +338,7 @@ public class CoralMeshEditor : Editor // New Class
 
         if (GUILayout.Button("GROW!")) // if the grow button is pressed
         {
-            CoralMesh b = (target as CoralMesh); // basically getting CoralMeshes info
+            CoralPrecious b = (target as CoralPrecious); // basically getting CoralMeshes info
             b.Build(); // then telling it to build
 
         } // end if

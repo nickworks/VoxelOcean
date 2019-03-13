@@ -4,8 +4,21 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - prefabCoralTubeWorms: {instanceID: 0}
-  - prefabCoralBroccoli: {fileID: 8878938568153803597, guid: 94d0c880b3dda174a9c55164c1fae5fb,
+  - prefabCoralVoronoi: {fileID: 4817110474441004811, guid: 8772aa51e70c10846952c4f67d1f2e08,
+      type: 3}
+  - prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
+      type: 3}
+  - prefabCoralTree: {fileID: 5941988385446936893, guid: 48d5d527875b128468ddd074645be838,
+      type: 3}
+  - prefabCoralCrystal: {fileID: 5939494914578814260, guid: 2a07384cc95013f47944e8b518cb2d0b,
+      type: 3}
+  - prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
+      type: 3}
+  - prefabCoralPurpleFan: {fileID: 377820375716106876, guid: 41ac3c4f21bfe3c4fa6af8cfa21915ed,
+      type: 3}
+  - prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
+      type: 3}
+  - prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
