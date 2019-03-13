@@ -185,11 +185,11 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
+        if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        //if (biome.owner == BiomeOwner.Justin) prefab = ;
-        //if (biome.owner == BiomeOwner.Kaylee) prefab = ;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
+        if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
         //if (biome.owner == BiomeOwner.Kyle) prefab = ;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
 
@@ -215,81 +215,4 @@ public class LifeSpawner : MonoBehaviour
 
     }
 }
-
-
-/// <summary>
-/// This behavior is responsible for spawning prefabs on a VoxelChunk. It's currently being used to spawn coral, but could be used to spawn anything, really.
-
-
-    /// <summary>
-    /// The possible Biomes our game supports
-
-
-    /// <summary>
-    /// This struct contains one value: BiomeOwner. It also contains several convenience methods for converting from color to biome and vice versa.
-        /// <summary>
-        /// Gets a hue value to use for vertex color
-        /// </summary>
-
-
-        /// <summary>
-        /// Gets a Color value to use for vertex color
-        /// </summary>
-
-
-        /// <summary>
-        /// Creates a Biome associated with a specified BiomeOwner
-        /// </summary>
-
-
-        /// <summary>
-        /// Creates a Biome from a specified Color
-        /// </summary>
-
-
-        /// <summary>
-        /// Creates a Biome from a specified hue value
-        /// </summary>
-        /// <param name="hue">The hue value to use. Should be 0.0 to 1.0</param>
-
-
-        /// <summary>
-        /// Creates Biome from a specified integer.
-        /// </summary>
-        /// <param name="i">This integer should correspond to an index value in BiomeOwner</param>
-
-
-    /// <summary>
-    /// The minimum amount of life to spawn.
-    /// <summary>
-    /// The maximum amount of life to spawn.
-
-
-
-    /// <summary>
-    /// Attempt to spawn a bunch of life on this VoxelChunk
-
-
-        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
-        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
-        if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
-        if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
-        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
-        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
-        if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
-        //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
-        if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
-        //if (biome.owner == BiomeOwner.Kyle) prefab = ;
-        //if (biome.owner == BiomeOwner.Zach) prefab = ;
-
-
-
-    /// <summary>
-    /// Spawns a specific prefab
-    /// </summary>
-    /// <param name="prefab">The prefab to spawn</param>
-    /// <param name="position">The world position to spawn the prefab</param>
-    /// <param name="rotation">The world rotation to use when spawning the prefab</param>
 
