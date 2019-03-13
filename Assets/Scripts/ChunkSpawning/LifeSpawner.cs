@@ -134,6 +134,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
+    public GameObject prefabCoralPrecious;
     /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
@@ -203,7 +204,7 @@ public class LifeSpawner : MonoBehaviour
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
+        if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
         //if (biome.owner == BiomeOwner.Kyle) prefab = ;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
 
