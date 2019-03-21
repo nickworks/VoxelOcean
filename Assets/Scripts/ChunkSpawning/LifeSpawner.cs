@@ -189,14 +189,7 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
             //chance of spawning pyramid, or plant
-            if (Random.Range(1, 5) > 3)
-            {
-                Instantiate(prefabCoralPyramid, pos, rot, transform);
-            }
-            else
-            {
-                Instantiate(prefabPlantLeaf, pos, rot, transform);
-            }
+            prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
         }
         if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
