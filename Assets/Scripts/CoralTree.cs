@@ -58,7 +58,7 @@ public class CoralTree : MonoBehaviour
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(30, 90), Random.Range(0, 45));
 
             Grow(num, meshes, sidePos, rot1, scale);
-            print("0");
+            //print("0");
         }
 
         //four branches
@@ -73,7 +73,7 @@ public class CoralTree : MonoBehaviour
             Grow(num, meshes, pos, rot2, scale);
             Grow(num, meshes, pos, rot3, scale);
             Grow(num, meshes, pos, rot4, scale);
-            print("1");
+            //print("1");
         }
 
         //three branches
@@ -86,7 +86,7 @@ public class CoralTree : MonoBehaviour
             Grow(num, meshes, pos, rot1, scale);
             Grow(num, meshes, pos, rot2, scale);
             Grow(num, meshes, pos, rot3, scale);
-            print("2");
+            //print("2");
         }
 
         //two branches
@@ -97,7 +97,7 @@ public class CoralTree : MonoBehaviour
             
             Grow(num, meshes, pos, rot1, scale);
             Grow(num, meshes, pos, rot2, scale);
-            print("3");
+            //print("3");
         }
 
         scale *= scale;
