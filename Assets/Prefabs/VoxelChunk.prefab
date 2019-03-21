@@ -106,7 +106,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeAmountMin: 1
   lifeAmountMax: 5
-
   prefabCoralVoronoi: {fileID: 0}
   prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
     type: 3}
@@ -114,10 +113,11 @@ MonoBehaviour:
     type: 3}
   prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
     type: 3}
-  prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
+  prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
     type: 3}
   prefabCoralPurpleFan: {fileID: 377820375716106876, guid: 41ac3c4f21bfe3c4fa6af8cfa21915ed,
     type: 3}
-  prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
+  prefabPlantKelp: {fileID: 8532716728260304023, guid: d73592db77dcdf744ba98b6a5b38cddd,
     type: 3}
-
+  prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
+    type: 3}

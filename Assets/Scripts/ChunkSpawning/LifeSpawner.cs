@@ -134,6 +134,10 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
+
+    /// <summary>
+    /// Prefab reference for undersea Kelp (created by Kyle Lowery)
+    /// </summary>
     public GameObject prefabPlantKelp;
 
     /// <summary>
