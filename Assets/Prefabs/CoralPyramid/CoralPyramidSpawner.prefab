@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2dc8692d7775fb046ab51b28187e4d51, type: 2}
+  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8856533629082828895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2af4c092ed731064e9b1520af79f060f, type: 3}
+  m_Script: {fileID: 11500000, guid: 678f28f41aa2be541b8d82decdf5e607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pyramidMesh: {fileID: 4300000, guid: 57fc67423f30ace45a480d9b8271021f, type: 2}

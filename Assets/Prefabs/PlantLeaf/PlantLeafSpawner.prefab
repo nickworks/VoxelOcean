@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5078370866149129377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54a81210b17a36948a1d43d0ba98b126, type: 3}
+  m_Script: {fileID: 11500000, guid: 79ac0e4d17b38be4e9f82fdd0fe2ab0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leafPrefab: {fileID: 3844196570331745669, guid: 172040fcab22ec648858c74ecf5841fc,
@@ -74,7 +74,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2dc8692d7775fb046ab51b28187e4d51, type: 2}
+  - {fileID: 2100000, guid: 74774478a039efe448761917e8290055, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

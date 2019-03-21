@@ -62,8 +62,8 @@ public class CoralPyramidSpawn : MonoBehaviour
         List<CombineInstance> meshes = new List<CombineInstance>();
 
         // grow our mesh recursively
-        transform.rotation = Quaternion.Euler(0, 0, 180);
-        Grow(0, true, meshes, Vector3.down, Quaternion.identity, 1);
+        //transform.rotation = Quaternion.Euler(0, 0, 180);
+        Grow(0, true, meshes, Vector3.one, Quaternion.identity, 1);
 
         // make the mesh by combining our list of meshes:
         Mesh mesh = new Mesh();
