@@ -7,8 +7,8 @@ public class CoralPyramidSpawn : MonoBehaviour
 {
 
     //the meshes we're going to use for generation
-    public MeshFilter pyramidMesh;
-    public MeshFilter prismMesh;
+    public Mesh pyramidMesh;
+    public Mesh prismMesh;
 
     //parameters to tweak
     [Tooltip("How many iterations to have.")]
@@ -116,11 +116,11 @@ public class CoralPyramidSpawn : MonoBehaviour
 
         if (usePrism)
         {
-            inst.mesh = prismMesh.sharedMesh; //use prism mesh
+            inst.mesh = prismMesh; //use prism mesh
         }
         else
         {
-        inst.mesh = pyramidMesh.sharedMesh; // use pyramid mesh
+        inst.mesh = pyramidMesh; // use pyramid mesh
         }                   
 
         inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(rotationPerSegment / 53 * scale, scale, rotationPerSegment / 53 * scale));

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8856533629082828893}
   - component: {fileID: 8856533629082828892}
   m_Layer: 0
-  m_Name: JoshCoralPyramidSpawner
+  m_Name: CoralPyramidSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,10 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af4c092ed731064e9b1520af79f060f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pyramidMesh: {fileID: 7582523416606775353, guid: 3ce7fd6d685026e43b4ee10a74079aeb,
-    type: 3}
-  prismMesh: {fileID: 2533957084980682736, guid: 537ed4ace78a2464daa321cc74e04f8f,
-    type: 3}
+  pyramidMesh: {fileID: 4300000, guid: 57fc67423f30ace45a480d9b8271021f, type: 2}
+  prismMesh: {fileID: 4300000, guid: e74138ca299e9ea4992a5d733124b98e, type: 2}
   iterations: 5
   flipEveryNth: 3
   rotationPerSegment: 63.4

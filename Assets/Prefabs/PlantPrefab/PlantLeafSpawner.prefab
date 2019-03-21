@@ -50,12 +50,11 @@ MonoBehaviour:
   stemPrefab: {fileID: 6347859486127614871, guid: 652563669c73e3648acae12578df8a05,
     type: 3}
   iterations: 2
-  scale: 1
   chanceForBranches: 20
   leafVariance: 5
   stemAngle: 5
   numberOfLeaves: 3
-  scaleDownRate: 0.9
+  randomVars: 1
   randomSeed: 1
   seed: 0
 --- !u!23 &5078370866149129379
@@ -75,7 +74,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 2100000, guid: 2dc8692d7775fb046ab51b28187e4d51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
