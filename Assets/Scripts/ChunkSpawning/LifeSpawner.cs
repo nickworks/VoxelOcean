@@ -117,6 +117,9 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralPrecious;
+    public GameObject prefabCoralPyramid;
+
+    public GameObject prefabPlantLeaf;
     /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
@@ -184,6 +187,17 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
+        if (biome.owner == BiomeOwner.Josh){
+            //chance of spawning pyramid, or plant
+            if (Random.Range(1, 5) > 3)
+            {
+                Instantiate(prefabCoralPyramid, pos, rot, transform);
+            }
+            else
+            {
+                Instantiate(prefabPlantLeaf, pos, rot, transform);
+            }
+        }
         if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
