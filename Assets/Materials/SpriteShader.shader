@@ -20,6 +20,8 @@
 
 		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
+		ZWrite Off
+		//AlphaToMask On
 
 		GrabPass{}
 
@@ -69,14 +71,14 @@
 				_StartOpac-= unity_DeltaTime.y;
 
 				fixed4 srcCol = tex2D(_MainTex, i.uv);
-				fixed4 dispPos = tex2D(_DispTex, i.uv);
+				fixed4 dispPos = tex2D(_DispTex, float2(i.uv.x, i.uv.y - (_Time.y + i.color.a / 2)));
 				fixed4 vinCol = tex2D(_VinTex, i.uv);
 				float2 offset = (dispPos.xy * 2 - 1) * _DispPower * vinCol.r;
 
 				fixed4 grabColor = tex2D(_GrabTexture, i.grabPos.xy + offset);
 				fixed4 texColor = tex2D(_MainTex, i.uv)*i.color;
 
-				fixed4 finalColor = lerp(fixed4(grabColor.rgb,srcCol.a), grabColor, vinCol.r);
+				fixed4 finalColor = lerp(fixed4(grabColor.rgb, 0.0), grabColor, vinCol.r * 2);
 				finalColor.a *= i.color.a;
 
 				return finalColor;
