@@ -77,7 +77,7 @@
 				fixed4 texColor = tex2D(_MainTex, i.uv)*i.color;
 
 				fixed4 finalColor = lerp(fixed4(grabColor.rgb,srcCol.a), grabColor, vinCol.r);
-				//finalColor.a *= _StartOpac;
+				finalColor.a *= i.color.a;
 
 				return finalColor;
 			}
