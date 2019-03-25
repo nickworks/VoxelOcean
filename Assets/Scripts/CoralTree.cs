@@ -3,21 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Spawns random Coral Trees
+/// </summary>
 public class CoralTree : MonoBehaviour
 {
-    //decides how many / long the branches grow
+    /// <summary>
+    /// how many iterations per branch
+    /// </summary>
     [Range(2, 8)] public int iterations = 6;
 
-    //decides the scale of the individual branches
+    /// <summary>
+    /// the scale of each branch
+    /// </summary>
     public Vector3 branchScale = new Vector3(.25f, 1, .25f);
 
     void Start()
     {
-        //creates a random "tree" everytime it spawns
         Build();
     }
 
-    //builds the coral based on the Grow function
+    /// <summary>
+    /// combines everything into one mesh
+    /// </summary>
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
@@ -33,7 +41,14 @@ public class CoralTree : MonoBehaviour
 
     }//end Build
 
-    //decides what each tree will look like
+    /// <summary>
+    /// where the recursion happens
+    /// </summary>
+    /// <param name="num">the number of iterations</param>
+    /// <param name="meshes">the list of the meshes to be combined</param>
+    /// <param name="pos">the position of the meshes</param>
+    /// <param name="rot">the rotstion of the meshes</param>
+    /// <param name="scale">the scale of the meshes</param>
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
         if (num <= 0) return;//stop
@@ -58,7 +73,6 @@ public class CoralTree : MonoBehaviour
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(30, 90), Random.Range(0, 45));
 
             Grow(num, meshes, sidePos, rot1, scale);
-            print("0");
         }
 
         //four branches
@@ -73,7 +87,6 @@ public class CoralTree : MonoBehaviour
             Grow(num, meshes, pos, rot2, scale);
             Grow(num, meshes, pos, rot3, scale);
             Grow(num, meshes, pos, rot4, scale);
-            print("1");
         }
 
         //three branches
@@ -86,7 +99,6 @@ public class CoralTree : MonoBehaviour
             Grow(num, meshes, pos, rot1, scale);
             Grow(num, meshes, pos, rot2, scale);
             Grow(num, meshes, pos, rot3, scale);
-            print("2");
         }
 
         //two branches
@@ -97,14 +109,16 @@ public class CoralTree : MonoBehaviour
             
             Grow(num, meshes, pos, rot1, scale);
             Grow(num, meshes, pos, rot2, scale);
-            print("3");
         }
 
         scale *= scale;
 
     }//end Grow
 
-    //creates a cube based on the location of each vertices
+    /// <summary>
+    /// Creates the mesh
+    /// </summary>
+    /// <returns></returns>
     private Mesh MakeCube()
     {
         List<Vector3> verts = new List<Vector3>();
