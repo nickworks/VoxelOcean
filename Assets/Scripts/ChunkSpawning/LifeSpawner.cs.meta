@@ -11,7 +11,7 @@ MonoImporter:
   - prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
       type: 3}
   - prefabCoralPurpleFan: {instanceID: 0}
-  - prefabPlantKelp: {fileID: 8532716728260304023, guid: d73592db77dcdf744ba98b6a5b38cddd,
+  - prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
       type: 3}
   - prefabCoralTubeWorm: {instanceID: 0}
   executionOrder: 0
