@@ -117,9 +117,16 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
     /// <summary>
+    /// Prfab reference for PlantKelp. (Kyle Lowery)
+    /// </summary>
+    public GameObject prefabPlantKelp;
+    public GameObject prefabCoralPrecious;
+    public GameObject prefabCoralPyramid;
+    /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
     public GameObject prefabCoralTubeWorm;
+    public GameObject prefabPlantLeaf;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -193,8 +200,9 @@ public class LifeSpawner : MonoBehaviour
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
-        //if (biome.owner == BiomeOwner.Kyle) prefab = ;
+        if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
+        if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
 
         if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
 
@@ -218,11 +226,3 @@ public class LifeSpawner : MonoBehaviour
 
     }
 }
-
-
-    public GameObject prefabCoralPrecious;
-    public GameObject prefabCoralPyramid;
-
-    public GameObject prefabPlantLeaf;
-        if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
-        //if (biome.owner == BiomeOwner.Kyle) prefab = ;
