@@ -178,8 +178,6 @@ public class LifeSpawner : MonoBehaviour
 
         Biome biome = Biome.FromColor(color);
 
-        print("Spawning life in " + biome.owner + "'s biome...");
-
         if (printDebug) print("Spawning life in " + biome.owner + "'s biome...");
 
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
