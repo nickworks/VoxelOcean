@@ -61,23 +61,23 @@ public class PropertiesBase : MonoBehaviour
     /// <summary>
     /// A publicly accessable reference to all entities within the game.
     /// </summary>
-    public static Dictionary<string, PropertiesBase> all;
+    public static Dictionary<string, PropertiesBase> all = new Dictionary<string, PropertiesBase>();
     /// <summary>
     /// A publicly accessable reference to all animals within the game.
     /// </summary>
-    public static Dictionary<string, PropertiesAnimal> animals;
+    public static Dictionary<string, PropertiesAnimal> animals = new Dictionary<string, PropertiesAnimal>();
     /// <summary>
     /// A publicly accessable reference to all plants within the game.
     /// </summary>
-    public static Dictionary<string, PropertiesPlant> plants;
+    public static Dictionary<string, PropertiesPlant> plants = new Dictionary<string, PropertiesPlant>();
     /// <summary>
     /// A publicly accessable reference to all coral within the game.
     /// </summary>
-    public static Dictionary<string, PropertiesCoral> coral;
+    public static Dictionary<string, PropertiesCoral> coral = new Dictionary<string, PropertiesCoral>();
     /// <summary>
     /// A publicly accessable reference to all entities within the game that do not fit into the other catagories, such as rocks.
     /// </summary>
-    public static Dictionary<string, PropertiesOther> others;
+    public static Dictionary<string, PropertiesOther> others = new Dictionary<string, PropertiesOther>();
 
     /// <summary>
     /// This OnEnable logic is used to add this entity to all dictionaries which accurately describe it and do not already contain it.
