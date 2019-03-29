@@ -391,7 +391,7 @@ public class CoralPurpleFan : MonoBehaviour
         {
 
 
-            Color color = Color.HSVToRGB(.7f, .6f, .7f, .35f);
+            Color color = Color.HSVToRGB(.7f, .6f, .7f);
 
             colors.Add(color);
         }
