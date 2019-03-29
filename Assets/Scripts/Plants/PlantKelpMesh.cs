@@ -6,6 +6,7 @@ using UnityEditor;
 /// <summary>
 /// This script creates a mesh for a PlantKelp object using mesh construction functions.
 /// Author: Kyle Lowery
+/// Last Date Updated: 03/29/2019
 /// </summary>
 public class PlantKelpMesh : MonoBehaviour
 {
@@ -67,14 +68,24 @@ public class PlantKelpMesh : MonoBehaviour
     /// </summary>
     [Range(0, 45f)] public float maxRandom = 30f;
 
+    //Hue modifiers:
+    /// <summary>
+    /// Sets the minimum value of the hue color.
+    /// </summary>
     [Range(.1f, .9f)] public float hueMin = .1f;
+    /// <summary>
+    /// Sets the maximum value of the hue color.
+    /// </summary>
     [Range(.1f, 1f)] public float hueMax = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .5f;
+        // Check to make sure Unity values don't break the code:
+        if (minRandom > maxRandom || minRandom == maxRandom) minRandom = maxRandom - 1;
+        if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .1f;
 
+        // Start building the mesh:
         Build();
     }
 
@@ -123,17 +134,23 @@ public class PlantKelpMesh : MonoBehaviour
         // Count down number of passes:
         num--;
 
+        // Get the position of the end of this section:
         pos = stem.transform.MultiplyPoint(new Vector3(0, 1, 0));
         
+        //Generate random angles based on set angle values:
         float randX = angleX + Random.Range(minRandom, maxRandom);
         float randY = angleY + Random.Range(minRandom, maxRandom);
         float randZ = angleZ + Random.Range(minRandom, maxRandom);
 
+        //Create a Quaternion to change the local transform to the world Vector3.up:
         Quaternion rot1 = Quaternion.FromToRotation(transform.up, Vector3.up);
+        //Create a Quaternion using the random angles from earlier:
         Quaternion rot2 = Quaternion.Euler(randX, randY, randZ);
 
+        //Use a slerp to create a Quaternion between rot1 and rot2, leaning more towards randomness in later segments:
         Quaternion finalRot = Quaternion.Slerp(rot1, rot2, (num/(float)iterations));
         
+        //Grow another segment:
         Grow(num, meshes, pos, finalRot);
     }
     /// <summary>
