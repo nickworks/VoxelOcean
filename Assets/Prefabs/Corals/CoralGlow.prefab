@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4215765450872021454
+--- !u!1 &2570415099341971992
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4215765450872021450}
-  - component: {fileID: 4215765450872021453}
-  - component: {fileID: 4215765450872021452}
-  - component: {fileID: 4215765450872021455}
+  - component: {fileID: 2132010133955996118}
+  - component: {fileID: 4592105782611681004}
+  - component: {fileID: 4175372070534847607}
+  - component: {fileID: 4753737815735315702}
   m_Layer: 0
-  m_Name: CoralPrecious
+  m_Name: CoralGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4215765450872021450
+--- !u!4 &2132010133955996118
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4215765450872021454}
-  m_LocalRotation: {x: -0.001271145, y: -0, z: -0, w: 0.9999992}
-  m_LocalPosition: {x: -3.26, y: 0.09110409, z: -0.9462375}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_GameObject: {fileID: 2570415099341971992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.14600001, y: 0, z: 0}
---- !u!23 &4215765450872021453
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &4592105782611681004
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4215765450872021454}
+  m_GameObject: {fileID: 2570415099341971992}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -50,7 +50,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 806e144ce7a86074bb4b10a39d6bba3d, type: 2}
+  - {fileID: 2100000, guid: 72b1a7247a56c0a4ea8a1398989780c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70,28 +70,32 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &4215765450872021452
+--- !u!33 &4175372070534847607
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4215765450872021454}
+  m_GameObject: {fileID: 2570415099341971992}
   m_Mesh: {fileID: 0}
---- !u!114 &4215765450872021455
+--- !u!114 &4753737815735315702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4215765450872021454}
+  m_GameObject: {fileID: 2570415099341971992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df91bbab2832f0499f8aa63fc568b51, type: 3}
+  m_Script: {fileID: 11500000, guid: 12546c0b58257c348ad88c48b7bb500c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHealth: 0
+  absoluteControl: 0
+  branchScale: {x: 0.25, y: 1, z: 0.25}
   iterations: 3
-  branches: 5
-  xScaling: 0.15
-  yScaling: 1
-  zScaling: 0.15
+  bonusIterations: 2
+  xRotator: 45
+  zRotator: 45
+  yRotator: 45
+  glow: 0.5

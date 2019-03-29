@@ -116,6 +116,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
+    public GameObject prefabCoralFingers;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
@@ -132,6 +133,11 @@ public class LifeSpawner : MonoBehaviour
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
     /// </summary>
     MeshFilter mesh;
+
+    /// <summary>
+    /// Prefab reference for Glowing coral
+    /// </summary>
+    public GameObject prefabCoralGlow;
 
     /// <summary>
     /// Attempt to spawn a bunch of life on this VoxelChunk
@@ -183,7 +189,7 @@ public class LifeSpawner : MonoBehaviour
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
         GameObject prefab = null;
-        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
+        if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
         if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
         if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
@@ -194,7 +200,7 @@ public class LifeSpawner : MonoBehaviour
         }
         if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
+        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
