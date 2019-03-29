@@ -111,6 +111,9 @@ public class LifeSpawner : MonoBehaviour
     /// Socket for Dom's Vornoi Coral 
     /// </summary>
     public GameObject prefabCoralVoronoi;
+	/// <summary>
+	/// Prefab reference for Broccoli Coral (Jess P)
+	/// </summary>
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
     public GameObject prefabCoralCrystal;
@@ -127,6 +130,10 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCoralTubeWorm;
     public GameObject prefabPlantLeaf;
+	/// <summary>
+	/// Prefab reference for Seagrass (Jess P)
+	/// </summary>
+	public GameObject prefabPlantSeagrass;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -197,7 +204,9 @@ public class LifeSpawner : MonoBehaviour
             //chance of spawning pyramid, or plant
             prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
         }
-        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
+		if (biome.owner == BiomeOwner.Jess){
+			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
+		}
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         //if (biome.owner == BiomeOwner.Jesse) prefab = ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
