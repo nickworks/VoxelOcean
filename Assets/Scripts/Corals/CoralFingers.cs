@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-// TODO: please comment your code in documentation style.  you can do this by starting a comment with "///".
+/// <summary>
+///   This is the base class for the CoralMesh script 
+/// adds colors to the mesh and builds itself.
+/// </summary>
 public class CoralFingers : MonoBehaviour
 {
     MeshFilter meshFilter;
