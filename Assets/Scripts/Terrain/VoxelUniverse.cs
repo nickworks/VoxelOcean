@@ -71,12 +71,14 @@ public class VoxelUniverse : MonoBehaviour
     /// <summary>
     /// The currently generated list of chunks.
     /// </summary>
-    List<VoxelChunk> chunks = new List<VoxelChunk>();
+
+    VoxelChunk[,,] chunks;
 
     Coroutine coroutine;
 
     void Start()
     {
+        chunks = new VoxelChunk[1 + renderDistance * 2, 1 + renderDistanceVertical * 2, 1 + renderDistance * 2];
         main = this;
         Create();
     }
@@ -91,18 +93,43 @@ public class VoxelUniverse : MonoBehaviour
         // stop active generation:
         if (coroutine != null) StopCoroutine(coroutine);
         // destroy existing chunks:
-        DestroyChunks();
+        DestroyAllChunks();
         // begin asyncronous generation:
         coroutine = StartCoroutine(SpawnChunks());
     }
-    void DestroyChunks()
+
+    /// <summary>
+    /// Create a new chunk layer.
+    /// </summary>
+    public void CreateMoreChunks()
     {
-        foreach (VoxelChunk chunk in chunks)
-        {
-            Destroy(chunk.gameObject);
-        }
-        chunks.Clear();
+
     }
+
+    void DestroyAllChunks()
+    {
+        
+
+        if(chunks.Length > 0)
+        {
+            for (int x = 0; x < 1 + renderDistance * 2; x++)
+            {
+                for (int y = 0; y < 1 + renderDistanceVertical * 2; y++)
+                {
+                    for (int z = 0; z < 1 + renderDistance * 2; z++)
+                    {
+                        if (chunks[x, y, z] == null) continue;
+                        Destroy(chunks[x, y, z].gameObject);
+                        chunks[x, y, z] = null;
+                    }
+                }
+            }
+        }
+        
+        
+
+    }
+
     /// <summary>
     /// Spawns chunks of voxels.
     /// </summary>
@@ -126,6 +153,7 @@ public class VoxelUniverse : MonoBehaviour
             {
                 for (int z = -renderDistance; z <= renderDistance; z++)
                 {
+                     
                     Vector3 pos = new Vector3(x, y, z) * resPerChunk;
                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
                     chunk.Rebuild();
@@ -135,7 +163,8 @@ public class VoxelUniverse : MonoBehaviour
                     }
                     else
                     {
-                        chunks.Add(chunk);
+                        //chunks.Add(coord);
+                        chunks[x, y, z] = chunk; 
                     }
                     i++;
                     percentGenerated = i / (float)numChunks;
@@ -176,4 +205,7 @@ public class VoxelUniverse : MonoBehaviour
             
         }
     }
+
+
+
 }
