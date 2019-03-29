@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 2581658518344738572}
   - component: {fileID: 2581658518344738575}
   - component: {fileID: 2581658518344738574}
+  - component: {fileID: 6650651835330801839}
   - component: {fileID: 2271694814210191452}
   - component: {fileID: 3545957980217579752}
   m_Layer: 0
-  m_Name: Coral_Broccoli
+  m_Name: CoralBroccoli
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,6 +80,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6650651835330801839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2581658518344738568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aedefbc0080c80945a8f0cbcbff2597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iterations: 3
+  branchScaling: {x: 0.25, y: 1, z: 0.25}
 --- !u!114 &2271694814210191452
 MonoBehaviour:
   m_ObjectHideFlags: 0
