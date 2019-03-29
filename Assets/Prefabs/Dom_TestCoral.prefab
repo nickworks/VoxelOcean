@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6183259348291943136}
   - component: {fileID: 4174616497712387241}
   - component: {fileID: 328028237203063674}
+  - component: {fileID: 9209482394495152375}
   m_Layer: 0
   m_Name: Dom_TestCoral
   m_TagString: Untagged
@@ -91,3 +92,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9209482394495152375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4817110474441004811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: 
+  mobility: 0
+  special: 
+  defense: 0
+  size: 0
+  tangibility: 0

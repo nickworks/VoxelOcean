@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4215765450872021452}
   - component: {fileID: 4215765450872021455}
   - component: {fileID: 1845664869135153651}
+  - component: {fileID: 662064238048060672}
   m_Layer: 0
   m_Name: CoralPrecious
   m_TagString: Untagged
@@ -109,3 +110,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &662064238048060672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215765450872021454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: 
+  mobility: 0
+  special: 
+  defense: 0
+  size: 0
+  tangibility: 0

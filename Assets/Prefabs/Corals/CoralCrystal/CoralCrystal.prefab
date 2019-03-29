@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4110290460678341350}
   - component: {fileID: 7650360974209221560}
   - component: {fileID: 2584341277058590173}
+  - component: {fileID: 3683775889456287560}
   m_Layer: 0
   m_Name: CoralCrystal
   m_TagString: Untagged
@@ -97,3 +98,22 @@ MonoBehaviour:
   scalar: 0.5168334
   objpos: 0.59719074
   branchScale: {x: 0.25, y: 1, z: 0.25}
+--- !u!114 &3683775889456287560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3273964410850748819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: 
+  mobility: 0
+  special: 
+  defense: 0
+  size: 0
+  tangibility: 0

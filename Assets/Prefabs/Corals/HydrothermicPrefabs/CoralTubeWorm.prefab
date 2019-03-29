@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1778713374299121267}
   - component: {fileID: 1778713374299121268}
   - component: {fileID: 1778713374299121269}
+  - component: {fileID: 2664753442384728316}
   m_Layer: 0
   m_Name: CoralTubeWorm
   m_TagString: Untagged
@@ -109,3 +110,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2664753442384728316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778713374299121270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: 
+  mobility: 0
+  special: 
+  defense: 0
+  size: 0
+  tangibility: 0

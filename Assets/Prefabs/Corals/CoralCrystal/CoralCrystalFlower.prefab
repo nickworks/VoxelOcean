@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5939494914578814258}
   - component: {fileID: 5939494914578814256}
   - component: {fileID: 5939494914578814259}
+  - component: {fileID: 4975289026385349160}
   m_Layer: 0
   m_Name: CoralCrystalFlower
   m_TagString: Untagged
@@ -97,3 +98,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5939494914578814260}
   m_Mesh: {fileID: 0}
+--- !u!114 &4975289026385349160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5939494914578814260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: 
+  mobility: 0
+  special: 
+  defense: 0
+  size: 0
+  tangibility: 0
