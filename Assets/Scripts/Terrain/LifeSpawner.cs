@@ -119,6 +119,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
+    public GameObject prefabCoralFingers;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
@@ -208,7 +209,7 @@ public class LifeSpawner : MonoBehaviour
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
+        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
