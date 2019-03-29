@@ -26,11 +26,11 @@ public class PlantSeagrass : MonoBehaviour {
 	/// </summary>
 	public void Build () {
 		List<CombineInstance> meshes = new List<CombineInstance> ();
-		Grow (iterations, meshes, new Vector3(0, 0, 0), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),0,Random.Range(.2f, 2)), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (Random.Range(-2, .2f) ,0,Random.Range(-2, -.2f)), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (Random.Range(-2, -.2f) ,0,Random.Range(.2f, 2)), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),0,Random.Range(-2, -.2f)), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3(0,-.3f, 0), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),-.3f,Random.Range(.2f, 2)), Quaternion.identity, Random.Range(.5f, 2));
+		Grow (iterations, meshes, new Vector3 (Random.Range(-2, .2f) ,-.3f,Random.Range(-2, -.2f)), Quaternion.identity, Random.Range(.5f,2));
+		Grow (iterations, meshes, new Vector3 (Random.Range(-2, -.2f) ,-.3f,Random.Range(.2f, 2)), Quaternion.identity, Random.Range(.5f, 2));
+		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),-.3f,Random.Range(-2, -.2f)), Quaternion.identity, Random.Range(.5f, 2));
 
 		Mesh mesh = new Mesh ();
 		mesh.CombineMeshes (meshes.ToArray());
