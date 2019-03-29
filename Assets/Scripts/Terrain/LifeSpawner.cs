@@ -134,6 +134,11 @@ public class LifeSpawner : MonoBehaviour
     MeshFilter mesh;
 
     /// <summary>
+    /// Prefab reference for Glowing coral
+    /// </summary>
+    public GameObject prefabCoralGlow;
+
+    /// <summary>
     /// Attempt to spawn a bunch of life on this VoxelChunk
     /// </summary>
     public void SpawnSomeLife()
@@ -183,7 +188,7 @@ public class LifeSpawner : MonoBehaviour
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
         GameObject prefab = null;
-        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
+        if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
         if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
         if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;

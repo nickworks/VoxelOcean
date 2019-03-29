@@ -816,19 +816,9 @@ MonoBehaviour:
   biomeScaling: 50
   signalFields:
   - type: 0
-    zoom: 20.442778
-    densityBias: -0.106763974
-    flattenAmount: 0.308
-    flattenOffset: 0
-  - type: 0
-    zoom: 82.969284
-    densityBias: -0.17424001
-    flattenAmount: 0.304
-    flattenOffset: 0
-  - type: 3
-    zoom: 27.2
-    densityBias: -0.098
-    flattenAmount: 0.385
+    zoom: 18
+    densityBias: -0.07585199
+    flattenAmount: 0.64438033
     flattenOffset: 0
 --- !u!4 &2135429414
 Transform:
