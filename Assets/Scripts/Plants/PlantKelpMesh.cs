@@ -84,7 +84,6 @@ public class PlantKelpMesh : MonoBehaviour
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
-
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity);
 
         Mesh mesh = new Mesh();
@@ -125,15 +124,17 @@ public class PlantKelpMesh : MonoBehaviour
         num--;
 
         pos = stem.transform.MultiplyPoint(new Vector3(0, 1, 0));
-        Vector3 sidePos = stem.transform.MultiplyPoint(new Vector3(.5f, .5f, 0));
+        
+        float randX = angleX + Random.Range(minRandom, maxRandom);
+        float randY = angleY + Random.Range(minRandom, maxRandom);
+        float randZ = angleZ + Random.Range(minRandom, maxRandom);
 
-        float rotX = angleX + Random.Range(minRandom, maxRandom);
-        float rotY = angleY + Random.Range(minRandom, maxRandom);
-        float rotZ = angleZ + Random.Range(minRandom, maxRandom);
+        Quaternion rot1 = Quaternion.FromToRotation(transform.up, Vector3.up);
+        Quaternion rot2 = Quaternion.Euler(randX, randY, randZ);
 
-        Quaternion rot1 = rot * Quaternion.Euler(rotX, rotY, rotZ);
-
-        Grow(num, meshes, pos, rot1);
+        Quaternion finalRot = Quaternion.Slerp(rot1, rot2, (num/(float)iterations));
+        
+        Grow(num, meshes, pos, finalRot);
     }
     /// <summary>
     /// Makes a mesh for a 1m-sized cube.
