@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43fe3856bb158345a4ff83c30c4677b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: 806e144ce7a86074bb4b10a39d6bba3d, type: 2}
+  mat: {fileID: 2100000, guid: ee4bcb4310e8c9e45b618a8a113e7293, type: 2}
   filter: {fileID: 1778713374299121268}
   meshrenderer: {fileID: 1778713374299121269}
   baseIterations: 14

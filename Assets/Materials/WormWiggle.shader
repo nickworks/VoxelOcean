@@ -49,15 +49,21 @@
 
 			float colDist = (whtDist + redDist) / 2;
 
-			float tx = IN.vertex.x + _Time.x;
-			float tz = IN.vertex.z + _Time.x;
+			float4 pos = mul(unity_ObjectToWorld, IN.vertex * .01) / 1;
+			pos.x += _Time.x * .1;
+			pos.z += _Time.x * .1;
+			pos.y += _Time.x * .1;
 
-			fixed4 col = tex2Dlod(_Noise, float4(tx, tz, 0, 0));
+			//float tx = IN.vertex.x + _Time.x;
+			//float tz = IN.vertex.z + _Time.x;
 
-			fixed4 offset = col.rgba * _Wind * ((colDist > .5) ? colDist : 0);
+			fixed4 col = tex2Dlod(_Noise, pos);
+			col.xz *= 100;
 
-			IN.vertex.xyz += offset;
-			IN.vertex.xyz -= .5 * offset;
+			//fixed4 offset = col.rgba * _Wind * colDist;
+
+			IN.vertex.xyz += col.rgb * colDist * colDist;
+			//IN.vertex.xyz -= .5 * offset;
 		}
 
         void surf (Input IN, inout SurfaceOutputStandard o)
