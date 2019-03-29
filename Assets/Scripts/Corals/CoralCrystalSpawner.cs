@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -41,11 +41,20 @@ public class CoralCrystalSpawner : MonoBehaviour
     /// branchScale : is the scale of each branch object / transform scale
     /// </summary>
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
+    ///<summary>
+    ///hueMin minimum of the hue values of colors
+    /// </summary>
+    [Range(.5f, .6f)] public float hueMin = .5f;
+    /// <summary>
+    /// hueMax, maxium of the  of the hue values of colors
+    /// </summary>
+    [Range(.6f, 1f)] public float hueMax = .65f;
     
-/// <summary>
-/// Start / Build Function
-/// Creates the object and coral mesh
-/// </summary>
+
+    /// <summary>
+    /// Start / Build Function
+    /// Creates the object and coral mesh
+    /// </summary>
     void Start()
     {
         Build();
@@ -80,6 +89,8 @@ public class CoralCrystalSpawner : MonoBehaviour
         List<CombineInstance> meshes = new List<CombineInstance>();
 
         Grow(meshes, iterations, Vector3.zero, Quaternion.identity, 1);
+        GetComponent<Transform>().Rotate(0, Random.value * 360, 0); //randomize Y rotation
+
 
         Mesh mesh = new Mesh();
         mesh.CombineMeshes(meshes.ToArray());
@@ -116,19 +127,19 @@ public class CoralCrystalSpawner : MonoBehaviour
         pos = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), 1, Random.Range(0, 1)));
 
         Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(objpos, objpos, objpos));
-
         Vector3 sidePos2 = inst.transform.MultiplyPoint(new Vector3(-objpos, objpos, -objpos));
-
+        Vector3 sidePos3 = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), objpos, Random.Range(0, 1)));
         Quaternion rot1 = rot * Quaternion.Euler(angle3, angle1, angle2);
         Quaternion rot2 = rot * Quaternion.Euler(0, angle2, 0);
         Quaternion rot3 = rot * Quaternion.Euler(-angle3, 0, -angle2); //to avoid stretching
 
         scale *= scalar;
+       //ranchScale -= ;
         //BUG - Objects will sometimes 'stretch'
         Grow(meshes, num, pos, rot1, scale); //doing one for tendril like
         Grow(meshes, num, sidePos, rot2, scale); // doing for tendril 2
-        Grow(meshes, num, sidePos2, rot3, scale); // tendril 3
-
+        Grow(meshes, num / 2, sidePos2, rot3, scale / 2 ); // tendril 3
+        Grow(meshes, num / 2, sidePos3, rot3, scale / 2); // tendril 4
     }
     /// <summary>
     /// Randomize Range
@@ -160,10 +171,6 @@ public class CoralCrystalSpawner : MonoBehaviour
         List<Vector3> normals = new List<Vector3>();
         List<Color> colors = new List<Color>();
         List<int> tris = new List<int>();
-
-
-
-
         //FRONT
         vertices.Add(new Vector3(-0.5f, 0, -0.5f));
         vertices.Add(new Vector3(-0.5f, 1, -0.5f));
@@ -288,8 +295,6 @@ public class CoralCrystalSpawner : MonoBehaviour
 
 
         //Set hue min and Max
-        float hueMin = .4f;
-        float hueMax = Random.Range(.6f, 1);
 
         float hue = Mathf.Lerp(hueMin, hueMax, (num / (float) iterations));
         /*
@@ -297,7 +302,7 @@ public class CoralCrystalSpawner : MonoBehaviour
         */
         foreach (Vector3 pos in vertices)
         {
-            float tempHue = hue;
+            float tempHue = hue + (1 / (float)iterations) * pos.y;
 
             Color color = Color.HSVToRGB(tempHue, 1, 1);
 
