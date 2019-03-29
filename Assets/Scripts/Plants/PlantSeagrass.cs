@@ -26,12 +26,11 @@ public class PlantSeagrass : MonoBehaviour {
 	/// </summary>
 	public void Build () {
 		List<CombineInstance> meshes = new List<CombineInstance> ();
-		print(transform.localPosition.z);
-		Grow (iterations, meshes, Vector3.zero, Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (transform.localPosition.x + .2f ,0,transform.localPosition.z + .2f), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (transform.localPosition.x - .2f ,0,transform.localPosition.z - .2f), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (transform.localPosition.x - .2f ,0,transform.localPosition.z + .2f), Quaternion.identity, 1);
-		Grow (iterations, meshes, new Vector3 (transform.localPosition.x + .2f ,0,transform.localPosition.z - .2f), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3(0, 0, 0), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),0,Random.Range(.2f, 2)), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3 (Random.Range(-2, .2f) ,0,Random.Range(-2, -.2f)), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3 (Random.Range(-2, -.2f) ,0,Random.Range(.2f, 2)), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),0,Random.Range(-2, -.2f)), Quaternion.identity, 1);
 
 		Mesh mesh = new Mesh ();
 		mesh.CombineMeshes (meshes.ToArray());
@@ -63,7 +62,7 @@ public class PlantSeagrass : MonoBehaviour {
 		num--;
 
 		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));
-		Quaternion randomPosRot = rot * Quaternion.Euler (0, Random.Range(0, 15), Random.Range(0, 20));
+		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 15), Random.Range(0, 15), Random.Range(0, 20));
 		Quaternion randomNegRot = rot * Quaternion.Euler (0, Random.Range(0, -15),  Random.Range(0, -20));
 		scale *= .75f;
 
