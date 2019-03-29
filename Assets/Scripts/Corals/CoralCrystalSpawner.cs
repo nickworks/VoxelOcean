@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -44,12 +44,12 @@ public class CoralCrystalSpawner : MonoBehaviour
     ///<summary>
     ///hueMin minimum of the hue values of colors
     /// </summary>
-    [Range(.5f, .6f)] public float hueMin = .5f;
+    [Range(.3f, .4f)] public float hueMin = .4f;
     /// <summary>
     /// hueMax, maxium of the  of the hue values of colors
     /// </summary>
-    [Range(.6f, 1f)] public float hueMax = .65f;
-    
+    [Range(.4f, 7f)] public float hueMax = .6f;
+
 
     /// <summary>
     /// Start / Build Function

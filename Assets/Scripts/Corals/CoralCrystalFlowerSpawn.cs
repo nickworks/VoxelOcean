@@ -45,6 +45,17 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     /// is the scale of each branch object / transform scale
     /// </summary>
     public Vector3 branchScale = new Vector3(.25f, 2, .25f);
+    ///<summary>
+    ///hueMin minimum of the hue values of colors
+    /// </summary>
+    [Range(.3f, .4f)] public float hueMin = .4f;
+    /// <summary>
+    /// hueMax, maxium of the  of the hue values of colors
+    /// </summary>
+    [Range(.4f, 4f)] public float hueMax = .6f;
+
+
+
     /// <summary>
     /// Start / Build Function
     /// Creates the object and coral mesh
@@ -113,6 +124,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
 
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
         Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(objpos, objpos, objpos));
+        Vector3 sidePos2 = inst.transform.MultiplyPoint(new Vector3(-objpos, objpos, -objpos));
         Quaternion rot1 = rot * Quaternion.Euler(angle1, angle2, angle3);
         Quaternion rot2 = rot * Quaternion.Euler(-angle1, -angle2, -angle3);
         scale *= scalar;
@@ -269,8 +281,6 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         tris.Add(20);
 
         //Set hue min and Max
-        float hueMin = .6f;
-        float hueMax = Random.Range(.7f, 1);
 
         float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
         /*
@@ -278,7 +288,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         */
         foreach (Vector3 pos in vertices)
         {
-            float tempHue = hue;
+            float tempHue = hue + (1 / (float)iterations) * pos.y;
 
             Color color = Color.HSVToRGB(tempHue, 1, 1);
 
