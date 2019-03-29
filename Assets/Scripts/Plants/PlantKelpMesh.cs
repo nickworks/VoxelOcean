@@ -5,6 +5,7 @@ using UnityEditor;
 
 /// <summary>
 /// This script creates a mesh for a PlantKelp object using mesh construction functions.
+/// Author: Kyle Lowery
 /// </summary>
 public class PlantKelpMesh : MonoBehaviour
 {
@@ -66,9 +67,14 @@ public class PlantKelpMesh : MonoBehaviour
     /// </summary>
     [Range(0, 45f)] public float maxRandom = 30f;
 
+    [Range(.1f, .9f)] public float hueMin = .1f;
+    [Range(.1f, 1f)] public float hueMax = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .5f;
+
         Build();
     }
 
@@ -100,7 +106,7 @@ public class PlantKelpMesh : MonoBehaviour
 
         // Add Stem Mesh:
         CombineInstance stem = new CombineInstance();
-        stem.mesh = MakeCylinder();
+        stem.mesh = MakeCylinder(num);
         stem.transform = Matrix4x4.TRS(pos, rot, stemScaling);
         meshes.Add(stem);
 
@@ -108,7 +114,7 @@ public class PlantKelpMesh : MonoBehaviour
         for (int i = 1; i <= numberOfLeaves; i++)
         {
             CombineInstance leaves = new CombineInstance();
-            leaves.mesh = MakeCube();
+            leaves.mesh = MakeCube(num);
             float rotAmount = 360 / (numberOfLeaves * i);
             Quaternion leafRot = rot * Quaternion.Euler(leafOffsetAngleX, leafOffsetAngleY * rotAmount, leafOffsetAngleZ);
             leaves.transform = Matrix4x4.TRS(pos, leafRot, leafScaling);
@@ -133,12 +139,13 @@ public class PlantKelpMesh : MonoBehaviour
     /// Makes a mesh for a 1m-sized cube.
     /// </summary>
     /// <returns>Mesh data for a 1m-sized cube.</returns>
-    private Mesh MakeCube()
+    private Mesh MakeCube(int num)
     {
         List<Vector3> verts = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
+        List<Color> colors = new List<Color>();
 
         //FRONT
         verts.Add(new Vector3(-0.5f, 0, -0.5f));
@@ -260,11 +267,21 @@ public class PlantKelpMesh : MonoBehaviour
         tris.Add(23);
         tris.Add(20);
 
+        float hue = Mathf.Lerp(hueMin, hueMax, (num/(float)iterations));
+
+        foreach (Vector3 pos in verts)
+        {
+            float tempHue = hue;
+            Color tempColor = Color.HSVToRGB(tempHue, 1, 1);
+            colors.Add(tempColor);
+        }
+
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
         mesh.SetUVs(0, uvs);
         mesh.SetNormals(normals);
         mesh.SetTriangles(tris, 0);
+        mesh.SetColors(colors);
         return mesh;
 
     }
@@ -272,12 +289,13 @@ public class PlantKelpMesh : MonoBehaviour
     /// Makes a mesh for a 1m tall (y-axis) cylinder.
     /// </summary>
     /// <returns>Mesh data for a 1m tall (y-axis) cylinder.</returns>
-    private Mesh MakeCylinder()
+    private Mesh MakeCylinder(int num)
     {
         List<Vector3> verts = new List<Vector3>();
         //List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
+        List<Color> colors = new List<Color>();
 
         //TOP
         verts.Add(new Vector3(+.5f, 1, 0));
@@ -408,13 +426,21 @@ public class PlantKelpMesh : MonoBehaviour
         tris.Add(29);
         tris.Add(27);
 
+        float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
 
+        foreach (Vector3 pos in verts)
+        {
+            float tempHue = hue;
+            Color tempColor = Color.HSVToRGB(tempHue, 1, 1);
+            colors.Add(tempColor);
+        }
 
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
         //mesh.SetUVs(0, uvs);
         mesh.SetNormals(normals);
         mesh.SetTriangles(tris, 0);
+        mesh.SetColors(colors);
         return mesh;
     }
 }

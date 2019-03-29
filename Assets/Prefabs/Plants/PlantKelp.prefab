@@ -57,6 +57,8 @@ MonoBehaviour:
   leafOffsetAngleZ: 35
   minRandom: 0
   maxRandom: 10
+  hueMin: 0.1
+  hueMax: 0.6
 --- !u!33 &4531927683660134110
 MeshFilter:
   m_ObjectHideFlags: 0
