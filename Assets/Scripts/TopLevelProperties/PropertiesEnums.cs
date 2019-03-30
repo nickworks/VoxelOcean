@@ -59,3 +59,50 @@ public enum Tangibility
     PassThrough
 };
 
+/// <summary>
+/// Enumerator to track how durable any given entity is.
+/// </summary>
+public enum Defense
+{
+    Invincible,
+    HighDef,
+    MidDef,
+    LowDef,
+    Frail
+}
+
+/// <summary>
+/// Enumerator to track aproximately how large any given entity is.
+/// </summary>
+public enum Size
+{
+    Huge,
+    Large,
+    Mid,
+    Small,
+    Tiny
+}
+
+/// <summary>
+/// Enumerator to track how fast any given animal is relatie to its size.
+/// </summary>
+public enum Speed
+{
+    LightSpeed,
+    HighSpeed,
+    MidSpeed,
+    LowSpeed,
+    Slow
+}
+
+/// <summary>
+/// Enumerator to track how offensively powerful any given animal is relative to its size.
+/// </summary>
+public enum Strength
+{
+    OnePunch,
+    HighStrength,
+    MidStrength,
+    LowStrength,
+    Weak
+}

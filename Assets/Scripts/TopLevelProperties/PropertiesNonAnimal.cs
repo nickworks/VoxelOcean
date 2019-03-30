@@ -12,5 +12,6 @@ public class PropertiesNonAnimal : PropertiesBase
     /// <summary>
     /// The physical resistance which this entity represents to animals attempting to pass through it.
     /// </summary>
+    [Tooltip("The physical resistance which this entity presents to animals attempting to pass through it.")]
     public Tangibility tangibility;
 }

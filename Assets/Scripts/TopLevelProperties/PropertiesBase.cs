@@ -27,36 +27,43 @@ public class PropertiesBase : MonoBehaviour
             return _id;
         }
     }
+
     /// <summary>
     /// The name of the student who initially created this entity.
     /// </summary>
+    [Tooltip("The name of the student who initially created this entity.")]
     public string creator;
-
+    
     /// <summary>
     /// The general classification of this entity, primarly intended for use by schooling entities to find one another.  
     /// For fish and coral the label "species" should be used literally, for something like a rock just set the species to "volcanicRock" or something.
     /// </summary>
+    [Tooltip("The species (or comparable equivalent) classification of this entity.")]
     public string species;
     /// <summary>
     /// The mobility capabilities of this entity.  For most fish it will probably be swimming, and for most other entities it will probably be immobile.
     /// </summary>
+    [Tooltip("The mobility capabilities of this entity.")]
     public Mobility mobility;
     /// <summary>
     /// A list of all the special attributes this entity has.  For example, an octopus may have both camo and poisonous, depending on the species.
     /// Most entities will likely have no special attributes.
     /// </summary>
+    [Tooltip("A list of all the special attributes this entity has (such as poisonous, camo, etc).")]
     public List<Special> special;
     /// <summary>
-    /// A float representing the physical durability of this entity relative to its size.  
+    /// A enum representing the physical durability of this entity relative to its size.  
     /// For example a turtule or snail would have a very high value, while a squid would have a low one.  
     /// Recommended to keep in the range of 1 - 10, however going above or below is permitted if an extreme case demands it.
     /// </summary>
-    public float defense;
+    [Tooltip("The physical durability of this entity in relation to its aproximate size.")]
+    public Defense defense;
     /// <summary>
-    /// A float representing the aproximate size of this entity.  
+    /// A enum representing the aproximate size of this entity.  
     /// This is not intended to be a literal representation of the size of this entity by any actual unity, just about how large it is relative to other entities.
     /// </summary>
-    public float size;
+    [Tooltip("The aproximate size of this entity.")]
+    public Size size;
 
     /// <summary>
     /// A publicly accessable reference to all entities within the game.

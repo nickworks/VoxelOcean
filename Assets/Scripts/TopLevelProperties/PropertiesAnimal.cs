@@ -12,17 +12,21 @@ public class PropertiesAnimal : PropertiesBase
     /// <summary>
     /// The diet that will indicate how this animal attempts to feed itself.
     /// </summary>
+    [Tooltip("The diet that will indicate how this animal attempts to feed itself.")]
     public Diet diet;
     /// <summary>
     /// The activity which the AI of this animal is currently engaged in.
     /// </summary>
+    [Tooltip("The activity which the AI of this animal is currently engaged in.")]
     public Activity activity;
     /// <summary>
     /// The relative ability of this animal to kill a similarly sized animal in a conflict. 
     /// </summary>
-    public float strength;
+    [Tooltip("The relative ability of this animal to kill a similarly sized animal in a conflict.")]
+    public Strength strength;
     /// <summary>
     /// The relative ability of this animal to out-run a similarly sized animal.  Not nessicarily a literal repersentation if it's actual meters/second speed.
     /// </summary>
-    public float speed;
+    [Tooltip("The relative ability of this animal to out-run a similarly sized animal.")]
+    public Speed speed;
 }

@@ -114,9 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creator: 
-  species: 
-  mobility: 0
+  species: CoralPyramid
+  mobility: 3
   special: 
-  defense: 0
-  size: 0
+  defense: 1
+  size: 1
   tangibility: 0
