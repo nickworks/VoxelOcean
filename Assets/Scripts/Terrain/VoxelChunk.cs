@@ -205,9 +205,6 @@ public class VoxelChunk : MonoBehaviour
         // remove duplicate vertices:
         this.mesh.mesh = MeshTools.RemoveDuplicates(mesh, true);
 
-        // calculate those normals:
-        this.mesh.mesh.RecalculateNormals();
-
         SetVertexColors();
     }
     /// <summary>
