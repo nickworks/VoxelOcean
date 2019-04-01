@@ -23,7 +23,7 @@ public class CoralPrecious : MonoBehaviour
     void Start()
     {
         Build(); // calls the Build function
-        Detect(); // calls the Detect function
+        
     }
 
     /**
@@ -172,27 +172,27 @@ public class CoralPrecious : MonoBehaviour
 
         if (Physics.Raycast(gameObject.transform.position, fwd, out hit, 2)) // cast a ray 2 units ahead of the coral
         {
-            print("There is something in front of the object!");
+            
         }
         else if (Physics.Raycast(gameObject.transform.position, back, out hit, 2)) // cast a ray 2 units behind the coral
         {
-            print("There is something behind of the object!");
+            
         }
         else if (Physics.Raycast(gameObject.transform.position, right, out hit, 2)) // cast a ray 2 units to the right of the coral
         {
-            print("There is something to the right of the object!");
+            
         }
         else if (Physics.Raycast(gameObject.transform.position, left, out hit, 2)) // cast a ray 2 units to the left of the coral
         {
-            print("There is something to the left of the object!");
+            
         }
         else if (Physics.Raycast(gameObject.transform.position, up, out hit, 2)) // cast a ray 2 units above the coral
         {
-            print("There is something above of the object!");
+            
         }
         else if (Physics.Raycast(gameObject.transform.position, dwn, out hit, 2)) // cast a ray 2 units below the coral
         {
-            print("There is something below of the object!");
+            
         }
 
     } // end detect method

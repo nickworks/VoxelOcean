@@ -111,11 +111,15 @@ public class LifeSpawner : MonoBehaviour
     /// Socket for Dom's Vornoi Coral 
     /// </summary>
     public GameObject prefabCoralVoronoi;
+	/// <summary>
+	/// Prefab reference for Broccoli Coral (Jess P)
+	/// </summary>
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
+    public GameObject prefabCoralFingers;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
@@ -127,11 +131,20 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCoralTubeWorm;
     public GameObject prefabPlantLeaf;
+	/// <summary>
+	/// Prefab reference for Seagrass (Jess P)
+	/// </summary>
+	public GameObject prefabPlantSeagrass;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
     /// </summary>
     MeshFilter mesh;
+
+    /// <summary>
+    /// Prefab reference for Glowing coral
+    /// </summary>
+    public GameObject prefabCoralGlow;
 
     /// <summary>
     /// Attempt to spawn a bunch of life on this VoxelChunk
@@ -183,7 +196,7 @@ public class LifeSpawner : MonoBehaviour
         // TODO: add a kind of "proximity" check to ensure that plants aren't growing too close to each other
 
         GameObject prefab = null;
-        //if (biome.owner == BiomeOwner.Andrew) prefab = ;
+        if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
         if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
         if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
@@ -192,9 +205,11 @@ public class LifeSpawner : MonoBehaviour
             //chance of spawning pyramid, or plant
             prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
         }
-        if (biome.owner == BiomeOwner.Jess) prefab = prefabCoralBroccoli;
+		if (biome.owner == BiomeOwner.Jess){
+			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
+		}
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        //if (biome.owner == BiomeOwner.Jesse) prefab = ;
+        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
