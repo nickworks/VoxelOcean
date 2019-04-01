@@ -49,7 +49,10 @@ public class CoralCrystalSpawner : MonoBehaviour
     /// hueMax, maxium of the  of the hue values of colors
     /// </summary>
     [Range(.4f, 7f)] public float hueMax = .6f;
-
+    /// <summary>
+    /// Range controls the different types of Crystal Coral, with a random range set in the update function;
+    /// </summary>
+    [Range(1, 4)] public int range = 2;
 
     /// <summary>
     /// Start / Build Function
@@ -104,6 +107,7 @@ public class CoralCrystalSpawner : MonoBehaviour
     /// Grow
     /// Grows objects from a single branch that is then randomized aned give iterations that the player can control.
     /// Objects are controlled entirely in the grow function
+    /// Objects are then given randomized side postionings rotational postions and different children amounts
     /// </summary>
     /// <param name="meshes"> mesh that it takes</param>
     /// <param name="num"> number of meshes</param>
@@ -125,21 +129,125 @@ public class CoralCrystalSpawner : MonoBehaviour
         num--;
 
         pos = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), 1, Random.Range(0, 1)));
-
         Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(objpos, objpos, objpos));
         Vector3 sidePos2 = inst.transform.MultiplyPoint(new Vector3(-objpos, objpos, -objpos));
         Vector3 sidePos3 = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), objpos, Random.Range(0, 1)));
+        Vector3 sidePos4 = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), Random.Range(.5f,1), Random.Range(0, 1)));
+
+        scale *= scalar;
+        range = Random.Range(0, 4);
+
+
         Quaternion rot1 = rot * Quaternion.Euler(angle3, angle1, angle2);
         Quaternion rot2 = rot * Quaternion.Euler(0, angle2, 0);
         Quaternion rot3 = rot * Quaternion.Euler(-angle3, 0, -angle2); //to avoid stretching
+        Quaternion rot4 = rot * Quaternion.Euler(Random.Range(30, 45), 0, Random.Range(30, 45)); //to avoid stretching
+        Quaternion rot5 = rot * Quaternion.Euler(Random.Range(10, 45), 0, Random.Range(10, 45)); //to avoid stretching
+        Quaternion rot6 = rot * Quaternion.Euler(-Random.Range(10, 45), 0, -Random.Range(10, 45)); //to avoid stretching
+        int children = Random.Range(1, 2);
+        int randomdorandom = Random.Range(1, 4);
+        if (range == 0) {
 
-        scale *= scalar;
-       //ranchScale -= ;
-        //BUG - Objects will sometimes 'stretch'
-        Grow(meshes, num, pos, rot1, scale); //doing one for tendril like
-        Grow(meshes, num, sidePos, rot2, scale); // doing for tendril 2
-        Grow(meshes, num / 2, sidePos2, rot3, scale / 2 ); // tendril 3
-        Grow(meshes, num / 2, sidePos3, rot3, scale / 2); // tendril 4
+            Grow(meshes, num, pos, rot1, scale);
+            Grow(meshes, num, pos, rot2, scale);
+            Grow(meshes, num, pos, rot3, scale);
+            Grow(meshes, num, pos, rot4, scale);
+            if (randomdorandom > 2)
+            {
+                Grow(meshes, num, pos, rot6, scale);
+            }
+            else
+            {
+
+            }
+        }
+
+        if (range == 1)
+        {
+
+
+
+
+
+            //ranchScale -= ;
+            //BUG - Objects will sometimes 'stretch'
+
+            Grow(meshes, num, sidePos, rot1, scale); //doing one for tendril like
+            Grow(meshes, num, sidePos, rot2, scale); // doing for tendril 2
+            Grow(meshes, num, sidePos, rot3, scale); // doing for tendril 2
+            Grow(meshes, num, sidePos, rot4, scale); // doing for tendril 2
+            if (randomdorandom > 2)
+            {
+                Grow(meshes, num, sidePos, rot6, scale);
+            }
+            else
+            {
+
+            }
+
+        }
+
+        if (range == 2)
+        {
+
+
+
+            Grow(meshes, num, sidePos2, rot1, scale / Random.Range(1,3)); // tendril 3
+            Grow(meshes, num / children, sidePos2, rot2, scale / Random.Range(1, 4))); // tendril 4
+            Grow(meshes, num / children, sidePos2, rot3, scale / Random.Range(1, 4))); // tendril 4
+            Grow(meshes, num / 2, sidePos2, rot4, scale / Random.Range(1,4)); // tendril 4
+
+            if (randomdorandom > 2)
+            {
+                Grow(meshes, num / 2, sidePos2, rot6, scale);
+            }
+            else
+            {
+                Grow(meshes, num / 2, sidePos2, rot5, scale); // tendril 4
+            }
+        }
+
+        if (range == 3)
+        {
+
+
+
+
+            Grow(meshes, num, sidePos3, rot1, scale / Random.Range(1, 3)); // tendril 3
+            Grow(meshes, num, sidePos3, rot2, scale / 2); // tendril 4
+            Grow(meshes, num / 2, sidePos3, rot3, scale / 2); // tendril 4
+            Grow(meshes, num / 2, sidePos3, rot4, scale / 2); // tendril 4
+
+            if (randomdorandom > 2)
+            {
+                Grow(meshes, num / 2, sidePos3, rot6, scale);
+            }
+            else
+            {
+                Grow(meshes, num / 2, sidePos3, rot5, scale); // tendril 4
+            }
+        }
+
+
+        if (range == 4)
+        {
+
+
+
+
+            Grow(meshes, num, sidePos4, rot1, scale / Random.Range(1, 3)); // tendril 3
+            Grow(meshes, num, sidePos4, rot2, scale); // tendril 4
+            Grow(meshes, num, sidePos4, rot3, scale); // tendril 4
+            Grow(meshes, num, sidePos4, rot4, scale); // tendril 4
+            if (randomdorandom > 2)
+            {
+                Grow(meshes, num / 2, sidePos4, rot6, scale);
+            }
+            else
+            {
+                Grow(meshes, num / 2, sidePos4, rot5, scale); // tendril 4
+            }
+        }
     }
     /// <summary>
     /// Randomize Range
