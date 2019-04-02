@@ -5,16 +5,13 @@ using UnityEditor;
 
 /// <summary>
 /// Modular Asset Coral Mesh
-/// Created by Cameron Garchow to mimic Crystalline Flower Structures
+/// Created by Cameron Garchow to mimic Crystalline Structures
 /// Based on scientific and a mix of parasitic crystal structures
-/// Mimicing in a Crystal Biome a naturalistic Flower\
-/// With an emissive mapping and others this object 
-/// Is meant to glow and spread the crystalline disease
 /// The idea behind it is to create crystalline structures that 'spread' like a disease.
 /// This can be changed to any value we want, we could take this into a game controller and randomize it
-/// For this we can randomize its scale
+/// For this we can randomize its 
 /// </summary>
-public class CoralCrystalFlowerSpawn : MonoBehaviour
+public class CoralCrystalRock : MonoBehaviour
 {
 
     /// <summary>
@@ -65,7 +62,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     {
         Build();
     }
-    
+
     /// <summary>
     /// Update
     /// Called once a frame
@@ -75,7 +72,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     /// </summary>
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -85,7 +82,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     /// Combines meshes to reduce object count
     /// Meshfilters it from reference
     /// </summary>
-    public void Build ()
+    public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
 
@@ -137,6 +134,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         Grow(meshes, num, pos, rot3, scale); // tendril 3
         Grow(meshes, num, sidePos, rot4, scale); // tendril 4
         Grow(meshes, num, sidePos, rot5, scale); // tendril 5
+
     }
     /// <summary>
     /// Randomize Values
@@ -150,6 +148,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         scalar = Random.Range(.5f, 1);
         branchScale = new Vector3(Random.Range(.25f, .4f), (float)4, Random.Range(.25f, .4f));
     }
+
     //Cube Data
     // Makes a cube
     /// <summary>
@@ -316,10 +315,10 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
 }
 /// <summary>
 /// Editor
-/// Editor for the CoralCrystalFlowerSpawn, allows building in editor for testing
+/// Editor for the CoralCrystalRock, allows building in editor for testing
 /// </summary>
-[CustomEditor(typeof(CoralCrystalFlowerSpawn))]
-public class CoralCrystalFlowerSpawnEditor : Editor
+[CustomEditor(typeof(CoralCrystalRock))]
+public class CoralCrystalRockSpawmEditor : Editor
 {
 
     override public void OnInspectorGUI()
@@ -327,7 +326,7 @@ public class CoralCrystalFlowerSpawnEditor : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("GROW!"))
         {
-            CoralCrystalFlowerSpawn c = (target as CoralCrystalFlowerSpawn);
+            CoralCrystalRock c = (target as CoralCrystalRock);
             c.Build();
         }
 
