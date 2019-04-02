@@ -45,11 +45,11 @@ public class CoralCrystalRock : MonoBehaviour
     ///<summary>
     ///hueMin minimum of the hue values of colors
     /// </summary>
-    [Range(.3f, .4f)] public float hueMin = .3f;
+    [Range(.3f, .4f)] public float hueMin = .39f;
     /// <summary>
     /// hueMax, maxium of the  of the hue values of colors
     /// </summary>
-    [Range(.4f, 4f)] public float hueMax = .9f;
+    [Range(.4f, 4f)] public float hueMax = 1.7f;
 
 
 
@@ -105,57 +105,59 @@ public class CoralCrystalRock : MonoBehaviour
     /// <param name="pos"> postion of the object</param>
     /// <param name="rot"> rotation of the obj</param>
     /// <param name="scale"> objects scale randomized</param>
-    private void Grow(List<CombineInstance> meshes, int num, Vector3 pos, Quaternion rot, float scale)
-    {
-        if (num <= 0) return; // stop recursive function
-        RandomizeValues();
+        private void Grow(List<CombineInstance> meshes, int num, Vector3 pos, Quaternion rot, float scale)
+        {
 
-        CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube(num);
-        //inst.transform =
-        inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);
+            if (num <= 0) return; // stop recursive function
+            RandomizeRanges();
+            CombineInstance inst = new CombineInstance();
+            inst.mesh = MakeCube(num);
+            //inst.transform =
+            inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);
 
-        meshes.Add(inst);
+            meshes.Add(inst);
 
-        num--;
+            num--;
 
-        pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
-        Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(objpos, objpos, objpos));
-        Vector3 sidePos2 = inst.transform.MultiplyPoint(new Vector3(-objpos, objpos, -objpos));
-        Quaternion rot1 = rot * Quaternion.Euler(angle1, 90 + angle2, angle3);
-        Quaternion rot2 = rot * Quaternion.Euler(-angle1, 90 - angle2, -angle3);
-        Quaternion rot3 = rot * Quaternion.Euler(angle1, 45 + angle3, angle3);
-        Quaternion rot4 = rot * Quaternion.Euler(angle3, 45 - angle3, angle2);
-        Quaternion rot5 = rot * Quaternion.Euler(-angle3, Random.Range(30, 40) + angle2, -angle2);
-        scale *= scalar;
+            pos = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), 1, Random.Range(0, 1)));
 
-        Grow(meshes, num, pos, rot1, scale); //doing one for tendril like
-        Grow(meshes, num, pos, rot2, scale); // doing for tendril 2
-        Grow(meshes, num, pos, rot3, scale); // tendril 3
-        Grow(meshes, num, sidePos, rot4, scale); // tendril 4
-        Grow(meshes, num, sidePos, rot5, scale); // tendril 5
+            Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(objpos, objpos, objpos));
 
-    }
-    /// <summary>
-    /// Randomize Values
-    /// Randomizes the objects within the grown objects.
-    /// </summary>
-    private void RandomizeValues()
-    {
-        angle1 = Random.Range(5, 30);
-        angle2 = Random.Range(5, 40);
-        angle3 = Random.Range(5, 40);
-        scalar = Random.Range(.5f, 1);
-        branchScale = new Vector3(Random.Range(.25f, .4f), (float)4, Random.Range(.25f, .4f));
-    }
+            Vector3 sidePos2 = inst.transform.MultiplyPoint(new Vector3(-objpos, objpos, -objpos));
 
-    //Cube Data
-    // Makes a cube
-    /// <summary>
-    /// Makes a cube with data taken from X,Y,Z coords
-    /// </summary>
-    /// <returns></returns>
-    private Mesh MakeCube(int num)
+            Quaternion rot1 = rot * Quaternion.Euler(angle3, angle1, angle2);
+            Quaternion rot2 = rot * Quaternion.Euler(0, angle2, 0);
+            Quaternion rot3 = rot * Quaternion.Euler(-angle3, 0, -angle2); //to avoid stretching
+            Quaternion rot4 = rot * Quaternion.Euler(-angle3, 45 + angle2, -angle2); //to avoid stretching
+            scale *= scalar;
+            //BUG - Objects will sometimes 'stretch'
+            Grow(meshes, num, pos, rot1, scale); //doing one for tendril like
+            Grow(meshes, num, sidePos, rot2, scale); // doing for tendril 2
+            Grow(meshes, num, sidePos2, rot3, scale); // tendril 3
+            Grow(meshes, num, pos, rot4, scale); // tendril 3
+        }
+        /// <summary>
+        /// Randomize Range
+        /// Randomize the range of the objects inside of the grow function.
+        /// 
+        /// </summary>
+        private void RandomizeRanges()
+        {
+            angle1 = Random.Range(0, 45);
+            angle2 = Random.Range(0, 45);
+            angle3 = Random.Range(0, 45);
+            scalar = Random.Range(.5f, .8f);
+            objpos = Random.Range(.4f, .6f);
+            branchScale = new Vector3(Random.Range(.5f, 1), (float)2, Random.Range(.5f, 1));
+        }
+
+        //Cube Data
+        // Makes a cube
+        /// <summary>
+        /// Makes a cube with data taken from X,Y,Z coords
+        /// </summary>
+        /// <returns></returns>
+        private Mesh MakeCube(int num)
     {
         List<Vector3> vertices = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
