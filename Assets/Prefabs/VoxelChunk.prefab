@@ -117,11 +117,19 @@ MonoBehaviour:
     type: 3}
   prefabCoralPurpleFan: {fileID: 377820375716106876, guid: 41ac3c4f21bfe3c4fa6af8cfa21915ed,
     type: 3}
+  prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
+    type: 3}
+  prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
+    type: 3}
   prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
     type: 3}
   prefabCoralPyramid: {fileID: 8856533629082828895, guid: 28013e49a404f4243abe910b6bb4ce60,
     type: 3}
+  prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
+    type: 3}
   prefabPlantLeaf: {fileID: 5078370866149129377, guid: 6846a9475805a6843b455aeb8456966e,
     type: 3}
-  prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
+  prefabPlantSeagrass: {fileID: 9184822981456748834, guid: 8ef6def96fa59974caab563f824ce1b1,
+    type: 3}
+  prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}

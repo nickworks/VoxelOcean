@@ -5,29 +5,32 @@ using UnityEditor;
 /// <summary>
 /// Spawns Coral type Broccoli
 /// </summary>
-public class Coral_Broccoli : MonoBehaviour {
+public class PlantSeagrass : MonoBehaviour {
 
-    /// <summary>
-    /// how many iterations per branch we should spawn
-    /// </summary>
+	/// <summary>
+	/// how many iterations per branch we should spawn
+	/// </summary>
 	[Range(2, 8)]public int iterations = 3;
-    /// <summary>
-    /// the scale and size of each cube
-    /// </summary>
+	/// <summary>
+	/// the scale and size of each cube
+	/// </summary>
 	public Vector3 branchScaling = new Vector3 (.25f, 1, .25f);
 	// Use this for initialization
 	void Start () {
-        Build();
-    }
-	
+		Build();
+	}
+
 	// Update is called once per frame
-    /// <summary>
-    /// this combines all of the cubes into one mesh
-    /// </summary>
+	/// <summary>
+	/// this combines all of the cubes into one mesh
+	/// </summary>
 	public void Build () {
 		List<CombineInstance> meshes = new List<CombineInstance> ();
-
-		Grow (iterations, meshes, Vector3.zero, Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3(0,-.3f, 0), Quaternion.identity, 1);
+		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),-.3f,Random.Range(.2f, 2)), Quaternion.identity, Random.Range(.5f, 2));
+		Grow (iterations, meshes, new Vector3 (Random.Range(-2, .2f) ,-.3f,Random.Range(-2, -.2f)), Quaternion.identity, Random.Range(.5f,2));
+		Grow (iterations, meshes, new Vector3 (Random.Range(-2, -.2f) ,-.3f,Random.Range(.2f, 2)), Quaternion.identity, Random.Range(.5f, 2));
+		Grow (iterations, meshes, new Vector3 (Random.Range(.2f, 2),-.3f,Random.Range(-2, -.2f)), Quaternion.identity, Random.Range(.5f, 2));
 
 		Mesh mesh = new Mesh ();
 		mesh.CombineMeshes (meshes.ToArray());
@@ -35,14 +38,14 @@ public class Coral_Broccoli : MonoBehaviour {
 		MeshFilter meshFilter = GetComponent<MeshFilter> ();
 		meshFilter.mesh = mesh;
 	}
-    /// <summary>
-    /// This is where the recursion occurs
-    /// </summary>
-    /// <param name="num">the number of iterations</param>
-    /// <param name="meshes">list of the meshes we combined</param>
-    /// <param name="pos">position of our meshes</param>
-    /// <param name="rot">rotation of our meshes</param>
-    /// <param name="scale">scale of our meshes</param>
+	/// <summary>
+	/// This is where the recursion occurs
+	/// </summary>
+	/// <param name="num">the number of iterations</param>
+	/// <param name="meshes">list of the meshes we combined</param>
+	/// <param name="pos">position of our meshes</param>
+	/// <param name="rot">rotation of our meshes</param>
+	/// <param name="scale">scale of our meshes</param>
 	private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale){
 
 		if(num <= 0) return;
@@ -59,22 +62,18 @@ public class Coral_Broccoli : MonoBehaviour {
 		num--;
 
 		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));
-		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75));
-		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75));
+		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 15), Random.Range(0, 15), Random.Range(0, 20));
+		Quaternion randomNegRot = rot * Quaternion.Euler (0, Random.Range(0, -15),  Random.Range(0, -20));
 		scale *= .75f;
 
-		Grow (num, meshes, pos, randomPosRot, scale);
-		Grow (num, meshes, pos, randomNegRot, scale);
-		Grow (num, meshes, pos, randomNegRot, scale);
-		Grow (num, meshes, pos, randomPosRot, scale);
-		Grow (num, meshes, pos, randomNegRot, scale);
-		Grow (num, meshes, pos, randomPosRot, scale);
+		Grow (num, meshes, pos, ((Random.Range(1, 5) >= 3) ? randomPosRot : randomNegRot), scale);
+
 	}
-    /// <summary>
-    /// This creates the actual mesh
-    /// </summary>
-    /// <param name="num">the number of iterations</param>
-    /// <returns></returns>
+	/// <summary>
+	/// This creates the actual mesh
+	/// </summary>
+	/// <param name="num">the number of iterations</param>
+	/// <returns></returns>
 	private Mesh MakeCube(int num){
 		List<Vector3> verts = new List<Vector3> ();
 		List<Vector2> uvs = new List<Vector2> ();
@@ -201,12 +200,12 @@ public class Coral_Broccoli : MonoBehaviour {
 		tris.Add (22);
 		tris.Add (23);
 		tris.Add (20);
-		float hue = 1;
+		float hue = .3f;
 
 		foreach (Vector3 pos in verts) {
 
-			float tempHue = hue + (1 * pos.y);
-			Color color = Color.HSVToRGB (tempHue, .5f, 1);
+			float tempHue = hue;
+			Color color = Color.HSVToRGB (tempHue, .8f, .6f);
 			colors.Add(color);
 
 		}
