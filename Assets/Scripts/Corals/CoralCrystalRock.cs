@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 /// <summary>
-/// Modular Asset Coral Mesh
+/// Modular Asset Crystal Mesh
 /// Created by Cameron Garchow to mimic Crystalline Structures
 /// Based on scientific and a mix of parasitic crystal structures
 /// The idea behind it is to create crystalline structures that 'spread' like a disease.
@@ -135,7 +135,8 @@ public class CoralCrystalRock : MonoBehaviour
             Grow(meshes, num, sidePos, rot2, scale); // doing for tendril 2
             Grow(meshes, num, sidePos2, rot3, scale); // tendril 3
             Grow(meshes, num, pos, rot4, scale); // tendril 3
-        }
+            Grow(meshes, num / 4, sidePos, rot4, scale); // tendril 3
+    }
         /// <summary>
         /// Randomize Range
         /// Randomize the range of the objects inside of the grow function.
