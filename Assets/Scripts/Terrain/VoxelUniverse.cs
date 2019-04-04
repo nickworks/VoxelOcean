@@ -72,6 +72,8 @@ public class VoxelUniverse : MonoBehaviour
     public bool isGenerating { get; private set; }
     public float percentGenerated { get; private set; }
 
+    
+
     /// <summary>
     /// The currently generated list of chunks.
     /// </summary>
@@ -82,6 +84,10 @@ public class VoxelUniverse : MonoBehaviour
 
     void Start()
     {
+        xOffset = -renderDistance;
+        yOffset = -renderDistanceVertical;
+        zOffset = -renderDistance; 
+
         chunks = new VoxelChunk[1 + renderDistance * 2, 1 + renderDistanceVertical * 2, 1 + renderDistance * 2];
         main = this;
         Create();
@@ -102,10 +108,18 @@ public class VoxelUniverse : MonoBehaviour
         coroutine = StartCoroutine(SpawnChunks());
     }
 
+    public void CreateMoreChunks()
+    {
+        // stop active generation:
+        if (coroutine != null) StopCoroutine(coroutine);
+        // begin asyncronous generation:
+        coroutine = StartCoroutine(SpawnMoreChunks());
+    }
+
     /// <summary>
     /// Create a new chunk layer.
     /// </summary>
-    IEnumerator CreateMoreChunks()
+    IEnumerator SpawnMoreChunks()
     {
         int whereToSpawnNewChunks = 1; //change this based on some parameter that tells us in what direction the player was moving when the switched chunks
 
@@ -122,11 +136,11 @@ public class VoxelUniverse : MonoBehaviour
 
                 if (chunks.Length > 0)
                 {
-                    for (int x = 0; x < renderDistance * 2 ; x++)
+                    for (int x = 0; x < 1 + renderDistance * 2; x++)
                     {
-                        for (int y = 0; y < renderDistanceVertical * 2; y++)
+                        for (int y = 0; y < 1 + renderDistanceVertical * 2; y++)
                         {
-                            for (int z = 0; z < renderDistance * 2; z++)
+                            for (int z = 0; z < 1 + renderDistance * 2; z++)
                             {
                                 if(x == 0) //removes least x grid of chunks and replaces it with what is one x slot more positive
                                 {
@@ -134,7 +148,7 @@ public class VoxelUniverse : MonoBehaviour
                                     Destroy(chunks[x, y, z].gameObject);
                                     chunks[x, y, z] = chunks[x + 1, y, z];
                                 }
-                                else if (x == renderDistance * 2 - 1) //adds new grid of chunks at the highest x values
+                                else if (x == renderDistance * 2) //adds new grid of chunks at the highest x values
                                 {
                                     if (chunks[x, y, z] != null)
                                     {
@@ -142,7 +156,7 @@ public class VoxelUniverse : MonoBehaviour
                                         chunks[x, y, z] = null;
                                     }
 
-                                    Vector3 pos = new Vector3(x + xOffset, y, z) * resPerChunk;
+                                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
                                     chunk.Rebuild();
                                     if (chunk.isEmpty)
@@ -178,13 +192,13 @@ public class VoxelUniverse : MonoBehaviour
 
                 if (chunks.Length > 0)
                 {
-                    for (int x = renderDistance * 2 - 1; x > -1; x--)
+                    for (int x = renderDistance * 2; x > -1; x--)
                     {
-                        for (int y = 0; y < renderDistanceVertical * 2; y++)
+                        for (int y = 0; y < 1 + renderDistanceVertical * 2; y++)
                         {
-                            for (int z = 0; z < renderDistance * 2; z++)
+                            for (int z = 0; z < 1 + renderDistance * 2; z++)
                             {
-                                if (x == renderDistance * 2 - 1) //removes most x grid of chunks and replaces it with what is one x slot more negative
+                                if (x == renderDistance * 2) //removes most x grid of chunks and replaces it with what is one x slot more negative
                                 {
                                     if (chunks[x, y, z] == null) continue;
                                     Destroy(chunks[x, y, z].gameObject);
@@ -198,7 +212,7 @@ public class VoxelUniverse : MonoBehaviour
                                         chunks[x, y, z] = null;
                                     }
 
-                                    Vector3 pos = new Vector3(x + xOffset, y, z) * resPerChunk;
+                                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
                                     chunk.Rebuild();
                                     if (chunk.isEmpty)
@@ -224,19 +238,221 @@ public class VoxelUniverse : MonoBehaviour
                 break;
 
             case 3: // move postive z one chunk
+                zOffset++;
+                numChunks = (renderDistance * 2 + 1);
 
+                i = 0;
+
+                if (chunks.Length > 0)
+                {
+                    for (int x = 0; x < 1 + renderDistance * 2 ; x++)
+                    {
+                        for (int y = 0; y < 1 + renderDistanceVertical * 2 ; y++)
+                        {
+                            for (int z = 0; z < 1 + renderDistance * 2 ; z++)
+                            {
+                                if (z == 0) //removes least z grid of chunks and replaces it with what is one z slot more positive
+                                {
+                                    if (chunks[x, y, z] == null) continue;
+                                    Destroy(chunks[x, y, z].gameObject);
+                                    chunks[x, y, z] = chunks[x, y, z + 1];
+                                }
+                                else if (z == renderDistance * 2) //adds new grid of chunks at the highest z values
+                                {
+                                    if (chunks[x, y, z] != null)
+                                    {
+                                        Destroy(chunks[x, y, z].gameObject);
+                                        chunks[x, y, z] = null;
+                                    }
+
+                                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
+                                    VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                                    chunk.Rebuild();
+                                    if (chunk.isEmpty)
+                                    {
+                                        Destroy(chunk.gameObject);
+                                    }
+                                    else
+                                    {
+                                        chunks[x, y, z] = chunk;
+                                    }
+                                    i++;
+                                    percentGenerated = i / (float)numChunks;
+                                    yield return null;
+                                }
+                                else //shifts all of the chunks one z value towards negative by grabbing the chunk to their z positive pointing to it
+                                {
+                                    chunks[x, y, z] = chunks[x, y, z + 1];
+                                }
+
+
+                            }
+                        }
+                    }
+                }
                 break;
 
             case 4: // move negative z one chunk
+                zOffset--;
 
+
+                numChunks = (renderDistance * 2 + 1); 
+                i = 0;
+
+                if (chunks.Length > 0)
+                {
+                    for (int x = 0; x < 1 + renderDistance * 2 ; x++)
+                    {
+                        for (int y = 0; y < 1 + renderDistanceVertical * 2; y++)
+                        {
+                            for (int z = renderDistance * 2 ; z > -1; z--)
+                            {
+                                if (z == renderDistance * 2 ) //removes most z grid of chunks and replaces it with what is one z slot more negative
+                                {
+                                    if (chunks[x, y, z] == null) continue;
+                                    Destroy(chunks[x, y, z].gameObject);
+                                    chunks[x, y, z] = chunks[x, y, z - 1];
+                                }
+                                else if (z == 0) //adds new grid of chunks at the lowest x values
+                                {
+                                    if (chunks[x, y, z] != null)
+                                    {
+                                        Destroy(chunks[x, y, z].gameObject);
+                                        chunks[x, y, z] = null;
+                                    }
+
+                                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
+                                    VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                                    chunk.Rebuild();
+                                    if (chunk.isEmpty)
+                                    {
+                                        Destroy(chunk.gameObject);
+                                    }
+                                    else
+                                    {
+                                        chunks[x, y, z] = chunk;
+                                    }
+                                    i++;
+                                    percentGenerated = i / (float)numChunks;
+                                    yield return null;
+                                }
+                                else //shifts all of the chunks one x value towards positive by grabbing the chunk to their x negative pointing to it
+                                {
+                                    chunks[x, y, z] = chunks[x, y, z - 1];
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
 
             case 5: // move postive y one chunk
+                yOffset++;
+                numChunks = (renderDistanceVertical * 2 + 1);
 
+                i = 0;
+
+                if (chunks.Length > 0)
+                {
+                    for (int x = 0; x < 1 + renderDistance * 2; x++)
+                    {
+                        for (int y = 0; y < 1 + renderDistanceVertical * 2; y++)
+                        {
+                            for (int z = 0; z < 1 + renderDistance * 2; z++)
+                            {
+                                if (y == 0) //removes least y grid of chunks and replaces it with what is one y slot more positive
+                                {
+                                    if (chunks[x, y, z] == null) continue;
+                                    Destroy(chunks[x, y, z].gameObject);
+                                    chunks[x, y, z] = chunks[x, y + 1, z];
+                                }
+                                else if (y == renderDistanceVertical * 2 ) //adds new grid of chunks at the highest y values
+                                {
+                                    if (chunks[x, y, z] != null)
+                                    {
+                                        Destroy(chunks[x, y, z].gameObject);
+                                        chunks[x, y, z] = null;
+                                    }
+
+                                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
+                                    VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                                    chunk.Rebuild();
+                                    if (chunk.isEmpty)
+                                    {
+                                        Destroy(chunk.gameObject);
+                                    }
+                                    else
+                                    {
+                                        chunks[x, y, z] = chunk;
+                                    }
+                                    i++;
+                                    percentGenerated = i / (float)numChunks;
+                                    yield return null;
+                                }
+                                else //shifts all of the chunks one z value towards negative by grabbing the chunk to their z positive pointing to it
+                                {
+                                    chunks[x, y, z] = chunks[x, y + 1, z];
+                                }
+
+
+                            }
+                        }
+                    }
+                }
                 break;
 
             case 6: // move negative y one chunk
+                yOffset--;
 
+
+                numChunks = (renderDistanceVertical * 2 + 1); 
+                i = 0;
+
+                if (chunks.Length > 0)
+                {
+                    for (int x = 0; x < 1 + renderDistance * 2; x++)
+                    {
+                        for (int y = renderDistanceVertical * 2 ; y > -1; y--)
+                        {
+                            for (int z = 0; z < 1 + renderDistance * 2; z++)
+                            {
+                                if (y == renderDistanceVertical * 2) //removes most y grid of chunks and replaces it with what is one y slot more negative
+                                {
+                                    if (chunks[x, y, z] == null) continue;
+                                    Destroy(chunks[x, y, z].gameObject);
+                                    chunks[x, y, z] = chunks[x, y - 1, z];
+                                }
+                                else if (y == 0) //adds new grid of chunks at the lowest x values
+                                {
+                                    if (chunks[x, y, z] != null)
+                                    {
+                                        Destroy(chunks[x, y, z].gameObject);
+                                        chunks[x, y, z] = null;
+                                    }
+
+                                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
+                                    VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                                    chunk.Rebuild();
+                                    if (chunk.isEmpty)
+                                    {
+                                        Destroy(chunk.gameObject);
+                                    }
+                                    else
+                                    {
+                                        chunks[x, y, z] = chunk;
+                                    }
+                                    i++;
+                                    percentGenerated = i / (float)numChunks;
+                                    yield return null;
+                                }
+                                else //shifts all of the chunks one x value towards positive by grabbing the chunk to their x negative pointing to it
+                                {
+                                    chunks[x, y, z] = chunks[x, y - 1, z];
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
 
                 
@@ -294,7 +510,7 @@ public class VoxelUniverse : MonoBehaviour
                 for (int z = 0; z <= renderDistance * 2 ; z++)
                 {
                      
-                    Vector3 pos = new Vector3(x, y, z) * resPerChunk;
+                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
                     chunk.Rebuild();
                     if (chunk.isEmpty)

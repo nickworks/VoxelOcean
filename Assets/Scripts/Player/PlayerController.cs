@@ -13,14 +13,43 @@ public class PlayerController : MonoBehaviour
 
     Vector3 velocity = Vector3.zero;
 
-    public float maxSpeed = 5;
-    public float acceleration = 10f;
+    public float maxSpeed = 5; 
+    public float acceleration = 10f; 
+
+    private VoxelUniverse universeReference;
+    private int renderDist;
+    private int renderDistVert; 
+
+
+    private void Start()
+    {
+        universeReference = GameObject.Find("VoxelUniverse").GetComponent<VoxelUniverse>();
+        renderDist = universeReference.renderDistance;
+        renderDistVert = universeReference.renderDistanceVertical;
+
+        
+
+    }
 
     // Update is called once per frame
     void Update()
     {
         Look();
         Move();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private void Move()
