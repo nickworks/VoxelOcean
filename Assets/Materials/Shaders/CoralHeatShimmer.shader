@@ -1,4 +1,4 @@
-﻿Shader "Custom/SpriteShader"
+﻿Shader "Custom/CoralHeatShimmer"
 {
 	Properties
 	{
