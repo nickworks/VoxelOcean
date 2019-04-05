@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2127263659944381022}
   - component: {fileID: 5069189132746748973}
   - component: {fileID: 2697563857129997568}
+  - component: {fileID: 3855992322356351506}
   m_Layer: 0
   m_Name: CoralBauble
   m_TagString: Untagged
@@ -102,3 +103,22 @@ MonoBehaviour:
   zRot: 0
   xRot: -15
   yRot: -15
+--- !u!114 &3855992322356351506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4989460743283663176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: CoralBauble
+  mobility: 3
+  special: 
+  defense: 1
+  size: 1
+  tangibility: 0
