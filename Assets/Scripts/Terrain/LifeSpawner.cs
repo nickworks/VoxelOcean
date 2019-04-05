@@ -136,6 +136,9 @@ public class LifeSpawner : MonoBehaviour
 	/// </summary>
 	public GameObject prefabPlantSeagrass;
 
+
+    public GameObject prefabMossBall;
+
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
     /// </summary>
@@ -211,7 +214,7 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
