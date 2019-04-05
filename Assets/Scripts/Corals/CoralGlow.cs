@@ -39,7 +39,7 @@ public class CoralGlow : MonoBehaviour
     /// A Vector3 used for branch scale
     /// </summary>
     [Tooltip("A Vector3 used to control the scale of branch segments for the coral")]
-    public Vector3 branchScale = new Vector3(.25f, 1, .25f);
+    public Vector3 branchScale = new Vector3(1, 1, 1);
 
     /// <summary>
     /// The number of iterations for fractal generation we want
@@ -89,6 +89,11 @@ public class CoralGlow : MonoBehaviour
     /// A float used to subtract and add from the glow variable above
     /// </summary>
     private float countDown = .1f;
+
+    /// <summary>
+    /// A modifier applied to the scale of the coral
+    /// </summary>
+    public float scaleMod = 1f;
     #endregion
 
 
@@ -171,11 +176,15 @@ public class CoralGlow : MonoBehaviour
                 myHealth = Health.Growing;//myHealth is set to growing
                 glow = Random.Range(0, 100) * .010f; //Glow is set to a random amount
                 iterations += bonusIterations = Random.Range(5, 10); //We get bonus iterations representing the coral being larger and healthier
+
+                scaleMod += 2;
                 break;//End of case 1
             case 2://If case is 2
                 myHealth = Health.Normal; //health is set to normal
                 glow = Random.Range(0, 100) * .010f;//Glow is set to a random amount
                 iterations +=  bonusIterations = Random.Range(0, 5); //We get bonus iterations but there is a wider range so we could only get one or we could get 4
+
+                scaleMod += 1;
                 break;//End of case 2
             case 3://If case is 3
                 myHealth = Health.Sick;// My health is set to sick
@@ -184,7 +193,8 @@ public class CoralGlow : MonoBehaviour
                 {
                     iterations -= bonusIterations = Random.Range(1, 3);//We subtract iterations
                 }//End of if(iterations >=3) statement
-                
+
+                scaleMod -= .5f;
                 break;//end of case 3
 
         }//end of switch(state) statement
@@ -207,7 +217,7 @@ public class CoralGlow : MonoBehaviour
          // - Vector3.zero : a zerod out vector for location
          // - Quaternion.identity : world rotation
          // - integer : the scale of the coral
-        Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.identity, scaleMod);
         //We create a new mesh object
         Mesh mesh = new Mesh();
         //We combine meshes and then place them inside of a meshes array
@@ -261,7 +271,7 @@ public class CoralGlow : MonoBehaviour
             {
              //We create two rotations with only positive values in the x and z range
              Quaternion rot1 = rot * Quaternion.Euler(0 + Random.Range(0, xRotator), 45 + Random.Range(0, yRotator), 45 + Random.Range(0, zRotator));
-             Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(0, xRotator), 45 + Random.Range(0, yRotator), 45 + Random.Range(0, zRotator));
+             Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, 0), 45 + Random.Range(0, yRotator), 45 + Random.Range(0, zRotator));
             //Scale is only reduced by 10%
              scale *= .60f;
             //We call the GrowMethod Twice
@@ -271,8 +281,8 @@ public class CoralGlow : MonoBehaviour
             else if (myHealth == Health.Normal)
              {
                 //We create two rotations with base values in the y, and z range, and a possibility of negative values
-                Quaternion rot1 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, xRotator), 20 + Random.Range(-yRotator, yRotator), 25 + Random.Range(-zRotator, zRotator));
-                 Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, xRotator), 20 + Random.Range(-yRotator, yRotator), 25 + Random.Range(-zRotator, zRotator));
+                Quaternion rot1 = rot * Quaternion.Euler(0 + Random.Range(0, xRotator), 20 + Random.Range(-yRotator, yRotator), 25 + Random.Range(-zRotator, zRotator));
+                 Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, 0), 20 + Random.Range(-yRotator, yRotator), 25 + Random.Range(-zRotator, zRotator));
                 //Scale is only reduced by 50%
                 scale *= .50f;
                 //We call the GrowMethod Twice
@@ -282,8 +292,8 @@ public class CoralGlow : MonoBehaviour
             else if (myHealth == Health.Sick)
              {
                 //We create two rotations with the possibility of a positive value in the x range, but only the possibility of a negative value in the y and z range
-                 Quaternion rot1 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, xRotator), 10 + Random.Range(-yRotator,0), 15 + Random.Range(-zRotator, 0));
-                 Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, xRotator), 10 + Random.Range(-yRotator,0), 15 + Random.Range(-zRotator, 0));
+                 Quaternion rot1 = rot * Quaternion.Euler(0 + Random.Range(0, xRotator), 10 + Random.Range(-yRotator,0), 15 + Random.Range(-zRotator, 0));
+                 Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, 0), 10 + Random.Range(-yRotator,0), 15 + Random.Range(-zRotator, 0));
                 //The coral is reduced by 80% 
                  scale *= .80f;                                                                                              
                 //We call the GrowMethod Twice
