@@ -60,14 +60,14 @@ public class CreatureSeaStarMesh : MonoBehaviour
             {
                 CombineInstance arm = new CombineInstance();
                 arm.mesh = MeshTools.MakeCube();
-                float rotDegrees = 360 / (numberOfArms * i);
+                float rotDegrees = (360 / numberOfArms) * i + 180.0f;
                 float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
                 
                 //Build out arm in that direction:
-                float armX = Mathf.Cos(rotRadians) * (meshScale.x);
-                float armZ = Mathf.Sin(rotRadians) * (meshScale.z);
+                float armX = Mathf.Cos(rotRadians) * meshScale.x;
+                float armZ = Mathf.Sin(rotRadians) * meshScale.z;
 
-                Vector3 armPos = pos + (new Vector3(armX, 0, armZ));
+                Vector3 armPos = pos + new Vector3(armX, 0, armZ);
 
                 Quaternion armRot = rot * Quaternion.Euler(0, rotDegrees, 0);
                 arm.transform = Matrix4x4.TRS(armPos, armRot, meshScale);
