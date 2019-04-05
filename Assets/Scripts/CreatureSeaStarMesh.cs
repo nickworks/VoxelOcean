@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// This script is used to create a mesh for a sea star within VoxelOcean.
+/// Author: Kyle Lowery
+/// Last Date Updated: 04/04/2019
+/// </summary>
 public class CreatureSeaStarMesh : MonoBehaviour
 {
 
@@ -11,6 +16,11 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// Controls the number of iterations the Build function goes through to make the mesh.
     /// </summary>
     [Range(2, 20)] public int iterations = 3;
+
+    public int numberOfPoints = 5;
+
+    // Scaling Vectors:
+    public Vector3 pointScale = new Vector3(1, 1, 1);
 
     //Hue modifiers:
     /// <summary>
@@ -47,7 +57,40 @@ public class CreatureSeaStarMesh : MonoBehaviour
     {
         if (num <= 0) return;
 
+        //If Grow is on first iteration:
+        if (num == iterations)
+        {
+            //Make points of sea star:
+            for (int i = 1; i <= numberOfPoints; i++)
+            {
+                CombineInstance point = new CombineInstance();
+                point.mesh = MakeCube(num);
+                float rotAmount = 360 / (numberOfPoints * i);
+                Quaternion pointRot = rot * Quaternion.Euler(0, rotAmount, 0);
+                point.transform = Matrix4x4.TRS(pos, pointRot, pointScale);
+                meshes.Add(point);
+            }
+        }
+        //Use this code for every other iteration:
+        else
+        {
+            //Make points of sea star:
+            for (int i = 1; i <= numberOfPoints; i++)
+            {
+                CombineInstance point = new CombineInstance();
+                point.mesh = MakeCube(num);
+                float rotAmount = 360 / (numberOfPoints * i);
+                //Draw vector from rotation:
 
+                //Build out point in that direction:
+
+                //Scale down Mesh based on number of iterations:
+
+                Quaternion pointRot = rot * Quaternion.Euler(0, rotAmount, 0);
+                point.transform = Matrix4x4.TRS(pos, pointRot, pointScale);
+                meshes.Add(point);
+            }
+        }
 
         num--;
         Grow(num, meshes, pos, rot);
