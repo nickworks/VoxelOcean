@@ -16,6 +16,8 @@ public class CreatureSeaStarMesh : MonoBehaviour
     // Scaling Vectors:
     public Vector3 meshScale = new Vector3(1, 1, 1);
 
+    public Vector3 armScale = new Vector3(.5f, 1, .75f);
+
     //Hue modifiers:
     /// <summary>
     /// Sets the minimum value of the hue color.
@@ -68,9 +70,13 @@ public class CreatureSeaStarMesh : MonoBehaviour
                 float armZ = Mathf.Sin(rotRadians) * meshScale.z;
 
                 Vector3 armPos = pos + new Vector3(armX, 0, armZ);
-
                 Quaternion armRot = rot * Quaternion.Euler(0, rotDegrees, 0);
-                arm.transform = Matrix4x4.TRS(armPos, armRot, meshScale);
+
+                //adjust arm position by scale:
+                armPos.x += Mathf.Cos(rotRadians)*(armScale.x / 2);
+                armPos.z += Mathf.Sin(rotRadians)*(armScale.z / 2);
+
+                arm.transform = Matrix4x4.TRS(armPos, armRot, armScale);
                 meshes.Add(arm);
             }
     }
