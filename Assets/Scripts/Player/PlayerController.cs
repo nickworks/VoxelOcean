@@ -18,17 +18,27 @@ public class PlayerController : MonoBehaviour
 
     private VoxelUniverse universeReference;
     private int renderDist;
-    private int renderDistVert; 
+    private int renderDistVert;
+    private int resPerChunk;
+    private Vector3 counterMax;
+    private Vector3 counterMin;
 
+    private Vector3 pos; 
 
     private void Start()
     {
         universeReference = GameObject.Find("VoxelUniverse").GetComponent<VoxelUniverse>();
         renderDist = universeReference.renderDistance;
         renderDistVert = universeReference.renderDistanceVertical;
+        resPerChunk = universeReference.resPerChunk;
 
-        
+        counterMax = new Vector3(resPerChunk / 2.0f, resPerChunk / 2.0f, resPerChunk / 2.0f);
+        counterMin = -counterMax;
 
+        pos = GetComponent<Transform>().position; 
+            
+
+        //print(counterMin.x + " " + counterMin.y + " " + counterMin.z); 
     }
 
     // Update is called once per frame
@@ -37,14 +47,49 @@ public class PlayerController : MonoBehaviour
         Look();
         Move();
 
+        
+        pos = GetComponent<Transform>().position;
 
+        if(pos.x > counterMax.x)
+        {
+            universeReference.CreateMoreChunks(1); 
+            counterMax.x += resPerChunk;
+            counterMin.x += resPerChunk; 
+        }
+        else if(pos.x < counterMin.x)
+        {
+            universeReference.CreateMoreChunks(2);
+            counterMax.x -= resPerChunk;
+            counterMin.x -= resPerChunk;
+        }
 
+        if (pos.z > counterMax.z)
+        {
+            universeReference.CreateMoreChunks(3);
+            counterMax.z += resPerChunk;
+            counterMin.z += resPerChunk;
+        }
+        else if (pos.z < counterMin.z)
+        {
+            universeReference.CreateMoreChunks(4);
+            counterMax.z -= resPerChunk;
+            counterMin.z -= resPerChunk;
+        }
 
+        if (pos.y > counterMax.y)
+        {
+            universeReference.CreateMoreChunks(5);
+            counterMax.y += resPerChunk;
+            counterMin.y += resPerChunk;
+        }
+        else if (pos.y < counterMin.y)
+        {
+            universeReference.CreateMoreChunks(6);
+            counterMax.y -= resPerChunk;
+            counterMin.y -= resPerChunk;
+        }
 
-
-
-
-
+        
 
 
 

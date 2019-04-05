@@ -17,6 +17,11 @@ public class VoxelUniverse : MonoBehaviour
     private int yOffset = 0;
     private int zOffset = 0;
 
+    public enum Direction
+    {
+        Up, Down, Left, Right, Front, Back  
+    }
+
     public enum SignalType
     {
         AddOnly,
@@ -90,7 +95,7 @@ public class VoxelUniverse : MonoBehaviour
 
         chunks = new VoxelChunk[1 + renderDistance * 2, 1 + renderDistanceVertical * 2, 1 + renderDistance * 2];
         main = this;
-        Create();
+       // Create();
     }
     /// <summary>
     /// Create a voxel universe.
@@ -108,20 +113,20 @@ public class VoxelUniverse : MonoBehaviour
         coroutine = StartCoroutine(SpawnChunks());
     }
 
-    public void CreateMoreChunks()
+    public void CreateMoreChunks(int i)
     {
         // stop active generation:
-        if (coroutine != null) StopCoroutine(coroutine);
+        //if (coroutine != null) StopCoroutine(coroutine);
         // begin asyncronous generation:
-        coroutine = StartCoroutine(SpawnMoreChunks());
+        coroutine = StartCoroutine(SpawnMoreChunks(i));
     }
 
     /// <summary>
     /// Create a new chunk layer.
     /// </summary>
-    IEnumerator SpawnMoreChunks()
+    IEnumerator SpawnMoreChunks(int whereToSpawnNewChunks)
     {
-        int whereToSpawnNewChunks = 1; //change this based on some parameter that tells us in what direction the player was moving when the switched chunks
+        //whereToSpawnNewChunks = 1; //change this based on some parameter that tells us in what direction the player was moving when the switched chunks
 
         isGenerating = true;
         percentGenerated = 0;
@@ -150,11 +155,7 @@ public class VoxelUniverse : MonoBehaviour
                                 }
                                 else if (x == renderDistance * 2) //adds new grid of chunks at the highest x values
                                 {
-                                    if (chunks[x, y, z] != null)
-                                    {
-                                        Destroy(chunks[x, y, z].gameObject);
-                                        chunks[x, y, z] = null;
-                                    }
+
 
                                     Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
@@ -206,11 +207,7 @@ public class VoxelUniverse : MonoBehaviour
                                 }
                                 else if (x == 0) //adds new grid of chunks at the lowest x values
                                 {
-                                    if (chunks[x, y, z] != null)
-                                    {
-                                        Destroy(chunks[x, y, z].gameObject);
-                                        chunks[x, y, z] = null;
-                                    }
+
 
                                     Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
@@ -259,11 +256,7 @@ public class VoxelUniverse : MonoBehaviour
                                 }
                                 else if (z == renderDistance * 2) //adds new grid of chunks at the highest z values
                                 {
-                                    if (chunks[x, y, z] != null)
-                                    {
-                                        Destroy(chunks[x, y, z].gameObject);
-                                        chunks[x, y, z] = null;
-                                    }
+
 
                                     Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
@@ -315,11 +308,7 @@ public class VoxelUniverse : MonoBehaviour
                                 }
                                 else if (z == 0) //adds new grid of chunks at the lowest x values
                                 {
-                                    if (chunks[x, y, z] != null)
-                                    {
-                                        Destroy(chunks[x, y, z].gameObject);
-                                        chunks[x, y, z] = null;
-                                    }
+
 
                                     Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
@@ -368,11 +357,7 @@ public class VoxelUniverse : MonoBehaviour
                                 }
                                 else if (y == renderDistanceVertical * 2 ) //adds new grid of chunks at the highest y values
                                 {
-                                    if (chunks[x, y, z] != null)
-                                    {
-                                        Destroy(chunks[x, y, z].gameObject);
-                                        chunks[x, y, z] = null;
-                                    }
+
 
                                     Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
@@ -424,11 +409,7 @@ public class VoxelUniverse : MonoBehaviour
                                 }
                                 else if (y == 0) //adds new grid of chunks at the lowest x values
                                 {
-                                    if (chunks[x, y, z] != null)
-                                    {
-                                        Destroy(chunks[x, y, z].gameObject);
-                                        chunks[x, y, z] = null;
-                                    }
+
 
                                     Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
