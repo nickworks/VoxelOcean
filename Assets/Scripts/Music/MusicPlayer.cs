@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Music : MonoBehaviour
+public class MusicPlayer : MonoBehaviour
 {
     
     public  bool random = false;// to check if they want music to be random
@@ -12,11 +12,22 @@ public class Music : MonoBehaviour
     public static float[] fftSamples = new float[64];// holds the fft data
     /// <summary>
     /// grabs all the music and adds it to an array
+    /// adds waveform to samples float
     /// </summary>
     void Start()
     {
         myMusic = Resources.LoadAll("Music", typeof(AudioClip));
         GetComponent<AudioSource>().clip = myMusic[2] as AudioClip;
+         AudioSource audioSource = GetComponent<AudioSource>();
+        float[] samples = new float[audioSource.clip.samples * audioSource.clip.channels];
+        audioSource.clip.GetData(samples, 0);
+
+        for (int i = 0; i < samples.Length; ++i)
+        {
+            samples[i] = samples[i] * 0.5f;
+        }
+
+        audioSource.clip.SetData(samples, 0);
     }
 
 
