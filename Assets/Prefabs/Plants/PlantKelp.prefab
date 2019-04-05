@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6125296191573934606}
   - component: {fileID: 4531927683660134110}
   - component: {fileID: 5399352122963632199}
+  - component: {fileID: 253464069093893883}
   m_Layer: 0
   m_Name: PlantKelp
   m_TagString: Untagged
@@ -55,8 +56,10 @@ MonoBehaviour:
   leafOffsetAngleX: 35
   leafOffsetAngleY: 35
   leafOffsetAngleZ: 35
-  minRandom: 0
-  maxRandom: 10
+  minRandom: 10
+  maxRandom: 45
+  hueMin: 0.1
+  hueMax: 0.6
 --- !u!33 &4531927683660134110
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -102,3 +105,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &253464069093893883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111102048973533995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f05891abbe85d46bba417b8de83be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: PlantKelp
+  mobility: 3
+  special: 
+  defense: 3
+  size: 1
+  tangibility: 3

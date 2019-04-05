@@ -203,10 +203,7 @@ public class VoxelChunk : MonoBehaviour
         Mesh mesh = MakeMeshFromTris(geom);
 
         // remove duplicate vertices:
-        this.mesh.mesh = RemoveDuplicates(mesh);
-
-        // calculate those normals:
-        this.mesh.mesh.RecalculateNormals();
+        this.mesh.mesh = MeshTools.RemoveDuplicates(mesh, true);
 
         SetVertexColors();
     }
@@ -238,51 +235,6 @@ public class VoxelChunk : MonoBehaviour
         mesh.SetTriangles(tris, 0);
         return mesh;
     }
-    /// <summary>
-    /// Removes duplicate vertices from a mesh by "welding" together vertices that are EXACTLY the same.
-    /// </summary>
-    /// <param name="complexMesh">The mesh from which to remove duplicate vertices.</param>
-    /// <param name="printDebug">Whether or not to output to the console the before/after vertex count.</param>
-    /// <returns>A copy of the complexMesh, with vertices removed. NOTE: The copy contains no UVs, vertex colors, or normals.</returns>
-    private Mesh RemoveDuplicates(Mesh complexMesh, bool printDebug = false)
-    {
-        List<Vector3> verts = new List<Vector3>();
-        List<int> tris = new List<int>();
-
-        complexMesh.GetVertices(verts);
-        complexMesh.GetTriangles(tris, 0);
-
-        int count1 = verts.Count;
-
-        for (int i = 0; i < verts.Count; i++)
-        {
-            // find duplicates:
-            for (int j = 0; j < verts.Count; j++)
-            {
-                if (i == j) continue;
-                if (j >= verts.Count) break;
-                if (i >= verts.Count) break;
-                if (verts[i] == verts[j]) // if a duplicate vert:
-                {
-                    verts.RemoveAt(j); // remove it
-                    for(int k = 0; k < tris.Count; k++)
-                    {
-                        if (tris[k] == j) tris[k] = i;
-                        if (tris[k] > j) tris[k] = tris[k] - 1;
-                    }
-                }
-            }
-        }
-        int count2 = verts.Count;
-
-        if(printDebug) print($"{count1} reduced to {count2}");
-
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(verts);
-        mesh.SetTriangles(tris, 0);
-        return mesh;
-
-    } // RemoveDuplicates()
     /// <summary>
     /// Generates vertex colors for every vertex in the MeshFilter's mesh.
     /// </summary>
