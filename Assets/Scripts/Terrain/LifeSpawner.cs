@@ -217,7 +217,7 @@ public class LifeSpawner : MonoBehaviour
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
 
-        if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
+        if (prefab != null) SpawnPrefab(prefab, pos, rot, Random.Range(.5f,1.25f));
 
         return true;
     }
