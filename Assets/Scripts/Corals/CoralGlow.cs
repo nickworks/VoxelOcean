@@ -95,10 +95,11 @@ public class CoralGlow : MonoBehaviour
     /// </summary>
     public float scaleMod = 1f;
 
-
+    /// <summary>
+    /// The chance you will get a larger piece of coral 
+    /// </summary>
     public int longChance = 4;
 
-    public float longScale = 4f;
     #endregion
 
 
@@ -175,7 +176,7 @@ public class CoralGlow : MonoBehaviour
     /// <param name="state">a integer value passed in from the start method that is used to determine what the corals health is</param>
    private void SetHealth(int state)
     {
-
+        //We generate a random integer from 0 to 3 based on our longChance
         int x = Random.Range(0, longChance);
         print(x);
         //We start our switch statement here
@@ -187,8 +188,8 @@ public class CoralGlow : MonoBehaviour
                 myHealth = Health.Growing;//myHealth is set to growing
                 glow = Random.Range(0, 100) * .010f; //Glow is set to a random amount
                 iterations += bonusIterations = Random.Range(5, 10); //We get bonus iterations representing the coral being larger and healthier
-                
-                if(x >= 0)
+                //If coral is in its growing state and x is greater than 0 we will get a larger piece of growing coral 
+                if(x > 0)
                 {
                     branchScale = new Vector3(.5f, 2, .5f);
                 }
@@ -201,8 +202,8 @@ public class CoralGlow : MonoBehaviour
                 iterations +=  bonusIterations = Random.Range(0, 5); //We get bonus iterations but there is a wider range so we could only get one or we could get 4
 
 
-               
-                if (x >= 0)
+               //If coral is in its healthy state and x is greater than 0 we will get a larger piece of healthy coral
+                if (x > 0)
                 {
                     branchScale = new Vector3(.25f, 1, .25f);
                 }
@@ -217,7 +218,7 @@ public class CoralGlow : MonoBehaviour
                     iterations -= bonusIterations = Random.Range(1, 3);//We subtract iterations
                 }//End of if(iterations >=3) statement
 
-
+                //If coral is in its sick state and x is greater than or equal to 2 then we will get a smaller piece of sick coral
                 if (x >= 2)
                 {
                     branchScale = new Vector3(.1f, 1f, .1f);
