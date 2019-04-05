@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4432468947427318689}
   - component: {fileID: 1473888731111057437}
+  - component: {fileID: 2937313396669877406}
+  - component: {fileID: 3518378117797305553}
   m_Layer: 0
   m_Name: PlantMossBall
   m_TagString: Untagged
@@ -43,10 +45,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf40a2c603811f644a1e5658df19af94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 0
+  iterations: 3
   sideFan: 0
-  branchScaling: {x: 0.1, y: 0.1, z: 0.1}
+  branchScaling: {x: 0.3, y: 0.3, z: 0.3}
   pos2: {x: -2, y: 0, z: 2}
   pos3: {x: 2, y: 0, z: 2}
   pos4: {x: -1, y: 0, z: 1}
   pos5: {x: 1, y: 0, z: -1}
+--- !u!23 &2937313396669877406
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755855242698053521}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &3518378117797305553
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755855242698053521}
+  m_Mesh: {fileID: 0}

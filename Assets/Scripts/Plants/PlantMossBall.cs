@@ -34,7 +34,7 @@ public class PlantMossBall : MonoBehaviour
         List<CombineInstance> meshes = new List<CombineInstance>();
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
         Grow(iterations, meshes, pos3, Quaternion.identity, 1);
-        Grow(iterations, meshes, pos4, Quaternion.identity, 1);
+        //Grow(iterations, meshes, pos4, Quaternion.identity, 1);
         Grow(iterations, meshes, pos5, Quaternion.identity, 1);
 
 
@@ -43,6 +43,7 @@ public class PlantMossBall : MonoBehaviour
 
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
+
     }
     /// <summary>
     /// Where the grow function generates the new branches 
@@ -67,12 +68,8 @@ public class PlantMossBall : MonoBehaviour
 
 
         //where the branches will be positioned when spawning in
-        pos = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), 1, Random.Range(0, 1)));
+        pos = inst.transform.MultiplyPoint(new Vector3(0, .5f, 0));
 
-        if (iterations == 1)
-        {
-            pos = inst.transform.MultiplyPoint(new Vector3(Random.Range(0, 1), 0, Random.Range(0, 1)));
-        }
         //rotation of the branches spawned
         Quaternion rot1 = rot * Quaternion.Euler(Random.Range(30, 60), Random.Range(30, 60), Random.Range(30, 60));
         Quaternion rot2 = rot * Quaternion.Euler(Random.Range(-30, -60), 0, Random.Range(-60, -30));
@@ -80,11 +77,11 @@ public class PlantMossBall : MonoBehaviour
         Quaternion rot5 = rot * Quaternion.Euler(Random.Range(-40, 40), 0, Random.Range(-40, 40));
 
         //how each iteration of a branch will be generated
-        scale *= 2;
+        scale *= .8f;
         //branches that spawn for the skeletal part of the coral
 
         Grow(num, meshes, pos, rot1, scale);
-        Grow(num, meshes, pos, rot2, scale);
+        //Grow(num, meshes, pos, rot2, scale);
         Grow(num, meshes, pos, rot4, scale);
         Grow(num, meshes, pos, rot5, scale);
 
