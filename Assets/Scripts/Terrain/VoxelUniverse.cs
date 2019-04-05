@@ -13,6 +13,11 @@ public class VoxelUniverse : MonoBehaviour
     /// </summary>
     public const float VOXEL_SEPARATION = 1;
 
+
+    private int xOffset = 0;
+    private int yOffset = 0;
+    private int zOffset = 0;
+
     public enum SignalType
     {
         AddOnly,
@@ -22,6 +27,18 @@ public class VoxelUniverse : MonoBehaviour
         Sphere,
         None
     }
+
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        Front,
+        Back
+    }
+
+
 
     [System.Serializable]
     public class SignalField
@@ -39,7 +56,7 @@ public class VoxelUniverse : MonoBehaviour
             res.densityBias = UnityEngine.Random.Range(-0.2f, 0.2f);
             res.flattenAmount = UnityEngine.Random.Range(0f, 1);
             res.flattenOffset = 0;
-            res.type = (SignalType) UnityEngine.Random.Range(0, 5);
+            res.type = (SignalType)UnityEngine.Random.Range(0, 5);
             return res;
         }
     }
@@ -51,15 +68,15 @@ public class VoxelUniverse : MonoBehaviour
     static public VoxelUniverse main;
 
     [Tooltip("How many chunks to spawn laterally in either direction around the middle. For example, a value of 1 will spawn an 3 x 3 chunks.")]
-    [Range(0,8)] public int renderDistance = 3;
+    [Range(0, 8)] public int renderDistance = 3;
     [Tooltip("How many layers of chunks to spawn above and below the middle layer. For example, a value of 1 will spawn 3 layers of chunks.")]
-    [Range(0,3)] public int renderDistanceVertical = 1;
+    [Range(0, 3)] public int renderDistanceVertical = 1;
     [Tooltip("How many voxels should be in each dimension of each chunk. For example, a value of 10 will produce chunks that have 10 x 10 x 10 voxels.")]
-    [Range(1,40)] public int resPerChunk = 10;
+    [Range(1, 40)] public int resPerChunk = 10;
 
     [Tooltip("The prefab to use when spawning chunks.")]
     public VoxelChunk voxelChunkPrefab;
-    
+
     // how large to make the biomes
     [Range(3, 200)] public float biomeScaling = 25;
 
@@ -73,7 +90,8 @@ public class VoxelUniverse : MonoBehaviour
     /// </summary>
     List<VoxelChunk> chunks = new List<VoxelChunk>();
 
-    Coroutine coroutine;
+    Coroutine coroutine1;
+    Coroutine coroutine2;
 
     void Start()
     {
@@ -89,12 +107,229 @@ public class VoxelUniverse : MonoBehaviour
         //if (isGenerating) return;
 
         // stop active generation:
-        if (coroutine != null) StopCoroutine(coroutine);
+        if (coroutine1 != null) StopCoroutine(coroutine1);
+        if (coroutine2 != null) StopCoroutine(coroutine2);
         // destroy existing chunks:
         DestroyChunks();
         // begin asyncronous generation:
-        coroutine = StartCoroutine(SpawnChunks());
+        coroutine1 = StartCoroutine(SpawnChunks());
     }
+
+    public void UpdateChunks(Vector3 playerPos, Direction dir)
+    {
+        coroutine2 = StartCoroutine(LoadSliceOfChunks(dir));
+        DestroyDistantChunks(playerPos);
+        //LoadSliceOfChunks(dir);
+    }
+
+    private void DestroyDistantChunks(Vector3 playerPos)
+    {
+        float dx;
+        float dy;
+        float dz;
+        Vector3 chunk; 
+        for(int i = 0; i < chunks.Count; i++)
+        {
+
+            chunk = chunks[i].transform.position;
+
+            dx = chunk.x - playerPos.x;
+            dy = chunk.y - playerPos.y;
+            dz = chunk.z - playerPos.z;
+
+            if(dx < 0)
+            {
+                dx *= -1;
+            }
+
+            if (dy < 0)
+            {
+                dy *= -1;
+            }
+
+            if (dz < 0)
+            {
+                dz *= -1;
+            }
+
+            if (dx > renderDistance + 1)
+            {
+                Destroy(chunks[i].gameObject);
+                chunks.Remove(chunks[i]); 
+            }
+            else if(dz > renderDistance + 1)
+            {
+                Destroy(chunks[i].gameObject);
+                chunks.Remove(chunks[i]);
+            }
+            else if(dy > renderDistanceVertical + 1)
+            {
+                Destroy(chunks[i].gameObject);
+                chunks.Remove(chunks[i]); 
+            }
+
+
+
+        }
+    }
+
+    private IEnumerator LoadSliceOfChunks(Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.Right:
+                xOffset++;
+                if (chunks.Count > 0)
+                {
+                    for (int y = -renderDistanceVertical; y <= renderDistanceVertical; y++)
+                    {
+                        for (int z = -renderDistance; z <= renderDistance; z++)
+                        {
+                            Vector3 pos = new Vector3(renderDistance + xOffset, y + yOffset, z + zOffset) * resPerChunk;
+                            VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                            chunk.Rebuild();
+                            if (chunk.isEmpty)
+                            {
+                                Destroy(chunk.gameObject);
+                            }
+                            else
+                            {
+                                chunks.Add(chunk);
+                            }
+                            yield return null;
+                        }
+                    }
+                }
+                break;
+
+            case Direction.Left:
+                xOffset--;
+                if (chunks.Count > 0)
+                {
+                    for (int y = -renderDistanceVertical; y <= renderDistanceVertical; y++)
+                    {
+                        for (int z = -renderDistance; z <= renderDistance; z++)
+                        {
+                            Vector3 pos = new Vector3(-renderDistance + xOffset, y + yOffset, z + zOffset) * resPerChunk;
+                            VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                            chunk.Rebuild();
+                            if (chunk.isEmpty)
+                            {
+                                Destroy(chunk.gameObject);
+                            }
+                            else
+                            {
+                                chunks.Add(chunk);
+                            }
+                            yield return null;
+                        }
+                    }
+                }
+                break;
+
+            case Direction.Front:
+                zOffset++;
+                if (chunks.Count > 0)
+                {
+                    for (int y = -renderDistanceVertical; y <= renderDistanceVertical; y++)
+                    {
+                        for (int x = -renderDistance; x <= renderDistance; x++)
+                        {
+                            Vector3 pos = new Vector3(x + xOffset, y + yOffset, renderDistance + zOffset) * resPerChunk;
+                            VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                            chunk.Rebuild();
+                            if (chunk.isEmpty)
+                            {
+                                Destroy(chunk.gameObject);
+                            }
+                            else
+                            {
+                                chunks.Add(chunk);
+                            }
+                            yield return null;
+                        }
+                    }
+                }
+                break;
+
+            case Direction.Back:
+                zOffset--;
+                if (chunks.Count > 0)
+                {
+                    for (int y = -renderDistanceVertical; y <= renderDistanceVertical; y++)
+                    {
+                        for (int x = -renderDistance; x <= renderDistance; x++)
+                        {
+                            Vector3 pos = new Vector3(x + xOffset, y + yOffset, -renderDistance + zOffset) * resPerChunk;
+                            VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                            chunk.Rebuild();
+                            if (chunk.isEmpty)
+                            {
+                                Destroy(chunk.gameObject);
+                            }
+                            else
+                            {
+                                chunks.Add(chunk);
+                            }
+                            yield return null;
+                        }
+                    }
+                }
+                break;
+
+            case Direction.Up:
+                yOffset++;
+                if (chunks.Count > 0)
+                {
+                    for (int z = -renderDistance; z <= renderDistance; z++)
+                    {
+                        for (int x = -renderDistance; x <= renderDistance; x++)
+                        {
+                            Vector3 pos = new Vector3(x + xOffset, renderDistanceVertical + yOffset, z + zOffset) * resPerChunk;
+                            VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                            chunk.Rebuild();
+                            if (chunk.isEmpty)
+                            {
+                                Destroy(chunk.gameObject);
+                            }
+                            else
+                            {
+                                chunks.Add(chunk);
+                            }
+                            yield return null;
+                        }
+                    }
+                }
+                break;
+
+            case Direction.Down:
+                yOffset--;
+                if (chunks.Count > 0)
+                {
+                    for (int z = -renderDistance; z <= renderDistance; z++)
+                    {
+                        for (int x = -renderDistance; x <= renderDistance; x++)
+                        {
+                            Vector3 pos = new Vector3(x + xOffset, -renderDistanceVertical + yOffset, z + zOffset) * resPerChunk;
+                            VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
+                            chunk.Rebuild();
+                            if (chunk.isEmpty)
+                            {
+                                Destroy(chunk.gameObject);
+                            }
+                            else
+                            {
+                                chunks.Add(chunk);
+                            }
+                            yield return null;
+                        }
+                    }
+                }
+                break; 
+        }
+    }
+
+
     void DestroyChunks()
     {
         foreach (VoxelChunk chunk in chunks)
@@ -126,7 +361,7 @@ public class VoxelUniverse : MonoBehaviour
             {
                 for (int z = -renderDistance; z <= renderDistance; z++)
                 {
-                    Vector3 pos = new Vector3(x, y, z) * resPerChunk;
+                    Vector3 pos = new Vector3(x + xOffset, y + yOffset, z + zOffset) * resPerChunk;
                     VoxelChunk chunk = Instantiate(voxelChunkPrefab, pos, Quaternion.identity, transform);
                     chunk.Rebuild();
                     if (chunk.isEmpty)
