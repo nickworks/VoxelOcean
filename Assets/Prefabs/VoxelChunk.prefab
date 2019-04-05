@@ -133,3 +133,5 @@ MonoBehaviour:
     type: 3}
   prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}
+  prefabCoralSupreme: {fileID: 4802542557500494251, guid: e238a3f3b38936742b2a0f5f0e798ec8,
+    type: 3}

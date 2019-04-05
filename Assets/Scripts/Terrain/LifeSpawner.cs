@@ -145,6 +145,10 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for Glowing coral
     /// </summary>
     public GameObject prefabCoralGlow;
+    /// <summary>
+    /// Prefab reference for Coral Supreme
+    /// </summary>
+    public GameObject prefabCoralSupreme;
 
     /// <summary>
     /// Attempt to spawn a bunch of life on this VoxelChunk
@@ -214,7 +218,7 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
-        //if (biome.owner == BiomeOwner.Zach) prefab = ;
+        if (biome.owner == BiomeOwner.Zach) prefab = prefabCoralSupreme;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
 
         if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
