@@ -28,7 +28,7 @@ public class CoralPurpleFan : MonoBehaviour
     /// </summary>
     public void Build()
     {
-        iterations = Random.Range(4, 6);
+        iterations = Random.Range(3, 7);
         iteratoinsFan = iterations;
         List<CombineInstance> meshes = new List<CombineInstance>();
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
@@ -66,9 +66,9 @@ public class CoralPurpleFan : MonoBehaviour
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
 
         //rotation of the branches spawned
-        Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(30, 60));
-        Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(-60, -30));
-        Quaternion rot3 = rot * Quaternion.Euler(0, 0, Random.Range(-10, 20));
+        Quaternion rot1 = rot * Quaternion.Euler(Random.Range(10, 20), 0, Random.Range(10, 20));
+        Quaternion rot2 = rot * Quaternion.Euler(Random.Range(-15, -10), 0, Random.Range(-15, -10));
+        Quaternion rot3 = rot * Quaternion.Euler(Random.Range(-10, 20), 0, Random.Range(-10, 20));
 
         //how each iteration of a branch will be generated
         scale *= .8f;
@@ -100,12 +100,13 @@ public class CoralPurpleFan : MonoBehaviour
         scale *= .8f;
         //branches that spawn for the skeletal part of the coral
         pos = coralBase.transform.MultiplyPoint(new Vector3(0, 1f, 0));
-        Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(40, 80));
-        Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(-80, -40));
+        Quaternion rot1 = rot * Quaternion.Euler(Random.Range(10, 20), 0, Random.Range(10, 20));
+        Quaternion rot2 = rot * Quaternion.Euler(Random.Range(-15, -10), 0, Random.Range(-15, -10));
+        Quaternion rot3 = rot * Quaternion.Euler(Random.Range(-10, 20), 0, Random.Range(-10, 20));
 
         Grow2(num, meshes, pos, rot1, scale);
         Grow2(num, meshes, pos, rot2, scale);
-        Grow2(num, meshes, pos, rot, scale);
+        Grow2(num, meshes, pos, rot3, scale);
 
     }
     /// <summary>
