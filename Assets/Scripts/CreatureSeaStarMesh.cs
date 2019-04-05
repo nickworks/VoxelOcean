@@ -25,12 +25,32 @@ public class CreatureSeaStarMesh : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Check to make sure Unity values don't break the program.
+        if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .1f;
+
+        Build();
     }
 
     public void Build()
     {
-        print("Object has been told to GROW!");
+        List<CombineInstance> meshes = new List<CombineInstance>();
+        Grow(iterations, meshes, Vector3.zero, Quaternion.identity);
+
+        Mesh mesh = new Mesh();
+        mesh.CombineMeshes(meshes.ToArray());
+
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        meshFilter.mesh = mesh;
+    }
+
+    void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot)
+    {
+        if (num <= 0) return;
+
+
+
+        num--;
+        Grow(num, meshes, pos, rot);
     }
 
     /// <summary>
