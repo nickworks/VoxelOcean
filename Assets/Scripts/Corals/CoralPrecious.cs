@@ -10,7 +10,7 @@ public class CoralPrecious : MonoBehaviour
 {
 
     [Range(2, 6)] public int iterations = 3; // this allows the user to choose how many iterations they want in the editor
-    [Range(1, 4)] public int branches = 5; // this allows the user to choose how many branches per iteration they want in the editor
+    [Range(1, 5)] public int branches = 5; // this allows the user to choose how many branches per iteration they want in the editor
 
 
     public float xScaling = .15f; // this allows the user to choose the X scaling in the editor

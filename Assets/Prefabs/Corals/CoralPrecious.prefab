@@ -90,8 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df91bbab2832f0499f8aa63fc568b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 3
-  branches: 5
+  iterations: 5
+  branches: 1
   xScaling: 0.15
   yScaling: 1
   zScaling: 0.15
