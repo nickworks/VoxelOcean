@@ -52,13 +52,8 @@
 			pos.z += _Time.y * .75;
 			pos.y += _Time.y * .75;
 
-			//float tx = IN.vertex.x + _Time.x;
-			//float tz = IN.vertex.z + _Time.x;
 
 			fixed4 col = tex2Dlod(_Noise, pos / 100);
-			//col.xz *= 100;
-
-			//fixed4 offset = col.rgba * _Wind * colDist;
 
 			fixed4 offset  = col.rgba * redDist;
 			offset.a = 0;
@@ -70,7 +65,7 @@
         {
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            //o.Albedo = c.rgb;
+
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
