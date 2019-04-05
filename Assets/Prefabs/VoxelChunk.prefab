@@ -164,5 +164,7 @@ MonoBehaviour:
     type: 3}
   prefabPlantSeagrass: {fileID: 9184822981456748834, guid: 8ef6def96fa59974caab563f824ce1b1,
     type: 3}
+  prefabMossBall: {fileID: 6755855242698053521, guid: 23447f7e1e5d2924097a2fe4d93b867e,
+    type: 3}
   prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}
