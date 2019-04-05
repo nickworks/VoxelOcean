@@ -9,12 +9,12 @@ public class PlantMossBall : MonoBehaviour
     /// <summary>
     /// The number of iterations spawned from the original
     /// </summary>
-    public int iterations;
+    public int iterations = 6;
     public bool sideFan = false;
     /// <summary>
     /// How the scaling of the branches are for both the skeleton set and fan set
     /// </summary>
-    public Vector3 branchScaling = new Vector3(.1f, .1f, .1f);
+    public Vector3 branchScaling = new Vector3(.03f, .2f, .1f);
     public Vector3 pos2 = new Vector3(-2, 0, 2);
     public Vector3 pos3 = new Vector3(2, 0, 2);
     public Vector3 pos4 = new Vector3(-1, 0, 1);
@@ -30,13 +30,11 @@ public class PlantMossBall : MonoBehaviour
     /// </summary>
     public void Build()
     {
-        iterations = Random.Range(5, 6);
+        //how many iterations there will be to create variety.
         List<CombineInstance> meshes = new List<CombineInstance>();
+        //starting branches that spawn in 
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
-        Grow(iterations, meshes, pos3, Quaternion.identity, 1);
-        //Grow(iterations, meshes, pos4, Quaternion.identity, 1);
-        Grow(iterations, meshes, pos5, Quaternion.identity, 1);
-
+        Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
 
         Mesh mesh = new Mesh();
         mesh.CombineMeshes(meshes.ToArray());
@@ -78,10 +76,9 @@ public class PlantMossBall : MonoBehaviour
 
         //how each iteration of a branch will be generated
         scale *= .8f;
-        //branches that spawn for the skeletal part of the coral
 
+        //branches that spawn 
         Grow(num, meshes, pos, rot1, scale);
-        //Grow(num, meshes, pos, rot2, scale);
         Grow(num, meshes, pos, rot4, scale);
         Grow(num, meshes, pos, rot5, scale);
 

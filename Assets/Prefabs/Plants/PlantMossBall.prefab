@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf40a2c603811f644a1e5658df19af94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 3
-  sideFan: 0
-  branchScaling: {x: 0.3, y: 0.3, z: 0.3}
+  iterations: 6
+  sideFan: 1
+  branchScaling: {x: 0.03, y: 0.4, z: 0.1}
   pos2: {x: -2, y: 0, z: 2}
   pos3: {x: 2, y: 0, z: 2}
   pos4: {x: -1, y: 0, z: 1}
