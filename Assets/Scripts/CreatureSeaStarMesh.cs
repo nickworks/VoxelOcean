@@ -58,23 +58,22 @@ public class CreatureSeaStarMesh : MonoBehaviour
             meshes.Add(center);
   
             //Make arms of sea star:
-            for (int i = 1; i <= numberOfArms; i++)
+            for (int i = 0; i < numberOfArms; i++)
             {
                 CombineInstance arm = new CombineInstance();
                 arm.mesh = MeshTools.MakeCube();
-                float rotDegrees = (360 / numberOfArms) * i + 180.0f;
+                float rotDegrees = (360 / numberOfArms) * i;
                 float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
                 
                 //Build out arm in that direction:
-                float armX = Mathf.Cos(rotRadians) * meshScale.x;
-                float armZ = Mathf.Sin(rotRadians) * meshScale.z;
+                float armX = Mathf.Sin(rotRadians) * 1f;
+                float armZ = Mathf.Cos(rotRadians) * 1f;
 
                 Vector3 armPos = pos + new Vector3(armX, 0, armZ);
-                Quaternion armRot = rot * Quaternion.Euler(0, rotDegrees, 0);
+                Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
 
                 //adjust arm position by scale:
-                armPos.x += Mathf.Cos(rotRadians)*(armScale.x / 2);
-                armPos.z += Mathf.Sin(rotRadians)*(armScale.z / 2);
+                
 
                 arm.transform = Matrix4x4.TRS(armPos, armRot, armScale);
                 meshes.Add(arm);

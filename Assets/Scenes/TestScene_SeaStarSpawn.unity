@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfArms: 5
   meshScale: {x: 1, y: 1, z: 1}
-  armScale: {x: 3, y: 1, z: 0.2}
+  armScale: {x: 0.2, y: 1, z: 3}
   hueMin: 0.1
   hueMax: 1
 --- !u!23 &775965296
