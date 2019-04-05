@@ -94,6 +94,11 @@ public class CoralGlow : MonoBehaviour
     /// A modifier applied to the scale of the coral
     /// </summary>
     public float scaleMod = 1f;
+
+
+    public int longChance = 4;
+
+    public float longScale = 4f;
     #endregion
 
 
@@ -136,6 +141,9 @@ public class CoralGlow : MonoBehaviour
                 //Then we add to our glow variable using countdown multiplied by delta time
                 glow += countDown * Time.deltaTime;
             }//End of if(!tickup) statement
+
+           
+
             //Call the check countdown method to see if we need to change tickup to true or false
             CheckCountDown();
             //Set our material value _Glow to our glow value
@@ -167,6 +175,9 @@ public class CoralGlow : MonoBehaviour
     /// <param name="state">a integer value passed in from the start method that is used to determine what the corals health is</param>
    private void SetHealth(int state)
     {
+
+        int x = Random.Range(0, longChance);
+        print(x);
         //We start our switch statement here
         //We switch based on the state variable passed into this method
         switch (state)
@@ -176,15 +187,27 @@ public class CoralGlow : MonoBehaviour
                 myHealth = Health.Growing;//myHealth is set to growing
                 glow = Random.Range(0, 100) * .010f; //Glow is set to a random amount
                 iterations += bonusIterations = Random.Range(5, 10); //We get bonus iterations representing the coral being larger and healthier
+                
+                if(x >= 0)
+                {
+                    branchScale = new Vector3(.5f, 2, .5f);
+                }
 
-                scaleMod += 2;
+                scaleMod += 1;
                 break;//End of case 1
             case 2://If case is 2
                 myHealth = Health.Normal; //health is set to normal
                 glow = Random.Range(0, 100) * .010f;//Glow is set to a random amount
                 iterations +=  bonusIterations = Random.Range(0, 5); //We get bonus iterations but there is a wider range so we could only get one or we could get 4
 
-                scaleMod += 1;
+
+               
+                if (x >= 0)
+                {
+                    branchScale = new Vector3(.25f, 1, .25f);
+                }
+
+                scaleMod += .5f;
                 break;//End of case 2
             case 3://If case is 3
                 myHealth = Health.Sick;// My health is set to sick
@@ -193,6 +216,12 @@ public class CoralGlow : MonoBehaviour
                 {
                     iterations -= bonusIterations = Random.Range(1, 3);//We subtract iterations
                 }//End of if(iterations >=3) statement
+
+
+                if (x >= 2)
+                {
+                    branchScale = new Vector3(.1f, 1f, .1f);
+                }
 
                 scaleMod -= .5f;
                 break;//end of case 3
