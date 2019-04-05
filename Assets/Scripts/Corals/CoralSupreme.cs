@@ -6,27 +6,56 @@ using System;
 
 public class CoralSupreme : MonoBehaviour
 {
-    
+    /// <summary>
+    /// The number of iterations that the recursive Grow() function will iterate
+    /// </summary>
     [Range(2, 8)] public int iterations = 6;
+    /// <summary>
+    /// A value of up to 30 degrees off of 120 degrees (360/3 for 3 branches) for the branches to grow from the center
+    /// </summary>
     [Range(0, 30)] public int randomDir1Offset = 0;
+    /// <summary>
+    /// A value of up to 15 degrees off of 45 degrees from horizontal for the branches to grow upward.
+    /// </summary>
     [Range(0, 15)] public int randomDir2Offset = 0;
+    /// <summary>
+    /// The chance of a coral branch spawning from the center of the previous branch in the exact same direction rather than splitting into 3
+    /// </summary>
     [Range(0, 100)]public int Spawn4thBranchChance = 0;
+    /// <summary>
+    /// The chance of a 4th branch spawning along with the other 3 branches. The 4th branch spawns directly out of the other branch.
+    /// </summary>
     [Range(0, 50)] public int Mut1Chance = 0;
 
+    /// <summary>
+    /// Boolean value to override the OldColor and YoungColor variables and spawn the coral with 2 randomly decided values.
+    /// </summary>
     public bool RandomizeColors;
 
+    /// <summary>
+    /// The color to spawn nearest the center of the coral
+    /// </summary>
     public Color OldColor;
 
+    /// <summary>
+    /// The color to spawn furthest from the center of the coral.
+    /// </summary>
     public Color YoungColor;
 
-    //private List<Color> vertexColors = new List<Color>();
-
-
+    /// <summary>
+    /// The X Y and Z scaling for the rectangular portions of the coral.
+    /// </summary>
     public Vector3 branchScaling = new Vector3(.25f, 1, .25f);
 
+
+    /// <summary>
+    /// The random object used for determining randomness
+    /// </summary>
     private System.Random random = new System.Random();
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start is called before the first frame update
+    /// </summary>
     void Start()
     {
 
@@ -34,7 +63,9 @@ public class CoralSupreme : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Build function sets up and begins the recursive function Grow() 
+    /// </summary>
     public void Build()
     {
         if (RandomizeColors)
@@ -43,7 +74,6 @@ public class CoralSupreme : MonoBehaviour
             OldColor = new Color((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), 1);
         }
 
-        //vertexColors = new List<Color>();
         List<CombineInstance> meshes = new List<CombineInstance>();
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1, iterations);
 
@@ -52,13 +82,19 @@ public class CoralSupreme : MonoBehaviour
         
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
-
-        //mesh = meshFilter.mesh;
-        //mesh.colors = vertexColors.ToArray();
-        
         
     }
 
+    /// <summary>
+    /// The Recursive Grow Function
+    /// Each recursion spawns more branches.
+    /// </summary>
+    /// <param name="num">The number of iterations left in the recursive function. If less than or = to 0, returns.</param>
+    /// <param name="meshes">A list of CombineInstance objects which is expanded each iteration of the function.</param>
+    /// <param name="pos">The position of the transform of the previous iteration. If the first iteration, is the transform of the GameObject.</param>
+    /// <param name="rot">The rotation of the transform of the previous iteration. If the first iteration, is the transform of the GameObject.</param>
+    /// <param name="scale">The Scale of the transform of the previous iteration. If the first iteration, is the transform of the GameObject.</param>
+    /// <param name="maxNum">The Initial number of iterations. Should not change.</param>
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale, int maxNum)
     {
         if (num <= 0) return;
@@ -102,6 +138,12 @@ public class CoralSupreme : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Creates the rectangular meshes for the branches.
+    /// </summary>
+    /// <param name="num">The current iteration in the calling Grow() function.</param>
+    /// <param name="maxNum">The initial iteration in the calling Grow() function.</param>
+    /// <returns></returns>
     private Mesh MakeCube(int num, int maxNum)
     {
         List<Vector3> verts = new List<Vector3>();
@@ -275,6 +317,12 @@ public class CoralSupreme : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Gets the colors for the vertices for the current generation. The num and maxNum arguments are used to find proportions and to Lerp the colors.
+    /// </summary>
+    /// <param name="num">The current iteration</param>
+    /// <param name="maxNum">The maximum iteration.</param>
+    /// <returns>A Color array of size 2, containing the colors which the current generation will gradiant between. </returns>
     private Color[] GetColors(int num, int maxNum)
     {
 
@@ -291,6 +339,9 @@ public class CoralSupreme : MonoBehaviour
     
 
 }
+/// <summary>
+/// Adds the GROW button to the inspector, and stuff.
+/// </summary>
 [CustomEditor(typeof(CoralSupreme))]
 public class CoralSupremeEditor : Editor
 {
