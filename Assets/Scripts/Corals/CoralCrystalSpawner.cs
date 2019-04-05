@@ -58,7 +58,7 @@ public class CoralCrystalSpawner : MonoBehaviour
     /// </summary>
     [Range(1, 4)] public float randomdorandom;
     /// <summary>
-    /// TrueRandomize, turns on or off the randomization function of angles.
+    /// TrueRandomize, turns on or off the randomization function for testing / then enables it upon generation.
     /// </summary>
     public bool TrueRandomize = true;
 

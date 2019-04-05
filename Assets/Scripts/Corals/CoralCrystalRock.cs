@@ -140,7 +140,10 @@ public class CoralCrystalRock : MonoBehaviour
         /// <summary>
         /// Randomize Range
         /// Randomize the range of the objects inside of the grow function.
-        /// 
+        /// Angle 1 - 3 Randomizes ranges between 0 and 45 degrees
+        /// scalar is randomized between .5 (float), and .8 (float)
+        /// objpos is randomized between .4 (float), and .6 (float)
+        /// Branchscale is randomized its ranges between .5 (float) and 1 between its X and Z coordinates to give a different look each time.
         /// </summary>
         private void RandomizeRanges()
         {
