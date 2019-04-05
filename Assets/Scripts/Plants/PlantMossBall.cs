@@ -9,7 +9,7 @@ public class PlantMossBall : MonoBehaviour
     /// <summary>
     /// The number of iterations spawned from the original
     /// </summary>
-    public int iterations = 6;
+    public int iterations = 3;
     public bool sideFan = false;
     /// <summary>
     /// How the scaling of the branches are for both the skeleton set and fan set
@@ -75,7 +75,7 @@ public class PlantMossBall : MonoBehaviour
         Quaternion rot5 = rot * Quaternion.Euler(Random.Range(-40, 40), 0, Random.Range(-40, 40));
 
         //how each iteration of a branch will be generated
-        scale *= .8f;
+        scale *= Random.Range(.2f, .8f);
 
         //branches that spawn 
         Grow(num, meshes, pos, rot1, scale);
@@ -218,8 +218,8 @@ public class PlantMossBall : MonoBehaviour
 
 
         //Set hue min and Max
-        float hueMin = .3f;
-        float hueMax = Random.Range(.3f, 1);
+        float hueMin = .4f;
+        float hueMax = Random.Range(.5f, 1);
 
         float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
         //creating it so hues start out at random then turn to green
