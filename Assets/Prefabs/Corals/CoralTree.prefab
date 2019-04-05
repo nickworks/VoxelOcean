@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5941988385446936834}
   - component: {fileID: 5941988385446936835}
   - component: {fileID: 5547944737193792276}
+  - component: {fileID: 8104581169662956497}
   m_Layer: 0
   m_Name: CoralTree
   m_TagString: Untagged
@@ -92,3 +93,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterations: 6
   branchScale: {x: 0.25, y: 1, z: 0.25}
+--- !u!114 &8104581169662956497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5941988385446936893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: 
+  species: CoralTree
+  mobility: 3
+  special: 
+  defense: 1
+  size: 1
+  tangibility: 0
