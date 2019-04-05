@@ -507,6 +507,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7819836424440507457, guid: 6c28d9f8a64ff4f4abb3a82ef925d4f7,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0cd4ce48765a10947b9416eeb2be382f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c28d9f8a64ff4f4abb3a82ef925d4f7, type: 3}
 --- !u!114 &708821811 stripped
@@ -551,7 +557,7 @@ GameObject:
   - component: {fileID: 813205699}
   - component: {fileID: 813205698}
   m_Layer: 5
-  m_Name: Image
+  m_Name: CrossHairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -566,7 +572,7 @@ RectTransform:
   m_GameObject: {fileID: 813205696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.66789, y: 0.66789, z: 0.66789}
   m_Children: []
   m_Father: {fileID: 1676131608}
   m_RootOrder: 4

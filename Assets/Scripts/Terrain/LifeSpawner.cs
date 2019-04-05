@@ -154,7 +154,6 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public void SpawnSomeLife()
     {
-
         mesh = GetComponent<MeshFilter>();
         if (!mesh) return;
 
@@ -279,6 +278,5 @@ public class LifeSpawner : MonoBehaviour
 
         // TODO: register the coral in a list of coral?
         return obj;
-
     }
 }
