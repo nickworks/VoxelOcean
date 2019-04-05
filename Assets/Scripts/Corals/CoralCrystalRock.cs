@@ -50,7 +50,17 @@ public class CoralCrystalRock : MonoBehaviour
     /// hueMax, maxium of the  of the hue values of colors
     /// </summary>
     [Range(.4f, 4f)] public float hueMax = 1.7f;
-
+    /// <summary>
+    /// Range controls the different types of Crystal Coral, with a random range set in the update function;
+    /// </summary>
+    [Range(1, 5)] public float range;
+    /// <summary>
+    /// RandomdorRandom controls the different types of Crystal Coral, with a random range set in the update function;
+    /// </summary>
+    [Range(1, 4)] public float children;
+    /// <summary>
+    /// TrueRandomize, turns on or off the randomization function for testing / then enables it upon generation.
+    /// </summary>
 
 
     /// <summary>
@@ -130,12 +140,33 @@ public class CoralCrystalRock : MonoBehaviour
             Quaternion rot3 = rot * Quaternion.Euler(-angle3, 0, -angle2); //to avoid stretching
             Quaternion rot4 = rot * Quaternion.Euler(-angle3, 45 + angle2, -angle2); //to avoid stretching
             scale *= scalar;
-            //BUG - Objects will sometimes 'stretch'
+        //BUG - Objects will sometimes 'stretch'
+        if (range == 1 || range == 2)
+        {
             Grow(meshes, num, pos, rot1, scale); //doing one for tendril like
             Grow(meshes, num, sidePos, rot2, scale); // doing for tendril 2
             Grow(meshes, num, sidePos2, rot3, scale); // tendril 3
             Grow(meshes, num, pos, rot4, scale); // tendril 3
             Grow(meshes, num / 4, sidePos, rot4, scale); // tendril 3
+        }
+
+        if (range == 3)
+        {
+            Grow(meshes, num, sidePos, rot3, scale); //doing one for tendril like
+            Grow(meshes, num / 2, sidePos, rot1, scale); // doing for tendril 2
+            Grow(meshes, num / 2, sidePos2, rot3, scale); // tendril 3
+            Grow(meshes, num, pos, rot4, scale); // tendril 3
+            Grow(meshes, num / 4, sidePos, rot4, scale); // tendril 3
+        }
+
+        if (range == 4)
+        {
+            Grow(meshes, num, sidePos, rot3, scale); //doing one for tendril like
+            Grow(meshes, num / 4, sidePos, rot1, scale); // doing for tendril 2
+            Grow(meshes, num / 2, sidePos2, rot3, scale); // tendril 3
+            Grow(meshes, num, pos, rot4, scale); // tendril 3
+            Grow(meshes, num / 4, sidePos, rot4, scale); // tendril 3
+        }
     }
         /// <summary>
         /// Randomize Range
@@ -152,7 +183,9 @@ public class CoralCrystalRock : MonoBehaviour
             angle3 = Random.Range(0, 45);
             scalar = Random.Range(.5f, .8f);
             objpos = Random.Range(.4f, .6f);
-            branchScale = new Vector3(Random.Range(.5f, 1), (float)2, Random.Range(.5f, 1));
+        range = Random.Range(1, 5);
+        children = Random.Range(1, 4);
+        branchScale = new Vector3(Random.Range(.5f, 1), (float)2, Random.Range(.5f, 1));
         }
 
         //Cube Data

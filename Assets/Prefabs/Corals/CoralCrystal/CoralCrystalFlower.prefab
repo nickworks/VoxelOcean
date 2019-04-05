@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5939494914578814260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.9205103, z: 0, w: -0.39071846}
   m_LocalPosition: {x: 4.4889736, y: 2.29908, z: 3.2085218}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -83,13 +83,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea034d402b0a3140b89663ebe01b075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 7
-  angle1: 27
-  angle2: 37
-  angle3: 18
-  scalar: 0.6998584
+  iterations: 4
+  angle1: 25
+  angle2: 10
+  angle3: 13
+  scalar: 0.85226214
   objpos: 0.5
-  branchScale: {x: 0.25, y: 1, z: 0.25}
+  branchScale: {x: 0.39566383, y: 4, z: 0.29399157}
+  hueMin: 0.175
+  hueMax: 2.22
+  range: 2
+  children: 2
 --- !u!33 &5939494914578814259
 MeshFilter:
   m_ObjectHideFlags: 0

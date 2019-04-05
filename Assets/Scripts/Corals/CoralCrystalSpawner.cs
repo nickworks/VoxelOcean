@@ -52,11 +52,11 @@ public class CoralCrystalSpawner : MonoBehaviour
     /// <summary>
     /// Range controls the different types of Crystal Coral, with a random range set in the update function;
     /// </summary>
-    [Range(1, 4)] public float range;
+    [Range(1, 5)] public float range;
     /// <summary>
     /// RandomdorRandom controls the different types of Crystal Coral, with a random range set in the update function;
     /// </summary>
-    [Range(1, 4)] public float randomdorandom;
+    [Range(1, 4)] public float children;
     /// <summary>
     /// TrueRandomize, turns on or off the randomization function for testing / then enables it upon generation.
     /// </summary>
@@ -110,7 +110,26 @@ public class CoralCrystalSpawner : MonoBehaviour
         meshFilter.mesh = mesh;
 
     }
+    /// <summary>
+    /// Randomize Range
+    /// Randomize the range of the objects inside of the grow function.
+    /// 
+    /// </summary>
+    private void RandomizeRanges()
+    {
+        if (TrueRandomize == true)
+        {
+            angle1 = Random.Range(20, 45);
+            angle2 = Random.Range(20, 45);
+            angle3 = Random.Range(20, 45);
+            scalar = Random.Range(.5f, .8f);
+            objpos = Random.Range(.4f, .6f);
+            range = Random.Range(1, 6);
+            children = Random.Range(1, 4);
+        }
 
+        branchScale = new Vector3(Random.Range(.25f, .35f), (float)2, Random.Range(.25f, .35f));
+    }
     /// <summary>
     /// Grow
     /// Grows objects from a single branch that is then randomized aned give iterations that the player can control.
@@ -152,33 +171,33 @@ public class CoralCrystalSpawner : MonoBehaviour
         Quaternion rot5 = rot * Quaternion.Euler(Random.Range(10, 45), 0, Random.Range(10, 45)); //to avoid stretching
         Quaternion rot6 = rot * Quaternion.Euler(-Random.Range(10, 45), 0, -Random.Range(10, 45)); //to avoid stretching
 
-        if (range >= 1) {
+        if (range == 1) {
 
             Grow(meshes, num, pos, rot1, scale);
             Grow(meshes, num, pos, rot2, scale);
             Grow(meshes, num, pos, rot3, scale);
             Grow(meshes, num, pos, rot4, scale);
-            if (randomdorandom == 2)
+            if (children == 2)
             {
                 Grow(meshes, num, pos, rot6, scale);
             }
         }
 
-        if (range >= 2)
+        if (range == 2)
         {
             Grow(meshes, num, pos, rot1, scale); //doing one for tendril like
             Grow(meshes, num, pos, rot2, scale); // doing for tendril 2
             Grow(meshes, num, sidePos, rot3, scale); // doing for tendril 2
             Grow(meshes, num, sidePos, rot4, scale); // doing for tendril 2
-            if (randomdorandom == 2)
+            if (children == 2)
             {
                 Grow(meshes, num, sidePos, rot6, scale);
             }
-            if (randomdorandom == 1) {
+            if (children == 1) {
             }
         }
 
-        if (range >= 3)
+        if (range == 3)
         {
             num--;
             Grow(meshes, num / 2, sidePos2, rot1, scale / Random.Range(1, 3)); // tendril 3
@@ -186,24 +205,24 @@ public class CoralCrystalSpawner : MonoBehaviour
             Grow(meshes, num / 2, sidePos3, rot3, scale / 2); // tendril 4
             Grow(meshes, num / 2, sidePos3, rot4, scale / 2); // tendril 4
 
-            if (randomdorandom == 2)
+            if (children == 2)
             {
                 Grow(meshes, num / 2, sidePos3, rot6, scale);
             }
-            if (randomdorandom == 1)
+            if (children == 1)
             {
                 Grow(meshes, num / 10, sidePos3, rot5, scale); // tendril 4
             }
         }
 
 
-        if (range >= 4)        {
+        if (range == 4 || range == 5)        {
             num--;
             Grow(meshes, num, sidePos3, rot1, scale / Random.Range(1, 3)); // tendril1
             Grow(meshes, num, sidePos3, rot2, scale); // tendril 2
             Grow(meshes, num, sidePos4, rot3, scale); // tendril 3
             Grow(meshes, num, sidePos4, rot4, scale / 2); // tendril 4
-            if (randomdorandom == 2)
+            if (children == 2)
             {
                 Grow(meshes, num, sidePos4, rot6, scale); //tendril 5 potential
             }
@@ -213,26 +232,7 @@ public class CoralCrystalSpawner : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// Randomize Range
-    /// Randomize the range of the objects inside of the grow function.
-    /// 
-    /// </summary>
-    private void RandomizeRanges()
-    {
-        if (TrueRandomize == true)
-        {
-            angle1 = Random.Range(20, 45);
-            angle2 = Random.Range(20, 45);
-            angle3 = Random.Range(20, 45);
-            scalar = Random.Range(.5f, .8f);
-            objpos = Random.Range(.4f, .6f);
-            range = Random.Range(1, 4);
-            randomdorandom = Random.Range(1, 4);
-        }
-        
-        branchScale = new Vector3(Random.Range(.25f, .35f), (float)2, Random.Range(.25f, .35f));
-    }
+
 
     //Cube Data
     // Makes a cube

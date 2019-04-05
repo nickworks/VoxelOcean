@@ -116,7 +116,14 @@ public class LifeSpawner : MonoBehaviour
 	/// </summary>
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
+    /// <summary>
+    /// Prefab Reference to Coral Crystal (Cameron G)
+    /// </summary>
     public GameObject prefabCoralCrystal;
+    /// <summary>
+    /// Prfab Reference to Coral Flower (Cameron G);
+    /// </summary>
+    public GameObject prefabCoralCrystalFlower;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
@@ -197,7 +204,9 @@ public class LifeSpawner : MonoBehaviour
 
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
-        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
+        if (biome.owner == BiomeOwner.Cameron)        {
+            prefab = (Random.Range(1, 5) >= 3) ? prefabCoralCrystal : prefabCoralCrystalFlower; //chance to spawn a coral crystal or crystal flower
+        }
         if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
