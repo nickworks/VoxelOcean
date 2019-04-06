@@ -96,10 +96,11 @@ MonoBehaviour:
   branchScale: {x: 0.25, y: 1, z: 0.25}
   iterations: 3
   bonusIterations: 2
-  xRotator: 45
-  zRotator: 45
-  yRotator: 45
+  xRotator: 25
+  zRotator: 15
+  yRotator: 25
   glow: 0.5
+  scaleMod: 5
 --- !u!114 &3750588692689368394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creator: 
+  creator: Andrew Smith-Johnson
   species: CoralGlow
   mobility: 3
   special: 
   defense: 1
-  size: 1
+  size: 3
   tangibility: 0

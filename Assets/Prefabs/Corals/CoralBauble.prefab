@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creator: 
+  creator: Justin
   species: CoralBauble
   mobility: 3
   special: 
