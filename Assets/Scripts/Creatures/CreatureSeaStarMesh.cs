@@ -15,8 +15,8 @@ public class CreatureSeaStarMesh : MonoBehaviour
 
     // Scaling Vectors:
     public Vector3 meshScale = new Vector3(1, 1, 1);
-
     public Vector3 armScale = new Vector3(.5f, 1, .75f);
+    [Range(0.1f, 1)]public float taperAmount = 0.5f;
 
     //Hue modifiers:
     /// <summary>
@@ -61,7 +61,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
             for (int i = 0; i < numberOfArms; i++)
             {
                 CombineInstance arm = new CombineInstance();
-                arm.mesh = MeshTools.MakeCube();
+                arm.mesh = MeshTools.MakeTaperCube(taperAmount);
                 float rotDegrees = (360 / numberOfArms) * i;
                 float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
                 
@@ -69,7 +69,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
                 float armX = Mathf.Sin(rotRadians) * 1f;
                 float armZ = Mathf.Cos(rotRadians) * 1f;
 
-                Vector3 armPos = pos + new Vector3(armX, 0, armZ);
+                Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
                 Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
 
                 //adjust arm position by scale:

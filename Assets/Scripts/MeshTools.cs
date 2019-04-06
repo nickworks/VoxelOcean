@@ -423,7 +423,7 @@ public static class MeshTools
     /// This function generates and returns a 1m cube mesh that tapers at its end. The anchor point is the back center of the mesh.
     /// </summary>
     /// <returns>A mesh object with normals and uvs. No color information has been set.</returns>
-    public static Mesh MakeTaperedCube()
+    public static Mesh MakeTaperCube(float taperAmount)
     {
         List<Vector3> verts = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
@@ -431,10 +431,10 @@ public static class MeshTools
         List<int> tris = new List<int>();
 
         // Front face
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
+        verts.Add(new Vector3(-0.5f * taperAmount, +0.5f * taperAmount, 1));
+        verts.Add(new Vector3(+0.5f * taperAmount, +0.5f * taperAmount, 1));
+        verts.Add(new Vector3(+0.5f * taperAmount, -0.5f * taperAmount, 1));
+        verts.Add(new Vector3(-0.5f * taperAmount, -0.5f * taperAmount, 1));
         normals.Add(new Vector3(0, 0, -1));
         normals.Add(new Vector3(0, 0, -1));
         normals.Add(new Vector3(0, 0, -1));
@@ -443,18 +443,18 @@ public static class MeshTools
         uvs.Add(new Vector2(0, 1));
         uvs.Add(new Vector2(1, 1));
         uvs.Add(new Vector2(1, 0));
-        tris.Add(0);
+        tris.Add(2);
         tris.Add(1);
-        tris.Add(2);
-        tris.Add(2);
-        tris.Add(3);
         tris.Add(0);
+        tris.Add(0);
+        tris.Add(3);
+        tris.Add(2);
 
         // Back face
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
+        verts.Add(new Vector3(-0.5f, +0.5f, 0));
+        verts.Add(new Vector3(+0.5f, +0.5f, 0));
+        verts.Add(new Vector3(+0.5f, -0.5f, 0));
+        verts.Add(new Vector3(-0.5f, -0.5f, 0));
         normals.Add(new Vector3(0, 0, +1));
         normals.Add(new Vector3(0, 0, +1));
         normals.Add(new Vector3(0, 0, +1));
@@ -471,10 +471,10 @@ public static class MeshTools
         tris.Add(4);
 
         // Left face 
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
+        verts.Add(new Vector3(-0.5f, +0.5f, 0));
+        verts.Add(new Vector3(-0.5f * taperAmount, +0.5f * taperAmount, 1));
+        verts.Add(new Vector3(-0.5f * taperAmount, -0.5f * taperAmount, 1));
+        verts.Add(new Vector3(-0.5f, -0.5f, 0));
         normals.Add(new Vector3(-1, 0, 0));
         normals.Add(new Vector3(-1, 0, 0));
         normals.Add(new Vector3(-1, 0, 0));
@@ -483,18 +483,18 @@ public static class MeshTools
         uvs.Add(new Vector2(0, 1));
         uvs.Add(new Vector2(1, 1));
         uvs.Add(new Vector2(1, 0));
-        tris.Add(8);
+        tris.Add(10);
         tris.Add(9);
-        tris.Add(10);
-        tris.Add(10);
-        tris.Add(11);
         tris.Add(8);
+        tris.Add(8);
+        tris.Add(11);
+        tris.Add(10);
 
         // Right face
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
+        verts.Add(new Vector3(+0.5f, +0.5f, 0));
+        verts.Add(new Vector3(+0.5f * taperAmount, +0.5f * taperAmount, 1));
+        verts.Add(new Vector3(+0.5f * taperAmount, -0.5f * taperAmount, 1));
+        verts.Add(new Vector3(+0.5f, -0.5f, 0));
         normals.Add(new Vector3(+1, 0, 0));
         normals.Add(new Vector3(+1, 0, 0));
         normals.Add(new Vector3(+1, 0, 0));
@@ -511,10 +511,10 @@ public static class MeshTools
         tris.Add(12);
 
         // Top face
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
+        verts.Add(new Vector3(-0.5f, +0.5f, 0));
+        verts.Add(new Vector3(+0.5f, +0.5f, 0));
+        verts.Add(new Vector3(+0.5f * taperAmount, +0.5f * taperAmount, 1));
+        verts.Add(new Vector3(-0.5f * taperAmount, +0.5f * taperAmount, 1));
         normals.Add(new Vector3(0, +1, 0));
         normals.Add(new Vector3(0, +1, 0));
         normals.Add(new Vector3(0, +1, 0));
@@ -523,18 +523,18 @@ public static class MeshTools
         uvs.Add(new Vector2(0, 1));
         uvs.Add(new Vector2(1, 1));
         uvs.Add(new Vector2(1, 0));
-        tris.Add(16);
+        tris.Add(18);
         tris.Add(17);
-        tris.Add(18);
-        tris.Add(18);
-        tris.Add(19);
         tris.Add(16);
+        tris.Add(16);
+        tris.Add(19);
+        tris.Add(18);
 
         // Bottom face 
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
+        verts.Add(new Vector3(-0.5f, -0.5f, 0));
+        verts.Add(new Vector3(+0.5f, -0.5f, 0));
+        verts.Add(new Vector3(+0.5f * taperAmount, -0.5f * taperAmount, 1));
+        verts.Add(new Vector3(-0.5f * taperAmount, -0.5f * taperAmount, 1));
         normals.Add(new Vector3(0, -1, 0));
         normals.Add(new Vector3(0, -1, 0));
         normals.Add(new Vector3(0, -1, 0));
