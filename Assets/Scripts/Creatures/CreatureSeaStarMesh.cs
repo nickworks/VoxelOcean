@@ -54,6 +54,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
             //Make center of the sea star:
             CombineInstance center = new CombineInstance();
             center.mesh = MeshTools.MakePentagonalCylinder();
+            Quaternion adjustRot =  Quaternion.Euler(0, 15, 0) * rot;
             center.transform = Matrix4x4.TRS(pos, rot, meshScale);
             meshes.Add(center);
   

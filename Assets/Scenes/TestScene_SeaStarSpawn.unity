@@ -340,5 +340,15 @@ PrefabInstance:
       propertyPath: armScale.x
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 1612530955601573738, guid: 8c8b1bc97220f884f97ba4078cc1259a,
+        type: 3}
+      propertyPath: meshScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612530955601573738, guid: 8c8b1bc97220f884f97ba4078cc1259a,
+        type: 3}
+      propertyPath: meshScale.z
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c8b1bc97220f884f97ba4078cc1259a, type: 3}
