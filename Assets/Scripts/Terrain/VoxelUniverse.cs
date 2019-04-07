@@ -137,32 +137,31 @@ public class VoxelUniverse : MonoBehaviour
             dy = chunk.y - playerPos.y;
             dz = chunk.z - playerPos.z;
 
+            //gets absolute value of the broken vector pieces
             if(dx < 0)
             {
                 dx *= -1;
             }
-
             if (dy < 0)
             {
                 dy *= -1;
             }
-
             if (dz < 0)
             {
                 dz *= -1;
             }
 
-            if (dx > renderDistance + 1)
-            {
-                Destroy(chunks[i].gameObject);
-                chunks.Remove(chunks[i]); 
-            }
-            else if(dz > renderDistance + 1)
+            if (dx > renderDistance)
             {
                 Destroy(chunks[i].gameObject);
                 chunks.Remove(chunks[i]);
             }
-            else if(dy > renderDistanceVertical + 1)
+            else if (dz > renderDistance)
+            {
+                Destroy(chunks[i].gameObject);
+                chunks.Remove(chunks[i]);
+            }
+            else if (dy > renderDistanceVertical)
             {
                 Destroy(chunks[i].gameObject);
                 chunks.Remove(chunks[i]); 
