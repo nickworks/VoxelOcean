@@ -420,9 +420,10 @@ public static class MeshTools
     }
 
     /// <summary>
-    /// This function generates and returns a 1m cube mesh that tapers at its end. The anchor point is the back center of the mesh.
+    /// Creates a 1m cube that tapers in on it's front end by a variable amount.
     /// </summary>
-    /// <returns>A mesh object with normals and uvs. No color information has been set.</returns>
+    /// <param name="taperAmount">Sets the amount the cube tapers in at it's front.</param>
+    /// <returns></returns>
     public static Mesh MakeTaperCube(float taperAmount)
     {
         List<Vector3> verts = new List<Vector3>();

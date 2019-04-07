@@ -124,6 +124,9 @@ public class LifeSpawner : MonoBehaviour
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
     public GameObject prefabPlantKelp;
+    /// <summary>
+    /// Prefab reference for CreatureSeaStar (Kyle Lowery)
+    /// </summary>
     public GameObject prefabCreatureSeaStar;
     public GameObject prefabCoralPrecious;
     public GameObject prefabCoralPyramid;
