@@ -124,51 +124,27 @@ public class VoxelUniverse : MonoBehaviour
 
     private void DestroyDistantChunks(Vector3 playerPos)
     {
-        float dx;
-        float dy;
-        float dz;
-        Vector3 chunk; 
-        for(int i = 0; i < chunks.Count; i++)
+        //print("Removing distant chunks...");
+
+        for(int i = chunks.Count - 1; i >= 0; i--) // loop backwards to avoid skip-update glitch
         {
 
-            chunk = chunks[i].transform.position;
+            Vector3 dis = chunks[i].transform.position - playerPos;
 
-            dx = chunk.x - playerPos.x;
-            dy = chunk.y - playerPos.y;
-            dz = chunk.z - playerPos.z;
+            dis /= resPerChunk * VOXEL_SEPARATION; // convert dis from meters to chunks
 
             //gets absolute value of the broken vector pieces
-            if(dx < 0)
-            {
-                dx *= -1;
-            }
-            if (dy < 0)
-            {
-                dy *= -1;
-            }
-            if (dz < 0)
-            {
-                dz *= -1;
-            }
+            dis.x = (int) Mathf.Abs(dis.x);
+            dis.y = (int) Mathf.Abs(dis.y);
+            dis.z = (int) Mathf.Abs(dis.z);
 
-            if (dx > renderDistance)
+            bool isDistant = (dis.x > renderDistance) || (dis.z > renderDistance) || (dis.y > renderDistanceVertical);
+
+            if (isDistant)
             {
                 Destroy(chunks[i].gameObject);
                 chunks.Remove(chunks[i]);
             }
-            else if (dz > renderDistance)
-            {
-                Destroy(chunks[i].gameObject);
-                chunks.Remove(chunks[i]);
-            }
-            else if (dy > renderDistanceVertical)
-            {
-                Destroy(chunks[i].gameObject);
-                chunks.Remove(chunks[i]); 
-            }
-
-
-
         }
     }
 
