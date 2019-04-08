@@ -121,6 +121,8 @@ MonoBehaviour:
     type: 3}
   prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
     type: 3}
+  prefabCreatureSeaStar: {fileID: 338540796843315734, guid: 8c8b1bc97220f884f97ba4078cc1259a,
+    type: 3}
   prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
     type: 3}
   prefabCoralPyramid: {fileID: 8856533629082828895, guid: 28013e49a404f4243abe910b6bb4ce60,

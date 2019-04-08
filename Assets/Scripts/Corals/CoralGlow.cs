@@ -178,7 +178,7 @@ public class CoralGlow : MonoBehaviour
     {
         //We generate a random integer from 0 to 3 based on our longChance
         int x = Random.Range(0, longChance);
-        print(x);
+        
         //We start our switch statement here
         //We switch based on the state variable passed into this method
         switch (state)
