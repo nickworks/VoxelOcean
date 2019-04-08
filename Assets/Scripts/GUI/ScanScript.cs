@@ -36,22 +36,27 @@ public class ScanScript : MonoBehaviour
             //if the raycast hit something (with a mesh renderer)
             if (Physics.Raycast(ray, out hit))
             {
-                //turn on the gui
-                img.enabled = true;
-                text.enabled = true;
-                //print("I'm looking at " + hit.transform.name);
-
                 //reference to the target
                 GameObject target = hit.transform.gameObject;
-
-                //master string all of the information will populate
-                string output;
-
-                //the string is populated with different information based on what properties it has
 
                 //everything properties - all objects will have this
                 PropertiesBase properties = target.GetComponent<PropertiesBase>();
 
+                if (properties == null)
+                {
+                    img.enabled = false;
+                    text.enabled = false;
+                    return;
+                }
+
+                //turn on the gui
+                img.enabled = true;
+                text.enabled = true;
+
+                //master string all of the information will populate
+                string output = "";
+
+                //the string is populated with different information based on what properties it has
                 string creator = properties.creator;
                 string species = properties.species;
                 Mobility mobility = properties.mobility;
@@ -60,16 +65,15 @@ public class ScanScript : MonoBehaviour
                 List<Special> special = properties.special;
 
                 output = $"Creator: {creator}\n" +
-                         $"Species: {species}\n" +
-                         $"Mobility: {mobility}\n" +
-                         $"Defence: {defense}\n" +
-                         $"Size: {size}\n";
+                            $"Species: {species}\n" +
+                            $"Mobility: {mobility}\n" +
+                            $"Defence: {defense}\n" +
+                            $"Size: {size}\n";
 
                 foreach (Special s in special)
                 {
                     output += s.ToString() + "\n";
                 }
-
 
                 PropertiesNonAnimal nonAnimalProperties = target.GetComponent<PropertiesNonAnimal>();
                 PropertiesAnimal animalProperties = target.GetComponent<PropertiesAnimal>();
