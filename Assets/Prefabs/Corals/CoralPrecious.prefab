@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4215765450872021453}
   - component: {fileID: 4215765450872021452}
   - component: {fileID: 4215765450872021455}
+  - component: {fileID: 4567951234934598155}
   m_Layer: 0
   m_Name: CoralPrecious
   m_TagString: Untagged
@@ -95,3 +96,22 @@ MonoBehaviour:
   xScaling: 0.15
   yScaling: 1
   zScaling: 0.15
+--- !u!114 &4567951234934598155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4215765450872021454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Keegan Johnson
+  species: CoralPrecious
+  mobility: 3
+  special: 
+  defense: 1
+  size: 2
+  tangibility: 0

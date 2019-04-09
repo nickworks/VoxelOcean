@@ -5,6 +5,8 @@ using UnityEditor;
 
 /// <summary>
 /// This script creates a mesh for a PlantKelp object using mesh construction functions.
+/// Author: Kyle Lowery
+/// Last Date Updated: 03/29/2019
 /// </summary>
 public class PlantKelpMesh : MonoBehaviour
 {
@@ -66,9 +68,24 @@ public class PlantKelpMesh : MonoBehaviour
     /// </summary>
     [Range(0, 45f)] public float maxRandom = 30f;
 
+    //Hue modifiers:
+    /// <summary>
+    /// Sets the minimum value of the hue color.
+    /// </summary>
+    [Range(.1f, .9f)] public float hueMin = .1f;
+    /// <summary>
+    /// Sets the maximum value of the hue color.
+    /// </summary>
+    [Range(.1f, 1f)] public float hueMax = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Check to make sure Unity values don't break the code:
+        if (minRandom > maxRandom || minRandom == maxRandom) minRandom = maxRandom - 1;
+        if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .1f;
+
+        // Start building the mesh:
         Build();
     }
 
@@ -78,7 +95,6 @@ public class PlantKelpMesh : MonoBehaviour
     public void Build()
     {
         List<CombineInstance> meshes = new List<CombineInstance>();
-
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity);
 
         Mesh mesh = new Mesh();
@@ -100,7 +116,7 @@ public class PlantKelpMesh : MonoBehaviour
 
         // Add Stem Mesh:
         CombineInstance stem = new CombineInstance();
-        stem.mesh = MakeCylinder();
+        stem.mesh = MakePentagonalCylinder(num);
         stem.transform = Matrix4x4.TRS(pos, rot, stemScaling);
         meshes.Add(stem);
 
@@ -108,7 +124,7 @@ public class PlantKelpMesh : MonoBehaviour
         for (int i = 1; i <= numberOfLeaves; i++)
         {
             CombineInstance leaves = new CombineInstance();
-            leaves.mesh = MakeCube();
+            leaves.mesh = MakeCube(num);
             float rotAmount = 360 / (numberOfLeaves * i);
             Quaternion leafRot = rot * Quaternion.Euler(leafOffsetAngleX, leafOffsetAngleY * rotAmount, leafOffsetAngleZ);
             leaves.transform = Matrix4x4.TRS(pos, leafRot, leafScaling);
@@ -118,27 +134,36 @@ public class PlantKelpMesh : MonoBehaviour
         // Count down number of passes:
         num--;
 
+        // Get the position of the end of this section:
         pos = stem.transform.MultiplyPoint(new Vector3(0, 1, 0));
-        Vector3 sidePos = stem.transform.MultiplyPoint(new Vector3(.5f, .5f, 0));
+        
+        //Generate random angles based on set angle values:
+        float randX = angleX + Random.Range(minRandom, maxRandom);
+        float randY = angleY + Random.Range(minRandom, maxRandom);
+        float randZ = angleZ + Random.Range(minRandom, maxRandom);
 
-        float rotX = angleX + Random.Range(minRandom, maxRandom);
-        float rotY = angleY + Random.Range(minRandom, maxRandom);
-        float rotZ = angleZ + Random.Range(minRandom, maxRandom);
+        //Create a Quaternion to change the local transform to the world Vector3.up:
+        Quaternion rot1 = Quaternion.FromToRotation(transform.up, Vector3.up);
+        //Create a Quaternion using the random angles from earlier:
+        Quaternion rot2 = Quaternion.Euler(randX, randY, randZ);
 
-        Quaternion rot1 = rot * Quaternion.Euler(rotX, rotY, rotZ);
-
-        Grow(num, meshes, pos, rot1);
+        //Use a slerp to create a Quaternion between rot1 and rot2, leaning more towards randomness in later segments:
+        Quaternion finalRot = Quaternion.Slerp(rot1, rot2, (num/(float)iterations));
+        
+        //Grow another segment:
+        Grow(num, meshes, pos, finalRot);
     }
     /// <summary>
     /// Makes a mesh for a 1m-sized cube.
     /// </summary>
     /// <returns>Mesh data for a 1m-sized cube.</returns>
-    private Mesh MakeCube()
+    private Mesh MakeCube(int num)
     {
         List<Vector3> verts = new List<Vector3>();
         List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
+        List<Color> colors = new List<Color>();
 
         //FRONT
         verts.Add(new Vector3(-0.5f, 0, -0.5f));
@@ -260,24 +285,35 @@ public class PlantKelpMesh : MonoBehaviour
         tris.Add(23);
         tris.Add(20);
 
+        float hue = Mathf.Lerp(hueMin, hueMax, (num/(float)iterations));
+
+        foreach (Vector3 pos in verts)
+        {
+            float tempHue = hue;
+            Color tempColor = Color.HSVToRGB(tempHue, 1, 1);
+            colors.Add(tempColor);
+        }
+
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
         mesh.SetUVs(0, uvs);
         mesh.SetNormals(normals);
         mesh.SetTriangles(tris, 0);
+        mesh.SetColors(colors);
         return mesh;
 
     }
     /// <summary>
-    /// Makes a mesh for a 1m tall (y-axis) cylinder.
+    /// Makes a mesh for a 1m tall (y-axis) pentagonal cylinder.
     /// </summary>
     /// <returns>Mesh data for a 1m tall (y-axis) cylinder.</returns>
-    private Mesh MakeCylinder()
+    private Mesh MakePentagonalCylinder(int num)
     {
         List<Vector3> verts = new List<Vector3>();
         //List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
+        List<Color> colors = new List<Color>();
 
         //TOP
         verts.Add(new Vector3(+.5f, 1, 0));
@@ -408,13 +444,21 @@ public class PlantKelpMesh : MonoBehaviour
         tris.Add(29);
         tris.Add(27);
 
+        float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
 
+        foreach (Vector3 pos in verts)
+        {
+            float tempHue = hue;
+            Color tempColor = Color.HSVToRGB(tempHue, 1, 1);
+            colors.Add(tempColor);
+        }
 
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
         //mesh.SetUVs(0, uvs);
         mesh.SetNormals(normals);
         mesh.SetTriangles(tris, 0);
+        mesh.SetColors(colors);
         return mesh;
     }
 }

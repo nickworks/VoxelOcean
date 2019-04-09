@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2581658518344738572}
   - component: {fileID: 2581658518344738575}
   - component: {fileID: 2581658518344738574}
-  - component: {fileID: 2271694814210191452}
+  - component: {fileID: 789150373867855962}
+  - component: {fileID: 3545957980217579752}
   m_Layer: 0
-  m_Name: Coral_Broccoli
+  m_Name: CoralBroccoli
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &2271694814210191452
+--- !u!114 &789150373867855962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,3 +93,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterations: 3
   branchScaling: {x: 0.25, y: 1, z: 0.25}
+--- !u!114 &3545957980217579752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2581658518344738568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Jessica Petroelje
+  species: CoralBroccoli
+  mobility: 3
+  special: 
+  defense: 1
+  size: 2
+  tangibility: 0

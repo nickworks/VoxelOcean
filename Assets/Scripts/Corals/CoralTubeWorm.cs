@@ -124,7 +124,7 @@ public class CoralTubeWorm : MonoBehaviour
         filter.mesh = mesh;
         meshrenderer.material = mat;
 
-        transform.localScale = Vector3.one * .1f;
+        transform.localScale *= .1f;
     }
     /// <summary>
     /// Generate a rock, which will then either recursively create more rocks or create a tube worm.
