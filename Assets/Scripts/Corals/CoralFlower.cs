@@ -70,10 +70,23 @@ public class CoralFlower : MonoBehaviour
 	/// controls the normal distribution of branches's y rotation
 	/// </summary>
 	[Tooltip("controls the normal distribution of branches's y rotation")]
-	public float yRot = -15;    
+	public float yRot = -15;
+
+    /// <summary>
+    /// controls the normal distribution of branches's y rotation
+    /// </summary>
+    [Tooltip("controls how spread out the petals are")]
+    [Range(1, 360)] public int degreeOfSeparation = 10; //randomize from 4 to 15
+
+    [Tooltip("changes the angle of the petals relative to the base")]
+    [Range(0, 360)] public int degreeFromBase = 115; //randomize from 100 to 118
+
+    private List<Quaternion> rots; 
+
     ///<summary>Runs the Build() function</summary>
     void Start()
 	{
+         
         Build();	///make a coral when this script is made
 		
 	}
@@ -84,8 +97,11 @@ public class CoralFlower : MonoBehaviour
 	{
 		List<CombineInstance> meshes = new List<CombineInstance>();
 
-		Grow(0, meshes, Vector3.zero, Quaternion.identity, 1);		///make the coral
-		GetComponent<Transform>().Rotate(0, Random.value * 360, 0);	///randomize y rotation of the coral
+        rots.Clear(); 
+        rots = new List<Quaternion>();
+
+        Grow(0, meshes, Vector3.zero, Quaternion.identity, 1);		///make the coral
+		//GetComponent<Transform>().Rotate(0, Random.value * 360, 0);	///randomize y rotation of the coral
 
 		Mesh mesh = new Mesh();
 		mesh.CombineMeshes(meshes.ToArray());						///combine meshes
@@ -118,9 +134,14 @@ public class CoralFlower : MonoBehaviour
 		inst.mesh = MakeCube(num);
 		if (num == 0)
 		{
-			inst.transform = Matrix4x4.TRS(pos, Quaternion.Euler(0,0,0), new Vector3(.2f, 1f, .2f)); ///sets the transform of the first piece
+			inst.transform = Matrix4x4.TRS(pos, Quaternion.Euler(0,0,0), new Vector3(.15f, 1f, .15f)); ///sets the transform of the first piece
 			num++;
 		}
+        else if(num == 1)
+        {
+            inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.1f, 2f, .1f)); ///sets the transform of the first iteration
+			num++;
+        }
 		else
 		{
 			inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);	///sets the transform of the later iterations
@@ -157,28 +178,22 @@ public class CoralFlower : MonoBehaviour
 			Quaternion lrot = Quaternion.identity;
 			Quaternion rtrot = Quaternion.identity;
 			Quaternion rbrot = Quaternion.identity;
-			Quaternion rot4 = Quaternion.identity;
-			Quaternion rot5 = Quaternion.identity;
-			Quaternion rot6 = Quaternion.identity;
-			Quaternion rot7 = Quaternion.identity;
-			Quaternion rot8 = Quaternion.identity;
+
 			
 			
 
 			if ( num == 1)
 			{
-																				///sets rotations of the second iteration
-				rtrot = rot * Quaternion.Euler(45, yRot + 180, -45);
-				lrot = rot * Quaternion.Euler(xRot, yRot, 45);
-				rbrot = rot * Quaternion.Euler(45, 0, 45);
-				rot4 = rot * Quaternion.Euler(45, 0, 0);
-				rot5 = rot * Quaternion.Euler(45, 0, -45);
-				rot6 = rot * Quaternion.Euler(0, 0, -45);
-				rot7 = rot * Quaternion.Euler(-45, 0, -45);
-				rot8 = rot * Quaternion.Euler(-45, 0, 0);
-				
+                ///sets rotations of the second iteration
+                for (int i = 0; i < 360; i += degreeOfSeparation)
+                {
+                    Quaternion newRot = rot * Quaternion.Euler(degreeFromBase, i, 0);
+                    rots.Add(newRot); 
+                }
 
-			}
+
+
+            }
 			else if (ran < ranRotOdds)
 			{
 				float xRan = Random.value * ranRotRange;
@@ -195,14 +210,13 @@ public class CoralFlower : MonoBehaviour
 
 			if (num == 1)
 			{
-				Grow(num, meshes, lSidePos, lrot, scale);		///spawn all the branches off of the original
-				Grow(num, meshes, lSidePos, rtrot, scale);
-				Grow(num, meshes, lSidePos, rbrot, scale);
-				Grow(num, meshes, lSidePos, rot4, scale);
-				Grow(num, meshes, lSidePos, rot5, scale);
-				Grow(num, meshes, lSidePos, rot6, scale);
-				Grow(num, meshes, lSidePos, rot7, scale);
-				Grow(num, meshes, lSidePos, rot8, scale);
+                for (int i = 0; i < rots.Count; i++)
+                {
+                    Grow(num, meshes, lSidePos, rots[i], scale);    ///spawn all the branches off of the original
+
+                }
+
+
 
 			}
 			else if (Random.value > splitOdds)
