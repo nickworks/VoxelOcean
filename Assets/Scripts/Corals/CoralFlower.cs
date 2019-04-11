@@ -49,7 +49,7 @@ public class CoralFlower : MonoBehaviour
 	/// controls the proportions of the boxes
 	/// </summary>
 	[Tooltip("controls the proportions of the boxes")]
-	public Vector3 branchScale = new Vector3(.25f, 1f, .25f);
+	public Vector3 branchScale = new Vector3(.5f, 2f, .5f);
 	/// <summary>
 	/// controls hot the box scale changes between iterations
 	/// </summary>
@@ -75,6 +75,12 @@ public class CoralFlower : MonoBehaviour
     /// <summary>
     /// controls the normal distribution of branches's y rotation
     /// </summary>
+    [Tooltip("controls the lengths of the segments")]
+    [Range(0, 10)] public float length = 1;
+
+    /// <summary>
+    /// controls the normal distribution of branches's y rotation
+    /// </summary>
     [Tooltip("controls how spread out the petals are")]
     [Range(1, 360)] public int degreeOfSeparation = 10; //randomize from 4 to 15
 
@@ -86,7 +92,7 @@ public class CoralFlower : MonoBehaviour
     ///<summary>Runs the Build() function</summary>
     void Start()
 	{
-         
+        
         Build();	///make a coral when this script is made
 		
 	}
@@ -97,11 +103,16 @@ public class CoralFlower : MonoBehaviour
 	{
 		List<CombineInstance> meshes = new List<CombineInstance>();
 
-        rots.Clear(); 
+        if(rots != null) rots.Clear(); 
         rots = new List<Quaternion>();
 
+
+        degreeOfSeparation = (int)(Mathf.Lerp(4f, 16f, Random.value));
+        degreeFromBase = (int)(Mathf.Lerp(100f, 119f, Random.value));
+        length = (Mathf.Lerp(.25f, .5f, Random.value));
+
         Grow(0, meshes, Vector3.zero, Quaternion.identity, 1);		///make the coral
-		//GetComponent<Transform>().Rotate(0, Random.value * 360, 0);	///randomize y rotation of the coral
+		GetComponent<Transform>().Rotate(0, Random.value * 360, 0);	///randomize y rotation of the coral
 
 		Mesh mesh = new Mesh();
 		mesh.CombineMeshes(meshes.ToArray());						///combine meshes
@@ -129,23 +140,25 @@ public class CoralFlower : MonoBehaviour
 		if (num > iterations) return;
 		int kids = 2;
 		if (num > iterations - 2) kids = 1; ///makes the coral plant thinner near the end of the iterations
+        
 
-		CombineInstance inst = new CombineInstance();
+        CombineInstance inst = new CombineInstance();
 		inst.mesh = MakeCube(num);
 		if (num == 0)
 		{
-			inst.transform = Matrix4x4.TRS(pos, Quaternion.Euler(0,0,0), new Vector3(.15f, 1f, .15f)); ///sets the transform of the first piece
+			inst.transform = Matrix4x4.TRS(pos, Quaternion.Euler(0,0,0), new Vector3(.15f * length, length, .15f * length)); ///sets the transform of the first piece
 			num++;
 		}
         else if(num == 1)
         {
-            inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.1f, 2f, .1f)); ///sets the transform of the first iteration
+            inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.1f * length, 2 * length, .1f * length)); ///sets the transform of the first iteration
 			num++;
         }
 		else
 		{
-			inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);	///sets the transform of the later iterations
-			num++;
+            inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.3f * length, length, .05f * length));
+            //inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);	///sets the transform of the later iterations
+            num++;
 		}
 
 		meshes.Add(inst);
@@ -191,8 +204,6 @@ public class CoralFlower : MonoBehaviour
                     rots.Add(newRot); 
                 }
 
-
-
             }
 			else if (ran < ranRotOdds)
 			{
@@ -213,21 +224,22 @@ public class CoralFlower : MonoBehaviour
                 for (int i = 0; i < rots.Count; i++)
                 {
                     Grow(num, meshes, lSidePos, rots[i], scale);    ///spawn all the branches off of the original
-
                 }
 
-
-
 			}
-			else if (Random.value > splitOdds)
+			else if (num == 2)
 			{
-				Grow(num, meshes, lSidePos, lrot, scale);
-			}
+                int x = (int)((Random.value - .5) * 100);
+                int z = (int)((Random.value - .5) * 100);
+                //int y = (int)((Random.value - .5) * 100);
+
+                lrot = Quaternion.Euler(x, 0, z); 
+                Grow(num, meshes, lSidePos, lrot, scale);
+            }
 			else
 			{
-				Grow(num, meshes, lSidePos, lrot * Quaternion.Euler(spread, spread, spread), scale);
-				Grow(num, meshes, lSidePos, lrot * Quaternion.Euler(-spread, -spread, -spread), scale);
-			}
+                Grow(num, meshes, lSidePos, lrot, scale);
+            }
 			
 
 
