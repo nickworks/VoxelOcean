@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2132010133955996118}
   - component: {fileID: 4592105782611681004}
   - component: {fileID: 4175372070534847607}
-  - component: {fileID: 4753737815735315702}
   - component: {fileID: 3750588692689368394}
+  - component: {fileID: 2366202900691829065}
   m_Layer: 0
   m_Name: CoralGlow
   m_TagString: Untagged
@@ -79,28 +79,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2570415099341971992}
   m_Mesh: {fileID: 0}
---- !u!114 &4753737815735315702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2570415099341971992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12546c0b58257c348ad88c48b7bb500c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myHealth: 0
-  absoluteControl: 0
-  branchScale: {x: 0.25, y: 1, z: 0.25}
-  iterations: 3
-  bonusIterations: 2
-  xRotator: 25
-  zRotator: 15
-  yRotator: 25
-  glow: 0.5
-  scaleMod: 5
 --- !u!114 &3750588692689368394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,3 +98,26 @@ MonoBehaviour:
   defense: 1
   size: 3
   tangibility: 0
+--- !u!114 &2366202900691829065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570415099341971992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196ca3a1f24b8b046bd470bff3a18aea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMod: 1
+  myHealth: 0
+  branchScale: {x: 1, y: 1, z: 1}
+  iterations: 3
+  xRotator: 45
+  zRotator: 45
+  yRotator: 45
+  baseChance: 1
+  otherChance: 1
+  healthModifier: 1
+  sickModifier: 1
