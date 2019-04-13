@@ -62,10 +62,12 @@ public class CoralGlowNew : MonoBehaviour
     public float yRotator = 45;
 
     //GLOW AMOUNT
+    [Range(0, 1)] float glowAmount = 0;
     //TICKUP BOOL
-    //COUNTDOWN FOR SHADER
-    //BASE CHANCE
-    //OTHER CHANCE
+    private bool tickup = true;
+
+    
+    
 
     /// <summary>
     /// A random number that the coral uses to choose its health state
@@ -94,6 +96,15 @@ public class CoralGlowNew : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //We get a reference to our renderer
+        rend = GetComponent<Renderer>();
+        //We get a reference to our CoralGlow Shader
+        rend.material.shader = Shader.Find("CoralShaders/CoralGlow");
+        //we set the shaders color
+        rend.material.SetColor("_PrimaryColor", Color.blue);
+        //We set the shaders glow amount to random amount between 0 and 1
+        rend.material.SetFloat("_Glow", glowAmount = Random.Range(0, 1));
+
         //We call the SetHealth method to determine what our corals health will be
         SetHealth();
         //We then build the coral 
@@ -103,7 +114,28 @@ public class CoralGlowNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /* if(tickup)
+           {
+               glowAmount += .01f;
+
+
+           }
+        else
+           {
+               glowAmount -= .01f;
+
+           }
+           if (glowAmount >= 1.0)
+           {
+               tickup = false;
+           }
+           else if (glowAmount <= 0)
+           {
+               tickup = true;
+           }*/
+        glowAmount = Mathf.PingPong(Time.time, 2.0f);
+        rend.material.SetFloat("_Glow", glowAmount);
+       
     }
 
     private void Build()
