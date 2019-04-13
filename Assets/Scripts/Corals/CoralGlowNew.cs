@@ -18,8 +18,8 @@ public class CoralGlowNew : MonoBehaviour
         Normal, //This creates coral with the paremeters you set
         Growing,//Growing coral grows bigger and automatically gets sent through the grow function an extra number of times
         Sick,//Sick coral should be smaller than other coral
-        big,
-        small,
+        big,//Big coral should be bigger than other coral
+        small,//Small coral should be smaller than other coral
     }
 
     /// <summary>
@@ -67,18 +67,36 @@ public class CoralGlowNew : MonoBehaviour
     //BASE CHANCE
     //OTHER CHANCE
 
-    [Range(1, 10)] public float baseChance = 1;
-                         
-    [Range(1, 10)] public float otherChance = 1;
-                        
-    [Range(1, 10)] public float healthModifier = 1;
-                          
-    [Range(1, 10)] public float sickModifier = 1;
+    /// <summary>
+    /// A random number that the coral uses to choose its health state
+    /// </summary>
+    private float baseChance = 1;
+           
+    /// <summary>
+    /// Another random number that is added to the coral to determine its health state
+    /// </summary>
+    private float otherChance = 1;
+           
+    /// <summary>
+    /// A random number generated in a method that is subtracted from
+    /// the total of baseChance and otherChance to increase the odds we will
+    /// get normal, big, or growing coral
+    /// </summary>
+    private float healthModifier = 1;
+    /// <summary>
+    /// A random number generated in a method that is added t0
+    /// the total of baseChance and otherChance to increase the odds
+    /// we will get sick or small coral
+    /// </summary>
+    private float sickModifier = 1;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //We call the SetHealth method to determine what our corals health will be
+        SetHealth();
+        //We then build the coral 
         Build();
     }
 
@@ -137,70 +155,125 @@ public class CoralGlowNew : MonoBehaviour
         //We subtract from the amount of times we are going to recourse through the function
         num--;
 
+        //A series of if statements to change how the coral is made
+
+        //If our coral is health.Normal
         if(myHealth == Health.Normal)
         {
-            pos = inst.transform.MultiplyPoint(new Vector3(0, .8f, 0));
-            scale = 1;
+            //Our position is updated so we don't spawn coral pieces ontop of one another
+            pos = inst.transform.MultiplyPoint(new Vector3(.5f, .8f, 0));
+            scale *= 1;//We multiply the scale to keep it at whatever it was from the last iteration
+            Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(0, 15), Random.Range(-15, 15));//Rotation values are keep small
+            SetHealth(); //We set health for the next iteration of coral
+            Grow(num, meshes, pos, rot1, scale);//We call grow only once
+        } //End if Health.normal
+        if(myHealth == Health.big)//If our coral is health.big
+        {
+            //We add a value from 1 to 3 to our num variable to increase coral iterations
+            num += Random.Range(1, 3);
+            //Our position is updated so we don't spawn coral pieces ontop of one another
+            pos = inst.transform.MultiplyPoint(new Vector3(.6f, .8f, 0));
+            //We multiply the scale by a random value so it is either the same or greater
+            scale *= Random.Range(1, 2.5f);
+            //Rotation values are keep small
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(0, 15), Random.Range(-15, 15));
+            //We set health for the next iteration of coral
+            SetHealth();
+            //We call grow only once
             Grow(num, meshes, pos, rot1, scale);
-        }
-
-
-
-        //Our position is updated so we don't spawn coral pieces ontop of one another
-        //pos = inst.transform.MultiplyPoint(new Vector3(.8f, .8f, 0)); //This is used to convert from one coordinate space to another
-        //We calculate another sidePosition of the coral that is close to pos
-        //Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(.10f, .8f, 0));
-
-
-
-        //We create two rotations with only positive values in the x and z range
-        //Quaternion rot1 = rot * Quaternion.Euler(0 + Random.Range(0, xRotator), 45 + Random.Range(0, yRotator), 45 + Random.Range(0, zRotator));
-        //Quaternion rot2 = rot * Quaternion.Euler(0 + Random.Range(-xRotator, 0), 45 + Random.Range(0, yRotator), 45 + Random.Range(0, zRotator));
-        //Scale is only reduced by 10%
-       // scale *= .60f;
-
-
-
-
-
-
-
-        //We call the GrowMethod Twice
-       // Grow(num, meshes, pos, rot1, scale);
-       // Grow(num, meshes, sidePos, rot2, scale);
-            
-        
+        }//End if Health.normal
+        if (myHealth == Health.small)//If our coral is health.small
+        {
+            //Our position is updated so we don't spawn coral pieces ontop of one another
+            pos = inst.transform.MultiplyPoint(new Vector3(0, .8f, 0));
+            //We multiply the scale by a random value so it is either smaller or the same
+            scale *= Random.Range(.5f, 1);
+            //Rotation values are keep small
+            Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(0, 15), Random.Range(-15, 15));
+            //We set health for the next iteration of coral
+            SetHealth();
+            //We call grow only once
+            Grow(num, meshes, pos, rot1, scale);
+        }//End if Health.small
+        if (myHealth == Health.Sick)//If our coral is health.Sick
+        {
+            //Our position is updated so we don't spawn coral pieces ontop of one another
+            pos = inst.transform.MultiplyPoint(new Vector3(0, .8f, 0));
+            //We multiply the scale by a random value so it is either smaller or the same
+            scale *= Random.Range(.5f, 1);
+            //Rotation values are made more drastic
+            Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(- 25, 45), Random.Range(-35, 35));
+            //We set health for the next iteration of coral
+            SetHealth();
+            //We call grow only once
+            Grow(num, meshes, pos, rot1, scale);
+        }//End if Health.Sick
+        if (myHealth == Health.Growing)//If our coral is health.Growing
+        {
+            //We add a value from 3 to 5 to our num variable to increase coral iterations
+            num += Random.Range(3, 5);
+            //Our position is updated so we don't spawn coral pieces ontop of one another
+            pos = inst.transform.MultiplyPoint(new Vector3(.8f, .8f, 0));
+            // We generate a sidePosition to pass to our other call of the grow method
+            Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(.10f, .8f, 0));
+            //We multiply the scale by a random value so it is either smaller or greater
+            scale *= Random.Range(1, 1.5f);
+            //Rotation values are keep small
+            Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(-15, 15), Random.Range(-15, 15));
+            //We generate another rotation quaternion for our second call to the grow method
+            Quaternion rot2 = rot * Quaternion.Euler(0, Random.Range(-15, 15), Random.Range(-15, 15));
+            SetHealth();
+            //We call grow twice 
+            Grow(num, meshes, pos, rot1, scale);
+            Grow(num, meshes, sidePos, rot2, scale);
+        }//End if Health.Growing
 
     }//End private Grow() method
 
-
-    private Health setHealth()
+    /// <summary>
+    /// A private method to set the Health enumeration of the coral
+    /// </summary>
+    /// <returns>returns myHealth doesn't really need to return this though now that I think about it</returns>
+    private Health SetHealth()
     {
+        //baseChance will always be a float from 1 to 5
         baseChance = Random.Range(1, 5);
+        //otherChance will always be a float from 1 to 5
         otherChance = Random.Range(1, 5);
+        //newChance is generated from baseChance being added to otherChance
         float newChance = baseChance + otherChance;
-        newChance -= sickModifier;
-        newChance += healthModifier;
+        //We then add the sickModifier to increase the chances that we will get sick or small coral
+        newChance += sickModifier;
+        //Then we subtract the health modifier so that we will more likely get normal, big or growing coral
+        newChance -= healthModifier;
 
-        if(newChance >= 4.5)
+        //If the chance is between 0 and 2.5 we get normal coral
+        if(newChance >= 0 && newChance <= 2.5)
         {
             myHealth = Health.Normal;
         }
-        if(newChance >= 4.6 && newChance <= 6.5)
+        //If the chance is between 2.6 and 6.5 we get growing coral 
+        //and increase the healthModifier by 1 to 3
+        if(newChance >= 2.6 && newChance <= 6.5)
         {
             myHealth = Health.Growing;
-            sickModifier += Random.Range(1, 3);
+            healthModifier += Random.Range(1, 3);
         }
+        //If the chance is between 6.6 and 8.0
+        //we get big coral
         if(newChance >= 6.6 && newChance <= 8.0)
         {
             myHealth = Health.big;
         }
+        //If the chance is between 8.1 and 9.0
+        //we get sick coral
+        //and increase the sick modifier by a value from 1 to 3
         if(newChance >= 8.1 && newChance <= 9.0)
         {
             myHealth = Health.Sick;
             sickModifier += Random.Range(1, 3);
         }
+        //If the chance is greater than 9.1 we get small coral
         if(newChance >= 9.1)
         {
             myHealth = Health.small;
