@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour
     /// Game Paused
     /// Checks to see if the game is paused or unpaused.
     /// </summary>
-    public static bool GamePaused = false;
+    public static bool gamepaused = false;
     /// <summary>
     /// pauseMENU UI
     /// A reference to canvas
@@ -36,9 +36,9 @@ public class PauseMenu : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Escape"))
         {
-            if (GamePaused)
+            if (gamepaused)
             {
                 Resume();
             }
@@ -60,7 +60,7 @@ public class PauseMenu : MonoBehaviour
     {
         pausemenuUI.SetActive(false);
         Time.timeScale = 1f;
-        GamePaused = false;
+        gamepaused = false;
     }
     /// <summary>
     /// Pause
@@ -72,7 +72,7 @@ public class PauseMenu : MonoBehaviour
     {
         pausemenuUI.SetActive(true);
         Time.timeScale = 0f;
-        GamePaused = true;
+        gamepaused = true;
     }
     /// <summary>
     /// Load Menu
@@ -83,6 +83,17 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Scene Loaded");
        //SceneManager.LoadScene("OBJ");
         Time.timeScale = 1f;
+    }
+
+
+    /// <summary>
+    /// Load Menu
+    /// Loads a menu and resets the time to normal
+    /// </summary>
+    public void Options()
+    {
+        Debug.Log("Options Loaded");
+        //SceneManager.LoadScene("OBJ");
     }
     /// <summary>
     /// Quit Game
