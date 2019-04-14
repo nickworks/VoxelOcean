@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// Cameron Garchow's Pause Menu
+/// Currently this pause menu pauses the game when escape is hit. It is bound inside of its own canvas and object to prevent issues
+/// There is currently a bug that has to deal with the GROW functionality in unity editor. Which prevents us from building the scene.
+/// The only way to fix this is to delete the editor functionality from all objects that retain this functionality
+/// Once it is deleted we can then load the scenes and build them.
+/// This menu system is currently in working order, right now if exit to main menu is clicked it won't do anything but send a debug command.
+/// Once we have deleted the old functionality it will work.
+/// </summary>
 public class PauseMenu : MonoBehaviour
 {
     /// <summary>
@@ -72,7 +80,8 @@ public class PauseMenu : MonoBehaviour
     /// </summary>
     public void LoadMenu()
     {
-        SceneManager.LoadScene("OBJ");
+        Debug.Log("Scene Loaded");
+       //SceneManager.LoadScene("OBJ");
         Time.timeScale = 1f;
     }
     /// <summary>
