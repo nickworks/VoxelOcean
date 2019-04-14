@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4000013905167283674}
   - component: {fileID: 1111512800998879164}
   - component: {fileID: 4814222475261284595}
+  - component: {fileID: 8850687128252270397}
   m_Layer: 0
   m_Name: CoralFingers
   m_TagString: Untagged
@@ -91,3 +92,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   branchScaling: {x: 0.25, y: 1, z: 0.25}
+--- !u!114 &8850687128252270397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8333528668977454555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Jesse Webb
+  species: CoralFingers
+  mobility: 3
+  special: 
+  defense: 1
+  size: 1
+  tangibility: 0

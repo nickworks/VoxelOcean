@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 377820375716106875}
   - component: {fileID: 377820375716106874}
   - component: {fileID: 377820375716106877}
+  - component: {fileID: 83273056376710800}
   m_Layer: 0
   m_Name: CoralPurpleFan
   m_TagString: Untagged
@@ -50,7 +51,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,5 +92,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iterations: 4
+  iteratoinsFan: 0
+  sideFan: 0
   branchScaling: {x: 0.03, y: 0.4, z: 0.1}
   baseScaling: {x: 0.5, y: 0.5, z: 0.05}
+--- !u!114 &83273056376710800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377820375716106876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Kaylee Kuipers-Berry
+  species: CoralPurpleFan
+  mobility: 3
+  special: 
+  defense: 1
+  size: 2
+  tangibility: 0

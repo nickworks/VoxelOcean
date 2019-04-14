@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9184822981456748845}
   - component: {fileID: 9184822981456748844}
   - component: {fileID: 368124144052120444}
+  - component: {fileID: 4123278078497621994}
   m_Layer: 0
   m_Name: PlantSeagrass
   m_TagString: Untagged
@@ -92,3 +93,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterations: 3
   branchScaling: {x: 0.25, y: 1, z: 0.25}
+--- !u!114 &4123278078497621994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184822981456748834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f05891abbe85d46bba417b8de83be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Jessica Petroelje
+  species: PlantSeagrass
+  mobility: 3
+  special: 
+  defense: 3
+  size: 2
+  tangibility: 3

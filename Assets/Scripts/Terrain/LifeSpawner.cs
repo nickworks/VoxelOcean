@@ -124,6 +124,10 @@ public class LifeSpawner : MonoBehaviour
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
     public GameObject prefabPlantKelp;
+    /// <summary>
+    /// Prefab reference for CreatureSeaStar (Kyle Lowery)
+    /// </summary>
+    public GameObject prefabCreatureSeaStar;
     public GameObject prefabCoralPrecious;
     public GameObject prefabCoralPyramid;
     /// <summary>
@@ -135,6 +139,9 @@ public class LifeSpawner : MonoBehaviour
 	/// Prefab reference for Seagrass (Jess P)
 	/// </summary>
 	public GameObject prefabPlantSeagrass;
+
+
+    public GameObject prefabMossBall;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -211,13 +218,16 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
-        if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
+        if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
+        
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
 
-        if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
+        float scale = Random.Range(.1f, .75f) + Random.Range(.1f, .75f);
+
+        if (prefab != null) SpawnPrefab(prefab, pos, rot, scale);
 
         return true;
     }
