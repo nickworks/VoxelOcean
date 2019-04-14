@@ -6,7 +6,6 @@ using UnityEditor;
 /// Spawns Coral type Broccoli 
 /// </summary> 
 public class CoralBroccoli : MonoBehaviour { 
-
 	/// <summary> 
 	/// how many iterations per branch we should spawn 
 	/// </summary> 
@@ -43,8 +42,10 @@ public class CoralBroccoli : MonoBehaviour {
 	/// <param name="scale">scale of our meshes</param> 
 	private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale){ 
 
-		if(num <= 0) return; 
+			branchScaling = new Vector3 (.25f, Random.Range(1.1f, 2.1f), .25f);
 
+		if(num <= 0) return; 
+	
 		CombineInstance inst = new CombineInstance (); 
 
 		inst.mesh = MakeCube(num); 
@@ -68,6 +69,14 @@ public class CoralBroccoli : MonoBehaviour {
 		Grow (num, meshes, pos, randomNegRot, localScale); 
 		Grow (num, meshes, pos, randomPosRot, localScale); 
 	} 
+	public void DestroyChildren()
+	{
+		/* destroys any children left over from a previous spawn in */
+		while (transform.childCount > 0)
+		{
+			DestroyImmediate(transform.GetChild(0).gameObject);
+		}
+	}
 	/// <summary> 
 	/// This creates the actual mesh 
 	/// </summary> 
@@ -199,14 +208,11 @@ public class CoralBroccoli : MonoBehaviour {
 		tris.Add (22); 
 		tris.Add (23); 
 		tris.Add (20); 
-		float hue = 1; 
-
+		float hue = Random.Range(.82f, .873f); 
+		Color color;
 		foreach (Vector3 pos in verts) { 
-
-			float tempHue = hue + (1 * pos.y); 
-			Color color = Color.HSVToRGB (1, tempHue, tempHue); 
+			color = Color.HSVToRGB (Random.Range(.82f, .9f), .5f, 1);
 			colors.Add(color); 
-
 		} 
 
 		Mesh mesh = new Mesh (); 
@@ -216,5 +222,24 @@ public class CoralBroccoli : MonoBehaviour {
 		mesh.SetTriangles (tris, 0); 
 		mesh.SetColors (colors); 
 		return mesh; 
+	}
+}
+[CustomEditor(typeof(CoralBroccoli))]
+public class BroccoliSpawnerEditor : Editor
+{
+	/*adds in inspector gui for GUI changes */
+	public override void OnInspectorGUI()
+	{
+		/*Places a button the player can hit on the GUI labelled GROW! So you can test the grow function of the coral */
+		base.OnInspectorGUI();
+		if (GUILayout.Button("GROW!"))
+		{
+			/*targets spawner when the grow button is hit */
+			CoralBroccoli b = (target as CoralBroccoli);
+			/*destroys any children left over from a previous grow */
+			b.DestroyChildren();
+			/* Starts grow command and transform and iterations */
+			b.Build();
+		}
 	}
 }
