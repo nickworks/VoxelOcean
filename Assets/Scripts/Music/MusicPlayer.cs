@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 /// <summary>
 /// class loads music from rescources/music
@@ -23,6 +24,11 @@ public class MusicPlayer : MonoBehaviour
     ///  This List holds our music tracks.
     /// </summary>
     public List<AudioClip> songs = new List<AudioClip>();
+
+    private List<AudioClip> shuffledSongs = new List<AudioClip>();
+
+    private bool paused = false;
+
     /// <summary>
     ///  Holds the current fft spectrum data. These are the amplitudes of various frequencies.
     /// </summary>
@@ -32,10 +38,6 @@ public class MusicPlayer : MonoBehaviour
     /// </summary>
     public static float[] samples;
 
-    /// <summary>
-    /// grabs all the music and adds it to an array
-    /// adds waveform to samples float
-    /// </summary>
     void Start()
     {
         audioSource = GetComponent<AudioSource>();   
@@ -48,14 +50,14 @@ public class MusicPlayer : MonoBehaviour
     /// </summary>
     void Update()
     {
-        PlayMusic();
-        AudioData();
+        if(!paused && !audioSource.isPlaying) NextTrack();
+        UpdateAudioData();
     }
     /// <summary>
     /// grabs the FFT data and adds to fftsamples
     /// grabs the waveform data and adds to samples
     /// </summary>
-    void AudioData()
+    void UpdateAudioData()
     {
         if (!audioSource.clip) return;
         samples = new float[audioSource.clip.frequency * audioSource.clip.channels]; // 1 second worth of samples
@@ -63,26 +65,66 @@ public class MusicPlayer : MonoBehaviour
         AudioListener.GetSpectrumData(fftSamples, 0, FFTWindow.Rectangular);
         audioSource.clip.GetData(samples, pos);
     }
-    /// <summary>
-    /// picks a song from the array and goes up by one every time the function is called and plays the next song
-    /// when i is great than the lenght of the array gets set back to 0 and plays first song
-    /// </summary>
-    void PlayMusic()
+    void MakeShuffleList()
     {
-        if (audioSource.isPlaying) return;
-        if (shuffle)
+        List<AudioClip> temp = songs.GetRange(0, songs.Count);
+        shuffledSongs = new List<AudioClip>();
+        while(temp.Count > 0)
         {
-            audioSource.clip = songs[Random.Range(0, songs.Count)];
-            audioSource.Play();
+            int i = Random.Range(0, temp.Count);
+            shuffledSongs.Add(temp[i]);
+            temp.RemoveAt(i);
         }
-        else {
-            int i = songs.IndexOf(audioSource.clip) + 1;
-            i %= songs.Count;
-            if (i >= songs.Count) return; // invalid track number, abort
+    }
+    List<AudioClip> GetPlayList()
+    {
+        if (shuffle && shuffledSongs.Count <= 0) MakeShuffleList();
+        return shuffle ? shuffledSongs : songs;
+    }
+    public void NextTrack()
+    {
+        List<AudioClip> tracks = GetPlayList();
 
-            audioSource.clip = songs[i];
-            audioSource.Play();
-        }
+        int i = tracks.IndexOf(audioSource.clip) + 1;
+        i %= tracks.Count;
+
+        paused = true;
+        if (i >= tracks.Count) return; // invalid track number, abort
+        paused = false;
+
+        audioSource.clip = tracks[i];
+        audioSource.Play();
+    }
+    public void PrevTrack()
+    {
+        List<AudioClip> tracks = GetPlayList();
+
+        int i = tracks.IndexOf(audioSource.clip) - 1;
+        if (i < 0) i = tracks.Count - 1;
+
+        paused = true;
+        if (i < 0) return; // invalid track number, abort
+        paused = false;
+
+        audioSource.clip = tracks[i];
+        audioSource.Play();
+    }
+    public void Pause()
+    {
+        paused = !paused;
+        if (paused) audioSource.Pause();
+        else audioSource.UnPause();
+    }
+}
+[CustomEditor(typeof(MusicPlayer))]
+class MusicPlayerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        if (GUILayout.Button("Toggle Pause")) (target as MusicPlayer).Pause();
+        if (GUILayout.Button("Next Track")) (target as MusicPlayer).NextTrack();
+        if (GUILayout.Button("Prev Track")) (target as MusicPlayer).PrevTrack();
     }
 }
 

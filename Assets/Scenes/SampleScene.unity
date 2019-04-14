@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb28c118282057f4d89a8313ef27fa38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  random: 0
+  shuffle: 0
   songs:
   - {fileID: 8300000, guid: a97b9c624852c834595b9b0c9e5ddc3e, type: 3}
   - {fileID: 8300000, guid: 12ad9e32f4fa8fa4b8936103cd3c9b2f, type: 3}
