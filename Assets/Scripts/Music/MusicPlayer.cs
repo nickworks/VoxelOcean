@@ -8,6 +8,7 @@ using UnityEngine;
 /// if you want random music to play turn random to true false will play in oder 
 /// needs to be on game obgject with an audio listner 
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class MusicPlayer : MonoBehaviour
 {
     /// <summary>
@@ -15,23 +16,19 @@ public class MusicPlayer : MonoBehaviour
     /// </summary>
     AudioSource audioSource;
     /// <summary>
-    /// Random  to check if they want music to be random
+    /// Whether or not shuffle is enabled.
     /// </summary>
-    public bool random = false; 
+    public bool shuffle = false;
     /// <summary>
-    ///  myMusic array list to hold our music
+    ///  This List holds our music tracks.
     /// </summary>
-    Object[] myMusic;
+    public List<AudioClip> songs = new List<AudioClip>();
     /// <summary>
-    /// i integer keep track of what array song is playing
-    /// </summary>
-    int i = 0;
-    /// <summary>
-    ///  fftSamples holds the fft data 
+    ///  Holds the current fft spectrum data. These are the amplitudes of various frequencies.
     /// </summary>
     public static float[] fftSamples = new float[64];
     /// <summary>
-    /// Samples holds waveform data
+    /// Holds the raw waveform data for the next second of playback.
     /// </summary>
     public static float[] samples;
 
@@ -41,17 +38,9 @@ public class MusicPlayer : MonoBehaviour
     /// </summary>
     void Start()
     {
-        myMusic = Resources.LoadAll("Music", typeof(AudioClip));
-        GetComponent<AudioSource>().clip = myMusic[2] as AudioClip;
-
-        audioSource = GetComponent<AudioSource>();
-        
-        
+        audioSource = GetComponent<AudioSource>();   
     }
 
-
-
-    // Update is called once per frame
     /// <summary>
     /// checks if music is playing if not it plays a random song if set random is set to true
     /// or plays song in playlist oder 
@@ -59,35 +48,20 @@ public class MusicPlayer : MonoBehaviour
     /// </summary>
     void Update()
     {
-
-
-        PlayRandomMusic();
         PlayMusic();
         AudioData();
-
-
-    }
-    /// <summary>
-    /// gets a song from the array from a random song in the array based on from 0 and the length of the array then plays the chosen song
-    ///</summary>
-    void PlayRandomMusic()
-    {
-        if (!audioSource.isPlaying && random == true)
-        {
-            GetComponent<AudioSource>().clip = myMusic[Random.Range(0, myMusic.Length)] as AudioClip;
-            GetComponent<AudioSource>().Play();
-        }
     }
     /// <summary>
     /// grabs the FFT data and adds to fftsamples
     /// grabs the waveform data and adds to samples
     /// </summary>
     void AudioData()
-    {   samples = new float[audioSource.clip.frequency * audioSource.clip.channels]; // 1 second worth of samples
+    {
+        if (!audioSource.clip) return;
+        samples = new float[audioSource.clip.frequency * audioSource.clip.channels]; // 1 second worth of samples
+        int pos = audioSource.timeSamples;
         AudioListener.GetSpectrumData(fftSamples, 0, FFTWindow.Rectangular);
-        audioSource.clip.GetData(samples, 0);
-        
-
+        audioSource.clip.GetData(samples, pos);
     }
     /// <summary>
     /// picks a song from the array and goes up by one every time the function is called and plays the next song
@@ -95,20 +69,19 @@ public class MusicPlayer : MonoBehaviour
     /// </summary>
     void PlayMusic()
     {
-        if (!audioSource.isPlaying && random == false)
+        if (audioSource.isPlaying) return;
+        if (shuffle)
         {
-            if (i < myMusic.Length)
-            {
-                GetComponent<AudioSource>().clip = myMusic[i] as AudioClip;
-                GetComponent<AudioSource>().Play();
-                i += 1;
-                if (i == myMusic.Length)
-                {
-                    i = 0;
-                }
-            }
+            audioSource.clip = songs[Random.Range(0, songs.Count)];
+            audioSource.Play();
+        }
+        else {
+            int i = songs.IndexOf(audioSource.clip) + 1;
+            i %= songs.Count;
+            if (i >= songs.Count) return; // invalid track number, abort
 
-
+            audioSource.clip = songs[i];
+            audioSource.Play();
         }
     }
 }
