@@ -10,12 +10,30 @@ using UnityEngine;
 /// </summary>
 public class MusicPlayer : MonoBehaviour
 {
-    AudioSource audioSource; // this is audisource
-    public bool random = false;// to check if they want music to be random
-    Object[] myMusic; // array list to hold our music
-    int i = 0; // keep track of what array song is playing
-    public static float[] fftSamples = new float[64];// holds the fft data 
-    public static float[] samples;//holds waveform data
+    /// <summary>
+    /// Audiosource source of audio
+    /// </summary>
+    AudioSource audioSource;
+    /// <summary>
+    /// Random  to check if they want music to be random
+    /// </summary>
+    public bool random = false; 
+    /// <summary>
+    ///  myMusic array list to hold our music
+    /// </summary>
+    Object[] myMusic;
+    /// <summary>
+    /// i integer keep track of what array song is playing
+    /// </summary>
+    int i = 0;
+    /// <summary>
+    ///  fftSamples holds the fft data 
+    /// </summary>
+    public static float[] fftSamples = new float[64];
+    /// <summary>
+    /// Samples holds waveform data
+    /// </summary>
+    public static float[] samples;
 
     /// <summary>
     /// grabs all the music and adds it to an array
