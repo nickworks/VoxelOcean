@@ -536,9 +536,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuffle: 0
   songs:
-  - {fileID: 8300000, guid: a97b9c624852c834595b9b0c9e5ddc3e, type: 3}
-  - {fileID: 8300000, guid: 12ad9e32f4fa8fa4b8936103cd3c9b2f, type: 3}
-  - {fileID: 8300000, guid: aa5488571b0f19f49b551555721418f6, type: 3}
+  - {fileID: 8300000, guid: 38b320b2b8e38104288ad05c66cfe4e7, type: 3}
+  - {fileID: 8300000, guid: ebadac23a7f1f5841a3a00f44ce029ef, type: 3}
+  - {fileID: 8300000, guid: 23357f7e6f02ba24488ed2375b9c030e, type: 3}
 --- !u!4 &1444457281
 Transform:
   m_ObjectHideFlags: 0
