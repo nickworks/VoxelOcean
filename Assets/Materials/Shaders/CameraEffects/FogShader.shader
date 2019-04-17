@@ -16,7 +16,6 @@
 	  CGPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag
-
 				#include "UnityCG.cginc"
 	  sampler2D _CameraDepthTexture;
 	fixed4 _FogColor;

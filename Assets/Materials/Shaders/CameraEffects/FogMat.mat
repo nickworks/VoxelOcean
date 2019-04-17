@@ -20,15 +20,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 910969cd50cb9634a82368386eb6b424, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _DepthDist: 1
-    - _DepthStart: 0.51
+    - _DepthStart: 10.55
     - _NoiseFrequency: 1
     - _NoiseScale: 1
     - _NoiseSpeed: 1
     - _PixelOffset: 0.005
     m_Colors:
-    - _FogColor: {r: 0.005065441, g: 0, b: 0.5, a: 0.1254902}
+    - _FogColor: {r: 56.447784, g: 55.54382, b: 141.87097, a: 255}

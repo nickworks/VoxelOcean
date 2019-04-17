@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// Image Effect - Under Water 
 /// Creates a distortion effect on the camera that can be seen in editor view,
-/// This was created by Cameron Garchow with many references to tutorials, and also online help from some friends
+/// This was created by Cameron Garchow 
+/// Items are also designed for use in basically any other part.
 /// This is also taken form the ideas from nick pattison's warp effect as seen in class
 /// This effect is essential to feeling underwater
 /// TODO : Add a Sound matrix that gives the feeling of underwater (subtle not too much)
@@ -29,17 +30,17 @@ public class ImageEffect : MonoBehaviour
     public float _noiseScale = 0.71f;
 
     /// <summary>
-    /// Frequency is the frequency of the noise
+    /// Frequency is the noise's frequency of the effect throughout camera
     /// </summary>
     [Range(0.001f, 20f)]
     public float _noiseFrequency = 1.77f;
     /// <summary>
-    /// _NoiseSpeed sets the speed of the noise
+    /// _NoiseSpeed sets the speed of the noise volume on the camera, the higher the faster the movement of the noise.
     /// </summary>
     [Range(0.001f, 20f)]
     public float _noiseSpeed = 0.64f;
     /// <summary>
-    /// Depth Start start of the fog depth
+    /// Depth Start of the fog depth
     /// </summary>
     public float _depthStart;
     /// <summary>

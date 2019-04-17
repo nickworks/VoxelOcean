@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// Fog Effect - Under Water 
+/// Fog Effect 
 /// Creates a fog effect on the camera that can be seen in editor view,
 /// This was created by Cameron Garchow
 /// Simple and easy Fog Effect for underwater and or other uses.
@@ -15,20 +15,27 @@ public class FogEffect : MonoBehaviour
     /// <summary>
     /// _mat is a reference to the shader
     /// </summary>
-    public Material _mat;
+    public Material mat;
     /// <summary>
-    /// fog Color sets the fog color
+    /// fog Color sets the color of the fog. Which is set in editor. There is no default color other than white.
     /// </summary>
     public Color _fogColor;
 
     /// <summary>
-    /// Depth Start start of the fog depth
+    /// Depth Start start of the fog depth, is the starting value of where the fog starts, the further it is away from the player (calculated in meters), the farther the fog effect is.
     /// </summary>
     public float _depthStart;
+
+
     /// <summary>
-    /// Depth distance how far the fog is
+    /// Depth distance how far the fog is from the camera. The 'wall' of fog distance away from the camera.
     /// </summary>
     public float _depthDistance;
+
+    /// <summary>
+    /// Player is a reference to the player object
+    /// </summary>
+    public GameObject player;
 
 
 /// <summary>
@@ -49,19 +56,37 @@ public class FogEffect : MonoBehaviour
     /// </summary>
     void Update()
     {
-        _mat.SetColor("_FogColor", _fogColor);
-        _mat.SetFloat("_DepthStart", _depthStart);
-        _mat.SetFloat("_DepthDistance", _depthDistance);
+       // PlayerYPos();
+        mat.SetColor("_FogColor", _fogColor);
+        mat.SetFloat("_DepthStart", _depthStart);
+        mat.SetFloat("_DepthDistance", _depthDistance);
+        
     }
+
+
     /// <summary>
     /// Renders on image 
-    /// 
     /// </summary>
     /// <param name="src"> source of the camera </param>
     /// <param name="dst">distance of the material</param>
     private void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
-        //     material.SetFloat("_WarpAmount", Mathf.Sin(Time.time);
-        Graphics.Blit(src, dst, _mat);
+        Graphics.Blit(src, dst, mat);
+    }
+
+    /// <summary>
+    /// PlayerYpos gets a reference to the players position this is PSEUDO code
+    /// </summary>
+    private void PlayerYPos()
+    {
+
+        if (player.transform.localPosition.y < -50)
+        {
+            _fogColor = new Vector4 (0f, 0f, 0f, 0f);
+        }
+        else
+        {
+            _fogColor = new Vector4(1f, 0f, 128f, 255f);
+        }
     }
 }

@@ -330,7 +330,7 @@ Camera:
   m_GameObject: {fileID: 534669902}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.23139906, g: 0.375169, b: 0.4716981, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
@@ -357,7 +357,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -391,11 +391,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: f8d1229df2115d44496d41769efe42b4, type: 2}
   _pixelOffset: 0.0094
-  _noiseScale: 0.71
-  _noiseFrequency: 1.77
+  _noiseScale: 1.2
+  _noiseFrequency: 3
   _noiseSpeed: 0.74
   _depthStart: 0
-  _depthDistance: 270
+  _depthDistance: 50
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,15 +403,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a7b9e3a71f169f4ba8b52134daa8af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mat: {fileID: 2100000, guid: 4fa3daffd0973074691df1f50f3391ef, type: 2}
-  _fogColor: {r: 0.005065441, g: 0, b: 0.5, a: 0.1254902}
+  mat: {fileID: 2100000, guid: 4fa3daffd0973074691df1f50f3391ef, type: 2}
+  _fogColor: {r: 56.447784, g: 55.54382, b: 141.87097, a: 255}
   _depthStart: 10.55
   _depthDistance: 238.3
+  player: {fileID: 92437261}
 --- !u!1 &1015166725
 GameObject:
   m_ObjectHideFlags: 0
