@@ -7,6 +7,9 @@ using UnityEditor;
 public class CoralFlower : MonoBehaviour
 {
     // TODO: Please update comments to be documentation style.  You can easily do this by starting your comment with "///".
+
+    public Material mat;
+
     /// <summary>
     /// controls number of times the loop will run
     /// </summary>
@@ -120,13 +123,17 @@ public class CoralFlower : MonoBehaviour
 		MeshFilter meshFilter = GetComponent<MeshFilter>();			///change assigned mesh
 		meshFilter.mesh = mesh;
 
-		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
+        
 
-		//Material mat = (Material)mesh.colors; 
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
 
-		//meshRenderer.material = mesh.colors; 
+        meshRenderer.material = mat;
 
-	}
+        //Material mat = (Material)mesh.colors; 
+
+        //meshRenderer.material = mesh.colors; 
+
+    }
     /// <summary>
     /// The iterative function that grows the coral
     /// </summary>

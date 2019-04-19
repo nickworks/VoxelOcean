@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74aa1795979cf946b7faa923b74f352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: e0072c799e5ee0a4c802093ed8dd5040, type: 2}
   iterations: 4
   splitOdds: 0.5
   ranRotOdds: 0.37
