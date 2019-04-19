@@ -135,6 +135,10 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
     public GameObject prefabCoralTubeWorm;
+    /// <summary>
+    /// Prefab reference for drifting kelp (Chris's flora).
+    /// </summary>
+    public GameObject prefabPlantDrifter;
     public GameObject prefabPlantLeaf;
 	/// <summary>
 	/// Prefab reference for Seagrass (Jess P)
@@ -206,7 +210,7 @@ public class LifeSpawner : MonoBehaviour
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
         if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
-        if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
+        if (biome.owner == BiomeOwner.Chris) prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : prefabPlantDrifter;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
