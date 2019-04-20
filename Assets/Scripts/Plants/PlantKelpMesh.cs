@@ -116,7 +116,7 @@ public class PlantKelpMesh : MonoBehaviour
 
         // Add Stem Mesh:
         CombineInstance stem = new CombineInstance();
-        stem.mesh = MakeCylinder(num);
+        stem.mesh = MakePentagonalCylinder(num);
         stem.transform = Matrix4x4.TRS(pos, rot, stemScaling);
         meshes.Add(stem);
 
@@ -304,10 +304,10 @@ public class PlantKelpMesh : MonoBehaviour
 
     }
     /// <summary>
-    /// Makes a mesh for a 1m tall (y-axis) cylinder.
+    /// Makes a mesh for a 1m tall (y-axis) pentagonal cylinder.
     /// </summary>
     /// <returns>Mesh data for a 1m tall (y-axis) cylinder.</returns>
-    private Mesh MakeCylinder(int num)
+    private Mesh MakePentagonalCylinder(int num)
     {
         List<Vector3> verts = new List<Vector3>();
         //List<Vector2> uvs = new List<Vector2>();

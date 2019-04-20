@@ -115,10 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f05891abbe85d46bba417b8de83be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creator: 
+  creator: Josh Doll
   species: PlantLeaf
   mobility: 3
   special: 
   defense: 3
-  size: 1
+  size: 2
   tangibility: 3

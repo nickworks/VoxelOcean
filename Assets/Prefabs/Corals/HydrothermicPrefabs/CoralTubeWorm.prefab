@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43fe3856bb158345a4ff83c30c4677b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  mat: {fileID: 2100000, guid: ee4bcb4310e8c9e45b618a8a113e7293, type: 2}
   filter: {fileID: 1778713374299121268}
   meshrenderer: {fileID: 1778713374299121269}
   baseIterations: 14
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creator: Lawson
+  creator: Chris Lawson
   species: CoralTubeWorm
   mobility: 3
   special: 
@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 4667056347887201175}
   - component: {fileID: 4112330768555049790}
   - component: {fileID: 2863155700861431619}
-  - component: {fileID: 46486461805785065}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -4834,15 +4833,3 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &46486461805785065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6733678113505739700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95e4edbb53ad619479c278ed8f0d1107, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
