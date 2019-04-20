@@ -125,6 +125,7 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCoralCrystalFlower;
     public GameObject prefabCoralBauble;
+    public GameObject prefabCoralFlower; 
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
     /// <summary>
@@ -141,6 +142,10 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
     public GameObject prefabCoralTubeWorm;
+    /// <summary>
+    /// Prefab reference for drifting kelp (Chris's flora).
+    /// </summary>
+    public GameObject prefabPlantDrifter;
     public GameObject prefabPlantLeaf;
 	/// <summary>
 	/// Prefab reference for Seagrass (Jess P)
@@ -211,9 +216,7 @@ public class LifeSpawner : MonoBehaviour
 
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
-        if (biome.owner == BiomeOwner.Cameron)        {
-            prefab = (Random.Range(1, 5) >= 3) ? prefabCoralCrystal : prefabCoralCrystalFlower; //chance to spawn a coral crystal or crystal flower
-        }
+        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
         if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
@@ -224,7 +227,7 @@ public class LifeSpawner : MonoBehaviour
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
-        if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
+        if (biome.owner == BiomeOwner.Justin) prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble : prefabCoralFlower;
         if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
@@ -258,3 +261,5 @@ public class LifeSpawner : MonoBehaviour
 
     }
 }
+        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
+        if (biome.owner == BiomeOwner.Chris) prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : prefabPlantDrifter;
