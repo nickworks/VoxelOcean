@@ -11,10 +11,6 @@ using UnityEditor;
 public class VoxelChunk : MonoBehaviour
 {
     /// <summary>
-    /// The density threshold to use to find where the surface lies.
-    /// </summary>
-    [Range(-.2f, .2f)] public float threshold = 0;
-    /// <summary>
     /// This Chunk's grid-space position. Set once, in the SpawnChunk() function
     /// </summary>
     public Int3 gridPos { get; private set; }
@@ -79,75 +75,25 @@ public class VoxelChunk : MonoBehaviour
                     // find voxel's position:
                     Vector3 pos = new Vector3(x, y, z) * VoxelUniverse.main.voxelSize;
 
+                    // build voxel data object (cached)
                     VoxelData voxel = new VoxelData(pos);
-                    // set the densities of the 8 corners of the cube:
-                    for (int i = 0; i < VoxelData.positions.Length; i++)
-                        voxel.densities[i] = GetDensitySample(voxel.center + VoxelData.positions[i]);
+
+                    // tell the voxel to sample the density in its 8 corners:
+                    voxel.SetDensityData(transform.position);
+
                     // store the data:
                     data[x, y, z] = voxel;
                 }
             }
         }
     }
-    /// <summary>
-    /// Samples a given grid position and returns the noise value at this position.
-    /// </summary>
-    /// <param name="pos">A position in world space.</param>
-    /// <returns>The density of the given position. Depending on the noise function used, this should be in the -1 to +1 range.</returns>
-    float GetDensitySample(Vector3 pos)
-    {
-        float res = 0;
-        foreach (VoxelUniverse.SignalField field in VoxelUniverse.main.signalFields)
-        {
-            Vector3 p = pos + transform.position; // convert from local coordinates to world coordinates
-            float val = Noise.Sample(p / field.zoom); // simplex.noise(pos.x, pos.y, pos.z);
-
-
-            if (field.type == VoxelUniverse.SignalType.Sphere)
-            {
-                float size = 8 + field.flattenOffset;
-                size *= size;
-                float d = p.sqrMagnitude;
-                val -= (d/size - size) * field.flattenAmount * .05f;
-            }
-            else
-            {
-                // use the vertical position to influence the density:
-                val -= (p.y + field.flattenOffset) * field.flattenAmount * .05f;
-            }
-
-
-            // adjust the final density using the densityBias:
-            val += field.densityBias;
-
-            // adjust how various fields are mixed together:
-            switch (field.type)
-            {
-                case VoxelUniverse.SignalType.Sphere:
-                case VoxelUniverse.SignalType.AddOnly:
-                    if (val > 0 || res == 0) res += val;
-                    break;
-                case VoxelUniverse.SignalType.SubtractOnly:
-                    if (val < 0 || res == 0) res += val;
-                    break;
-                case VoxelUniverse.SignalType.Multiply:
-                    res *= val;
-                    break;
-                case VoxelUniverse.SignalType.Average:
-                    res = (val + res) / 2;
-                    break;
-                case VoxelUniverse.SignalType.None:
-                    break;
-            }
-        }
-        return res;
-    }
+    
     /// <summary>
     /// Generates a Biome at a given position
     /// </summary>
     /// <param name="pos">The position to sample the biome field, in local space.</param>
     /// <returns>A Biome object with data about which biome inhabits this space.</returns>
-    LifeSpawner.Biome PickBiomeAtPos(Vector3 pos)
+    Biome PickBiomeAtPos(Vector3 pos)
     {
         // TODO: maybe a bunch of this logic can be moved into the LifeSpawner.Biome struct?
 
@@ -185,11 +131,11 @@ public class VoxelChunk : MonoBehaviour
         Color.RGBToHSV(new Color(r,g,b),out float h, out float s, out float v);
 
         //posterize the hue value:
-        h = Mathf.Round(h * LifeSpawner.Biome.COUNT);
+        h = Mathf.Round(h * Biome.COUNT);
         int biome_num = (int)h;
 
         // create and return the biome:
-        return LifeSpawner.Biome.FromInt(biome_num);
+        return Biome.FromInt(biome_num);
     }
     /// <summary>
     /// This function builds the mesh by implementing a Cube Marching algorithm, removing duplicate vertices, calculating normals, and generating biome-based vertex colors.
@@ -204,9 +150,9 @@ public class VoxelChunk : MonoBehaviour
             {
                 for (int z = 0; z < data.GetLength(2); z++)
                 {
-                    if (!data[x, y, z].IsHidden(threshold))
+                    if (!data[x, y, z].IsHidden(0))
                     {
-                        data[x, y, z].MarchCube(threshold, geom);
+                        data[x, y, z].MarchCube(0, geom);
                     }
                 }
             }
@@ -257,7 +203,7 @@ public class VoxelChunk : MonoBehaviour
         foreach (Vector3 p in mesh.mesh.vertices)
         {
             //Vector3 pos = p + transform.position;
-            LifeSpawner.Biome biome = PickBiomeAtPos(p);
+            Biome biome = PickBiomeAtPos(p);
             colors.Add(biome.GetVertexColor());
         }
         mesh.mesh.SetColors(colors);

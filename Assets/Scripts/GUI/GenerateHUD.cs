@@ -12,8 +12,7 @@ public class GenerateHUD : MonoBehaviour
     {
         if (universe)
         {
-            universe.RandomizeFields();
-            universe.Create();
+            universe.Create(true);
         }
     }
 }

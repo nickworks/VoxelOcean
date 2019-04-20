@@ -6,22 +6,9 @@ using UnityEditor;
 /// <summary>
 /// This class spawns several VoxelChunkMesh objects.
 /// </summary>
+[RequireComponent(typeof(SignalFieldGenerator))]
 public class VoxelUniverse : MonoBehaviour
 {
-
-    //private int xOffset = 0;
-    //private int yOffset = 0;
-    //private int zOffset = 0;
-
-    public enum SignalType
-    {
-        AddOnly,
-        SubtractOnly,
-        Multiply,
-        Average,
-        Sphere,
-        None
-    }
 
     public enum MoveDirection
     {
@@ -34,32 +21,12 @@ public class VoxelUniverse : MonoBehaviour
         Back
     }
 
-    [System.Serializable]
-    public class SignalField
-    {
-        public SignalType type;
-        [Range(1, 100)] public float zoom = 20;
-        [Range(-0.2f, 0.2f)] public float densityBias = 0;
-        [Range(0, 1)] public float flattenAmount = 0;
-        [Range(-20, 20)] public float flattenOffset = 0;
-
-        static public SignalField Random()
-        {
-            SignalField res = new SignalField();
-            res.zoom = UnityEngine.Random.Range(1f, 100);
-            res.densityBias = UnityEngine.Random.Range(-0.2f, 0.2f);
-            res.flattenAmount = UnityEngine.Random.Range(0f, 1);
-            res.flattenOffset = 0;
-            res.type = (SignalType)UnityEngine.Random.Range(0, 5);
-            return res;
-        }
-    }
-
-
     /// <summary>
     /// The universe singleton.
     /// </summary>
     static public VoxelUniverse main;
+
+    public SignalFieldGenerator signals { get; private set; }
 
     [Tooltip("How large each voxel cube is, in meters.")]
     [Range(1, 10)] public float voxelSize = 1;
@@ -103,8 +70,6 @@ public class VoxelUniverse : MonoBehaviour
     // how large to make the biomes
     [Range(3, 200)] public float biomeScaling = 25;
 
-    public SignalField[] signalFields;
-
     /// <summary>
     /// The currently generated list of chunks.
     /// </summary>
@@ -113,12 +78,13 @@ public class VoxelUniverse : MonoBehaviour
     void Start()
     {
         main = this;
+        signals = GetComponent<SignalFieldGenerator>();
         Create();
     }
     /// <summary>
     /// Create a voxel universe.
     /// </summary>
-    public void Create()
+    public void Create(bool randomizeFields = false)
     {
         if (!main) return; // don't run if Start() hasn't been called yet
 
@@ -126,6 +92,8 @@ public class VoxelUniverse : MonoBehaviour
         StopAllCoroutines();
         // destroy existing chunks:
         DestroyAllChunks();
+
+        if (randomizeFields) signals.RandomizeFields();
 
         // find the player's grid position:
         GenerateLevelAroundMe pawn = FindObjectOfType<GenerateLevelAroundMe>();
@@ -251,16 +219,14 @@ public class VoxelUniverse : MonoBehaviour
         Gizmos.DrawWireCube(position, size);
     }
 
-    public void RandomizeFields()
+    /// <summary>
+    /// Samples a given grid position and returns the noise value at this position.
+    /// </summary>
+    /// <param name="pos">A position in world space.</param>
+    /// <returns>The density of the given position. Depending on the noise function used, this should be in the -1 to +1 range.</returns>
+    public float GetDensitySample(Vector3 pos)
     {
-        int fieldCount = Random.Range(1, 8);
-        List<SignalField> fields = new List<SignalField>();
-        for(int i = 0; i < fieldCount; i++)
-        {
-            fields.Add(SignalField.Random());
-        }
-        fields[0].type = SignalType.AddOnly;
-        signalFields = fields.ToArray();
+        return signals.GetDensitySample(pos);
     }
 
     [CustomEditor(typeof(VoxelUniverse))]
@@ -270,10 +236,6 @@ public class VoxelUniverse : MonoBehaviour
         {
             base.OnInspectorGUI();
 
-            if (GUILayout.Button("Randomize Noise"))
-            {
-                (target as VoxelUniverse).RandomizeFields();
-            }
             if (GUILayout.Button("Build Universe"))
             {
                 (target as VoxelUniverse).Create();
