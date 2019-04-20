@@ -15,6 +15,10 @@ public class VoxelChunk : MonoBehaviour
     /// </summary>
     [Range(-.2f, .2f)] public float threshold = 0;
     /// <summary>
+    /// This Chunk's grid-space position. Set once, in the SpawnChunk() function
+    /// </summary>
+    public Int3 gridPos { get; private set; }
+    /// <summary>
     /// Cached noise data. This is used as "density" to determin whether or not voxels are solid.
     /// </summary>
     VoxelData[,,] data;
@@ -36,7 +40,7 @@ public class VoxelChunk : MonoBehaviour
     /// <summary>
     /// When called, this function generates noise data and rebuilds the mesh.
     /// </summary>
-    public void Rebuild()
+    public void SpawnChunk(Int3 gridPos)
     {
         if (!EditorApplication.isPlaying) return;
 
@@ -44,15 +48,20 @@ public class VoxelChunk : MonoBehaviour
         GenerateNoiseData();
         GenerateMesh();
 
-        LifeSpawner spawner = GetComponent<LifeSpawner>();
-        if (spawner) spawner.SpawnSomeLife();
+        this.gridPos = gridPos;
+
+        if (!VoxelUniverse.main.terrainOnly)
+        {
+            LifeSpawner spawner = GetComponent<LifeSpawner>();
+            if (spawner) spawner.SpawnSomeLife();
+        }
     }
     /// <summary>
     /// Generate noise data and cache in a huge array
     /// </summary>
     void GenerateNoiseData()
     {
-        int res = VoxelUniverse.main.resPerChunk;
+        int res = VoxelUniverse.main.voxelsPerChunk;
         data = new VoxelData[res, res, res];
 
         int sizeX = data.GetLength(0);
@@ -65,7 +74,11 @@ public class VoxelChunk : MonoBehaviour
             {
                 for (int z = 0; z < sizeZ; z++)
                 {
-                    Vector3 pos = new Vector3(x, y, z);
+                    // for reach voxel in this chunk:
+
+                    // find voxel's position:
+                    Vector3 pos = new Vector3(x, y, z) * VoxelUniverse.main.voxelSize;
+
                     VoxelData voxel = new VoxelData(pos);
                     // set the densities of the 8 corners of the cube:
                     for (int i = 0; i < VoxelData.positions.Length; i++)
@@ -248,5 +261,14 @@ public class VoxelChunk : MonoBehaviour
             colors.Add(biome.GetVertexColor());
         }
         mesh.mesh.SetColors(colors);
+    }
+    void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+        Gizmos.color = Color.yellow;
+        
+        Gizmos.color = Color.blue;
+        VoxelUniverse.main.DrawGizmoChunk(gridPos);
+
     }
 }

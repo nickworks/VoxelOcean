@@ -326,6 +326,22 @@ struct VoxelData
     /// <summary>
     /// The local positions of each voxel's 8 corners
     /// </summary>
+    /*
+    static public void UpdatePositionData(float scale = 1)
+    {
+        
+        positions = new Vector3[] {
+            scale * new Vector3(-0.5f, -0.5f, +0.5f), // L B B
+            scale * new Vector3(+0.5f, -0.5f, +0.5f), // R B B
+            scale * new Vector3(+0.5f, -0.5f, -0.5f), // R B F
+            scale * new Vector3(-0.5f, -0.5f, -0.5f), // L B F
+            scale * new Vector3(-0.5f, +0.5f, +0.5f), // L T B
+            scale * new Vector3(+0.5f, +0.5f, +0.5f), // R T B
+            scale * new Vector3(+0.5f, +0.5f, -0.5f), // R T F
+            scale * new Vector3(-0.5f, +0.5f, -0.5f)  // L T F
+        };
+    }
+    */
     static public Vector3[] positions = new Vector3[] {
         new Vector3(-0.5f, -0.5f, +0.5f), // L B B
         new Vector3(+0.5f, -0.5f, +0.5f), // R B B
