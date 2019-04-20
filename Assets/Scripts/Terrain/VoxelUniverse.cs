@@ -114,18 +114,19 @@ public class VoxelUniverse : MonoBehaviour
     {
         int w = renderDistance;
         int h = renderDistanceVertical;
-        int l = renderDistance;
 
-        Int3 min = new Int3(-w, -h, -l);
-        Int3 max = new Int3(+w, +h, +l);
+        Int3 min = new Int3(-w, -h, -w) + center;
+        Int3 max = new Int3(+w, +h, +w) + center;
 
-        if (dir == MoveDirection.Up)    min.y = max.y;
         if (dir == MoveDirection.Right) min.x = max.x;
+        if (dir == MoveDirection.Up)    min.y = max.y;
         if (dir == MoveDirection.Front) min.z = max.z;
 
-        if (dir == MoveDirection.Down) max.y = min.y;
         if (dir == MoveDirection.Left) max.x = min.x;
+        if (dir == MoveDirection.Down) max.y = min.y;
         if (dir == MoveDirection.Back) max.z = min.z;
+
+        List<Int3> spawnPoints = new List<Int3>(); // make a list of locations to spawn chunks at
 
         for (int x = min.x; x <= max.x; x++)
         {
@@ -134,10 +135,31 @@ public class VoxelUniverse : MonoBehaviour
                 for (int z = min.z; z <= max.z; z++)
                 {
                     Int3 p = new Int3(x, y, z);
-                    SpawnChunkAt(p + center);
-                    yield return null;
+
+                    // calculate this chunks distance from the center:
+
+                    p.tag = Int3.ManhattanDis(p, center);
+                    // add the chunks in order by distance
+
+                    // find the index number to insert the new chunk:
+                    int i = 0;
+                    while(i < spawnPoints.Count)
+                    {
+                        // if this other location is further away,
+                        // we've found where to insert our chunk, so break out
+                        if (p.tag < spawnPoints[i].tag) break; 
+                        i++;
+                    }
+                    spawnPoints.Insert(i, p); // insert position
                 }
             }
+        }
+
+        // spawn the chunks:
+        foreach (Int3 p in spawnPoints)
+        {
+            SpawnChunkAt(p);
+            yield return null;
         }
     }
     private void SpawnChunkAt(Int3 gridPos)
@@ -153,6 +175,11 @@ public class VoxelUniverse : MonoBehaviour
         else
         {
             chunks.Add(chunk);
+            /*
+            TextMesh txt = chunk.GetComponentInChildren<TextMesh>();
+            txt.transform.localPosition = Vector3.one * chunkSize / 2;
+            txt.text = text;
+            */
         }
     }
 

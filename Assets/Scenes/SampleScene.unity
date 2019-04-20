@@ -886,11 +886,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b0fe9a48af9784a9f6919c20016d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voxelSize: 1
+  voxelSize: 2
   voxelsPerChunk: 10
-  terrainOnly: 1
-  renderDistance: 2
-  renderDistanceVertical: 2
+  terrainOnly: 0
+  renderDistance: 3
+  renderDistanceVertical: 0
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   biomeScaling: 50
@@ -925,5 +925,5 @@ MonoBehaviour:
   - type: 0
     zoom: 20
     densityBias: 0
-    flattenAmount: 0
+    flattenAmount: 0.657
     flattenOffset: 0
