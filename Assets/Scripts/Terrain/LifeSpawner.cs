@@ -144,7 +144,14 @@ public class LifeSpawner : MonoBehaviour
 	/// Prefab reference for Seagrass (Jess P)
 	/// </summary>
 	public GameObject prefabPlantSeagrass;
-
+    /// <summary>
+    /// PRefab Reference for Crystal Flower (Cameron G)
+    /// </summary>
+    public GameObject prefabCrystalFlower;
+    /// <summary>
+    /// Prefab Reference for Crystal Rock (Cameron G)
+    /// </summary>
+    public GameObject prefabCrystalRock;
 
     public GameObject prefabMossBall;
 
@@ -209,7 +216,7 @@ public class LifeSpawner : MonoBehaviour
 
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
-        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
+        if (biome.owner == BiomeOwner.Cameron) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralCrystal : (Random.Range(0f, 10f) > 9f) ? prefabCrystalFlower : prefabCrystalRock;
         if (biome.owner == BiomeOwner.Chris) prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : prefabPlantDrifter;
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
