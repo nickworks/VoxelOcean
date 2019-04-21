@@ -28,8 +28,10 @@ public class CoralPurpleFan : MonoBehaviour
     /// </summary>
     public void Build()
     {
-        iterations = Random.Range(4, 6);
+
+        iterations = Random.Range(3, 5);
         iteratoinsFan = iterations;
+
         List<CombineInstance> meshes = new List<CombineInstance>();
         Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
         Grow2(iteratoinsFan, meshes, Vector3.zero, Quaternion.identity, 1);
@@ -61,14 +63,13 @@ public class CoralPurpleFan : MonoBehaviour
 
         meshes.Add(inst);
 
-
         //where the branches will be positioned when spawning in
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
 
         //rotation of the branches spawned
         Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(30, 60));
-        Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(-60, -30));
-        Quaternion rot3 = rot * Quaternion.Euler(0, 0, Random.Range(-10, 20));
+        Quaternion rot2 = rot * Quaternion.Euler(Random.Range(10, 40), Random.Range(10, 40), 0);
+        Quaternion rot3 = rot * Quaternion.Euler(Random.Range(-40, -10), Random.Range(-40, -10), 0);
 
         //how each iteration of a branch will be generated
         scale *= .8f;
@@ -77,11 +78,8 @@ public class CoralPurpleFan : MonoBehaviour
         Grow(num, meshes, pos, rot1, scale);
         Grow(num, meshes, pos, rot2, scale);
         Grow(num, meshes, pos, rot3, scale);
-
-
-
-
     }
+
     private void Grow2(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
         if (num <= 0) return; //stop recursive function
@@ -92,6 +90,7 @@ public class CoralPurpleFan : MonoBehaviour
         coralBase.mesh = MakeCube1();
         coralBase.transform = Matrix4x4.TRS(pos, rot, baseScaling * scale);
 
+        meshes.Add(coralBase);
 
         meshes.Add(coralBase);
 
@@ -102,10 +101,14 @@ public class CoralPurpleFan : MonoBehaviour
         pos = coralBase.transform.MultiplyPoint(new Vector3(0, 1f, 0));
         Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(40, 80));
         Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(-80, -40));
+        Quaternion rot3 = rot * Quaternion.Euler(Random.Range(10, 40), Random.Range(10, 40), 0);
+        Quaternion rot4 = rot * Quaternion.Euler(Random.Range(-40, -10), Random.Range(-40, -10), 0);
 
         Grow2(num, meshes, pos, rot1, scale);
         Grow2(num, meshes, pos, rot2, scale);
-        Grow2(num, meshes, pos, rot, scale);
+        Grow2(num, meshes, pos, rot3, scale);
+        Grow2(num, meshes, pos, rot4, scale);
+
 
     }
     /// <summary>
@@ -397,6 +400,7 @@ public class CoralPurpleFan : MonoBehaviour
 
             colors.Add(color);
         }
+
 
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
