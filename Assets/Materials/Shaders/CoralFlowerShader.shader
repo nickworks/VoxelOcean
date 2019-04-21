@@ -1,90 +1,85 @@
-﻿Shader "Custom/CoralFlowerShader"
+﻿Shader "Custom/CoralFlower"
 {
     Properties
     {
-		[PerRendererData]
-        _Color ("Color", Color) = (1,1,1,1)	
-		_MainTex("Main Texture", 2D) = "white"{}
-		_DispTex("Displacement Texture", 2D) = "white"{}
-		_DispPower("Displacement Power" , Float) = 0
+        _Color ("Color", Color) = (1,1,1,1)
+        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _Metallic ("Metallic", Range(0,1)) = 0.0
+		_Noise("Noise", 2D) = "white" {}
+		_Wind("Current Strength", Float) = 1.0
     }
     SubShader
     {
-        Tags 
-		{ 
-			"RenderType" = "Transparent"
-			"Queue" = "Transparent"
+        Tags { "RenderType"="Opaque" }
+        LOD 200
+
+        CGPROGRAM
+        // Physically based Standard lighting model, and enable shadows on all light types
+        #pragma surface surf Standard fullforwardshadows
+
+		#pragma vertex vert 
+
+
+        // Use shader model 3.0 target, to get nicer looking lighting
+        #pragma target 3.0
+
+        sampler2D _MainTex;
+		sampler2D _Noise;
+
+        struct Input
+        {
+            float2 uv_MainTex;
+			float4 color : COLOR;
+        };
+
+        half _Glossiness;
+        half _Metallic;
+        fixed4 _Color;
+		float _Wind; 
+
+        // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
+        // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
+        // #pragma instancing_options assumeuniformscaling
+		UNITY_INSTANCING_BUFFER_START(Props)
+			// put more per-instance properties here
+			UNITY_INSTANCING_BUFFER_END(Props)
+
+		void vert(inout appdata_full IN) {
+
+			float redDist = IN.color.r - .5;
+			if (redDist < 0)redDist = 0;
+
+			float4 pos = mul(unity_ObjectToWorld, IN.vertex) / 10;
+
+			pos.x += _Time.y * .05f;
+
+			fixed4 col = tex2Dlod(_Noise, float4(pos.xy, 0, 0)) - .5;
+
+			//fixed4 offset = col.rgba * redDist;
+			//offset.a = 0;
+			//IN.vertex.xyz -= redDist * 15;
+			//IN.vertex.xyz += offset * 30;
+
+			float3 offest = lerp(float3(0, 0, 0), col.rgb, IN.color.r);
+
+			IN.vertex.xyz += col.rgb; 
 		}
 
-		Cull Off
-		Blend SrcAlpha OneMinusSrcAlpha
-		ZWrite Off
-			
+        void surf (Input IN, inout SurfaceOutputStandard o)
+        {
+            // Albedo comes from a texture tinted by color
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            
+            // Metallic and smoothness come from slider variables
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
 
-		GrabPass{}
+			o.Albedo = IN.color;
 
-        
-        
-		Pass
-		{
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-
-			#include "UnityCG.cginc"
-
-			struct appdata {
-				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
-				float4 color : COLOR;
-			};
-
-			struct v2f {
-				float4 vertex : SV_POSITION;
-				float2 uv : TEXCOORD0;
-				float4 color : COLOR;
-				float4 grabPos : TEXCOORD1;
-			};
-
-			sampler2D _MainTex;
-			sampler2D _DispTex;
-			sampler2D _VinTex;
-			sampler2D _GrabTexture;
-			fixed4 _Color;
-			float _DispPower;
-
-			float _StartOpac = 1.0;
-
-			v2f vert(appdata v) {
-				v2f o;
-				o.uv = v.uv;
-				o.color = v.color;
-				o.vertex = UnityObjectToClipPos(v.vertex);
-
-				o.grabPos = ComputeScreenPos(o.vertex);
-				o.grabPos /= o.grabPos.w;
-
-				return o;
-			}
-
-			fixed4 frag(v2f i) : SV_Target {
-				_StartOpac -= unity_DeltaTime.y;
-
-				fixed4 srcCol = tex2D(_MainTex, i.uv);
-				fixed4 dispPos = tex2D(_DispTex, float2(i.uv.x, i.uv.y - (_Time.y + i.color.a / 2)));
-				fixed4 vinCol = tex2D(_VinTex, i.uv);
-				float2 offset = (dispPos.xy * 2 - 1) * _DispPower * vinCol.r;
-
-				fixed4 grabColor = tex2D(_GrabTexture, i.grabPos.xy + offset);
-				fixed4 texColor = tex2D(_MainTex, i.uv)*i.color;
-
-				fixed4 finalColor = lerp(fixed4(grabColor.rgb, 0.0), grabColor, vinCol.r * 2);
-				finalColor.a *= i.color.a;
-
-				return finalColor;
-			}
-			ENDCG
-		}
+            o.Alpha = c.a;
+        }
+        ENDCG
     }
-    
+    FallBack "Diffuse"
 }

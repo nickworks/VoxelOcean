@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751210088325410814}
-  m_LocalRotation: {x: 0, y: -0.783539, z: 0, w: 0.62134266}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.79693896, z: 0, w: 0.6040599}
+  m_LocalPosition: {x: -0.046, y: 0, z: 0.155}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 2100000, guid: 9b65f2266814a404c965cdea52ad27da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74aa1795979cf946b7faa923b74f352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: e0072c799e5ee0a4c802093ed8dd5040, type: 2}
+  mat: {fileID: 2100000, guid: 9b65f2266814a404c965cdea52ad27da, type: 2}
   iterations: 4
   splitOdds: 0.5
   ranRotOdds: 0.37
@@ -104,9 +104,9 @@ MonoBehaviour:
   zRot: 0
   xRot: -15
   yRot: -15
-  length: 1.7654338
-  degreeOfSeparation: 12
-  degreeFromBase: 114
+  length: 0.46527588
+  degreeOfSeparation: 7
+  degreeFromBase: 113
 --- !u!114 &7970180951915588074
 MonoBehaviour:
   m_ObjectHideFlags: 0
