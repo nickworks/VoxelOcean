@@ -890,7 +890,7 @@ MonoBehaviour:
   voxelsPerChunk: 10
   terrainOnly: 0
   renderDistance: 3
-  renderDistanceVertical: 0
+  renderDistanceVertical: 2
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   biomeScaling: 50
