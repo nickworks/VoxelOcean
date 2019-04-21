@@ -16,7 +16,7 @@ public class PlantLeafSpawn : MonoBehaviour
     [Tooltip("How many iterations to have.")]
     [Range(1, 15)] public int iterations = 2;
     [Tooltip("Scale of the plant.")]
-    float scale = 1;
+    public float scale = 1;
     [Tooltip("How likely to spawn additional branches.")]
     [Range(0,100)] public float chanceForBranches = 20;
     [Tooltip("How far the leaves can be offset.")]
@@ -137,7 +137,8 @@ public class PlantLeafSpawn : MonoBehaviour
     {
         //bell curve for more in the middle
         iterations = Random.Range(2,4) + Random.Range(2,4);
-        chanceForBranches = Random.Range(5, 20) + Random.Range(5, 20);
+        //scale = Random.Range(.5f, 7);
+        chanceForBranches = Random.Range(5, 20) + Random.Range(5, 20) + (int) scale/2;
         numberOfLeaves = Random.Range(3, 5);       
         leafVariance = Random.Range(10, 25);
         stemAngle = Random.Range(1, 5) + Random.Range(1, 5);
@@ -193,7 +194,8 @@ public class PlantLeafSpawn : MonoBehaviour
 
         //set rotation and next position for next iteration
         rot *= Quaternion.Euler(stemAngle+Random.value, 0, stemAngle+Random.value);
-        pos = inst.transform.MultiplyPoint(new Vector3(0, .985f*scale, 0));
+        //pos = inst.transform.MultiplyPoint(new Vector3(0, .985f*scale, 0));
+        pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
         //scale down number and scale
         number--;
         scale *= scaleDownRate;        
@@ -204,7 +206,7 @@ public class PlantLeafSpawn : MonoBehaviour
         //try to grow another branch
         if(Random.Range(0,100) < chanceForBranches)
         {
-            pos = inst.transform.MultiplyPoint(Vector3.up * Random.Range(0, scale));
+            pos = inst.transform.MultiplyPoint(Vector3.up * Random.Range(0, 1));
             rot = Quaternion.Euler(rot.eulerAngles - new Vector3(0, Random.Range(rot.eulerAngles.y-300,rot.eulerAngles.y-30), 0));
             number = Random.Range(2, number);
             Grow(number, meshes, pos, rot, scale, leaves,true);
