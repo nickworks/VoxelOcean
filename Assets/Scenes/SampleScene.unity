@@ -390,12 +390,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: f8d1229df2115d44496d41769efe42b4, type: 2}
-  _pixelOffset: 0.0094
-  _noiseScale: 1.2
-  _noiseFrequency: 3
-  _noiseSpeed: 0.74
+  _pixelOffset: 0.0093
+  _noiseScale: 0.71
+  _noiseFrequency: 1.77
+  _noiseSpeed: 0.64
   _depthStart: 0
-  _depthDistance: 50
+  _depthDistance: 0
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0

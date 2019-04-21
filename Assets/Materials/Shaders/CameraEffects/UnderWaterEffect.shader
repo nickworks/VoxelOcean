@@ -20,9 +20,8 @@
 				#pragma fragment frag
 
 				#include "UnityCG.cginc"
-				#include "noiseSimplex.cginc"
 				#define M_PI 3.1415926535897932384626433832795
-	  sampler2D _CameraDepthTexture;
+		sampler2D _CameraDepthTexture;
 		uniform float _PixelOffset, _NoiseScale, _NoiseSpeed, _NoiseFrequency;
 		
 		float _DepthStart;
@@ -60,7 +59,7 @@
 		depthValue = 1 - saturate((depthValue - _DepthStart) / _DepthDist);
 		float3 spos = float3 (i.scrPos.x, i.scrPos.y, 0) * _NoiseFrequency;
 		spos.z += _Time.x * _NoiseSpeed;
-		float noise = _NoiseScale * ((snoise(spos) + 1) / 3);
+		float noise = _NoiseScale * (((spos) + 1) / 3);
 		float4 noiseToDirection = float4(cos(noise * (M_PI * 2)), sin(noise*(M_PI*2)), 0, 0);
 		fixed4 col = tex2Dproj(_MainTex, i.scrPos + (normalize(noiseToDirection) * _PixelOffset * depthValue));
 		return col;
