@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 910969cd50cb9634a82368386eb6b424, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1.62, y: 1.58}
         m_Offset: {x: 0.5, y: 0.5}
     - _MetallicGlossMap:
@@ -56,11 +56,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Noise:
-        m_Texture: {fileID: 2800000, guid: 123732f78d276dc4d83636b91fffdc59, type: 3}
+        m_Texture: {fileID: 2800000, guid: 910969cd50cb9634a82368386eb6b424, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 910969cd50cb9634a82368386eb6b424, type: 3}
+        m_Texture: {fileID: 2800000, guid: c7caf5e9c4c21f64fb50705a44febc3b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -78,8 +78,8 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthDist: 26.55
-    - _DepthStart: 0
+    - _DepthDist: 500
+    - _DepthStart: 22.5
     - _DetailIntensity: 1
     - _DetailNormalMapScale: 1
     - _DetailScrollSpeed: 0
@@ -92,16 +92,16 @@ Material:
     - _MinuteDetailIntensity: 1
     - _MinuteDetailScrollSpeed: 0
     - _Mode: 0
-    - _NoiseFrequency: 1.77
-    - _NoiseScale: 0.71
-    - _NoiseSpeed: 0.64
+    - _NoiseFrequency: 4.39
+    - _NoiseScale: 3.04
+    - _NoiseSpeed: 1.84
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PixelOffset: 0.0093
+    - _PixelOffset: 0.0071
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Transparency: 0.084
+    - _Transparency: 0.015
     - _UVSec: 0
     - _WarpAmount: 240.7
     - _WaveIntensity: 1

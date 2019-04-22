@@ -39,14 +39,6 @@ public class ImageEffect : MonoBehaviour
     /// </summary>
     [Range(0.001f, 20f)]
     public float _noiseSpeed = 0.64f;
-    /// <summary>
-    /// Depth Start of the fog depth
-    /// </summary>
-    public float _depthStart;
-    /// <summary>
-    /// Depth distance how far the fog is
-    /// </summary>
-    public float _depthDistance;
 
     /// <summary>
     /// Update gives a reference to unity of the effect
@@ -61,8 +53,6 @@ public class ImageEffect : MonoBehaviour
         material.SetFloat("_NoiseSpeed", _noiseSpeed);
         material.SetFloat("_NoiseScale", _noiseScale);
         material.SetFloat("_PixelOffset", _pixelOffset);
-        material.SetFloat("_DepthStart", _depthStart);
-        material.SetFloat("_DepthDistance", _depthDistance);
     }
     /// <summary>
     /// Renders on image 
