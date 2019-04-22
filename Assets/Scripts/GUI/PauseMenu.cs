@@ -61,6 +61,7 @@ public class PauseMenu : MonoBehaviour
         pausemenuUI.SetActive(false);
         Time.timeScale = 1f;
         gamepaused = false;
+        AudioListener.pause = false;
     }
     /// <summary>
     /// Pause
@@ -73,6 +74,7 @@ public class PauseMenu : MonoBehaviour
         pausemenuUI.SetActive(true);
         Time.timeScale = 0f;
         gamepaused = true;
+        AudioListener.pause = true;
     }
     /// <summary>
     /// Load Menu
@@ -82,7 +84,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Scene Loaded");
        //SceneManager.LoadScene("OBJ");
-        Time.timeScale = 1f;
+        Resume();
     }
 
 
