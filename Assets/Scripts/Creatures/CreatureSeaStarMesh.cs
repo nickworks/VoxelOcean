@@ -54,6 +54,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// </summary>
     [Range(.1f, 1.5f)] public float maxRandomScaling = 5f;
 
+    //Object-Specific Values:
     /// <summary>
     /// Is used to control the amount each of the arms tapers at their end.
     /// </summary>
@@ -66,6 +67,11 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// Sets the maximum taper amount for the arms.
     /// </summary>
     [Range(.1f, 1f)] public float maxTaperAmount = 1f;
+
+    /// <summary>
+    /// Sets how high the center of the object rises up from its initial position.
+    /// </summary>
+    [Range(.3f, 1f)] public float centerRiseAmount = .3f;
 
     //Hue modifiers:
     /// <summary>
@@ -122,12 +128,16 @@ public class CreatureSeaStarMesh : MonoBehaviour
         //Set randomized values:
         numberOfArms = Random.Range(minArms, maxArms);
         float tempRandomScaling = Random.Range(minRandomScaling, maxRandomScaling);
+
+        //Set random values to adjust arm width/height:
         float tempRandomArmScaleX = Random.Range(minRandomScaling, maxRandomScaling);
         float tempRandomArmScaleZ = Random.Range(minRandomScaling, maxRandomScaling);
 
+        //Create temporary scaling for center and arms:
         Vector3 tempCenterScale = (centerScale * tempRandomScaling) * objectScaling;
         Vector3 tempArmScale = (armScale * tempRandomScaling) * objectScaling;
 
+        //Add randomness to arm width/height:
         tempArmScale.x += tempRandomArmScaleX;
         tempArmScale.z += tempRandomArmScaleZ;
 
@@ -135,9 +145,13 @@ public class CreatureSeaStarMesh : MonoBehaviour
         CombineInstance center = new CombineInstance();
         center.mesh = MeshTools.MakePentagonalCylinder();
         AddColorToVertices(center.mesh);
+
+        //Adjust center values:
         Quaternion adjustRot =  Quaternion.Euler(0, 15, 0) * rot;
         Vector3 adjustPos = pos;
-        adjustPos.y += .5f;
+        adjustPos.y += centerRiseAmount;
+
+        //Set center transform:
         center.transform = Matrix4x4.TRS(adjustPos, adjustRot, tempCenterScale);
         meshes.Add(center);
   
