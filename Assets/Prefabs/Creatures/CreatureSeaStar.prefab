@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8249340026947487879}
   - component: {fileID: 4603930500133023695}
   m_Layer: 0
-  m_Name: SeaStarSpawner
+  m_Name: CreatureSeaStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,9 +90,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b802f6d3258e33f419e4020408035c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfArms: 5
-  meshScale: {x: 3, y: 1, z: 3}
+  minArms: 4
+  maxArms: 8
+  minObjectScaling: 0.5
+  maxObjectScaling: 1.5
+  centerScale: {x: 4, y: 1.5, z: 4}
   armScale: {x: 0.6, y: 1, z: 3}
-  taperAmount: 0.3
+  minRandomScaling: 0.5
+  maxRandomScaling: 0.8
+  minTaperAmount: 0.2
+  maxTaperAmount: 0.8
   hueMin: 0.1
   hueMax: 1

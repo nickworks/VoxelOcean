@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 /// <summary>
 /// This script creates a mesh for a PlantKelp object using mesh construction functions.
 /// Author: Kyle Lowery
-/// Last Date Updated: 03/29/2019
+/// Last Date Updated: 04/22/2019
 /// </summary>
 public class PlantKelpMesh : MonoBehaviour
 {

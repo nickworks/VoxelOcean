@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 /// <summary>
 /// This script is used to create a mesh for a sea star.
 /// Author: Kyle Lowery
-/// Last Date Updated: 04/05/2019
+/// Last Date Updated: 04/22/2019
 /// </summary>
 public class CreatureSeaStarMesh : MonoBehaviour
 {
@@ -14,9 +13,30 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// <summary>
     /// Controls the number of arms segmenting off of the mesh.
     /// </summary>
-    public int numberOfArms = 5;
+    private int numberOfArms = 5;
+    /// <summary>
+    /// Sets the minimum number of arms the object can have.
+    /// </summary>
+    [Range(4, 8)] public int minArms = 4;
+    /// <summary>
+    /// Sets the maximum number of arms the object can have.
+    /// </summary>
+    [Range(4, 8)] public int maxArms = 8;
 
     // Scaling Vectors:
+    /// <summary>
+    /// Controls the overall scale of the object.
+    /// </summary>
+    private float objectScaling = 1f;
+    /// <summary>
+    /// Sets the minimum value for the object scale.
+    /// </summary>
+    [Range(.5f, 5f)] public float minObjectScaling = .5f;
+    /// <summary>
+    /// Sets the maximum value for the object scale.
+    /// </summary>
+    [Range(.5f, 5f)] public float maxObjectScaling = 5f;
+
     /// <summary>
     /// Controls the scale of the center of the sea star.
     /// </summary>
@@ -25,17 +45,37 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// Controls the scale of each of the arms on the mesh.
     /// </summary>
     public Vector3 armScale = new Vector3(.5f, 1, .75f);
+    /// <summary>
+    /// Sets the minimum value the object can randomly be scaled to.
+    /// </summary>
+    [Range(.1f, 1.5f)] public float minRandomScaling = .5f;
+    /// <summary>
+    /// Sets the maximum value the object can randomly be scaled to.
+    /// </summary>
+    [Range(.1f, 1.5f)] public float maxRandomScaling = 5f;
 
     /// <summary>
     /// Is used to control the amount each of the arms tapers at their end.
     /// </summary>
-    [Range(0.1f, 1)]public float taperAmount = 0.5f;
+    private float taperAmount = 0.5f;
+    /// <summary>
+    /// Sets the minimum taper amount for the arms.
+    /// </summary>
+    [Range(.1f, 1f)]public float minTaperAmount = .5f;
+    /// <summary>
+    /// Sets the maximum taper amount for the arms.
+    /// </summary>
+    [Range(.1f, 1f)] public float maxTaperAmount = 1f;
 
     //Hue modifiers:
     /// <summary>
+    /// Stores the hue value for the object.
+    /// </summary>
+    private float hue = 1f;
+    /// <summary>
     /// Sets the minimum value of the hue color.
     /// </summary>
-    [Range(.1f, .9f)] public float hueMin = .1f;
+    [Range(.1f, 1f)] public float hueMin = .1f;
     /// <summary>
     /// Sets the maximum value of the hue color.
     /// </summary>
@@ -45,7 +85,15 @@ public class CreatureSeaStarMesh : MonoBehaviour
     void Start()
     {
         //Check to make sure Unity values don't break the program.
+        if (minArms > maxArms || minArms == maxArms) minArms = maxArms - 1;
+        if (minObjectScaling > maxObjectScaling || minObjectScaling == maxObjectScaling) minObjectScaling = maxObjectScaling - .1f;
+        if (minRandomScaling > maxRandomScaling || minRandomScaling == maxRandomScaling) minRandomScaling = maxRandomScaling - .1f;
         if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .1f;
+
+        //Set variables that SHOULDN'T be changed in the recursive function:
+        objectScaling = Random.Range(minObjectScaling, maxObjectScaling);
+        taperAmount = Random.Range(minTaperAmount, maxTaperAmount);
+        hue = Mathf.Lerp(hueMin, hueMax, Random.Range(0f, 1f));
 
         Build();
     }
@@ -71,52 +119,68 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// <param name="rot">The rotation of the object.</param>
     void Grow(List<CombineInstance> meshes, Vector3 pos, Quaternion rot)
     {
-            //Make center of the sea star:
-            CombineInstance center = new CombineInstance();
-            center.mesh = MeshTools.MakePentagonalCylinder();
-            Quaternion adjustRot =  Quaternion.Euler(0, 15, 0) * rot;
-            center.transform = Matrix4x4.TRS(pos, rot, centerScale);
-            meshes.Add(center);
+        //Set randomized values:
+        numberOfArms = Random.Range(minArms, maxArms);
+        float tempRandomScaling = Random.Range(minRandomScaling, maxRandomScaling);
+        float tempRandomArmScaleX = Random.Range(minRandomScaling, maxRandomScaling);
+        float tempRandomArmScaleZ = Random.Range(minRandomScaling, maxRandomScaling);
+
+        Vector3 tempCenterScale = (centerScale * tempRandomScaling) * objectScaling;
+        Vector3 tempArmScale = (armScale * tempRandomScaling) * objectScaling;
+
+        tempArmScale.x += tempRandomArmScaleX;
+        tempArmScale.z += tempRandomArmScaleZ;
+
+        //Make center of the sea star:
+        CombineInstance center = new CombineInstance();
+        center.mesh = MeshTools.MakePentagonalCylinder();
+        AddColorToVertices(center.mesh);
+        Quaternion adjustRot =  Quaternion.Euler(0, 15, 0) * rot;
+        Vector3 adjustPos = pos;
+        adjustPos.y += .5f;
+        center.transform = Matrix4x4.TRS(adjustPos, adjustRot, tempCenterScale);
+        meshes.Add(center);
   
-            //Make arms of sea star:
-            for (int i = 0; i < numberOfArms; i++)
-            {
-                CombineInstance arm = new CombineInstance();
-                arm.mesh = MeshTools.MakeTaperCube(taperAmount);
-                float rotDegrees = (360 / numberOfArms) * i;
-                float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
-                
-                //Build out arm in that direction:
-                float armX = Mathf.Sin(rotRadians) * 1f;
-                float armZ = Mathf.Cos(rotRadians) * 1f;
-
-                Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
-                Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
-
-                //adjust arm position by scale:
-                
-
-                arm.transform = Matrix4x4.TRS(armPos, armRot, armScale);
-                meshes.Add(arm);
-            }
-    }
-}
-
-[CustomEditor(typeof(CreatureSeaStarMesh))]
-public class CreatureSeaStarMeshEditor : Editor
-{
-    /// <summary>
-    /// Runs the base OnInspectorGUI command and adds a "Grow" button to the inspector in the GUI.
-    /// </summary>
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        if (GUILayout.Button("GROW!"))                              //if the "Grow" button is pressed...
+        //Make arms of sea star:
+        for (int i = 0; i < numberOfArms; i++)
         {
-            CreatureSeaStarMesh s = (target as CreatureSeaStarMesh);                //create a new PlantKelpMesh on the script target.
-            s.Build();                                                  //Call the new PlantKelpMesh's Build function.
+            CombineInstance arm = new CombineInstance();
+            arm.mesh = MeshTools.MakeTaperCube(taperAmount);
+            AddColorToVertices(arm.mesh);
+            float rotDegrees = (360 / numberOfArms) * i;
+            float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
+                
+            //Build out arm in that direction:
+            float armX = Mathf.Sin(rotRadians) * 1f;
+            float armZ = Mathf.Cos(rotRadians) * 1f;
+
+            Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
+            Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
+
+            //adjust arm position by scale:
+                
+
+            arm.transform = Matrix4x4.TRS(armPos, armRot, tempArmScale);
+            meshes.Add(arm);
         }
+    }
+
+    /// <summary>
+    /// Adds color to vertices based on the number of iterations that have passed making the object.
+    /// </summary>
+    /// <param name="mesh">The mesh you wish to add vertex colors to.</param>
+    private void AddColorToVertices(Mesh mesh)
+    {
+        List<Color> colors = new List<Color>();
+
+        foreach (Vector3 pos in mesh.vertices)
+        {
+            float tempHue = hue;
+            Color tempColor = Color.HSVToRGB(tempHue, 1, 1);
+            colors.Add(tempColor);
+        }
+
+        mesh.SetColors(colors);
     }
 }
 
