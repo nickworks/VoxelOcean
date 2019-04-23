@@ -176,7 +176,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1676131608}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &92437261
 GameObject:
@@ -188,6 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 92437262}
   - component: {fileID: 92437263}
+  - component: {fileID: 92437264}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -203,7 +204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92437261}
   m_LocalRotation: {x: -0, y: 0.77248055, z: -0, w: 0.63503844}
-  m_LocalPosition: {x: -103.38615, y: 64.08, z: -27.79053}
+  m_LocalPosition: {x: 8.63, y: 7.23, z: -2.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
@@ -224,6 +225,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 50
   acceleration: 50
+--- !u!114 &92437264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92437261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8021dfcadf9fe3a4abc6692442b671b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnNewChunksOnMove: 1
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +543,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444457279}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb28c118282057f4d89a8313ef27fa38, type: 3}
   m_Name: 
@@ -820,7 +834,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1015166726}
-  - {fileID: 1682386563}
   - {fileID: 84876754}
   m_Father: {fileID: 2135429414}
   m_RootOrder: 0
@@ -842,88 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad969a525366b44ca271d800c8ab67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percentText: {fileID: 1682386564}
-  button: {fileID: 1015166727}
   universe: {fileID: 2135429413}
---- !u!1 &1682386562
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1682386563}
-  - component: {fileID: 1682386565}
-  - component: {fileID: 1682386564}
-  m_Layer: 5
-  m_Name: Percent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1682386563
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682386562}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1676131608}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -77, y: -48.700012}
-  m_SizeDelta: {x: 121.26001, y: 57.4}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1682386564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682386562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 33
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 46
-    m_Alignment: 5
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 0%
---- !u!222 &1682386565
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682386562}
-  m_CullTransparentMesh: 0
 --- !u!1 &2135429412
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +866,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2135429414}
   - component: {fileID: 2135429413}
+  - component: {fileID: 2135429415}
   m_Layer: 0
   m_Name: VoxelUniverse
   m_TagString: Untagged
@@ -953,18 +886,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b0fe9a48af9784a9f6919c20016d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderDistance: 5
+  voxelSize: 2
+  voxelsPerChunk: 10
+  terrainOnly: 0
+  renderDistance: 3
   renderDistanceVertical: 2
-  resPerChunk: 10
   voxelChunkPrefab: {fileID: 8198810764069784715, guid: ea06c3c4f35336a47b6c572c9e27d0be,
     type: 3}
   biomeScaling: 50
-  signalFields:
-  - type: 0
-    zoom: 18
-    densityBias: -0.07585199
-    flattenAmount: 0.64438033
-    flattenOffset: 0
 --- !u!4 &2135429414
 Transform:
   m_ObjectHideFlags: 0
@@ -973,10 +902,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2135429412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.5, y: 25.5, z: 25.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1676131608}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135429415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135429412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ae85edec3ee044fa0c284af5324206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  signalFields:
+  - type: 0
+    zoom: 20
+    densityBias: 0
+    flattenAmount: 0.657
+    flattenOffset: 0

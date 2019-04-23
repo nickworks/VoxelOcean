@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2452548087486150322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3541287713760308941}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3541287713760308941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452548087486150322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8198810764069784712}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8198810764069784714
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +60,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.5, y: 8.5, z: 8.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3541287713760308941}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,7 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7269a2b63bc3ecb4d872e77eae56020c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 0
 --- !u!33 &8198810764069784718
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -131,9 +161,15 @@ MonoBehaviour:
     type: 3}
   prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
     type: 3}
+  prefabPlantDrifter: {fileID: 7517662629918710561, guid: 6dc506ea99e26874f95816a436d85263,
+    type: 3}
   prefabPlantLeaf: {fileID: 5078370866149129377, guid: 6846a9475805a6843b455aeb8456966e,
     type: 3}
   prefabPlantSeagrass: {fileID: 9184822981456748834, guid: 8ef6def96fa59974caab563f824ce1b1,
+    type: 3}
+  prefabCrystalFlower: {fileID: 5939494914578814260, guid: 2a07384cc95013f47944e8b518cb2d0b,
+    type: 3}
+  prefabCrystalRock: {fileID: 3059848689261616440, guid: 46ce6703db41d2640917e1c27efbcccb,
     type: 3}
   prefabMossBall: {fileID: 6755855242698053521, guid: 72b739e313ec45346ac37640e24b714f,
     type: 3}
