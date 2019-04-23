@@ -14,13 +14,43 @@ public class PlantKelpMesh : MonoBehaviour
     /// <summary>
     /// Controls the number of iterations the Build function goes through to make the mesh.
     /// </summary>
-    [Range(2, 20)] public int iterations = 3;
+    private int iterations = 3;
+    /// <summary>
+    /// Sets the minimum number of iterations this object can pass through before stopping.
+    /// </summary>
+    [Range(2, 20)] public int minIterations = 2;
+    /// <summary>
+    /// Sets the maximum number of iterations this object can pass through before stopping.
+    /// </summary>
+    [Range(2, 20)] public int maxIterations = 20;
+
     /// <summary>
     /// Stores the number of leaves attached to every segment of the mesh.
     /// </summary>
-    [Range(2, 10)] public int numberOfLeaves = 5;
+    private int numberOfLeaves = 5;
+    /// <summary>
+    /// Sets the minimum number of leaves that are attached to every segment.
+    /// </summary>
+    [Range(4, 10)] public int minLeaves = 4;
+    /// <summary>
+    /// Sets the maximum number of leaves that are attached to every segment.
+    /// </summary>
+    [Range(4, 10)] public int maxLeaves = 10;
 
     // Scaling Vectors:
+    /// <summary>
+    /// Stores the scale of the overall object.
+    /// </summary>
+    private float objectScaling = 2f;
+    /// <summary>
+    /// Sets the minimum amount for the object's scale.
+    /// </summary>
+    [Range(.5f, 5f)] public float minObjectScaling = .5f;
+    /// <summary>
+    /// Sets the maximum amount for the object's scale.
+    /// </summary>
+    [Range(.5f, 5f)] public float maxObjectScaling = 5f;
+
     /// <summary>
     /// Stores the scaling of each Stem segment in the mesh.
     /// </summary>
@@ -30,19 +60,28 @@ public class PlantKelpMesh : MonoBehaviour
     /// </summary>
     public Vector3 leafScaling = new Vector3(.25f, 1, .35f);
 
+    /// <summary>
+    /// Sets the minimum value to randomly scale meshes.
+    /// </summary>
+    [Range(.5f, 2f)] public float minRandomScaling = .5f;
+    /// <summary>
+    /// Sets the maximum value to randomly scale meshes.
+    /// </summary>
+    [Range(.5f, 2f)] public float maxRandomScaling = 2f;
+
     // Angle of Instance:
     /// <summary>
     /// Controls the angle of the stem mesh in the X direction.
     /// </summary>
-    [Range(0, 45f)] public float angleX = 0;
+    [Range(0, 45f)] public float stemAngleX = 0;
     /// <summary>
     /// Controls the angle of the stem mesh in the Y direction.
     /// </summary>
-    [Range(0, 45f)] public float angleY = 45f;
+    [Range(0, 45f)] public float stemAngleY = 45f;
     /// <summary>
     /// Controls the angle of the stem mesh in the Z direction.
     /// </summary>
-    [Range(0, 45f)] public float angleZ = 45f;
+    [Range(0, 45f)] public float stemAngleZ = 45f;
 
     // Offset Angle for leaves:
     /// <summary>
@@ -57,16 +96,14 @@ public class PlantKelpMesh : MonoBehaviour
     /// Controls the angle of the leaf mesh in the Z direction.
     /// </summary>
     public float leafOffsetAngleZ = 90f;
-
-    // Modifiers for a randomized range of value:
     /// <summary>
-    /// Sets the minimum value of a random number.
+    /// Sets the minimum value of a random angle amount.
     /// </summary>
-    [Range(0, 45f)] public float minRandom = 0;
+    [Range(0, 45f)] public float minRandomAngle = 0;
     /// <summary>
-    /// Sets the maximum value of a random number.
+    /// Sets the maximum value of a random angle amount.
     /// </summary>
-    [Range(0, 45f)] public float maxRandom = 30f;
+    [Range(0, 45f)] public float maxRandomAngle = 30f;
 
     //Hue modifiers:
     /// <summary>
@@ -82,8 +119,15 @@ public class PlantKelpMesh : MonoBehaviour
     void Start()
     {
         // Check to make sure Unity values don't break the code:
-        if (minRandom > maxRandom || minRandom == maxRandom) minRandom = maxRandom - 1;
+        if (minIterations > maxIterations || minIterations == maxIterations) minIterations = maxIterations - 1;
+        if (minRandomAngle > maxRandomAngle || minRandomAngle == maxRandomAngle) minRandomAngle = maxRandomAngle - 1;
+        if (minRandomScaling > maxRandomScaling || minRandomScaling == maxRandomScaling) minRandomScaling = maxRandomScaling - .1f;
+        if (minLeaves > maxLeaves || minLeaves == maxLeaves) minLeaves = maxLeaves - 1;
         if (hueMin > hueMax || hueMin == hueMax) hueMin = hueMax - .1f;
+
+        // Set randomized values (set values here for ones that SHOULDN'T be changed in the recursive function):
+        iterations = Random.Range(minIterations, maxIterations);
+        objectScaling = Random.Range(minObjectScaling, maxObjectScaling);
 
         // Start building the mesh:
         Build();
@@ -114,11 +158,18 @@ public class PlantKelpMesh : MonoBehaviour
     {
         if (num <= 0) return;   //stop recursive function
 
+        //Adjust randomness for scale values:
+        Vector3 tempStemScaling = (stemScaling * Random.Range(minRandomScaling, maxRandomScaling)) * objectScaling;
+        Vector3 tempLeafScaling = (leafScaling * Random.Range(minRandomScaling, maxRandomScaling)) * objectScaling;
+
+        //Adjust randomness for leaves:
+        numberOfLeaves = Random.Range(minLeaves, maxLeaves);
+
         // Add Stem Mesh:
         CombineInstance stem = new CombineInstance();
         stem.mesh = MeshTools.MakePentagonalCylinder();
         AddColorToVertices(stem.mesh, num);
-        stem.transform = Matrix4x4.TRS(pos, rot, stemScaling);
+        stem.transform = Matrix4x4.TRS(pos, rot, tempStemScaling);
         meshes.Add(stem);
 
         // Add Leaves Mesh:
@@ -129,7 +180,7 @@ public class PlantKelpMesh : MonoBehaviour
             AddColorToVertices(leaves.mesh, num);
             float rotAmount = 360 / (numberOfLeaves * i);
             Quaternion leafRot = rot * Quaternion.Euler(leafOffsetAngleX, leafOffsetAngleY * rotAmount, leafOffsetAngleZ);
-            leaves.transform = Matrix4x4.TRS(pos, leafRot, leafScaling);
+            leaves.transform = Matrix4x4.TRS(pos, leafRot, tempLeafScaling);
             meshes.Add(leaves);
         }
 
@@ -140,9 +191,9 @@ public class PlantKelpMesh : MonoBehaviour
         pos = stem.transform.MultiplyPoint(new Vector3(0, 1, 0));
 
         //Generate random angles based on set angle values:
-        float randX = angleX + Random.Range(minRandom, maxRandom);
-        float randY = angleY + Random.Range(minRandom, maxRandom);
-        float randZ = angleZ + Random.Range(minRandom, maxRandom);
+        float randX = stemAngleX + Random.Range(minRandomAngle, maxRandomAngle);
+        float randY = stemAngleY + Random.Range(minRandomAngle, maxRandomAngle);
+        float randZ = stemAngleZ + Random.Range(minRandomAngle, maxRandomAngle);
 
         //Create a Quaternion to change the local transform to the world Vector3.up:
         Quaternion rot1 = Quaternion.FromToRotation(transform.up, Vector3.up);
