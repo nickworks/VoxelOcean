@@ -72,15 +72,15 @@ public class PlantKelpMesh : MonoBehaviour
     /// <summary>
     /// Controls the angle of the stem mesh in the X direction.
     /// </summary>
-    [Range(0, 45f)] public float stemAngleX = 0;
+    [Range(-45f, 45f)] public float stemAngleX = 0;
     /// <summary>
     /// Controls the angle of the stem mesh in the Y direction.
     /// </summary>
-    [Range(0, 45f)] public float stemAngleY = 45f;
+    [Range(-45f, 45f)] public float stemAngleY = 45f;
     /// <summary>
     /// Controls the angle of the stem mesh in the Z direction.
     /// </summary>
-    [Range(0, 45f)] public float stemAngleZ = 45f;
+    [Range(-45f, 45f)] public float stemAngleZ = 0f;
 
     // Offset Angle for leaves:
     /// <summary>
@@ -98,11 +98,11 @@ public class PlantKelpMesh : MonoBehaviour
     /// <summary>
     /// Sets the minimum value of a random angle amount.
     /// </summary>
-    [Range(0, 45f)] public float minRandomAngle = 0;
+    [Range(-45f, 45f)] public float minRandomAngle = 0;
     /// <summary>
     /// Sets the maximum value of a random angle amount.
     /// </summary>
-    [Range(0, 45f)] public float maxRandomAngle = 30f;
+    [Range(-45f, 45f)] public float maxRandomAngle = 30f;
 
     //Hue modifiers:
     /// <summary>
@@ -127,6 +127,7 @@ public class PlantKelpMesh : MonoBehaviour
         // Set randomized values (set values here for ones that SHOULDN'T be changed in the recursive function):
         iterations = Random.Range(minIterations, maxIterations);
         objectScaling = Random.Range(minObjectScaling, maxObjectScaling);
+        stemAngleY = Random.Range(minRandomAngle, maxRandomAngle);
 
         // Start building the mesh:
         Build();
