@@ -52,7 +52,7 @@
 
 			float4 pos = mul(unity_ObjectToWorld, IN.vertex) / 10;
 
-			pos.x += _Time.y * .05f;
+			pos.x += _Time.y;// *.05f;
 
 			fixed4 col = tex2Dlod(_Noise, float4(pos.xy, 0, 0)) - .5;
 
