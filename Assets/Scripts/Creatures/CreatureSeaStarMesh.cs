@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// This script is used to create a mesh for a sea star.
 /// Author: Kyle Lowery
-/// Last Date Updated: 04/22/2019
+/// Last Date Updated: 04/24/2019
 /// </summary>
 public class CreatureSeaStarMesh : MonoBehaviour
 {
@@ -17,11 +17,11 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// <summary>
     /// Sets the minimum number of arms the object can have.
     /// </summary>
-    [Range(4, 8)] public int minArms = 4;
+    [Range(5, 16)] public int minArms = 5;
     /// <summary>
     /// Sets the maximum number of arms the object can have.
     /// </summary>
-    [Range(4, 8)] public int maxArms = 8;
+    [Range(5, 16)] public int maxArms = 8;
 
     // Scaling Vectors:
     /// <summary>
@@ -54,6 +54,23 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// </summary>
     [Range(.1f, 1.5f)] public float maxRandomScaling = 5f;
 
+    /// <summary>
+    /// Sets the minimum length the arms can be stretched to.
+    /// </summary>
+    [Range(.5f, 2f)]public float minArmLength = .5f;
+    /// <summary>
+    /// Sets the maximum length the arms can be stretched to.
+    /// </summary>
+    [Range(.5f, 2f)] public float maxArmLength = 2f;
+    /// <summary>
+    /// Sets the minimum width the arms can be stretched to.
+    /// </summary>
+    [Range(.5f, 2f)] public float minArmWidth = .5f;
+    /// <summary>
+    /// Sets the maximum width the arms can be stretched to.
+    /// </summary>
+    [Range(.5f, 2f)] public float maxArmWidth = 2f;
+
     //Object-Specific Values:
     /// <summary>
     /// Is used to control the amount each of the arms tapers at their end.
@@ -71,7 +88,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// <summary>
     /// Sets how high the center of the object rises up from its initial position.
     /// </summary>
-    [Range(.3f, 1f)] public float centerRiseAmount = .3f;
+    [Range(0f, 1f)] public float centerRiseAmount = .3f;
 
     //Hue modifiers:
     /// <summary>
@@ -137,9 +154,13 @@ public class CreatureSeaStarMesh : MonoBehaviour
         Vector3 tempCenterScale = (centerScale * tempRandomScaling) * objectScaling;
         Vector3 tempArmScale = (armScale * tempRandomScaling) * objectScaling;
 
+        //Add arm length & width
+        tempArmScale.x += Random.Range(minArmWidth, maxArmWidth);
+        tempArmScale.z += Random.Range(minArmLength, maxArmLength);
+
         //Add randomness to arm width/height:
-        tempArmScale.x += tempRandomArmScaleX;
-        tempArmScale.z += tempRandomArmScaleZ;
+        tempArmScale.x *= tempRandomArmScaleX;
+        tempArmScale.z *= tempRandomArmScaleZ;
 
         //Make center of the sea star:
         CombineInstance center = new CombineInstance();
@@ -171,7 +192,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
             Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
             Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
 
-            //adjust arm position by scale:
+            // TODO: adjust arm position by scale
                 
 
             arm.transform = Matrix4x4.TRS(armPos, armRot, tempArmScale);
