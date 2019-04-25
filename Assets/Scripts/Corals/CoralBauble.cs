@@ -6,6 +6,11 @@ using UnityEditor;
 
 public class CoralBauble : MonoBehaviour
 {
+    /// <summary>
+    /// A reference to the VertexColor material, which will be applied to the mesh upon generation.
+    /// </summary>
+    public Material mat;
+
     // TODO: Please update comments to be documentation style.  You can easily do this by starting your comment with "///".
     /// <summary>
     /// controls number of times the loop will run
@@ -93,13 +98,15 @@ public class CoralBauble : MonoBehaviour
 		MeshFilter meshFilter = GetComponent<MeshFilter>();			///change assigned mesh
 		meshFilter.mesh = mesh;
 
-		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
 
-		//Material mat = (Material)mesh.colors; 
+        meshRenderer.material = mat;
 
-		//meshRenderer.material = mesh.colors; 
+        //Material mat = (Material)mesh.colors; 
 
-	}
+        //meshRenderer.material = mesh.colors; 
+
+    }
     /// <summary>
     /// The iterative function that grows the coral
     /// </summary>
