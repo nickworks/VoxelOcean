@@ -246,13 +246,8 @@ public class CoralCrystalSpawner : MonoBehaviour
     {
         
         List<Color> colors = new List<Color>();
-        
-
-
-
         Mesh mesh = MeshTools.MakeCube();
-
-
+        Vector3[] verts = mesh.vertices;
         //Set hue min and Max
 
         float hue = Mathf.Lerp(hueMin, hueMax, (num / (float) iterations));
@@ -261,7 +256,7 @@ public class CoralCrystalSpawner : MonoBehaviour
         */
         for (int i = 0; i < mesh.vertexCount; i++)
         {
-            float tempHue = hue + (1 / (float)iterations) * pos.y;
+            float tempHue = hue + (1 / (float)iterations) * verts[i].y;
 
             Color color = Color.HSVToRGB(tempHue, 1, 1);
 

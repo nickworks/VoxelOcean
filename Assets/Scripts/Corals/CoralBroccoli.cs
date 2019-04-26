@@ -53,15 +53,6 @@ public class CoralBroccoli : MonoBehaviour {
 
 		meshes.Add (inst); 
 
-		float localScale = scale; 
-
-		num--; 
-
-		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0)); 
-		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75)); 
-		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75)); 
-		localScale *= .5f; 
-
 		num--;
 
 		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));
