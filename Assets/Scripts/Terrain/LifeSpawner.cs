@@ -136,6 +136,10 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCoralTubeWorm;
     /// <summary>
+    /// Prefab reference for Hydrothermic blind shrimp (Chris's fish).
+    /// </summary>
+    public GameObject prefabCreatureBlindShrimp;
+    /// <summary>
     /// Prefab reference for drifting kelp (Chris's flora).
     /// </summary>
     public GameObject prefabPlantDrifter;
@@ -221,7 +225,12 @@ public class LifeSpawner : MonoBehaviour
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
         if (biome.owner == BiomeOwner.Cameron) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralCrystal : (Random.Range(0f, 10f) > 9f) ? prefabCrystalFlower : prefabCrystalRock;
-        if (biome.owner == BiomeOwner.Chris) prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : prefabPlantDrifter;
+        if (biome.owner == BiomeOwner.Chris)
+        {
+            prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : prefabPlantDrifter;
+
+            if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
+        }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
