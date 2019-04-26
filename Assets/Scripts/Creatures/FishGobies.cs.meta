@@ -3,7 +3,9 @@ guid: a40e6cc02aa8b0b42a1bc33f0ed65b7e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - FishGobbiesPrefab: {fileID: 7365141659715445623, guid: 25f4a1e078cdf0147a7a7f605f3a8364,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

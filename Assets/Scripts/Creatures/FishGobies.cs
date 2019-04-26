@@ -7,7 +7,7 @@ using UnityEngine;
 public class FishGobies : MonoBehaviour
 {
     public GameObject FishGobbiesPrefab;// crates the gameobject
-    static int numGobbies = 1;// sets the number of objects created
+    static int numGobbies = 25;// sets the number of objects created
     public static int biomeSize = 25; // the range of how far they can go
     public int spawnRadius = 1;
    // public static Vector3 goalPos = Vector3.zero; // makes postion of object availlble
