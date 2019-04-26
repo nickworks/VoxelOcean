@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8552084016987780539}
   - component: {fileID: 8249340026947487879}
   - component: {fileID: 4603930500133023695}
+  - component: {fileID: 4304220281012427838}
   m_Layer: 0
-  m_Name: SeaStarSpawner
+  m_Name: CreatureSeaStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,9 +91,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b802f6d3258e33f419e4020408035c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfArms: 5
-  meshScale: {x: 3, y: 1, z: 3}
-  armScale: {x: 0.6, y: 1, z: 3}
-  taperAmount: 0.3
+  minArms: 5
+  maxArms: 10
+  minObjectScaling: 0.5
+  maxObjectScaling: 1.5
+  centerScale: {x: 4, y: 1, z: 4}
+  armScale: {x: 0.6, y: 1, z: 1}
+  minRandomScaling: 0.5
+  maxRandomScaling: 0.8
+  minArmLength: 0.5
+  maxArmLength: 1.5
+  minArmWidth: 0.5
+  maxArmWidth: 1.5
+  minTaperAmount: 0.2
+  maxTaperAmount: 0.8
+  centerRiseAmount: 0.3
   hueMin: 0.1
   hueMax: 1
+--- !u!114 &4304220281012427838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338540796843315734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78928bcc98e4564f84c1c361a16833e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Kyle Lowery
+  species: Starfish
+  mobility: 1
+  special: 
+  defense: 2
+  size: 2
+  diet: 1
+  activity: 0
+  strength: 4
+  speed: 4
