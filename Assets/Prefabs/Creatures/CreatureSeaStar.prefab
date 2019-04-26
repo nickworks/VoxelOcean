@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1111102048973533995
+--- !u!1 &338540796843315734
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6554941770354227500}
-  - component: {fileID: 6125296191573934606}
-  - component: {fileID: 4531927683660134110}
-  - component: {fileID: 5399352122963632199}
-  - component: {fileID: 253464069093893883}
+  - component: {fileID: 628081347501787180}
+  - component: {fileID: 8552084016987780539}
+  - component: {fileID: 8249340026947487879}
+  - component: {fileID: 4603930500133023695}
+  - component: {fileID: 4304220281012427838}
   m_Layer: 0
-  m_Name: PlantKelp
+  m_Name: CreatureSeaStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6554941770354227500
+--- !u!4 &628081347501787180
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111102048973533995}
+  m_GameObject: {fileID: 338540796843315734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,53 +34,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6125296191573934606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111102048973533995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 938f4be032d71b545a9098d323e3090b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minIterations: 3
-  maxIterations: 18
-  minLeaves: 4
-  maxLeaves: 7
-  minObjectScaling: 0.5
-  maxObjectScaling: 1.5
-  stemScaling: {x: 0.25, y: 1.5, z: 0.25}
-  leafScaling: {x: 0.05, y: 1, z: 0.5}
-  minRandomScaling: 0.8
-  maxRandomScaling: 1.2
-  stemAngleX: 0
-  stemAngleY: 30
-  stemAngleZ: 0
-  leafOffsetAngleX: 35
-  leafOffsetAngleY: 35
-  leafOffsetAngleZ: 35
-  minRandomAngle: -30
-  maxRandomAngle: 30
-  hueMin: 0.1
-  hueMax: 0.6
---- !u!33 &4531927683660134110
+--- !u!33 &8552084016987780539
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111102048973533995}
+  m_GameObject: {fileID: 338540796843315734}
   m_Mesh: {fileID: 0}
---- !u!23 &5399352122963632199
+--- !u!23 &8249340026947487879
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111102048973533995}
+  m_GameObject: {fileID: 338540796843315734}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -111,22 +79,54 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &253464069093893883
+--- !u!114 &4603930500133023695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111102048973533995}
+  m_GameObject: {fileID: 338540796843315734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86f05891abbe85d46bba417b8de83be5, type: 3}
+  m_Script: {fileID: 11500000, guid: b802f6d3258e33f419e4020408035c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minArms: 5
+  maxArms: 10
+  minObjectScaling: 0.5
+  maxObjectScaling: 1.5
+  centerScale: {x: 4, y: 1, z: 4}
+  armScale: {x: 0.6, y: 1, z: 1}
+  minRandomScaling: 0.5
+  maxRandomScaling: 0.8
+  minArmLength: 0.5
+  maxArmLength: 1.5
+  minArmWidth: 0.5
+  maxArmWidth: 1.5
+  minTaperAmount: 0.2
+  maxTaperAmount: 0.8
+  centerRiseAmount: 0.3
+  hueMin: 0.1
+  hueMax: 1
+--- !u!114 &4304220281012427838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338540796843315734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78928bcc98e4564f84c1c361a16833e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   creator: Kyle Lowery
-  species: PlantKelp
-  mobility: 3
+  species: Starfish
+  mobility: 1
   special: 
-  defense: 3
-  size: 1
-  tangibility: 3
+  defense: 2
+  size: 2
+  diet: 1
+  activity: 0
+  strength: 4
+  speed: 4
