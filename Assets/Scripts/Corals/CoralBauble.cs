@@ -377,6 +377,10 @@ public class CoralBauble : MonoBehaviour
 
             Color color = Color.HSVToRGB(tempHue, 1, 1);
 
+            color.a = num/(float)iterations;
+            //color.r = color.b = color.g = color.a;
+            
+
             colors.Add(color); 
 		}
 
