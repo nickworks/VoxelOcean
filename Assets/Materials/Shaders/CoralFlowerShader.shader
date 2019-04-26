@@ -16,7 +16,7 @@
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard fullforwardshadows addshadow
 
 		#pragma vertex vert 
 
@@ -52,7 +52,7 @@
 
 			float4 pos = mul(unity_ObjectToWorld, IN.vertex) / 10;
 
-			pos.x += _Time.y;// *.05f;
+			pos.x += _Time.y *.2f;
 
 			fixed4 col = tex2Dlod(_Noise, float4(pos.xy, 0, 0)) - .5;
 
@@ -61,9 +61,9 @@
 			//IN.vertex.xyz -= redDist * 15;
 			//IN.vertex.xyz += offset * 30;
 
-			float3 offest = lerp(float3(0, 0, 0), col.rgb, IN.color.r);
+			//float3 offest = lerp(float3(0, 0, 0), col.rgb, IN.color.r);
 
-			IN.vertex.xyz += col.rgb; 
+			IN.vertex.xyz += col.rgb * IN.color.a / 2.5f; 
 		}
 
         void surf (Input IN, inout SurfaceOutputStandard o)
@@ -77,7 +77,7 @@
 
 			o.Albedo = IN.color;
 
-            o.Alpha = c.a;
+            o.Alpha = 1;
         }
         ENDCG
     }

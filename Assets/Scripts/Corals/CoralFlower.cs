@@ -158,6 +158,7 @@ public class CoralFlower : MonoBehaviour
 		}
         else if(num == 1)
         {
+            
             inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.1f * length, 2 * length, .1f * length)); ///sets the transform of the first iteration
 			num++;
         }
@@ -188,7 +189,7 @@ public class CoralFlower : MonoBehaviour
 		{
 			if (num == 1)
 			{
-				lSidePos = inst.transform.MultiplyPoint(new Vector3(0f, 1f, 0f));
+				lSidePos = inst.transform.MultiplyPoint(new Vector3(0f, 1.1f, 0f));
 			}
 			else
 			{
@@ -402,6 +403,8 @@ public class CoralFlower : MonoBehaviour
             float tempHue = hue + (1/(float)iterations) * pos.y; 
 
             Color color = Color.HSVToRGB(tempHue, 1, 1);
+
+            color.a = num / (float)iterations; 
 
             colors.Add(color); 
 		}
