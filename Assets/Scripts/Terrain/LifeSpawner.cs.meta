@@ -12,15 +12,17 @@ MonoImporter:
       type: 3}
   - prefabCoralPurpleFan: {instanceID: 0}
   - prefabCoralFingers: {instanceID: 0}
+  - prefabFishGobies: {fileID: 5745099137881814734, guid: 668b92fa5a3569644b1eb01f4063ded3,
+      type: 3}
   - prefabPlantKelp: {instanceID: 0}
+  - prefabCreatureSeaStar: {instanceID: 0}
   - prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
       type: 3}
   - prefabCoralPyramid: {instanceID: 0}
   - prefabCoralTubeWorm: {instanceID: 0}
   - prefabPlantLeaf: {instanceID: 0}
   - prefabPlantSeagrass: {instanceID: 0}
-  - prefabMossBall: {fileID: 6755855242698053521, guid: 23447f7e1e5d2924097a2fe4d93b867e,
-      type: 3}
+  - prefabMossBall: {instanceID: 0}
   - prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
       type: 3}
   executionOrder: 0

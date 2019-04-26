@@ -5,14 +5,14 @@ using UnityEngine;
 /// this class makes the spheres/ fish move and ratate and use a flocking pattering to get them to stay next to each other
 /// if oustside of desgnaited range they will turn around
 /// </summary>
-public class FlockGobies: MonoBehaviour 
+public class Flock: MonoBehaviour 
 {
     public float velocity; // how fast objects move
     public float maxVelocity; // the max speed they can go
     public float velocityRotation;// how fast they turn
     public float maxVelocityRotation;// max speed they can turn
     
-    float neighbourDistance = 3.0f;// max distance an object can affect another object
+    float neighbourDistance = .10f;// max distance an object can affect another object
     bool turning = false;// used if object need to turn around
                          // Start is called before the first frame update
 /// <summary>
@@ -38,10 +38,7 @@ public class FlockGobies: MonoBehaviour
     /// </summary>
     public void Swimming()
     {
-     // if (velocity < maxVelocity)
-     // {
-    //      velocity += 0.2f;
-     // }
+    
         transform.Translate(0, 0, velocity);
        
     }/// <summary>
@@ -49,8 +46,8 @@ public class FlockGobies: MonoBehaviour
     /// </summary>
     public void RandomSpeed()
     {
-      velocity = Random.Range(1.0f, 1.5f) * Time.deltaTime;
-  velocityRotation = Random.Range(1.1f, 1.5f);
+      velocity = Random.Range(4.0f, 5.5f) * Time.deltaTime;
+  velocityRotation = Random.Range(1.1f, 1.5f) * Time.deltaTime;
     }
     /// <summary>
     /// sets the objects to follow each other bying taking the avearge of the group
@@ -64,8 +61,8 @@ public class FlockGobies: MonoBehaviour
         Vector3 vCenter = Vector3.zero;
         Vector3 vAvoid = Vector3.zero;
 
-        float gSpeed = 0.1f;
-        Vector3 goalPos = FishGobies.goalPos;
+       
+
         float distance;
         int groupSize = 0;
         foreach (GameObject go in fishGobbies)
@@ -82,24 +79,22 @@ public class FlockGobies: MonoBehaviour
                         vAvoid = vAvoid + (this.transform.position - go.transform.position);
 
                     }
-                    FlockGobies anotherFlock = go.GetComponent<FlockGobies>();
-                    gSpeed = gSpeed + anotherFlock.velocity;
+                    Flock anotherFlock = go.GetComponent<Flock>();
+                   
                 }
 
             }
         }
         if(groupSize > 0)
         {
-            vCenter = vCenter / groupSize + (goalPos - this.transform.position);
-            velocity  = gSpeed / groupSize;
+            
+       
             Vector3 direction = (vCenter + vAvoid) - transform.position;
             if(direction != Vector3.zero)
             {
                 
-            //      if (velocityRotation < maxVelocityRotation) {
-          //        velocityRotation += 0.3f;
-            //  }
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), velocityRotation * Time.deltaTime);
+     
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), velocityRotation );
             }
         }
 
@@ -116,19 +111,14 @@ public class FlockGobies: MonoBehaviour
         else
         {
             turning = false;
-         // velocityRotation = 0;
+         
         }
         if (turning == true)
         {
-         // if (velocityRotation < maxVelocityRotation) { 
-         // velocityRotation += 0.3f;
-     // }
+
             Vector3 direction = Vector3.zero - transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), velocityRotation * Time.deltaTime);
-         //if (velocity > 0.1f)
-         // {
-          //    velocity -= 0.1f;
-          //}
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), velocityRotation );
+
         }
         
     }

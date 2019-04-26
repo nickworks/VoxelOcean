@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5745099137881814736}
   - component: {fileID: 5745099137881814737}
+  - component: {fileID: 5687632107554594627}
   m_Layer: 0
   m_Name: FishGobies 1
   m_TagString: Untagged
@@ -45,3 +46,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FishGobbiesPrefab: {fileID: 7365141659715445623, guid: 25f4a1e078cdf0147a7a7f605f3a8364,
     type: 3}
+  spawnRadius: 1
+--- !u!114 &5687632107554594627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5745099137881814734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fdf3039ee4c4214db6c24b3de3f0784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 0
+  maxVelocity: 0
+  velocityRotation: 0
+  maxVelocityRotation: 0
