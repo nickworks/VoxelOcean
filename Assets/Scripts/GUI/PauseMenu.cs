@@ -28,15 +28,20 @@ public class PauseMenu : MonoBehaviour
     /// OBJ is a string reference to a scene
     /// </summary>
     public string OBJ;
+    /// <summary>
+    /// Reference to Replacement Shader script - Josh's
+    /// </summary>
+    ReplacementShader replace;
 
-    ReplacementShader replace = new ReplacementShader();
-
+    /// <summary>
+    /// Start
+    /// Reference to Replacement  Shader and sets it on start.
+    /// </summary>
     void Start()
     {
         replace = GetComponent<ReplacementShader>();
     }
 
-    // Update is called once per frame
     /// <summary>
     ///  Update
     ///  Asks if you hit escape, if game is not paused is resumed

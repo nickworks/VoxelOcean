@@ -127,7 +127,7 @@ public class ReplacementShader : MonoBehaviour
             {
                 //TODO: if unloaded objects are stored in their current state, this may cause them to be reloaded with the
                 //xray material, leaving this comment here for future reference
-                Debug.Log("Possible issue due to loading /unloading, please message Josh for follow up debugging");
+               // Debug.Log("Possible issue due to loading /unloading, please message Josh for follow up debugging");
             }
         }
     }
