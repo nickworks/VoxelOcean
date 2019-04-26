@@ -423,7 +423,7 @@ public static class MeshTools
     /// Creates a 1m cube that tapers in on it's front end by a variable amount.
     /// </summary>
     /// <param name="taperAmount">Sets the amount the cube tapers in at it's front.</param>
-    /// <returns></returns>
+    /// <returns>Mesh data for a cube that tapers in on the end by the taper amount.</returns>
     public static Mesh MakeTaperCube(float taperAmount)
     {
         List<Vector3> verts = new List<Vector3>();

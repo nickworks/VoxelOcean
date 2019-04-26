@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2581658518344738568
+--- !u!1 &338540796843315734
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2581658518344738572}
-  - component: {fileID: 2581658518344738575}
-  - component: {fileID: 2581658518344738574}
-  - component: {fileID: 789150373867855962}
-  - component: {fileID: 3545957980217579752}
+  - component: {fileID: 628081347501787180}
+  - component: {fileID: 8552084016987780539}
+  - component: {fileID: 8249340026947487879}
+  - component: {fileID: 4603930500133023695}
+  - component: {fileID: 4304220281012427838}
   m_Layer: 0
-  m_Name: CoralBroccoli
+  m_Name: CreatureSeaStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2581658518344738572
+--- !u!4 &628081347501787180
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2581658518344738568}
+  m_GameObject: {fileID: 338540796843315734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7743859, y: 0.5700942, z: 5.1679177}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2581658518344738575
+--- !u!33 &8552084016987780539
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2581658518344738568}
+  m_GameObject: {fileID: 338540796843315734}
   m_Mesh: {fileID: 0}
---- !u!23 &2581658518344738574
+--- !u!23 &8249340026947487879
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2581658518344738568}
+  m_GameObject: {fileID: 338540796843315734}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -56,10 +56,10 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 2100000, guid: 806e144ce7a86074bb4b10a39d6bba3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,36 +79,54 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &789150373867855962
+--- !u!114 &4603930500133023695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2581658518344738568}
+  m_GameObject: {fileID: 338540796843315734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aedefbc0080c80945a8f0cbcbff2597f, type: 3}
+  m_Script: {fileID: 11500000, guid: b802f6d3258e33f419e4020408035c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 3
-  branchScaling: {x: 0.25, y: 1.9430904, z: 0.25}
---- !u!114 &3545957980217579752
+  minArms: 5
+  maxArms: 10
+  minObjectScaling: 0.5
+  maxObjectScaling: 1.5
+  centerScale: {x: 4, y: 1, z: 4}
+  armScale: {x: 0.6, y: 1, z: 1}
+  minRandomScaling: 0.5
+  maxRandomScaling: 0.8
+  minArmLength: 0.5
+  maxArmLength: 1.5
+  minArmWidth: 0.5
+  maxArmWidth: 1.5
+  minTaperAmount: 0.2
+  maxTaperAmount: 0.8
+  centerRiseAmount: 0.3
+  hueMin: 0.1
+  hueMax: 1
+--- !u!114 &4304220281012427838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2581658518344738568}
+  m_GameObject: {fileID: 338540796843315734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Script: {fileID: 11500000, guid: e78928bcc98e4564f84c1c361a16833e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creator: Jessica Petroelje
-  species: CoralBroccoli
-  mobility: 3
+  creator: Kyle Lowery
+  species: Starfish
+  mobility: 1
   special: 
-  defense: 1
+  defense: 2
   size: 2
-  tangibility: 0
+  diet: 1
+  activity: 0
+  strength: 4
+  speed: 4
