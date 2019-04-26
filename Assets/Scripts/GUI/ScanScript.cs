@@ -29,6 +29,7 @@ public class ScanScript : MonoBehaviour
         //if player presses e (scan button)
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("i'm working");
             //fire raycast from center of the camera/screen
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
             RaycastHit hit;
