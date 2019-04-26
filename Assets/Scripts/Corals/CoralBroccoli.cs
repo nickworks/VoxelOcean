@@ -59,7 +59,8 @@ public class CoralBroccoli : MonoBehaviour {
 		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));
 		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75));
 		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75));
-		scale *= .75f;
+
+        scale *= .75f;
 
 		Grow (num, meshes, pos, randomPosRot, scale);
 		Grow (num, meshes, pos, randomNegRot, scale);
@@ -80,9 +81,10 @@ public class CoralBroccoli : MonoBehaviour {
 
 		float hue = 1;
         Mesh mesh = MeshTools.MakeCube();
+        Vector3[] verts = mesh.vertices;
         for (int i = 0; i < mesh.vertexCount; i++) {
 
-			float tempHue = hue + (1 * pos.y);
+			float tempHue = hue + (1 * verts[i].y);
 			Color color = Color.HSVToRGB (tempHue, .5f, 1);
 			colors.Add(color);
 
@@ -92,4 +94,20 @@ public class CoralBroccoli : MonoBehaviour {
 		return mesh;
 	}
 }
-
+[CustomEditor(typeof(CoralBroccoli))]
+public class BroccoliSpawnerEditor : Editor
+{
+    /*adds in inspector gui for GUI changes */
+    public override void OnInspectorGUI()
+    {
+        /*Places a button the player can hit on the GUI labelled GROW! So you can test the grow function of the coral */
+        base.OnInspectorGUI();
+        if (GUILayout.Button("GROW!"))
+        {
+            /*targets spawner when the grow button is hit */
+            CoralBroccoli b = (target as CoralBroccoli);
+            /* Starts grow command and transform and iterations */
+            b.Build();
+        }
+    }
+}
