@@ -29,6 +29,13 @@ public class PauseMenu : MonoBehaviour
     /// </summary>
     public string OBJ;
 
+    ReplacementShader replace = new ReplacementShader();
+
+    void Start()
+    {
+        replace = GetComponent<ReplacementShader>();
+    }
+
     // Update is called once per frame
     /// <summary>
     ///  Update
@@ -76,6 +83,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         gamepaused = true;
         AudioListener.volume = .25f; //set to lower volume
+
+        replace.Populate();
     }
     /// <summary>
     /// Load Menu
