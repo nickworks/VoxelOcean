@@ -179,6 +179,9 @@ public class LifeSpawner : MonoBehaviour
     public void SpawnSomeLife()
     {
 
+        int seed = (int)(transform.position.x + transform.position.y + transform.position.z) * 100;
+        Random.InitState(seed);
+
         mesh = GetComponent<MeshFilter>();
         if (!mesh) return;
 

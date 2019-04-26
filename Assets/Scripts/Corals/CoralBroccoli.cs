@@ -53,193 +53,60 @@ public class CoralBroccoli : MonoBehaviour {
 
 		meshes.Add (inst); 
 
-		float localScale = scale; 
+		num--;
 
-		num--; 
+		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0));
+		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75));
+		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75));
 
-		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0)); 
-		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75)); 
-		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75)); 
-		localScale *= .5f; 
+        scale *= .75f;
 
-		Grow (num, meshes, pos, randomPosRot, localScale); 
-		Grow (num, meshes, pos, randomNegRot, localScale); 
-		Grow (num, meshes, pos, randomNegRot, localScale); 
-		Grow (num, meshes, pos, randomPosRot, localScale); 
-		Grow (num, meshes, pos, randomNegRot, localScale); 
-		Grow (num, meshes, pos, randomPosRot, localScale); 
-	} 
-	public void DestroyChildren()
-	{
-		/* destroys any children left over from a previous spawn in */
-		while (transform.childCount > 0)
-		{
-			DestroyImmediate(transform.GetChild(0).gameObject);
-		}
+		Grow (num, meshes, pos, randomPosRot, scale);
+		Grow (num, meshes, pos, randomNegRot, scale);
+		Grow (num, meshes, pos, randomNegRot, scale);
+		Grow (num, meshes, pos, randomPosRot, scale);
+		Grow (num, meshes, pos, randomNegRot, scale);
+		Grow (num, meshes, pos, randomPosRot, scale);
 	}
-	/// <summary> 
-	/// This creates the actual mesh 
-	/// </summary> 
-	/// <param name="num">the number of iterations</param> 
-	/// <returns></returns> 
-	private Mesh MakeCube(int num){ 
-		List<Vector3> verts = new List<Vector3> (); 
-		List<Vector2> uvs = new List<Vector2> (); 
-		List<Vector3> normals = new List<Vector3> (); 
-		List<Color> colors = new List<Color> (); 
-		List<int> tris = new List<int> (); 
+	/// <summary>
+	/// This creates the actual mesh
+	/// </summary>
+	/// <param name="num">the number of iterations</param>
+	/// <returns></returns>
+	private Mesh MakeCube(int num){
+		
+		List<Color> colors = new List<Color> ();
+		
 
-		//Front 
-		verts.Add(new Vector3(-0.5f, 0, -0.5f)); 
-		verts.Add(new Vector3(-0.5f, 1, -0.5f)); 
-		verts.Add(new Vector3(0.5f, 1, -0.5f)); 
-		verts.Add(new Vector3(0.5f, 0, -0.5f)); 
-		normals.Add (new Vector3 (0, 0, -1)); 
-		normals.Add (new Vector3 (0, 0, -1)); 
-		normals.Add (new Vector3 (0, 0, -1)); 
-		normals.Add (new Vector3 (0, 0, -1)); 
-		uvs.Add(new Vector2(0,0)); 
-		uvs.Add(new Vector2(0,1)); 
-		uvs.Add(new Vector2(1,1)); 
-		uvs.Add(new Vector2(1,0)); 
-		tris.Add (0); 
-		tris.Add (1); 
-		tris.Add (2); 
-		tris.Add (2); 
-		tris.Add (3); 
-		tris.Add (0); 
+		float hue = 1;
+        Mesh mesh = MeshTools.MakeCube();
+        Vector3[] verts = mesh.vertices;
+        for (int i = 0; i < mesh.vertexCount; i++) {
 
-		//Back 
-		verts.Add(new Vector3(-0.5f, 0, 0.5f)); 
-		verts.Add(new Vector3(0.5f, 0, 0.5f)); 
-		verts.Add(new Vector3(0.5f, 1, 0.5f)); 
-		verts.Add(new Vector3(-0.5f, 1, 0.5f)); 
-		normals.Add (new Vector3 (0, 0, 1)); 
-		normals.Add (new Vector3 (0, 0, 1)); 
-		normals.Add (new Vector3 (0, 0, 1)); 
-		normals.Add (new Vector3 (0, 0, 1)); 
-		uvs.Add(new Vector2(0,0)); 
-		uvs.Add(new Vector2(0,1)); 
-		uvs.Add(new Vector2(1,1)); 
-		uvs.Add(new Vector2(1,0)); 
-		tris.Add (4); 
-		tris.Add (5); 
-		tris.Add (6); 
-		tris.Add (6); 
-		tris.Add (7); 
-		tris.Add (4); 
+			float tempHue = hue + (1 * verts[i].y);
+			Color color = Color.HSVToRGB (tempHue, .5f, 1);
+			colors.Add(color);
 
-		//left 
-		verts.Add(new Vector3(-0.5f, 0, -0.5f)); 
-		verts.Add(new Vector3(-0.5f, 0, 0.5f)); 
-		verts.Add(new Vector3(-0.5f, 1, 0.5f)); 
-		verts.Add(new Vector3(-0.5f, 1, -0.5f)); 
-		normals.Add (new Vector3 (-1, 0, 0)); 
-		normals.Add (new Vector3 (-1, 0, 0)); 
-		normals.Add (new Vector3 (-1, 0, 0)); 
-		normals.Add (new Vector3 (-1, 0, 0)); 
-		uvs.Add(new Vector3(0,0)); 
-		uvs.Add(new Vector3(0,1)); 
-		uvs.Add(new Vector3(1,1)); 
-		uvs.Add(new Vector3(1,0)); 
-		tris.Add (8); 
-		tris.Add (9); 
-		tris.Add (10); 
-		tris.Add (10); 
-		tris.Add (11); 
-		tris.Add (8); 
+		}
 
-		//right 
-		verts.Add(new Vector3(0.5f, 0, -0.5f)); 
-		verts.Add(new Vector3(0.5f, 1, -0.5f)); 
-		verts.Add(new Vector3(0.5f, 1, 0.5f)); 
-		verts.Add(new Vector3(0.5f, 0, 0.5f)); 
-		normals.Add (new Vector3 (1, 0, 0)); 
-		normals.Add (new Vector3 (1, 0, 0)); 
-		normals.Add (new Vector3 (1, 0, 0)); 
-		normals.Add (new Vector3 (1, 0, 0)); 
-		uvs.Add(new Vector3(0,0)); 
-		uvs.Add(new Vector3(0,1)); 
-		uvs.Add(new Vector3(1,1)); 
-		uvs.Add(new Vector3(1,0)); 
-		tris.Add (12); 
-		tris.Add (13); 
-		tris.Add (14); 
-		tris.Add (14); 
-		tris.Add (15); 
-		tris.Add (12); 
-
-		//top 
-		verts.Add(new Vector3(-0.5f, 1, -0.5f)); 
-		verts.Add(new Vector3(-0.5f, 1, +0.5f)); 
-		verts.Add(new Vector3(+0.5f, 1, +0.5f)); 
-		verts.Add(new Vector3(+0.5f, 1, -0.5f)); 
-		normals.Add (new Vector3 (0, 1, 0)); 
-		normals.Add (new Vector3 (0, 1, 0)); 
-		normals.Add (new Vector3 (0, 1, 0)); 
-		normals.Add (new Vector3 (0, 1, 0)); 
-		uvs.Add(new Vector3(0,0)); 
-		uvs.Add(new Vector3(0,1)); 
-		uvs.Add(new Vector3(1,1)); 
-		uvs.Add(new Vector3(1,0)); 
-		tris.Add (16); 
-		tris.Add (17); 
-		tris.Add (18); 
-		tris.Add (18); 
-		tris.Add (19); 
-		tris.Add (16); 
-
-		//bottom 
-		verts.Add(new Vector3(-0.5f, 0, -0.5f)); 
-		verts.Add(new Vector3(+0.5f, 0, -0.5f)); 
-		verts.Add(new Vector3(+0.5f, 0, +0.5f)); 
-		verts.Add(new Vector3(-0.5f, 0, +0.5f)); 
-		normals.Add (new Vector3 (0, -1, 0)); 
-		normals.Add (new Vector3 (0, -1, 0)); 
-		normals.Add (new Vector3 (0, -1, 0)); 
-		normals.Add (new Vector3 (0, -1, 0)); 
-		uvs.Add(new Vector3(0,0)); 
-		uvs.Add(new Vector3(0,1)); 
-		uvs.Add(new Vector3(1,1)); 
-		uvs.Add(new Vector3(1,0)); 
-		tris.Add (20); 
-		tris.Add (21); 
-		tris.Add (22); 
-		tris.Add (22); 
-		tris.Add (23); 
-		tris.Add (20); 
-		float hue = Random.Range(.82f, .873f); 
-		Color color;
-		foreach (Vector3 pos in verts) { 
-			color = Color.HSVToRGB (Random.Range(.82f, .9f), .5f, 1);
-			colors.Add(color); 
-		} 
-
-		Mesh mesh = new Mesh (); 
-		mesh.SetVertices (verts); 
-		mesh.SetUVs (0, uvs); 
-		mesh.SetNormals (normals); 
-		mesh.SetTriangles (tris, 0); 
-		mesh.SetColors (colors); 
-		return mesh; 
+		mesh.SetColors (colors);
+		return mesh;
 	}
 }
 [CustomEditor(typeof(CoralBroccoli))]
 public class BroccoliSpawnerEditor : Editor
 {
-	/*adds in inspector gui for GUI changes */
-	public override void OnInspectorGUI()
-	{
-		/*Places a button the player can hit on the GUI labelled GROW! So you can test the grow function of the coral */
-		base.OnInspectorGUI();
-		if (GUILayout.Button("GROW!"))
-		{
-			/*targets spawner when the grow button is hit */
-			CoralBroccoli b = (target as CoralBroccoli);
-			/*destroys any children left over from a previous grow */
-			b.DestroyChildren();
-			/* Starts grow command and transform and iterations */
-			b.Build();
-		}
-	}
+    /*adds in inspector gui for GUI changes */
+    public override void OnInspectorGUI()
+    {
+        /*Places a button the player can hit on the GUI labelled GROW! So you can test the grow function of the coral */
+        base.OnInspectorGUI();
+        if (GUILayout.Button("GROW!"))
+        {
+            /*targets spawner when the grow button is hit */
+            CoralBroccoli b = (target as CoralBroccoli);
+            /* Starts grow command and transform and iterations */
+            b.Build();
+        }
+    }
 }

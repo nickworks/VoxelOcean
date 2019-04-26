@@ -116,135 +116,15 @@ public class CoralPurpleFan : MonoBehaviour
     /// </summary>
     private Mesh MakeCube()
     {
-        List<Vector3> verts = new List<Vector3>();
-        List<Vector3> uvs = new List<Vector3>();
-        List<Vector3> normals = new List<Vector3>();
+       
         List<Color> colors = new List<Color>();
-        List<int> tris = new List<int>();
-
-        //Front
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(0);
-        tris.Add(1);
-        tris.Add(2);
-        tris.Add(2);
-        tris.Add(3);
-        tris.Add(0);
-
-        //Back
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(4);
-        tris.Add(5);
-        tris.Add(6);
-        tris.Add(6);
-        tris.Add(7);
-        tris.Add(4);
-
-        //Left
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(8);
-        tris.Add(9);
-        tris.Add(10);
-        tris.Add(10);
-        tris.Add(11);
-        tris.Add(8);
-
-        //Right
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(12);
-        tris.Add(13);
-        tris.Add(14);
-        tris.Add(14);
-        tris.Add(15);
-        tris.Add(12);
-
-        //Top
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(16);
-        tris.Add(17);
-        tris.Add(18);
-        tris.Add(18);
-        tris.Add(19);
-        tris.Add(16);
-
-        //Bottom
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(20);
-        tris.Add(21);
-        tris.Add(22);
-        tris.Add(22);
-        tris.Add(23);
-        tris.Add(20);
+        Mesh mesh = MeshTools.MakeCube();
 
 
 
-        foreach (Vector3 pos in verts)
+
+
+        for (int i = 0; i < mesh.vertexCount; i++)
         {
 
 
@@ -252,12 +132,6 @@ public class CoralPurpleFan : MonoBehaviour
 
             colors.Add(color);
         }
-
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(verts);
-        mesh.SetUVs(0, uvs);
-        mesh.SetNormals(normals);
-        mesh.SetTriangles(tris, 0);
         mesh.SetColors(colors);
         return mesh;
 
