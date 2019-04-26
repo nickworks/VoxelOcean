@@ -26,22 +26,30 @@ public class CreatureSeaUrchin : MonoBehaviour
     /// </summary>
     public void Build()
     {
-        iterations = Random.Range(4, 7);
+        iterations = Random.Range(4, 6);
         iteratoinsFan = iterations + 1;
         List<CombineInstance> meshes = new List<CombineInstance>();
         //What makes the spindles in the sea urchin
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-20, 0), 0, Random.Range(-20, 20)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-40, 0), 0, Random.Range(-40, 40)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-60, 0), 0, Random.Range(-60, 60)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-80, 0), 0, Random.Range(-80, 80)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(10, 20), 0, Random.Range(-20, 20)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-15, 40), 0, Random.Range(-40, 40)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(20, 60), 0, Random.Range(-60, 60)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-25, 80), 0, Random.Range(-80, 80)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(30, 20), 0, Random.Range(-20, 20)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-35, 40), 0, Random.Range(-40, 40)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(40, 60), 0, Random.Range(-60, 60)), 1);
-        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-45, 80), 0, Random.Range(-80, 80)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 5), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 5), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5,5), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 5), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90,90), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 10), Random.Range(0, 180), 0), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-20, 25), Random.Range(0, 180), 0), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 30), Random.Range(0, 180), 0), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), Random.Range(0, 180), 0), 1);
         //creates the main body part of the urchin
         Grow2(iteratoinsFan, meshes, Vector3.zero, Quaternion.identity, 1);
         //creates and combines the meshes created by the grow comands
@@ -62,8 +70,7 @@ public class CreatureSeaUrchin : MonoBehaviour
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
         //to help randomize put in this random number generator if its above 8 it will end it early so each spindle has a different amount of things.
-        int end = Random.Range(0, 10);
-        if (end >= 8) return;
+
         if (num <= 0) return; //stop recursive function
         num--;
         //adds meshes to the coral list that have been generated

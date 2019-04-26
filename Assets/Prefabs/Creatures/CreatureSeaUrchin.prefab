@@ -94,4 +94,4 @@ MonoBehaviour:
   iteratoinsFan: 0
   sideFan: 0
   branchScaling: {x: 0.05, y: 0.45, z: 0.05}
-  baseScaling: {x: 0.4, y: 0.4, z: 0.4}
+  baseScaling: {x: 0.3, y: 0.4, z: 0.3}
