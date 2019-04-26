@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 /// <summary>
 /// Cameron Garchow's Pause Menu
 /// Currently this pause menu pauses the game when escape is hit. It is bound inside of its own canvas and object to prevent issues
@@ -61,7 +62,7 @@ public class PauseMenu : MonoBehaviour
         pausemenuUI.SetActive(false);
         Time.timeScale = 1f;
         gamepaused = false;
-        AudioListener.pause = false;
+        AudioListener.volume = 1.0f;
     }
     /// <summary>
     /// Pause
@@ -74,7 +75,7 @@ public class PauseMenu : MonoBehaviour
         pausemenuUI.SetActive(true);
         Time.timeScale = 0f;
         gamepaused = true;
-        AudioListener.pause = true;
+        AudioListener.volume = .25f; //set to lower volume
     }
     /// <summary>
     /// Load Menu
@@ -105,6 +106,6 @@ public class PauseMenu : MonoBehaviour
     {
 
         Debug.Log("Quit Game"); // CALLS FOR CONFIRMATION OF QUIT
-        Application.Quit(); // DOES NOT WORK IN EDITTOR
+        Application.Quit(); // DOES NOT WORK IN EDITTOR ONLY ON BUILD
     }
 }
