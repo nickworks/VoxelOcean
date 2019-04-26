@@ -161,6 +161,8 @@ MonoBehaviour:
     type: 3}
   prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
     type: 3}
+  prefabCreatureBlindShrimp: {fileID: 5091014771293800756, guid: 71643e42ab4cf6e469c4f4884e260f2b,
+    type: 3}
   prefabPlantDrifter: {fileID: 7517662629918710561, guid: 6dc506ea99e26874f95816a436d85263,
     type: 3}
   prefabPlantLeaf: {fileID: 5078370866149129377, guid: 6846a9475805a6843b455aeb8456966e,
