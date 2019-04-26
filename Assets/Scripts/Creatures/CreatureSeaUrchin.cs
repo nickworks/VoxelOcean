@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// Spawns Coral type Fan 
-/// </summary>
-public class CoralPurpleFan : MonoBehaviour
+
+public class CreatureSeaUrchin : MonoBehaviour
 {
     /// <summary>
     /// The number of iterations spawned from the original
@@ -15,8 +13,8 @@ public class CoralPurpleFan : MonoBehaviour
     /// <summary>
     /// How the scaling of the branches are for both the skeleton set and fan set
     /// </summary>
-    public Vector3 branchScaling = new Vector3(.03f, .2f, .1f);
-    public Vector3 baseScaling = new Vector3(.8f, .5f, .03f);
+    public Vector3 branchScaling = new Vector3(.5f, 2f, .5f);
+    public Vector3 baseScaling = new Vector3(.5f, 1f, .5f);
     void Start()
     {
         //initalizes the spawn of the coral
@@ -28,14 +26,33 @@ public class CoralPurpleFan : MonoBehaviour
     /// </summary>
     public void Build()
     {
-
-        iterations = Random.Range(3, 5);
-        iteratoinsFan = iterations;
-
+        iterations = Random.Range(4, 6);
+        iteratoinsFan = iterations + 1;
         List<CombineInstance> meshes = new List<CombineInstance>();
-        Grow(iterations, meshes, Vector3.zero, Quaternion.identity, 1);
+        //What makes the spindles in the sea urchin
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 5), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 5), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5,5), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 5), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 35), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-75, 75), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90,90), 0, Random.Range(-25, 25)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), 0, Random.Range(-40, 40)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), 0, Random.Range(-75, 75)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), 0, Random.Range(-90, 90)), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-5, 10), Random.Range(0, 180), 0), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-20, 25), Random.Range(0, 180), 0), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-30, 30), Random.Range(0, 180), 0), 1);
+        Grow(iterations, meshes, Vector3.zero, Quaternion.Euler(Random.Range(-90, 90), Random.Range(0, 180), 0), 1);
+        //creates the main body part of the urchin
         Grow2(iteratoinsFan, meshes, Vector3.zero, Quaternion.identity, 1);
-
+        //creates and combines the meshes created by the grow comands
         Mesh mesh = new Mesh();
         mesh.CombineMeshes(meshes.ToArray());
 
@@ -52,6 +69,8 @@ public class CoralPurpleFan : MonoBehaviour
     /// <param name="scale">scale of our meshes</param>
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        //to help randomize put in this random number generator if its above 8 it will end it early so each spindle has a different amount of things.
+
         if (num <= 0) return; //stop recursive function
         num--;
         //adds meshes to the coral list that have been generated
@@ -60,55 +79,27 @@ public class CoralPurpleFan : MonoBehaviour
         inst.mesh = MakeCube();
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
 
-
         meshes.Add(inst);
+        //sets the scale of the urchins spindles.
+        scale *= .7f;
+        //sets a new position for the new spindle that will be spawning in
+        pos = inst.transform.MultiplyPoint(new Vector3(0, 1f, 0));
 
-        //where the branches will be positioned when spawning in
-        pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
-
-        //rotation of the branches spawned
-        Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(30, 60));
-        Quaternion rot2 = rot * Quaternion.Euler(Random.Range(10, 40), Random.Range(10, 40), 0);
-        Quaternion rot3 = rot * Quaternion.Euler(Random.Range(-40, -10), Random.Range(-40, -10), 0);
-
-        //how each iteration of a branch will be generated
-        scale *= .8f;
-        //branches that spawn for the skeletal part of the coral
-
-        Grow(num, meshes, pos, rot1, scale);
-        Grow(num, meshes, pos, rot2, scale);
-        Grow(num, meshes, pos, rot3, scale);
+        Grow(num, meshes, pos, rot, scale);
     }
-
     private void Grow2(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+       
         if (num <= 0) return; //stop recursive function
         num--;
         //adds meshes to the coral list that have been generated
-        CombineInstance coralBase = new CombineInstance();
+        CombineInstance urchinBase = new CombineInstance();
 
-        coralBase.mesh = MakeCube1();
-        coralBase.transform = Matrix4x4.TRS(pos, rot, baseScaling * scale);
-
-        meshes.Add(coralBase);
-
-        meshes.Add(coralBase);
+        urchinBase.mesh = MakeCube1();
+        urchinBase.transform = Matrix4x4.TRS(pos, rot, baseScaling);
 
 
-        //how each iteration of a branch will be generated
-        scale *= .8f;
-        //branches that spawn for the skeletal part of the coral
-        pos = coralBase.transform.MultiplyPoint(new Vector3(0, 1f, 0));
-        Quaternion rot1 = rot * Quaternion.Euler(0, 0, Random.Range(40, 80));
-        Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(-80, -40));
-        Quaternion rot3 = rot * Quaternion.Euler(Random.Range(10, 40), Random.Range(10, 40), 0);
-        Quaternion rot4 = rot * Quaternion.Euler(Random.Range(-40, -10), Random.Range(-40, -10), 0);
-        //Each branch that grows from the originally set branch
-        Grow2(num, meshes, pos, rot1, scale);
-        Grow2(num, meshes, pos, rot2, scale);
-        Grow2(num, meshes, pos, rot3, scale);
-        Grow2(num, meshes, pos, rot4, scale);
-
+        meshes.Add(urchinBase);
 
     }
     /// <summary>
@@ -248,7 +239,7 @@ public class CoralPurpleFan : MonoBehaviour
         {
 
 
-            Color color = Color.HSVToRGB(1, 1, 1);
+            Color color = Color.HSVToRGB(Random.Range(0, 2), 1, Random.Range(0, 2));
 
             colors.Add(color);
         }
@@ -396,11 +387,10 @@ public class CoralPurpleFan : MonoBehaviour
         {
 
 
-            Color color = Color.HSVToRGB(.7f, .6f, .7f);
+            Color color = Color.HSVToRGB(0, Random.Range(0, 2), 0);
 
             colors.Add(color);
         }
-
 
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
