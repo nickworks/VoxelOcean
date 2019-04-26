@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iterations: 3
-  branchScaling: {x: 0.25, y: 1, z: 0.25}
+  branchScaling: {x: 0.25, y: 1.9430904, z: 0.25}
 --- !u!114 &3545957980217579752
 MonoBehaviour:
   m_ObjectHideFlags: 0

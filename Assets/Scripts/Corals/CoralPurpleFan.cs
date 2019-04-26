@@ -103,7 +103,7 @@ public class CoralPurpleFan : MonoBehaviour
         Quaternion rot2 = rot * Quaternion.Euler(0, 0, Random.Range(-80, -40));
         Quaternion rot3 = rot * Quaternion.Euler(Random.Range(10, 40), Random.Range(10, 40), 0);
         Quaternion rot4 = rot * Quaternion.Euler(Random.Range(-40, -10), Random.Range(-40, -10), 0);
-
+        //Each branch that grows from the originally set branch
         Grow2(num, meshes, pos, rot1, scale);
         Grow2(num, meshes, pos, rot2, scale);
         Grow2(num, meshes, pos, rot3, scale);
