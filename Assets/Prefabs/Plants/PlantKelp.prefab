@@ -51,7 +51,7 @@ MonoBehaviour:
   minLeaves: 4
   maxLeaves: 7
   minObjectScaling: 0.5
-  maxObjectScaling: 2.5
+  maxObjectScaling: 1.5
   stemScaling: {x: 0.25, y: 1.5, z: 0.25}
   leafScaling: {x: 0.05, y: 1, z: 0.5}
   minRandomScaling: 0.8
