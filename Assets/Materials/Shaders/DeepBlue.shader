@@ -56,6 +56,9 @@
 
         	float p = input.texcoord.y;
 
+			p /= 2;
+			p += .5;
+
 			output.screenColor  = lerp(_ColorBottom,_ColorTop,p);
             
             output.texcoord = input.texcoord;
