@@ -13,6 +13,8 @@ public class SeaDragonSpawner : MonoBehaviour
     public int stemSize = 5;
     public float chanceForMoreStems = 50;
 
+    public Mesh leafMesh;
+
     [Tooltip("Uncheck this to turn off randomness or use custom seed.")]
     public bool randomSeed = true;
     [Tooltip("Current Seed")]
@@ -33,6 +35,7 @@ public class SeaDragonSpawner : MonoBehaviour
 
     public void Build()
     {
+        
         //randomize seed
         if (randomSeed)
         {
@@ -95,14 +98,16 @@ public class SeaDragonSpawner : MonoBehaviour
         }
         if (!firstSegment)
         {
-
-            if (Random.Range(0, 100) > chanceForMoreStems)
+            int numberOfBranches = 1;
+            if (Random.Range(0, 100) < chanceForMoreStems)
             {
+                numberOfBranches += 1;
+
                 stemRotation = new Vector3(stemRotation.x, stemRotation.y, -45);
-                GrowStem(stemSize, stems, pos, Quaternion.Euler(stemRotation), scale);
+                GrowStem(stemSize, numberOfBranches, stems, pos, Quaternion.Euler(stemRotation), scale, switchDirection);
                 stemRotation = new Vector3(stemRotation.x, stemRotation.y, 45);
             }
-            GrowStem(stemSize, stems, pos, Quaternion.Euler(stemRotation), scale);
+            GrowStem(stemSize,numberOfBranches, stems, pos, Quaternion.Euler(stemRotation), scale, switchDirection);
         }
 
         switchDirection = !switchDirection;
@@ -115,7 +120,7 @@ public class SeaDragonSpawner : MonoBehaviour
         //grow another segment
         GrowBody(false, number, meshes, pos, rot, scale, switchDirection, stems);
     }
-    void GrowStem(int number, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
+    void GrowStem(int number, int numberOfStems, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale, bool top)
     {
         CombineInstance inst = new CombineInstance();
 
@@ -124,6 +129,43 @@ public class SeaDragonSpawner : MonoBehaviour
 
         meshes.Add(inst);
 
+        //rot *= Quaternion.Euler(1, 1, rot.z - 90);
+
+        //rot = Quaternion.Euler(225, 0, 0);
+        //if(numberOfStems == 2) rot *= Quaternion.Euler(1, 0, 45);
+
+        rot *= Quaternion.Euler(0, 0, 90);
+
+        if (!top)
+        {
+            rot *= Quaternion.Euler(180, 0, 0);
+        }
+       
+        float x = .1f;
+        while (x < 1)
+        {
+            if(x * 2 < 1){
+            x = Random.Range(2*x, 1);
+
+            }
+            else{
+                break;
+            }
+            pos = inst.transform.MultiplyPoint(Vector3.up * x);
+            scale = 1 + (1 - x) * 3;
+
+            GrowLeaf(1, meshes, pos, rot, scale);
+        }
+
+    }
+    void GrowLeaf(int numberOfLeaves, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
+    {
+        CombineInstance inst = new CombineInstance();
+        inst.mesh = leafMesh;
+
+        inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(scale, scale, scale));
+
+        meshes.Add(inst);        
     }
 }
 

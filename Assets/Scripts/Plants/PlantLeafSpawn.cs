@@ -137,7 +137,7 @@ public class PlantLeafSpawn : MonoBehaviour
     {
         //bell curve for more in the middle
         iterations = Random.Range(2,4) + Random.Range(2,4);
-        //scale = Random.Range(.5f, 7);
+        scale = Random.Range(.5f, 7);
         chanceForBranches = Random.Range(5, 20) + Random.Range(5, 20) + (int) scale/2;
         numberOfLeaves = Random.Range(3, 5);       
         leafVariance = Random.Range(10, 25);
@@ -198,8 +198,9 @@ public class PlantLeafSpawn : MonoBehaviour
         pos = inst.transform.MultiplyPoint(new Vector3(0, 1, 0));
         //scale down number and scale
         number--;
-        scale *= scaleDownRate;        
+        scale *= scaleDownRate;
 
+        
         //grow another stem
         Grow(number, meshes, pos, rot, scale,leaves,false);
 
