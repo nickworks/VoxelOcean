@@ -2,7 +2,7 @@ Shader "Custom/UnderWaterEffect"
 {
     Properties
     {
-	   _MainTex("Noise", 2D) = "white" {} // screen camera REFERENCE DO NOT GIVE ANYTHING TO THIS
+		_MainTex("Camera", 2D) = "white" {} // screen camera REFERENCE DO NOT GIVE ANYTHING TO THIS
 		_NormalMap("Normal Map", 2D) = "bump" {} // Normal Map 2d
 		_NoiseScale("NoiseScale", float) = 1 //Scale of the noise 
 		_NoiseFrequency("NoiseFrequency", float) = 1 //frequency of the noise volume
@@ -56,13 +56,11 @@ Shader "Custom/UnderWaterEffect"
 
 		
 		float3 spos = float3 (i.scrPos.x, i.scrPos.y, 0) * _NoiseFrequency; //gets screen position
-		fixed4 noise1 = tex2D(_NormalMap, i.uv + float2(_Time.y * .05, _Time.x * .06)); // Gets noise sampler and converts to float
+		fixed4 noisetex =  tex2D(_NormalMap, i.uv + float2(_Time.y * .05, _Time.x * .06)); // Gets noise sampler and converts to float
 		spos.x += _Time.x * _NoiseSpeed; // X coords
-		spos.y += _Time.y * _NoiseSpeed; //Y coords
-		spos.z += _Time.z * _NoiseSpeed; //Z COORDS
-		float noise = _NoiseScale * ((noise1 * _Time.x * (spos) + 1) / 4);
-		float4 noiseToDirection = float4(cos(noise * (M_PI * 2)), sin(noise*(M_PI*2)), 0, 0);
-		fixed4 col = tex2Dproj(_MainTex, i.scrPos + (normalize(noiseToDirection) * _PixelOffset));
+		float noise = _NoiseScale * ((noisetex * _Time.x * (spos) + 1) / 4);
+		float4 noiseToDirection = float4(cos(noise * (M_PI * 2)), sin(noise * (M_PI*2)), 0, 0);
+		fixed4 col = tex2Dproj(_MainTex, i.scrPos + (normalize(noiseToDirection) * _PixelOffset)); // Texture look up for camera and placed on camera
 		return col;
 		}
 		ENDCG

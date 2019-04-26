@@ -11,11 +11,10 @@ using UnityEngine;
 /// This effect is essential to feeling underwater
 /// TODO : Add a Sound matrix that gives the feeling of underwater (subtle not too much)
 /// </summary>
-[ExecuteInEditMode, ImageEffectAllowedInSceneView]
 public class ImageEffect : MonoBehaviour
 {
     /// <summary>
-    /// material is a reference to the shader matieral
+    /// material is a reference to the shader material
     /// </summary>
     public Material material;
     /// <summary>
