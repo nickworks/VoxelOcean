@@ -13,7 +13,7 @@ public class CoralFingers : MonoBehaviour
     /// <summary>
     ///  number of times this loop will run
     /// </summary>
-    int iterations = 8;
+    int iterations = 0;
     /// <summary>
     /// size of the branch
     /// </summary>
@@ -54,6 +54,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow4(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -126,6 +127,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow3(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -198,6 +200,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow2(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -270,6 +273,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);

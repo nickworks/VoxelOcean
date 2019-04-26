@@ -1,58 +1,66 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-/// <summary>
-/// Spawns Coral type Broccoli
-/// </summary>
-public class CoralBroccoli : MonoBehaviour {
+﻿using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine; 
+using UnityEditor; 
+/// <summary> 
+/// Spawns Coral type Broccoli 
+/// </summary> 
+public class CoralBroccoli : MonoBehaviour { 
+	/// <summary> 
+	/// how many iterations per branch we should spawn 
+	/// </summary> 
+	[Range(2, 8)]public int iterations = 3; 
+	/// <summary> 
+	/// the scale and size of each cube 
+	/// </summary> 
+	public Vector3 branchScaling = new Vector3 (.25f, 1, .25f); 
+	// Use this for initialization 
+	void Start () { 
+		Build(); 
+	} 
 
-	/// <summary>
-	/// how many iterations per branch we should spawn
-	/// </summary>
-	[Range(2, 8)]public int iterations = 3;
-	/// <summary>
-	/// the scale and size of each cube
-	/// </summary>
-	public Vector3 branchScaling = new Vector3 (.25f, 1, .25f);
-	// Use this for initialization
-	void Start () {
-		Build();
-	}
+	// Update is called once per frame 
+	/// <summary> 
+	/// this combines all of the cubes into one mesh 
+	/// </summary> 
+	public void Build () { 
+		List<CombineInstance> meshes = new List<CombineInstance> (); 
+		Grow (iterations, meshes, Vector3.zero, Quaternion.identity, 1); 
+		Mesh mesh = new Mesh (); 
+		mesh.CombineMeshes (meshes.ToArray()); 
 
-	// Update is called once per frame
-	/// <summary>
-	/// this combines all of the cubes into one mesh
-	/// </summary>
-	public void Build () {
-		List<CombineInstance> meshes = new List<CombineInstance> ();
-		Grow (iterations, meshes, Vector3.zero, Quaternion.identity, 1);
-		Mesh mesh = new Mesh ();
-		mesh.CombineMeshes (meshes.ToArray());
+		MeshFilter meshFilter = GetComponent<MeshFilter> (); 
+		meshFilter.mesh = mesh; 
+	} 
+	/// <summary> 
+	/// This is where the recursion occurs 
+	/// </summary> 
+	/// <param name="num">the number of iterations</param> 
+	/// <param name="meshes">list of the meshes we combined</param> 
+	/// <param name="pos">position of our meshes</param> 
+	/// <param name="rot">rotation of our meshes</param> 
+	/// <param name="scale">scale of our meshes</param> 
+	private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale){ 
 
-		MeshFilter meshFilter = GetComponent<MeshFilter> ();
-		meshFilter.mesh = mesh;
-	}
-	/// <summary>
-	/// This is where the recursion occurs
-	/// </summary>
-	/// <param name="num">the number of iterations</param>
-	/// <param name="meshes">list of the meshes we combined</param>
-	/// <param name="pos">position of our meshes</param>
-	/// <param name="rot">rotation of our meshes</param>
-	/// <param name="scale">scale of our meshes</param>
-	private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale){
+			branchScaling = new Vector3 (.25f, Random.Range(1.1f, 2.1f), .25f);
 
-		if(num <= 0) return;
+		if(num <= 0) return; 
+	
+		CombineInstance inst = new CombineInstance (); 
 
-		CombineInstance inst = new CombineInstance ();
+		inst.mesh = MakeCube(num); 
+		inst.transform = Matrix4x4.TRS(pos, rot, branchScaling*scale); 
 
-		inst.mesh = MakeCube(num);
-		inst.transform = Matrix4x4.TRS(pos, rot, branchScaling*scale);
+		meshes.Add (inst); 
 
-		meshes.Add (inst);
+		float localScale = scale; 
 
+		num--; 
 
+		pos = inst.transform.MultiplyPoint (new Vector3 (0, 1, 0)); 
+		Quaternion randomPosRot = rot * Quaternion.Euler (Random.Range(0, 60), Random.Range(0, 15), Random.Range(0, 75)); 
+		Quaternion randomNegRot = rot * Quaternion.Euler (Random.Range(0, -60), Random.Range(0, -15),  Random.Range(0, -75)); 
+		localScale *= .5f; 
 
 		num--;
 
