@@ -389,12 +389,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: f8d1229df2115d44496d41769efe42b4, type: 2}
-  _pixelOffset: 0.0071
+  _pixelOffset: 0.009
   _noiseScale: 3.04
-  _noiseFrequency: 4.39
-  _noiseSpeed: 1.84
-  _depthStart: 22.5
-  _depthDistance: 504.95
+  _noiseFrequency: 10.8
+  _noiseSpeed: 4.2
 --- !u!1 &1015166725
 GameObject:
   m_ObjectHideFlags: 0

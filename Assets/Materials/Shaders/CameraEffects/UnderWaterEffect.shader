@@ -1,17 +1,18 @@
-Shader "Custom/UnderWaterEffect"
+Shader "Custom/SinWaveUnderWater"
 {
     Properties
     {
 		_MainTex("Camera", 2D) = "white" {} // screen camera REFERENCE DO NOT GIVE ANYTHING TO THIS
-		_NormalMap("Normal Map", 2D) = "bump" {} // Normal Map 2d
+		_NormalMap("Normal Map", 2D) = "bump" {} // Normal Map 2d reference to a bump map / normal map, it is technically a height map
 		_NoiseScale("NoiseScale", float) = 1 //Scale of the noise 
 		_NoiseFrequency("NoiseFrequency", float) = 1 //frequency of the noise volume
 		_NoiseSpeed("NoiseSpeed", float) = 1 // speed at which the noise moves
 		_PixelOffset("PixelOffset", float) = 0.005 //offset controls how it looks
+		_ThresholdDivide("Division", float) = 4 // Divisionary Threshold
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" }
        
 		Pass {
 	  CGPROGRAM
@@ -19,12 +20,14 @@ Shader "Custom/UnderWaterEffect"
 				#pragma fragment frag
 
 				#include "UnityCG.cginc"
-				#define M_PI 3.1415926535897932384626433832795
+				#define M_TAU 6.28318530718 //3.1415926535897932384626433832795 * 2 //Ref to 2PI 6.28318530718
 		sampler2D _CameraDepthTexture; //depth of camera reference to camera
-		uniform float _PixelOffset, _NoiseScale, _NoiseSpeed, _NoiseFrequency; //noise settings
 
-		sampler2D _NormalMap; //noise map
-		sampler2D _MainTex; //ref to camera
+
+		sampler2D _NormalMap, _MainTex; //noise map && Ref to Camera
+
+		uniform float _PixelOffset, _NoiseScale, _NoiseSpeed, _NoiseFrequency, _ThresholdDivide; //noise settings && Pixel Offset, && ThresholdDivide used for division 
+		
 		struct appdata
 		{
 			float4 vertex : POSITION;
@@ -55,14 +58,18 @@ Shader "Custom/UnderWaterEffect"
 		{
 
 		
-		float3 spos = float3 (i.scrPos.x, i.scrPos.y, 0) * _NoiseFrequency; //gets screen position
-		fixed4 noisetex =  tex2D(_NormalMap, i.uv + float2(_Time.y * .05, _Time.x * .06)); // Gets noise sampler and converts to float
-		spos.x += _Time.x * _NoiseSpeed; // X coords
-		float noise = _NoiseScale * ((noisetex * _Time.x * (spos) + 1) / 4);
-		float4 noiseToDirection = float4(cos(noise * (M_PI * 2)), sin(noise * (M_PI*2)), 0, 0);
+		float3 Spos = float3 (i.scrPos.x, i.scrPos.y, 0) * _NoiseFrequency; //gets screen position
+		fixed4 noisetex =  tex2D(_NormalMap, i.uv + float2(_Time.y * (_NoiseSpeed / 100), _Time.x * (_NoiseSpeed / 100))); // Gets noise sampler and converts to float
+		Spos.x += _Time.x * _NoiseSpeed; // X coords so it moves in X coordinates
+		float noiseConv = _NoiseScale * ((noisetex * _Time.x * (Spos)) / _ThresholdDivide); // Converts fixed4 into a float + 
+		///Additional math Noistex is times the X and screen pos and divided by a threshold for a lesser effect
+		float4 noiseToDirection = float4(sin(noiseConv * (M_TAU)), cos(noiseConv * (M_TAU)), tan(noiseConv * (M_TAU)), 0);
+		///M_PI is M_TAU which is PI * 2, this will make it more efficent and less mathmatics  in the shader code but less flexible on purpose as this is only MEANT For one explict reason
+		
 		fixed4 col = tex2Dproj(_MainTex, i.scrPos + (normalize(noiseToDirection) * _PixelOffset)); // Texture look up for camera and placed on camera
 		return col;
-		}
+		//Is now replicating a SIN wave 
+			}
 		ENDCG
 			}
     }

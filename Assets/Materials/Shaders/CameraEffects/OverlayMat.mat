@@ -92,15 +92,16 @@ Material:
     - _MinuteDetailIntensity: 1
     - _MinuteDetailScrollSpeed: 0
     - _Mode: 0
-    - _NoiseFrequency: 2.3
-    - _NoiseScale: 2
-    - _NoiseSpeed: 2
+    - _NoiseFrequency: 10.8
+    - _NoiseScale: 3.04
+    - _NoiseSpeed: 4.2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PixelOffset: 0.0053
+    - _PixelOffset: 0.0073
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _ThresholdDivide: 4
     - _Transparency: 0.015
     - _UVSec: 0
     - _WarpAmount: 240.7
