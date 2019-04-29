@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5939494914578814258}
   - component: {fileID: 5939494914578814256}
   - component: {fileID: 5939494914578814259}
-  - component: {fileID: 4975289026385349160}
+  - component: {fileID: 1530004950678099349}
   m_Layer: 0
-  m_Name: CoralCrystalFlower
+  m_Name: PlantCrystalFlower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5939494914578814260}
   m_Mesh: {fileID: 0}
---- !u!114 &4975289026385349160
+--- !u!114 &1530004950678099349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,15 +112,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5939494914578814260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f623ba8ee80de944ea06b357045d54f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 86f05891abbe85d46bba417b8de83be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creator: Cameron Garchow
-  species: CoralCrystalFlower
-  mobility: 3
+  creator: Cameorn Garchow
+  species: Flower
+  mobility: 0
   special: 
-  defense: 1
-  size: 1
+  defense: 0
+  size: 0
   tangibility: 0
 --- !u!1001 &2510126556455934302
 PrefabInstance:

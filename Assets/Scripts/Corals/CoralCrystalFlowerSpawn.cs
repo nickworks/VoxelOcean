@@ -62,7 +62,6 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     /// </summary>
     [Range(1, 4)] public float children;
 
-
     /// <summary>
     /// Start / Build Function
     /// Creates the object and coral mesh
@@ -121,7 +120,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         RandomizeValues();
 
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube(num);
+        inst.mesh = MakeCylinder(num);
         //inst.transform =
         inst.transform = Matrix4x4.TRS(pos, rot, branchScale * scale);
 
@@ -203,7 +202,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     /// Makes a cube with data taken from X,Y,Z coords
     /// </summary>
     /// <returns></returns>
-    private Mesh MakeCube(int num)
+    private Mesh MakeCylinder(int num)
     {
      
         List<Color> colors = new List<Color>();
@@ -213,7 +212,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         //Set hue min and Max
 
         float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
-        Mesh mesh = MeshTools.MakeCube();
+        Mesh mesh = MeshTools.MakePentagonalCylinder();
         Vector3[] verts = mesh.vertices;
 
         for (int i = 0; i < mesh.vertexCount; i++)
@@ -233,23 +232,4 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
     }
 
 
-}
-/// <summary>
-/// Editor
-/// Editor for the CoralCrystalFlowerSpawn, allows building in editor for testing
-/// </summary>
-[CustomEditor(typeof(CoralCrystalFlowerSpawn))]
-public class CoralCrystalFlowerSpawnEditor : Editor
-{
-
-    override public void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        if (GUILayout.Button("GROW!"))
-        {
-            CoralCrystalFlowerSpawn c = (target as CoralCrystalFlowerSpawn);
-            c.Build();
-        }
-
-    }
 }
