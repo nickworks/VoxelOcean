@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 531678947018920310}
   - component: {fileID: 8482103166162871740}
   - component: {fileID: 3964141732727624720}
+  - component: {fileID: 6353403635334844281}
   m_Layer: 0
-  m_Name: CrystalFish
+  m_Name: CreatureCrystalFish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4698,3 +4699,25 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &6353403635334844281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3577812413843392023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78928bcc98e4564f84c1c361a16833e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: Cameron Garchow
+  species: Crystalline
+  mobility: 0
+  special: 
+  defense: 0
+  size: 4
+  diet: 1
+  activity: 4
+  strength: 4
+  speed: 0
