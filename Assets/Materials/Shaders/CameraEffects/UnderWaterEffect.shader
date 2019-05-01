@@ -20,7 +20,7 @@ Shader "Custom/SinWaveUnderWater"
 				#pragma fragment frag
 
 				#include "UnityCG.cginc"
-				#define M_TAU 6.28318530718 //3.1415926535897932384626433832795 * 2 //Ref to 2PI 6.28318530718
+				#define M_TAU 6.28318530718 //Ref to 2PI 6.28318530718
 		sampler2D _CameraDepthTexture; //depth of camera reference to camera
 
 
@@ -58,13 +58,12 @@ Shader "Custom/SinWaveUnderWater"
 		{
 
 		
-		float3 Spos = float3 (i.scrPos.x, i.scrPos.y, 0) * _NoiseFrequency; //gets screen position
-		fixed4 noisetex =  tex2D(_NormalMap, i.uv + float2(_Time.y * (_NoiseSpeed / 100), _Time.x * (_NoiseSpeed / 100))); // Gets noise sampler and converts to float
-		Spos.x += _Time.x * _NoiseSpeed; // X coords so it moves in X coordinates
-		float noiseConv = _NoiseScale * ((noisetex * _Time.x * (Spos)) / _ThresholdDivide); // Converts fixed4 into a float + 
-		///Additional math Noistex is times the X and screen pos and divided by a threshold for a lesser effect
+		float3 Spos = float3 (i.scrPos.x, i.scrPos.y, 0) * _NoiseFrequency; 
+		fixed4 noisetex =  tex2D(_NormalMap, i.uv + float2(_Time.y * (_NoiseSpeed / 100), _Time.x * (_NoiseSpeed / 100))); 
+		Spos.x += _Time.x * _NoiseSpeed; 
+		float noiseConv = _NoiseScale * ((noisetex * _Time.x * (Spos)) / _ThresholdDivide); 
 		float4 noiseToDirection = float4(sin(noiseConv * (M_TAU)), cos(noiseConv * (M_TAU)), tan(noiseConv * (M_TAU)), 0);
-		///M_PI is M_TAU which is PI * 2, this will make it more efficent and less mathmatics  in the shader code but less flexible on purpose as this is only MEANT For one explict reason
+	
 		
 		fixed4 col = tex2Dproj(_MainTex, i.scrPos + (normalize(noiseToDirection) * _PixelOffset)); // Texture look up for camera and placed on camera
 		return col;
