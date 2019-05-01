@@ -28,17 +28,17 @@ public class CreatureCrystalFish : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        flock();
+       // flock();
         velocity += acceleration;
-        if (velocity =< MAX_SPEED)
+     /*   if (velocity <= MAX_SPEED)
         {
 
         }
-        acceleration *= 0;
+       */ acceleration *= 0;
     }
 
     void seek(Vector3 target)
     {
-        desired = Vector3(target.position.x, target.position.y, target.position.z);
+     //   desired = Vector3(target.position.x, target.position.y, target.position.z);
     }
 }
