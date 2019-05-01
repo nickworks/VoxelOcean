@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// this class makes the spheres/ fish move and ratate and use a flocking pattering to get them to stay next to each other
+/// this class makes the spheres/ fish move and roatate and use a flocking pattering to get them to stay next to each other
 /// if oustside of desgnaited range they will turn around
 /// </summary>
-public class Flock: MonoBehaviour 
+public class GobbieFlock: MonoBehaviour 
 {
     public float velocity; // how fast objects move
     public float maxVelocity; // the max speed they can go
@@ -46,13 +46,12 @@ public class Flock: MonoBehaviour
     /// </summary>
     public void RandomSpeed()
     {
-      velocity = Random.Range(4.0f, 5.5f) * Time.deltaTime;
+      velocity = Random.Range(-2.5f, 2.5f) * Time.deltaTime;
   velocityRotation = Random.Range(1.1f, 1.5f) * Time.deltaTime;
     }
     /// <summary>
-    /// sets the objects to follow each other bying taking the avearge of the group
-    /// avoids each other
-    /// makes object head tworads a random set postion
+    /// sets the objects to follow each other bying taking all objects withen range and putting in group and yaking  the avearge of the group
+    /// when objects become to close they avoids each other
     /// </summary>
     public void Flocking()
     {
@@ -79,7 +78,7 @@ public class Flock: MonoBehaviour
                         vAvoid = vAvoid + (this.transform.position - go.transform.position);
 
                     }
-                    Flock anotherFlock = go.GetComponent<Flock>();
+                    GobbieFlock anotherFlock = go.GetComponent<GobbieFlock>();
                    
                 }
 
@@ -101,10 +100,12 @@ public class Flock: MonoBehaviour
     }
     /// <summary>
     /// makes the objects turn around when they get outside the set size for the object
+    /// checks for a random number and if it is 100 object will turn
     /// </summary>
     public void Turning()
     {
-        if (Vector3.Distance(transform.position, Vector3.zero) >= FishGobies.biomeSize)
+        int turn = Random.Range(1, 100);
+        if (Vector3.Distance(transform.position, Vector3.zero) >= FishGobies.biomeSize || turn == 100 )
         {
             turning = true;
         }

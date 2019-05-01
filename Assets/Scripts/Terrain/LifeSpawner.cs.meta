@@ -12,8 +12,7 @@ MonoImporter:
       type: 3}
   - prefabCoralPurpleFan: {instanceID: 0}
   - prefabCoralFingers: {instanceID: 0}
-  - prefabFishGobies: {fileID: 5745099137881814734, guid: 668b92fa5a3569644b1eb01f4063ded3,
-      type: 3}
+  - prefabFishGobies: {instanceID: 0}
   - prefabPlantKelp: {instanceID: 0}
   - prefabCreatureSeaStar: {instanceID: 0}
   - prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
