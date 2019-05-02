@@ -280,7 +280,6 @@ public static class MeshTools
         //List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
-        List<Color> colors = new List<Color>();
 
         //TOP
         verts.Add(new Vector3(+.5f, 1, 0));
@@ -421,7 +420,27 @@ public static class MeshTools
 
     public static Mesh MakePolygonalCylinder(int points)
     {
-        return null;
+        List<Vector3> verts = new List<Vector3>();
+        //List<Vector2> uvs = new List<Vector2>();
+        List<Vector3> normals = new List<Vector3>();
+        List<int> tris = new List<int>();
+
+        //Generate vertices based on number of points
+        //Set start points in middle:
+
+        //Get points for all sides(bottom, then top)
+
+        //Generate triangles based on the created vertices
+
+        //Generate normals (How does this work?)
+
+        //Generate mesh based on verts, tris, and normals
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(verts);
+        //mesh.SetUVs(uvs);
+        mesh.SetNormals(normals);
+        mesh.SetTriangles(tris, 0);
+        return mesh;
     }
 
     /// <summary>
