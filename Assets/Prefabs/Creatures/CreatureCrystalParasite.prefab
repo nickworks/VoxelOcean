@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3964141732727624720}
   - component: {fileID: 6353403635334844281}
   m_Layer: 0
-  m_Name: CreatureCrystalFish
+  m_Name: CreatureCrystalParasite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3577812413843392023}
   serializedVersion: 6
-  lengthInSec: 3.76
+  lengthInSec: 3.71
   simulationSpeed: 0.57
   stopAction: 0
   cullingMode: 0
@@ -602,7 +602,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 1
-    maxNumParticles: 10
+    maxNumParticles: 3
     size3D: 1
     rotation3D: 0
     gravityModifier:
@@ -4734,7 +4734,7 @@ GameObject:
   - component: {fileID: 8781204532900694543}
   - component: {fileID: 2677309060454317695}
   m_Layer: 0
-  m_Name: Particle System 2
+  m_Name: Parasite Trial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4762,7 +4762,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638899426016565387}
   serializedVersion: 6
-  lengthInSec: 3.5
+  lengthInSec: 1.58
   simulationSpeed: 0.57
   stopAction: 0
   cullingMode: 0
@@ -4890,7 +4890,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 5.26
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5006,7 +5006,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.43
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5322,13 +5322,13 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 10
+    maxNumParticles: 1
     size3D: 0
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.16
+      scalar: -0.86
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -6263,11 +6263,11 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.15
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -6320,7 +6320,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1.28
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -8605,11 +8605,11 @@ ParticleSystem:
   TrailModule:
     enabled: 1
     mode: 0
-    ratio: 0.79
+    ratio: 0.7
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.65
+      scalar: 0.09
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -8675,7 +8675,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.29196337, g: 0.764151, b: 0.34602806, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -8791,7 +8791,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.8396226, g: 0.33664113, b: 0.33664113, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
