@@ -428,10 +428,10 @@ public static class MeshTools
         //Generate vertices based on number of points & set normals:
             //Set start points in middle:
             verts.Add(new Vector3(0, 0, 0));                //verts(0) on Bottom Center
-            //normals.Add();             //normals for verts(0)
+            normals.Add(new Vector3(0, -1, 0));                          //normals for verts(0)
             
             verts.Add(new Vector3(0, 1, 0));                //verts(1) on Top Center
-            //normals.Add();              //normals for verts(1)
+            normals.Add(new Vector3(0, +1, 0));              //normals for verts(1)
 
             //Get points for all sides(bottom, then top); the sides will start at verts(2):
             for (int i = 0; i < points; i++)
@@ -447,10 +447,10 @@ public static class MeshTools
 
                 //set bottom vert & normals
                 verts.Add(new Vector3(vertX, 0, vertZ));
-                //normals.Add()
+                normals.Add(new Vector3(0, 0, 0));
                 //set top vert & normals
                 verts.Add(new Vector3(vertX, 1, vertZ));
-                //normals.Add()
+                normals.Add(new Vector3(0, 0, 0));
             }
 
         //TODO: Generate UV values:
