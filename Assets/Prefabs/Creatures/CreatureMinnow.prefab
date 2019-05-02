@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3043662747295578792}
   - component: {fileID: 8824173363307869227}
   m_Layer: 0
-  m_Name: Minnow
+  m_Name: CreatureMinnow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5616946952130484667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7cdd0ca51327541a8ede77dc1ce081, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e15c41c77c17a1459df8e63d2bff93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8824173363307869227
