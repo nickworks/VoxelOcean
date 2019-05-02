@@ -177,18 +177,6 @@ public class PlantLeafSpawn : MonoBehaviour
           {
             Quaternion newrot = rot * Quaternion.Euler(Random.Range(20, 30), 360 / i + Random.Range(-leafVariance, leafVariance), Random.Range(20, 30));
                  GrowLeaf(leaves, pos,newrot,scale);
-                //more test code I might want to refactor later
-                //TODO: Refactor/test
-                #region
-                //    GrowLeaf(meshes,  pos, rot * Quaternion.Euler(Random.Range(20,30),angleOffset*i+Random.Range(-30,30),0), scale);
-                //  float x = 1f * Mathf.Cos(360 / i * angleOffset);
-                //  float z = 1f * Mathf.Sin(360 / i* angleOffset);
-
-
-                //  Vector3 newPos = inst.transform.MultiplyPoint(Vector3.forward*.3f);
-                //  Quaternion newRot = inst.transform.rotation* Quaternion.Euler(0,360/numberOfLeaves,0);
-                //  GrowLeaf(meshes, newPos, newRot, scale);
-#endregion
             }
         }
 
