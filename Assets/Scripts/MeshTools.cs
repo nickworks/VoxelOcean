@@ -419,6 +419,11 @@ public static class MeshTools
         return mesh;
     }
 
+    public static Mesh MakePolygonalCylinder(int points)
+    {
+        return null;
+    }
+
     /// <summary>
     /// Creates a 1m cube that tapers in on it's front end by a variable amount.
     /// </summary>
