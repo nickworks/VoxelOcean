@@ -354,3 +354,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectScaling: {x: 1, y: 1, z: 1}
+  numberOfPoints: 4

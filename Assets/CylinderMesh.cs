@@ -5,6 +5,7 @@ using UnityEngine;
 public class CylinderMesh : MonoBehaviour
 {
     public Vector3 objectScaling = new Vector3(1, 1, 1);
+    public int numberOfPoints = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class CylinderMesh : MonoBehaviour
     void Build(List<CombineInstance> meshes, Vector3 pos, Quaternion rot)
     {
         CombineInstance cylinder = new CombineInstance();
-        cylinder.mesh = MeshTools.MakePolygonalCylinder(4);
+        cylinder.mesh = MeshTools.MakePolygonalCylinder(numberOfPoints);
         cylinder.transform = Matrix4x4.TRS(pos, rot, objectScaling);
 
         meshes.Add(cylinder);
