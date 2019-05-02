@@ -425,14 +425,116 @@ public static class MeshTools
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
 
-        //Generate vertices based on number of points
-        //Set start points in middle:
+        //Generate vertices based on number of points & set normals:
+            //Set start points in middle:
+            verts.Add(new Vector3(0, 0, 0));                //verts(0) on Bottom Center
+            //normals.Add();             //normals for verts(0)
+            
+            verts.Add(new Vector3(0, 1, 0));                //verts(1) on Top Center
+            //normals.Add();              //normals for verts(1)
 
-        //Get points for all sides(bottom, then top)
+            //Get points for all sides(bottom, then top); the sides will start at verts(2):
+            for (int i = 0; i < points; i++)
+            {       
+                //find angle to spawn verts at:
+                float angleDegrees = (i == 0) ?  0 : 360 / ((float)points / (float)i);
+                float angleRadians = angleDegrees * (Mathf.PI / 180);
+                float radius = .5f;
+
+                //find x and z positions of created vertices:
+                float vertX = Mathf.Sin(angleRadians) * radius;
+                float vertZ = Mathf.Cos(angleRadians) * radius;
+
+                //set bottom vert & normals
+                verts.Add(new Vector3(vertX, 0, vertZ));
+                //normals.Add()
+                //set top vert & normals
+                verts.Add(new Vector3(vertX, 1, vertZ));
+                //normals.Add()
+            }
+
+        //TODO: Generate UV values:
 
         //Generate triangles based on the created vertices
+            //Side Trianges:
+            //set up left and right index values:
+            int leftBottomIndex = 2;
+            int leftTopIndex = 3;
 
-        //Generate normals (How does this work?)
+            int rightBottomIndex;
+            int rightTopIndex;
+
+            for(int i = 1; i <= points; i++)
+            {
+                if (i != points)
+                {
+                    //set index values for the right vertices:
+                    rightBottomIndex = leftBottomIndex + 2;
+                    rightTopIndex = leftTopIndex + 2;
+
+                    
+                } else
+                {
+                    //set right vertices to loop back to the starting side vertices:
+                    rightBottomIndex = 2;
+                    rightTopIndex = 3;
+                }
+
+                //create triangles:
+                tris.Add(leftBottomIndex);
+                tris.Add(rightTopIndex);
+                tris.Add(leftTopIndex);
+
+                tris.Add(rightTopIndex);
+                tris.Add(leftBottomIndex);
+                tris.Add(rightBottomIndex);
+
+                //Set index values for next side.
+                leftBottomIndex = rightBottomIndex;
+                leftTopIndex = rightTopIndex;
+            }   
+        
+            //Bottom Triangles (Even index values):
+            for(int bv = 2; bv <= verts.Count - 2; bv += 2)
+            {
+                if (bv != verts.Count - 2)
+                {
+                    //grab vertices from index
+                        //start tri at bv (Bottom Vertex)
+                        tris.Add(bv);
+                        //Set vertex at index 0
+                        tris.Add(0);
+                        //End at vertex bv + 2;
+                        tris.Add(bv + 2);
+                } else
+                {
+                //Set last triangle using the center and point 1:
+                    tris.Add(bv);
+                    tris.Add(0);            //Bottom Center Index
+                    tris.Add(2);            //Bottom Point 1 Index
+                }
+            }
+            
+            //Top Triangles (Odd index values):
+            for(int tv = 1; tv <= verts.Count - 1; tv += 2)
+            {
+                if (tv != verts.Count  - 1)
+                {
+                    //set tris from vertices at index
+                        //Set at vertex tv + 2
+                        tris.Add(tv + 2);
+                        //Set at vertex at index 1
+                        tris.Add(1);
+                        //start tri at tv (Top Vertex)
+                        tris.Add(tv);       
+                } else
+                {
+                //Set last triangle using the center and point 1:
+                    tris.Add(3);
+                    tris.Add(1);                //Top Center Index
+                    tris.Add(tv);                //Top Point 1 Index
+                }
+            }
 
         //Generate mesh based on verts, tris, and normals
         Mesh mesh = new Mesh();

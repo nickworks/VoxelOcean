@@ -22,7 +22,7 @@ public class CylinderMesh : MonoBehaviour
     void Build(List<CombineInstance> meshes, Vector3 pos, Quaternion rot)
     {
         CombineInstance cylinder = new CombineInstance();
-        cylinder.mesh = MeshTools.MakePolygonalCylinder(5);
+        cylinder.mesh = MeshTools.MakePolygonalCylinder(4);
         cylinder.transform = Matrix4x4.TRS(pos, rot, objectScaling);
 
         meshes.Add(cylinder);
