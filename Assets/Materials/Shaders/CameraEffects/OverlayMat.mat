@@ -97,7 +97,7 @@ Material:
     - _NoiseSpeed: 4.2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PixelOffset: 0.0073
+    - _PixelOffset: 0.009
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
