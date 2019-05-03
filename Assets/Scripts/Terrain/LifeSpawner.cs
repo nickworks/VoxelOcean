@@ -273,35 +273,21 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
         if (biome.owner == BiomeOwner.Jesse)
         {
-            int num1 = Random.Range(1, 6);
-            int num2 = Random.Range(1, 6);
-            int num3 = num1 + num2;
-            if (num3 > 6)
+            int num = Random.Range(1, 7) + Random.Range(1, 7);
+            if (num > 7)
             {
                 prefab = prefabCoralFingers;
             }
-            if (num3 < 7)
+            else if (num > 3)
             {
                 prefab = prefabFishGobies;
             }
-        }
-
-        if (biome.owner == BiomeOwner.Justin) prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble : prefabCoralFlower;
-        if (biome.owner == BiomeOwner.Jesse)
-        {
-            int chest = Random.Range(1, 6);
-            int chest2 = Random.Range(1, 6);
-            int chest3 = chest + chest2;
-            if (chest3 > 4 && chest3 < 10 )
-            {
-                prefab = prefabCoralFingers;
-            }
-            if (chest3 < 5 || chest3 > 9)
+            else 
             {
                 prefab = prefabObjectChest;
             }
-
         }
+
         if (biome.owner == BiomeOwner.Justin) {
             prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble: prefabCoralFlower;
 
