@@ -25,6 +25,7 @@ public class SeaDragonSpawner : MonoBehaviour
     void Start()
     {
         Build();
+        Debug.Log("did a thing");
     }
 
     // Update is called once per frame
@@ -34,8 +35,7 @@ public class SeaDragonSpawner : MonoBehaviour
     }
 
     public void Build()
-    {
-        
+    {        
         //randomize seed
         if (randomSeed)
         {
@@ -46,7 +46,11 @@ public class SeaDragonSpawner : MonoBehaviour
         List<CombineInstance> meshes = new List<CombineInstance>();
         List<CombineInstance> stems = new List<CombineInstance>();
 
-        GrowBody(true, numberOfSegments, meshes, Vector3.zero, Quaternion.Euler(90, 0, 0), segmentScale, false, stems);
+        float offset = numberOfSegments / 4 * segmentScale;
+       //   Vector3 pos = new Vector3(0, offset, offset);
+        Vector3 pos = Vector3.zero;
+
+        GrowBody(true, numberOfSegments, meshes, pos, Quaternion.Euler(-90, 0, 0), segmentScale, false, stems);
         Mesh mesh = new Mesh();
 
         mesh.CombineMeshes(meshes.ToArray());
@@ -84,17 +88,18 @@ public class SeaDragonSpawner : MonoBehaviour
         //scale
 
         //rotation
-        //rot *= Quaternion.Euler(0, 90, 0);
+ ;
         Vector3 stemRotation = new Vector3();
+
         if (switchDirection)
-        {
-            rot = Quaternion.Euler(90, 0, 0);
-            if (!firstSegment) stemRotation.Set(45, 0, 0);
+        {//top side
+            rot = Quaternion.Euler(-90, 0, 0);
+            if (!firstSegment) stemRotation.Set(-45, 0, 0);
         }
         else
-        {
-            rot = Quaternion.Euler(180, 0, 0);
-            if (!firstSegment) stemRotation.Set(-135, 0, 0);
+        {//bottom side
+            rot = Quaternion.Euler(-180, 0, 0);
+            if (!firstSegment) stemRotation.Set(135, 0, 0);
         }
         if (!firstSegment)
         {
@@ -134,13 +139,14 @@ public class SeaDragonSpawner : MonoBehaviour
         //rot = Quaternion.Euler(225, 0, 0);
         //if(numberOfStems == 2) rot *= Quaternion.Euler(1, 0, 45);
 
-        rot *= Quaternion.Euler(0, 0, 90);
+        rot *= Quaternion.Euler(0, 180, 90);
 
         if (!top)
         {
             rot *= Quaternion.Euler(180, 0, 0);
         }
        
+        
         float x = .1f;
         while (x < 1)
         {
