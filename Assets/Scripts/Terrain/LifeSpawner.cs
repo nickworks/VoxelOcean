@@ -121,6 +121,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralFlower; 
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
+    public GameObject prefabObjectChest;
     public GameObject prefabCreatureMinnow;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
@@ -267,14 +268,28 @@ public class LifeSpawner : MonoBehaviour
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
+        if (biome.owner == BiomeOwner.Justin) prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble : prefabCoralFlower;
+        if (biome.owner == BiomeOwner.Jesse)
+        {
+            int chest = Random.Range(1, 6);
+            int chest2 = Random.Range(1, 6);
+            int chest3 = chest + chest2;
+            if (chest3 > 4 && chest3 < 10 )
+            {
+                prefab = prefabCoralFingers;
+            }
+            if (chest3 < 5 || chest3 > 9)
+            {
+                prefab = prefabObjectChest;
+            }
+
+        }
         if (biome.owner == BiomeOwner.Justin) {
             prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble: prefabCoralFlower;
 
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
         }
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
-        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
         if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
         
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
