@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class ScanScript : MonoBehaviour
 {
     //references to the background and text for the scan gui
-    public Image img;
-    public Text text;
+    public Image scanBackgroundImage;
+    public Text scanText;
 
     //reference to the main camera for raycasting
     Camera cam;
@@ -19,8 +19,8 @@ public class ScanScript : MonoBehaviour
     {
         cam = Camera.main;
         ///turn off the gui elements at start
-        img.enabled = false;
-        text.enabled = false;
+        scanBackgroundImage.enabled = false;
+        scanText.enabled = false;
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class ScanScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {     
             //if the scan box is already up, we turn it off instead
-            if(img.enabled == false)
+            if(scanBackgroundImage.enabled == false)
             {
 
             //fire raycast from center of the camera/screen
@@ -48,14 +48,14 @@ public class ScanScript : MonoBehaviour
 
                 if (properties == null)
                 {
-                    img.enabled = false;
-                    text.enabled = false;
+                    scanBackgroundImage.enabled = false;
+                    scanText.enabled = false;
                     return;
                 }
 
                 //turn on the gui
-                img.enabled = true;
-                text.enabled = true;
+                scanBackgroundImage.enabled = true;
+                scanText.enabled = true;
 
                 //master string all of the information will populate
                 string output = "";
@@ -102,27 +102,27 @@ public class ScanScript : MonoBehaviour
                 }
 
                 //assign the string to the text output
-                text.text = output;
+                scanText.text = output;
                 }
                 else
                 {
-                    img.enabled = false;
-                    text.enabled = false;
+                    scanBackgroundImage.enabled = false;
+                    scanText.enabled = false;
                 }
             }
             else
             {
                 //didn't hit anything or want to stop scanning - turn the gui off                
-                img.enabled = false;
-                text.enabled = false;
+                scanBackgroundImage.enabled = false;
+                scanText.enabled = false;
                // print("I'm looking at nothing!");
             }
         }
         //if player presses escape, also turn the gui off
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            img.enabled = false;
-            text.enabled = false;
+            scanBackgroundImage.enabled = false;
+            scanText.enabled = false;
         }
     }
 }
