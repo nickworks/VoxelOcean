@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672a511ec47a72140a70bfd070a476b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeAmountMin: 1
-  lifeAmountMax: 5
+  lifeAmountMin: 2
+  lifeAmountMax: 8
   prefabCoralVoronoi: {fileID: 0}
   prefabCoralBroccoli: {fileID: 2581658518344738568, guid: 2979c6adfad2046438f53af32cf04533,
     type: 3}
@@ -152,7 +152,10 @@ MonoBehaviour:
   prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
     type: 3}
   prefabObjectChest: {fileID: 100000, guid: 08f038e98ea33ed4fbd1a05e4f767979, type: 3}
-  prefabPlantKelp: {fileID: 0}
+  prefabCreatureMinnow: {fileID: 4955281280382788929, guid: fb6cdde9761e07a49b775f174d01d201,
+    type: 3}
+  prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
+    type: 3}
   prefabCreatureSeaStar: {fileID: 338540796843315734, guid: 8c8b1bc97220f884f97ba4078cc1259a,
     type: 3}
   prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
@@ -160,6 +163,10 @@ MonoBehaviour:
   prefabCoralPyramid: {fileID: 8856533629082828895, guid: 28013e49a404f4243abe910b6bb4ce60,
     type: 3}
   prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
+    type: 3}
+  prefabOtherAnchor: {fileID: 3748383184686259469, guid: b231adc09f5f63f438981ec08fbe9344,
+    type: 3}
+  prefabCreatureBlindShrimp: {fileID: 5091014771293800756, guid: 71643e42ab4cf6e469c4f4884e260f2b,
     type: 3}
   prefabPlantDrifter: {fileID: 7517662629918710561, guid: 6dc506ea99e26874f95816a436d85263,
     type: 3}
@@ -173,5 +180,6 @@ MonoBehaviour:
     type: 3}
   prefabMossBall: {fileID: 6755855242698053521, guid: 72b739e313ec45346ac37640e24b714f,
     type: 3}
+  prefabSeaUrchin: {fileID: 0}
   prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}

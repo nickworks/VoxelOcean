@@ -6,13 +6,11 @@ using UnityEngine.UI;
 public class GenerateHUD : MonoBehaviour
 {
 
-    public VoxelUniverse universe;
-
     public void Generate()
     {
-        if (universe)
+        if (VoxelUniverse.main)
         {
-            universe.Create(true);
+            VoxelUniverse.main.Create(true);
         }
     }
 }
