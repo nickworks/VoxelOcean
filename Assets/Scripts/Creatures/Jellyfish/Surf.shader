@@ -46,9 +46,9 @@
 
 			pos.x += _Time.x * .7;
 
-			fixed4 col = tex2Dlod(_Noise, float4(pos.xz, 0, 0)) - .2;
+			fixed4 col = tex2Dlod(_Noise, float4(pos.xz, 1, 0)) - .2;
 
-			float3 offset = lerp(float3(0, 1, 1), col.rgb, IN.color.r);
+			float3 offset = lerp(float3(0, 0, 1), col.rgb, IN.color.r);
 
 			IN.vertex.xyz -= offset;
 		}
