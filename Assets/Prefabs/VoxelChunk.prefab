@@ -102,7 +102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8db78d0a2516de4c84c49c9ae53d6ba, type: 2}
+  - {fileID: 2100000, guid: 806e144ce7a86074bb4b10a39d6bba3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,11 +151,11 @@ MonoBehaviour:
     type: 3}
   prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
     type: 3}
+  prefabFishGobies: {fileID: 7365141659715445623, guid: 25f4a1e078cdf0147a7a7f605f3a8364,
+    type: 3}
   prefabObjectChest: {fileID: 5141450642061279492, guid: fdb83abc566e81544886d588e77c60ff,
     type: 3}
   prefabCreatureMinnow: {fileID: 4955281280382788929, guid: fb6cdde9761e07a49b775f174d01d201,
-    type: 3}
-  prefabFishGobies: {fileID: 7365141659715445623, guid: 25f4a1e078cdf0147a7a7f605f3a8364,
     type: 3}
   prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
     type: 3}

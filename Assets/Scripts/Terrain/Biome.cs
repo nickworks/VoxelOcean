@@ -88,6 +88,12 @@ public struct Biome
         return new Biome((BiomeOwner)i);
     }
 
+    static float map(float v, float min1, float max1, float min2, float max2)
+    {
+        float p = (v - min1) / (max1 - min1);
+        return (p * (max2 - min2)) + min2;
+    }
+
     /// <summary>
     /// Generates a Biome at a given position
     /// </summary>
@@ -108,22 +114,15 @@ public struct Biome
 
         // TODO: redo/improve the calculations below
 
-        // convert values from approx. (-.2 to .2) to (-1.1 to 1.1):
-        r *= 5.5f;
-        g *= 5.5f;
-        b *= 5.5f;
+        r = map(r, -.2f, .2f, 0, 1);
+        g = map(g, -.2f, .2f, 0, 1);
+        b = map(b, -.2f, .2f, 0, 1);
+
         // redistribute values non-linearly:
-        r *= r;
-        g *= g;
-        b *= b;
-        // shift range from (+- 1.21) to (+- .5):
-        r /= 2.4f;
-        g /= 2.4f;
-        b /= 2.4f;
-        // shift from range from (+- .5) to (0 to 1):
-        r += .5f;
-        g += .5f;
-        b += .5f;
+        float pow = 1.5f;
+        r = Mathf.Pow(r, pow);
+        g = Mathf.Pow(g, pow);
+        b = Mathf.Pow(b, pow);
 
         // Convert from RGB to HSV:
         Color.RGBToHSV(new Color(r, g, b), out float h, out float s, out float v);
