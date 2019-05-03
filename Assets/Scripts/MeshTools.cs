@@ -447,10 +447,12 @@ public static class MeshTools
 
                 //set bottom vert & normals
                 verts.Add(new Vector3(vertX, 0, vertZ));
-                normals.Add(new Vector3(0, +1, 0));
+                int point1Bottom =  verts.Count - 1;
+                normals.Add(Vector3.Normalize(verts[point1Bottom] - verts[0]));
                 //set top vert & normals
                 verts.Add(new Vector3(vertX, 1, vertZ));
-                normals.Add(new Vector3(0, +1, 0));
+                int point1Top = verts.Count - 1;
+                normals.Add(Vector3.Normalize(verts[point1Top] - verts[1]));
             }
 
         //TODO: Generate UV values:
