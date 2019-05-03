@@ -175,6 +175,7 @@ MonoBehaviour:
     type: 3}
   prefabMossBall: {fileID: 6755855242698053521, guid: 72b739e313ec45346ac37640e24b714f,
     type: 3}
-  prefabSeaUrchin: {fileID: 0}
+  prefabSeaUrchin: {fileID: 3372295114930902288, guid: 857652fe40ad222479a4fe06fe517511,
+    type: 3}
   prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}
