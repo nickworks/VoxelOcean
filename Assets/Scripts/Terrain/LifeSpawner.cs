@@ -217,8 +217,20 @@ public class LifeSpawner : MonoBehaviour
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers;
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabFishGobies;
+        if (biome.owner == BiomeOwner.Jesse)
+        {
+            int num1 = Random.Range(1, 6);
+            int num2 = Random.Range(1, 6);
+            int num3 = num1 + num2;
+            if (num3 > 6)
+            {
+                prefab = prefabCoralFingers;
+            }
+            if (num3 < 7)
+            {
+                prefab = prefabFishGobies;
+            }
+        }
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;

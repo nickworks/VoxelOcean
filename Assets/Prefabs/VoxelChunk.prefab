@@ -119,7 +119,7 @@ MonoBehaviour:
     type: 3}
   prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
     type: 3}
-  prefabFishGobies: {fileID: 5745099137881814734, guid: 668b92fa5a3569644b1eb01f4063ded3,
+  prefabFishGobies: {fileID: 7365141659715445623, guid: 25f4a1e078cdf0147a7a7f605f3a8364,
     type: 3}
   prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
     type: 3}
