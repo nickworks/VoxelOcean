@@ -121,6 +121,8 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralFlower; 
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
+    public GameObject prefabFishGobies;
+    public GameObject prefabObjectChest;
     public GameObject prefabCreatureMinnow;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
@@ -131,7 +133,14 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCreatureSeaStar;
     public GameObject prefabCoralPrecious;
+    /// <summary>
+    /// Prefab reference for CoralPyramid
+    /// </summary>
     public GameObject prefabCoralPyramid;
+    /// <summary>
+    /// Prefab reference for Sea Dragon
+    /// </summary>
+    public GameObject prefabSeaDragon;
     /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
@@ -242,20 +251,49 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
             //chance of spawning pyramid, or plant
-            prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
+         //   prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
+            int rand = Random.Range(1, 10);
+            if (rand < 2)
+            {
+                prefab = prefabCoralPyramid;
+            }
+            else if(rand > 8)
+            {
+                prefab = prefabPlantLeaf;
+            }
+            else
+            {
+                prefab = prefabSeaDragon;
+            }         
         }
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
+
+        if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
+        if (biome.owner == BiomeOwner.Jesse)
+        {
+            int num = Random.Range(1, 7) + Random.Range(1, 7);
+            if (num > 7)
+            {
+                prefab = prefabCoralFingers;
+            }
+            else if (num > 3)
+            {
+                prefab = prefabFishGobies;
+            }
+            else 
+            {
+                prefab = prefabObjectChest;
+            }
+        }
+
         if (biome.owner == BiomeOwner.Justin) {
             prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble: prefabCoralFlower;
 
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
         }
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
-        //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
         
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
@@ -317,6 +355,7 @@ public class LifeSpawner : MonoBehaviour
         Quaternion rot = (rotation != null) ? (Quaternion)rotation : Quaternion.identity;
         GameObject obj = Instantiate(prefab, position, rot, transform);
         obj.transform.localScale = Vector3.one * scale;
+        
 
         // TODO: register the coral in a list of coral?
         return obj;
