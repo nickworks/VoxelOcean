@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1166930101}
   m_Direction: 3
   m_Value: 0
-  m_Size: 0.61
+  m_Size: 0.6098338
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2848,7 +2848,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1713609179}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4489,7 +4489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000004472303, y: 116.99996}
+  m_AnchoredPosition: {x: -0.000042571406, y: 117.033485}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1786611830
@@ -5380,75 +5380,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!1001 &8039672486206505277
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2152810945011846441, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_Name
-      value: CreatureSharkAttractor
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.7177396
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49018717
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.45019102
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19003906826989551, guid: e342d5b15032bac4f9b022d2262d6cf6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e342d5b15032bac4f9b022d2262d6cf6, type: 3}
 --- !u!224 &8252058490056070944
 RectTransform:
   m_ObjectHideFlags: 0
