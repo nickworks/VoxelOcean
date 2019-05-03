@@ -141,6 +141,8 @@ MonoBehaviour:
     type: 3}
   prefabCoralTree: {fileID: 5941988385446936893, guid: 48d5d527875b128468ddd074645be838,
     type: 3}
+  prefabCreatureJellyfish: {fileID: 8704091750471126998, guid: 020e17df9b000a84ba589794797dc23c,
+    type: 3}
   prefabCoralCrystal: {fileID: 3273964410850748819, guid: 448a5ebc8ce092b428cb91dbda96f102,
     type: 3}
   prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
@@ -175,5 +177,6 @@ MonoBehaviour:
     type: 3}
   prefabMossBall: {fileID: 6755855242698053521, guid: 72b739e313ec45346ac37640e24b714f,
     type: 3}
+  prefabSeaUrchin: {fileID: 0}
   prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}

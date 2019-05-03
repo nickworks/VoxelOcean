@@ -116,6 +116,7 @@ public class LifeSpawner : MonoBehaviour
 	/// </summary>
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
+    public GameObject prefabCreatureJellyfish;
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralFlower; 
@@ -232,7 +233,7 @@ public class LifeSpawner : MonoBehaviour
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
         }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
-        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
+        if (biome.owner == BiomeOwner.Eric) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCreatureJellyfish : prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
             //chance of spawning pyramid, or plant
             prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
