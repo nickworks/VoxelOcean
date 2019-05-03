@@ -118,6 +118,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralTree;
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
+    public GameObject prefabCoralFlower; 
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
     public GameObject prefabFishGobies;
@@ -135,14 +136,37 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
     public GameObject prefabCoralTubeWorm;
+    /// <summary>
+    /// Prefab reference for lost anchors. (Chris's "non living").
+    /// </summary>
+    public GameObject prefabOtherAnchor;
+    /// <summary>
+    /// Prefab reference for Hydrothermic blind shrimp (Chris's fish).
+    /// </summary>
+    public GameObject prefabCreatureBlindShrimp;
+    /// <summary>
+    /// Prefab reference for drifting kelp (Chris's flora).
+    /// </summary>
+    public GameObject prefabPlantDrifter;
     public GameObject prefabPlantLeaf;
 	/// <summary>
 	/// Prefab reference for Seagrass (Jess P)
 	/// </summary>
 	public GameObject prefabPlantSeagrass;
+    /// <summary>
+    /// PRefab Reference for Crystal Flower (Cameron G)
+    /// </summary>
+    public GameObject prefabCrystalFlower;
+    /// <summary>
+    /// Prefab Reference for Crystal Rock (Cameron G)
+    /// </summary>
+    public GameObject prefabCrystalRock;
 
-
+    /// <summary>
+    /// Prefab Reference for Crystal Rock and Sea Urchin (Kaylee K)
+    /// </summary>
     public GameObject prefabMossBall;
+    public GameObject prefabSeaUrchin;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -159,6 +183,9 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public void SpawnSomeLife()
     {
+
+        int seed = (int)(transform.position.x + transform.position.y + transform.position.z) * 100;
+        Random.InitState(seed);
 
         mesh = GetComponent<MeshFilter>();
         if (!mesh) return;
@@ -205,8 +232,14 @@ public class LifeSpawner : MonoBehaviour
 
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
-        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
-        if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
+        if (biome.owner == BiomeOwner.Cameron) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralCrystal : (Random.Range(0f, 10f) > 9f) ? prefabCrystalFlower : prefabCrystalRock;
+        if (biome.owner == BiomeOwner.Chris)
+        {
+            prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : (Random.Range(0f, 2f) > 1) ? prefabPlantDrifter : prefabOtherAnchor;
+            Debug.Log(prefab);
+
+            if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
+        }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
@@ -216,11 +249,10 @@ public class LifeSpawner : MonoBehaviour
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
-        if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers;
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabFishGobies;
+        if (biome.owner == BiomeOwner.Justin) prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble : prefabCoralFlower;
+        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
         
