@@ -20,33 +20,16 @@ public class ImageEffect : MonoBehaviour
     public Material material;
 
     /// <summary>
-    /// is the offset of the pixel noise
-    /// </summary>
-    [Range(0.001f, 0.1f)]
-    public float _pixelOffset = 0.0093f;
-
-    /// <summary>
     /// Noise Scale is the scale of the noise volume
     /// </summary>
-    [Range(0.001f, 20f)]
-    public float _noiseScale = 0.71f;
-
-    /// <summary>
-    /// Frequency is the noise's frequency of the effect throughout camera
-    /// </summary>
-    [Range(0.001f, 20f)]
-    public float _noiseFrequency = 1.77f;
+    [Range(0.0f, 0.2f)]
+    public float _noiseScale = 0.1f;
 
     /// <summary>
     /// _NoiseSpeed sets the speed of the noise volume on the camera, the higher the faster the movement of the noise.
     /// </summary>
-    [Range(0.001f, 20f)]
-    public float _noiseSpeed = 0.64f;
+    public Vector2 _noiseSpeed = new Vector2(.2f, .3f);
 
-    /// <summary>
-    /// Sets Threshold Division to 4 (part of a formula)
-    /// </summary>
-    private float _ThresholdDivision = 4;
 
     /// <summary>
     /// Update gives a reference to unity of the effect
@@ -57,11 +40,9 @@ public class ImageEffect : MonoBehaviour
     /// </summary>
     void Update()
     {
-        material.SetFloat("_NoiseFrequency", _noiseFrequency);
-        material.SetFloat("_NoiseSpeed", _noiseSpeed);
+        material.SetFloat("_NoiseSpeedX", _noiseSpeed.x);
+        material.SetFloat("_NoiseSpeedY", _noiseSpeed.y);
         material.SetFloat("_NoiseScale", _noiseScale);
-        material.SetFloat("_PixelOffset", _pixelOffset);
-        material.SetFloat("_ThresholdDivide", _ThresholdDivision);
     }
     /// <summary>
     /// Renders on image 
