@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
+
 
     float lookYaw;
     float lookPitch;
@@ -15,12 +17,15 @@ public class PlayerController : MonoBehaviour
 
     public float maxSpeed = 5;
     public float acceleration = 10f;
+    
+
 
     // Update is called once per frame
     void Update()
     {
         Look();
         Move();
+
     }
 
     private void Move()
@@ -60,7 +65,7 @@ public class PlayerController : MonoBehaviour
         float k = (densityOfFluid * friction)/2;
         Vector3 force = -k * velocity.sqrMagnitude * velocity.normalized;
         
-        float mass = 1;
+        float mass = .5f;
         velocity += (force / mass) * Time.deltaTime;
     }
     private void Look()

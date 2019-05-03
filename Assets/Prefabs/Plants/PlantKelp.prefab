@@ -46,18 +46,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938f4be032d71b545a9098d323e3090b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 6
-  numberOfLeaves: 5
+  minIterations: 3
+  maxIterations: 18
+  minLeaves: 4
+  maxLeaves: 7
+  minObjectScaling: 0.5
+  maxObjectScaling: 1.5
   stemScaling: {x: 0.25, y: 1.5, z: 0.25}
   leafScaling: {x: 0.05, y: 1, z: 0.5}
-  angleX: 0
-  angleY: 45
-  angleZ: 0
+  minRandomScaling: 0.8
+  maxRandomScaling: 1.2
+  stemAngleX: 0
+  stemAngleY: 30
+  stemAngleZ: 0
   leafOffsetAngleX: 35
   leafOffsetAngleY: 35
   leafOffsetAngleZ: 35
-  minRandom: 10
-  maxRandom: 45
+  minRandomAngle: -30
+  maxRandomAngle: 30
   hueMin: 0.1
   hueMax: 0.6
 --- !u!33 &4531927683660134110
