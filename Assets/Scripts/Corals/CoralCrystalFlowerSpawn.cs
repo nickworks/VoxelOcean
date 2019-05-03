@@ -212,7 +212,7 @@ public class CoralCrystalFlowerSpawn : MonoBehaviour
         //Set hue min and Max
 
         float hue = Mathf.Lerp(hueMin, hueMax, (num / (float)iterations));
-        Mesh mesh = MeshTools.MakePentagonalCylinder();
+        Mesh mesh = MeshTools.MakeCylinder(5);
         Vector3[] verts = mesh.vertices;
 
         for (int i = 0; i < mesh.vertexCount; i++)
