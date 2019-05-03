@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33468178300371448}
   - component: {fileID: 23167396194425928}
   m_Layer: 0
-  m_Name: LightWormHead
+  m_Name: HydrothermicWormHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
