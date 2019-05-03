@@ -151,6 +151,8 @@ MonoBehaviour:
     type: 3}
   prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
     type: 3}
+  prefabObjectChest: {fileID: 1934590458, guid: fa23576825bbf444198667e7a21ecd70,
+    type: 3}
   prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
     type: 3}
   prefabCreatureSeaStar: {fileID: 338540796843315734, guid: 8c8b1bc97220f884f97ba4078cc1259a,
