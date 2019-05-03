@@ -236,8 +236,6 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Chris)
         {
             prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : (Random.Range(0f, 2f) > 1) ? prefabPlantDrifter : prefabOtherAnchor;
-            Debug.Log(prefab);
-
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
         }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
@@ -251,7 +249,6 @@ public class LifeSpawner : MonoBehaviour
 		}
         if (biome.owner == BiomeOwner.Justin) {
             prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble: prefabCoralFlower;
-
 
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
         }

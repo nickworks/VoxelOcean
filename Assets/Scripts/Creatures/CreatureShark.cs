@@ -131,8 +131,7 @@ public class CreatureShark : MonoBehaviour
                 {
                     CreatureMinnow.minnows.Remove(m);
 
-                    Destroy(m);
-                    print("Eating");
+                    Destroy(m.gameObject);
                 }
             }
         }
