@@ -269,10 +269,7 @@ public class LifeSpawner : MonoBehaviour
 
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
         }
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
-        //if (biome.owner == BiomeOwner.Josh) prefab = ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
         if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
         
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
