@@ -167,7 +167,7 @@ public class PlantKelpMesh : MonoBehaviour
 
         // Add Stem Mesh:
         CombineInstance stem = new CombineInstance();
-        stem.mesh = MeshTools.MakePentagonalCylinder();
+        stem.mesh = MeshTools.MakeCylinder(5);
         AddColorToVertices(stem.mesh, num);
         stem.transform = Matrix4x4.TRS(pos, rot, tempStemScaling);
         meshes.Add(stem);
