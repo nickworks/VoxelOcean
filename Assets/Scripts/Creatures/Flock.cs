@@ -72,9 +72,9 @@ public class Flock: MonoBehaviour
                 distance = Vector3.Distance(go.transform.position, this.transform.position);
                 if(distance <= neighbourDistance)
                 {
-                    vCenter += go.transform.position;
+                  
                     groupSize++;
-                    if(distance < 0.1f)
+                    if(distance < .01f)
                     {
                         vAvoid = vAvoid + (this.transform.position - go.transform.position);
 

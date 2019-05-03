@@ -8,8 +8,8 @@ public class FishGobies : MonoBehaviour
 {
     public GameObject FishGobbiesPrefab;// crates the gameobject
     static int numGobbies = 25;// sets the number of objects created
-    public static int biomeSize = 25; // the range of how far they can go
-    public int spawnRadius = 1;
+    public static int biomeSize = 2; // the range of how far they can go
+    public int spawnRadius = 10;
    // public static Vector3 goalPos = Vector3.zero; // makes postion of object availlble
     public static GameObject[] fish = new GameObject[numGobbies];//the array of objects so they can see each other
     // Start is called before the first frame update
