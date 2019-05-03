@@ -40,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         replace = GetComponent<ReplacementShader>();
+        pausemenuUI.SetActive(false);
     }
 
     /// <summary>

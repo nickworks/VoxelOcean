@@ -99,8 +99,9 @@ public class ReplacementShader : MonoBehaviour
         {
         //if object has the matching creator, get reference to the meshrenderer
             if(p.creator == searchTarget)
-            {                
-                renderers.Add(p.GetComponent<MeshRenderer>());
+            {
+                MeshRenderer renderer = p.GetComponent<MeshRenderer>();
+                if(renderer != null) renderers.Add(renderer);
             }
         }
         //foreach meshrenderer, get reference to the material, and replace the default material
