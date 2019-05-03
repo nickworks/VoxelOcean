@@ -42,7 +42,7 @@ public class CreatureSharkAttractor : MonoBehaviour
         {
             //get all minnows within a certain distance
             float runningTotal = 0;
-            float range = 10000;
+            float range = 10;
             Vector3 target = Vector3.zero;
             foreach (CreatureMinnow b in CreatureMinnow.minnows)
             {

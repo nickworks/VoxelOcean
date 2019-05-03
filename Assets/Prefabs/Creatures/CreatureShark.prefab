@@ -95,7 +95,7 @@ MonoBehaviour:
   attractStrength: 3
   repulsStrength: 1
   turnForce: 5
-  speed: 20
+  speed: 15
   closeDist: 20
 --- !u!114 &3769196714484829634
 MonoBehaviour:

@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alignWeight: 0.5
-  cohesionWeight: 1
+  cohesionWeight: 1.5
   seperateWeight: 0.25
   attractStrength: 1
   repulsStrength: 100

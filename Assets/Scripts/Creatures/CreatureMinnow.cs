@@ -185,16 +185,19 @@ public class CreatureMinnow : MonoBehaviour
 
 
         //handle repulsors
-        shortestDist = 100000;
+        float range = 5;
         desire = Vector3.zero;
 
         foreach(CreatureMinnowRepulsor b in repulses)
         {
             float dist = Vector3.Distance(transform.position, b.transform.position);
-            if (dist < shortestDist) shortestDist = dist;
-            //finds the direction towards the repulsor and goes the other way
-            target = transform.position - b.transform.position;
-            desire += target.normalized * (.001f/dist);
+            if (dist < range)
+            {
+                //finds the direction towards the repulsor and goes the other way
+                target = transform.position - b.transform.position;
+                desire += target.normalized * (1.5f / dist);
+            }
+            
         }
         AddForce(desire * repulsStrength);
 
