@@ -28,8 +28,11 @@ public class ScanScript : MonoBehaviour
     {
         //if player presses e (scan button)
         if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("i'm working");
+        {     
+            //if the scan box is already up, we turn it off instead
+            if(img.enabled == false)
+            {
+
             //fire raycast from center of the camera/screen
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
             RaycastHit hit;
@@ -100,6 +103,12 @@ public class ScanScript : MonoBehaviour
 
                 //assign the string to the text output
                 text.text = output;
+                }
+                else
+                {
+                    img.enabled = false;
+                    text.enabled = false;
+                }
             }
             else
             {

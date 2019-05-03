@@ -277,10 +277,10 @@ public class LifeSpawner : MonoBehaviour
         //if obj doesn't have a meshcollider
         if (test == null)
         {
-            obj.AddComponent<MeshCollider>();
+            obj.AddComponent<BoxCollider>();
 
-            MeshCollider test2 = obj.GetComponent<MeshCollider>();
-            test2.convex = true;
+          //  MeshCollider test2 = obj.GetComponent<MeshCollider>();
+          //  test2.convex = true;
         }
     }
     /// <summary>
