@@ -34,6 +34,8 @@ public class SeaDragonSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //randomized scaling of the object messes with the scaling, so resetting it to zero
+        transform.localScale = Vector3.one;
         Build();
     }
 
@@ -172,7 +174,7 @@ public class SeaDragonSpawner : MonoBehaviour
     {
         CombineInstance inst = new CombineInstance();
 
-        inst.mesh = MeshTools.MakePentagonalCylinder();
+        inst.mesh = MeshTools.MakeCylinder(5);
         inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.2f, number, .2f));
 
         meshes.Add(inst);
