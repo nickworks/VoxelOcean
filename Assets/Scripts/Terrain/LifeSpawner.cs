@@ -121,6 +121,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralFlower; 
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
+    public GameObject prefabCreatureMinnow;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
@@ -242,8 +243,6 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Chris)
         {
             prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : (Random.Range(0f, 2f) > 1) ? prefabPlantDrifter : prefabOtherAnchor;
-            Debug.Log(prefab);
-
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
         }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
@@ -268,7 +267,11 @@ public class LifeSpawner : MonoBehaviour
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
-        if (biome.owner == BiomeOwner.Justin) prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble : prefabCoralFlower;
+        if (biome.owner == BiomeOwner.Justin) {
+            prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble: prefabCoralFlower;
+
+            if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
+        }
         if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(1, 5) > 3) ? prefabCoralPurpleFan : prefabMossBall;
         //if (biome.owner == BiomeOwner.Keegan) prefab = ;
@@ -279,9 +282,46 @@ public class LifeSpawner : MonoBehaviour
 
         float scale = Random.Range(.1f, .75f) + Random.Range(.1f, .75f);
 
-        if (prefab != null) SpawnPrefab(prefab, pos, rot, scale);
+        if (prefab != null)
+        {
+            //spawn prefab
+            GameObject obj = SpawnPrefab(prefab, pos, rot, 1);
 
+            // instantiate Coroutine for adding mesh collider
+            IEnumerator cr = AddMeshCollider(obj);
+            StartCoroutine(cr);
+        }
         return true;
+    }
+    /// <summary>
+    /// This coroutine will add a mesh collider to the passed in gameobject when it resolves
+    /// </summary>
+    /// <param name="obj">the gameobject to be affected</param>
+    /// <returns></returns>
+    IEnumerator AddMeshCollider(GameObject obj)
+    {
+        yield return new WaitForSeconds(1f);
+        MeshCollider test = null;
+
+        test = obj.GetComponent<MeshCollider>();
+
+        //if obj doesn't have a meshcollider
+        if (test == null)
+        {
+            obj.AddComponent<BoxCollider>();
+
+          //  MeshCollider test2 = obj.GetComponent<MeshCollider>();
+          //  test2.convex = true;
+        }
+    }
+    /// <summary>
+    /// start the AddMeshCollider coroutine
+    /// </summary>
+    /// <param name="obj">the gameobject to be affected</param>
+    /// <returns>starts the AddMeshCollider courtine</returns>
+    IEnumerator StartCoroutine(GameObject obj)
+    {
+        yield return StartCoroutine("AddMeshCollider");
     }
 
     /// <summary>
@@ -291,12 +331,14 @@ public class LifeSpawner : MonoBehaviour
     /// <param name="position">The world position to spawn the prefab</param>
     /// <param name="rotation">The world rotation to use when spawning the prefab</param>
     /// <param name="scale">The local scale to spawn the prefab</param>
-    void SpawnPrefab(GameObject prefab, Vector3 position, Quaternion? rotation = null, float scale = 1)
+    GameObject SpawnPrefab(GameObject prefab, Vector3 position, Quaternion? rotation = null, float scale = 1)
     {
         Quaternion rot = (rotation != null) ? (Quaternion)rotation : Quaternion.identity;
         GameObject obj = Instantiate(prefab, position, rot, transform);
         obj.transform.localScale = Vector3.one * scale;
         
 
+        // TODO: register the coral in a list of coral?
+        return obj;
     }
 }
