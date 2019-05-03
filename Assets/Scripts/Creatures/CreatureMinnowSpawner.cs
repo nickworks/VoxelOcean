@@ -15,7 +15,7 @@ public class CreatureMinnowSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + 25, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + 15, transform.position.z);
 
         Vector3 pos = transform.position;
         for (int i = 0; i < minnowsCount; i++)
@@ -27,7 +27,6 @@ public class CreatureMinnowSpawner : MonoBehaviour
                     pos.x + Random.Range(-5, 5),
                     pos.y + Random.Range(-1, 1),
                     pos.z + Random.Range(-5, 5));
-
 
             }
         }

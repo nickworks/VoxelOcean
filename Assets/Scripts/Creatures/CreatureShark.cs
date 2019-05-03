@@ -1,11 +1,9 @@
-﻿//heavily based off Chris's blind shrimp script so I can quickly get to the shark and the interaction between the minnows and the shark
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureMinnow : MonoBehaviour
+public class CreatureShark : MonoBehaviour
 {
-
     Vector3 velocity;
 
     Vector3 acceleration;
@@ -76,9 +74,8 @@ public class CreatureMinnow : MonoBehaviour
     /// </summary>
     Vector3 directionToCongregate;
 
-    public static List<CreatureMinnow> minnows = new List<CreatureMinnow>();
+    public static List<CreatureSharkAttractor> attracts = new List<CreatureSharkAttractor>();
 
-    public static List<CreatureMinnowAttractor> attracts = new List<CreatureMinnowAttractor>();
 
 
     // Start is called before the first frame update
@@ -88,26 +85,24 @@ public class CreatureMinnow : MonoBehaviour
 
         acceleration = new Vector3();
 
-        speed *= Random.Range(.75f, 1.2f); 
+        speed *= Random.Range(.75f, 1.5f);
 
-        minnows.Add(this); 
+       // CreatureMinnow.minnows to access a list of the minnows
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        ticker++; 
+        ticker++;
         acceleration = Vector3.zero;
 
         pickDirection();
-        Move(); 
+        Move();
     }
 
     void pickDirection()
     {
-        //logic to stop this function from doing stuff every frame
-        if (minnows.IndexOf(this) % 2 == 0 && ticker % 2 == 0 ||
-            minnows.IndexOf(this) % 2 != 0 && ticker % 2 != 0) return;
 
         directionToAlign = Vector3.zero;
         directionToCongregate = Vector3.zero;
@@ -116,10 +111,9 @@ public class CreatureMinnow : MonoBehaviour
         float runningTotal = 0;
         float shortestDist = 1000000;
 
-        foreach (CreatureMinnow b in minnows)
+        foreach (CreatureMinnow b in CreatureMinnow.minnows)
         {
             float dist = Vector3.Distance(transform.position, b.transform.position);
-            if (dist == 0) continue;
             if (dist < closeDist)
             {
                 if (dist < shortestDist) shortestDist = dist;
@@ -130,53 +124,28 @@ public class CreatureMinnow : MonoBehaviour
                 // get direction towards center of flock, weighted by distance
                 flockCenter += b.transform.position;
                 // align direction with neighbors, maybe weighted?
-                directionToAlign += b.velocity;
+                
 
                 runningTotal++;
             }
         }
-        if(runningTotal > 0)
+        if (runningTotal > 0)
         {
-            directionToAlign /= runningTotal;
-            flockCenter /= runningTotal;
-
-            //calc direction to congregate
-            directionToCongregate = flockCenter - transform.position;
-            float distToCenter = Vector3.Distance(flockCenter, transform.position);
-
-            directionToAlign = directionToAlign.normalized * speed;
-            directionToSeperate = directionToSeperate.normalized * speed;
-            directionToCongregate = directionToCongregate.normalized * speed;
-
-
-            //align
-            steer = (directionToAlign - velocity).normalized;
-
-            AddForce(steer * turnForce * alignWeight * (10 / shortestDist));
-
-            //seperate
-            steer = (directionToSeperate - velocity).normalized;
-
-            AddForce(steer * turnForce * seperateWeight * (10 / shortestDist));
-
-            //congregate
-            steer = (directionToCongregate - velocity).normalized;
-
-            AddForce(steer * turnForce * cohesionWeight * (distToCenter / 50)); //50
+            
         }
 
         //handle attractors
         shortestDist = 100000000;
         desire = Vector3.zero;
-        foreach (CreatureMinnowAttractor b in attracts)
+        foreach (CreatureSharkAttractor b in attracts)
         {
             float dist = Vector3.Distance(transform.position, b.transform.position);
             if (dist < shortestDist) shortestDist = dist;
             //TODO:
             // get direction away from every near boid, inversely weighted by proximity
             target = b.transform.position - transform.position;
-            desire += target.normalized * (dist/100);
-            
+            desire += target.normalized * (dist / 100);
+
         }
         AddForce(desire);
 
@@ -192,7 +161,7 @@ public class CreatureMinnow : MonoBehaviour
             //steer = (desire - veloc).normalized;
 
             //AddForce(steer * repulsStrength * (50 / shortestDist));
-        } 
+        }
 
     }
 
@@ -207,7 +176,6 @@ public class CreatureMinnow : MonoBehaviour
 
     void AddForce(Vector3 force)
     {
-        acceleration += force; 
+        acceleration += force;
     }
-
 }

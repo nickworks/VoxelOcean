@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2693326763219950730}
   - component: {fileID: 1142041131304281754}
   - component: {fileID: 1149727420882278599}
-  - component: {fileID: 3163865437276675851}
   - component: {fileID: 3043662747295578792}
   - component: {fileID: 8824173363307869227}
   m_Layer: 0
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &3163865437276675851
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5616946952130484667}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3043662747295578792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +91,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e15c41c77c17a1459df8e63d2bff93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alignWeight: 0.5
+  cohesionWeight: 1
+  seperateWeight: 0.25
+  attractStrength: 5
+  repulsStrength: 1
+  turnForce: 30
+  speed: 5
+  closeDist: 2
 --- !u!114 &8824173363307869227
 MonoBehaviour:
   m_ObjectHideFlags: 0
