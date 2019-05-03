@@ -30,11 +30,15 @@ public class SeaDragonSpawner : MonoBehaviour
     [Tooltip("Current Seed")]
     public int seed;
 
+    //we store modified scale here so we can generate without issues
+    Vector3 newScale;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //randomized scaling of the object messes with the scaling, so resetting it to zero
+        newScale = transform.localScale;
+        //randomized scaling of the object messes with the scaling, so resetting it to one
         transform.localScale = Vector3.one;
         Build();
     }
@@ -68,17 +72,30 @@ public class SeaDragonSpawner : MonoBehaviour
         GrowBody(true, numberOfSegments, meshes, pos, Quaternion.Euler(-90, 0, 0), segmentScale, false, stems);
         Mesh mesh = new Mesh();
 
-        mesh.CombineMeshes(meshes.ToArray());
+        mesh.CombineMeshes(stems.ToArray());
+        //modify the color of the mesh (stems only)
+        Vector3[] verts = mesh.vertices;
+        Color[] colors = new Color[verts.Length];
+        Color biomeColor = Biome.AtLocation(transform.position).GetVertexColor();
+
+        for (int i = 0; i < verts.Length; i++)
+        {
+            //lerp between colors as you get farther into the mesh from the base
+            colors[i] = Color.Lerp(Color.white, biomeColor, verts[i].y);
+        }
+        mesh.colors = colors;
+
+
         //convert mesh into new combine instance
         CombineInstance test = new CombineInstance();
         test.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, transform.localScale);
         test.mesh = mesh;
         // TODO: Apply colors of chunk
-        stems.Add(test);
+        meshes.Add(test);
 
         Mesh testMesh = new Mesh();
 
-        testMesh.CombineMeshes(stems.ToArray());
+        testMesh.CombineMeshes(meshes.ToArray());
 
         //TODO: figure out how to remove duplicate verticies
         //MeshTools.RemoveDuplicates(mesh);
@@ -86,6 +103,7 @@ public class SeaDragonSpawner : MonoBehaviour
         MeshFilter filter = GetComponent<MeshFilter>();
         filter.mesh = testMesh;
 
+        transform.localScale = newScale;
     }
     /// <summary>
     /// randomize parameters for the creatuer
@@ -96,7 +114,7 @@ public class SeaDragonSpawner : MonoBehaviour
         segmentScale = Random.Range(.25f, 4)+2f;
         stemSize = Random.Range(3, 8);
         chanceForMoreStems = Random.Range(30, 80);
-        scale = Random.Range(.2f, .7f);
+        scale = Random.Range(.1f, 1f);
     }
     /// <summary>
     /// Primary recursive function used to grow segments of the body, and attached stems
@@ -119,11 +137,6 @@ public class SeaDragonSpawner : MonoBehaviour
         inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(bodyWidth, bodyScale, bodyWidth)*scale);
 
         meshes.Add(inst);
-
-
-        //scale
-
-        //rotation
  ;
         Vector3 stemRotation = new Vector3();
 

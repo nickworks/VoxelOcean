@@ -303,7 +303,7 @@ public class LifeSpawner : MonoBehaviour
             GameObject obj = SpawnPrefab(prefab, pos, rot, 1);
 
             // instantiate Coroutine for adding mesh collider
-            IEnumerator cr = AddMeshCollider(obj);
+            IEnumerator cr = AddCollider(obj);
             StartCoroutine(cr);
         }
         return true;
@@ -313,7 +313,7 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     /// <param name="obj">the gameobject to be affected</param>
     /// <returns></returns>
-    IEnumerator AddMeshCollider(GameObject obj)
+    IEnumerator AddCollider(GameObject obj)
     {
         yield return new WaitForSeconds(1f);
         MeshCollider test = null;
