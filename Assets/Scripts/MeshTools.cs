@@ -418,6 +418,11 @@ public static class MeshTools
         return mesh;
     }
 
+    /// <summary>
+    /// Generates the mesh data to make a 1m sized cylinder mesh. Anchor point in in the bottom center of the mesh.
+    /// </summary>
+    /// <param name="points">The number of points the object has.</param>
+    /// <returns></returns>
     public static Mesh MakePolygonalCylinder(int points)
     {
         List<Vector3> verts = new List<Vector3>();

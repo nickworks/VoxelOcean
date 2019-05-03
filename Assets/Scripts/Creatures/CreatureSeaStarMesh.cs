@@ -164,7 +164,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
 
         //Make center of the sea star:
         CombineInstance center = new CombineInstance();
-        center.mesh = MeshTools.MakePentagonalCylinder();
+        center.mesh = MeshTools.MakePolygonalCylinder(8);
         AddColorToVertices(center.mesh);
 
         //Adjust center values:
