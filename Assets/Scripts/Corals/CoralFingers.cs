@@ -13,7 +13,7 @@ public class CoralFingers : MonoBehaviour
     /// <summary>
     ///  number of times this loop will run
     /// </summary>
-    int iterations = 8;
+    int iterations = 0;
     /// <summary>
     /// size of the branch
     /// </summary>
@@ -54,6 +54,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow4(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -126,6 +127,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow3(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -198,6 +200,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow2(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -270,6 +273,7 @@ public class CoralFingers : MonoBehaviour
     /// <param name="scale">size of are mesh</param>
     private void Grow(int num, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
     {
+        iterations = Random.Range(3, 15);
         int twist = 45;
         int twist2 = Random.Range(20, 30);
         int branch1 = Random.Range(0, 6);
@@ -342,160 +346,22 @@ public class CoralFingers : MonoBehaviour
     private Mesh MakeCube(int num)
     {
 
-        List<Vector3> verts = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
-        List<Vector3> normals = new List<Vector3>();
-        List<Color> colors = new List<Color>();
-        List<int> tris = new List<int>();
-        //front
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-
-        tris.Add(0);
-        tris.Add(1);
-        tris.Add(2);
-        tris.Add(2);
-        tris.Add(3);
-        tris.Add(0);
-        //back
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-
-        tris.Add(4);
-        tris.Add(5);
-        tris.Add(6);
-        tris.Add(6);
-        tris.Add(7);
-        tris.Add(4);
-        //left
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-
-        tris.Add(8);
-        tris.Add(9);
-        tris.Add(10);
-        tris.Add(10);
-        tris.Add(11);
-        tris.Add(8);
-        //Right
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-
-        tris.Add(12);
-        tris.Add(13);
-        tris.Add(14);
-        tris.Add(14);
-        tris.Add(15);
-        tris.Add(12);
-        //top
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-
-        tris.Add(16);
-        tris.Add(17);
-        tris.Add(18);
-        tris.Add(18);
-        tris.Add(19);
-        tris.Add(16);
-        //bottom
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-
-
-        tris.Add(20);
-        tris.Add(21);
-        tris.Add(22);
-        tris.Add(22);
-        tris.Add(23);
-        tris.Add(20);
-
+       
+       
+        
+ List<Color> colors = new List<Color>();
         float hueMin = .1f;
         float hueMax = .001f;
         float hue = Mathf.Lerp(hueMin,hueMax, (num / (float)iterations));
-    
-        foreach(Vector3 pos in verts)
+        Mesh mesh = MeshTools.MakeCube();
+        for (int i = 0; i < mesh.vertexCount; i++)
         {
             float tempHue = hue;// + (1/(float)iterations) * pos.y;
               Color color = Color.HSVToRGB(tempHue, 1, 1);
             colors.Add(color);
         }
 
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(verts);
-        mesh.SetUVs(0, uvs);
-        mesh.SetNormals(normals);
-  mesh.SetTriangles(tris, 0);
+     
         mesh.SetColors(colors);
         return mesh;
     }
