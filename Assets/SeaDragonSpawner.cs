@@ -113,7 +113,7 @@ public class SeaDragonSpawner : MonoBehaviour
 
         CombineInstance inst = new CombineInstance();
 
-        inst.mesh = MeshTools.MakePentagonalCylinder();
+        inst.mesh = MeshTools.MakeCylinder(5);
         inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(bodyWidth, bodyScale, bodyWidth)*scale);
 
         meshes.Add(inst);
