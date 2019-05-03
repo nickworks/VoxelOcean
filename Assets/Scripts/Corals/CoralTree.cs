@@ -121,131 +121,8 @@ public class CoralTree : MonoBehaviour
     /// <returns></returns>
     private Mesh MakeCube()
     {
-        List<Vector3> verts = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
-        List<Vector3> normals = new List<Vector3>();
+      
         List<Color> colors = new List<Color>();
-        List<int> tris = new List<int>();
-
-        //FRONT FACE
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(0);
-        tris.Add(1);
-        tris.Add(2);
-        tris.Add(2);
-        tris.Add(3);
-        tris.Add(0);
-
-        //BACK FACE
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(4);
-        tris.Add(5);
-        tris.Add(6);
-        tris.Add(6);
-        tris.Add(7);
-        tris.Add(4);
-
-        //LEFT FACE
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(8);
-        tris.Add(9);
-        tris.Add(10);
-        tris.Add(10);
-        tris.Add(11);
-        tris.Add(8);
-
-        //RIGHT FACE
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(12);
-        tris.Add(13);
-        tris.Add(14);
-        tris.Add(14);
-        tris.Add(15);
-        tris.Add(12);
-
-        //TOP FACE
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(16);
-        tris.Add(17);
-        tris.Add(18);
-        tris.Add(18);
-        tris.Add(19);
-        tris.Add(16);
-
-        //BOTTOM FACE
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(20);
-        tris.Add(21);
-        tris.Add(22);
-        tris.Add(22);
-        tris.Add(23);
-        tris.Add(20);
 
         //random vertex colors
         float hueMin = Random.Range(.4f, .7f);
@@ -253,20 +130,16 @@ public class CoralTree : MonoBehaviour
 
         //blends between the min and max by way of the number of iterations
         float hue = Mathf.Lerp(hueMin, hueMax, (float)iterations);
-
+        Mesh mesh = MeshTools.MakeCube();
         //applies the colors to each vertex
-        foreach (Vector3 pos in verts)
+        for (int i = 0; i < mesh.vertexCount; i++)
         {
             Color color = Color.HSVToRGB(hue, 1, 1);
 
             colors.Add(color);
         }
 
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(verts);
-        mesh.SetUVs(0, uvs);
-        mesh.SetNormals(normals);
-        mesh.SetTriangles(tris, 0);
+       
         mesh.SetColors(colors);
         return mesh;
 
