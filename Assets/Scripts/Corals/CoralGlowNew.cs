@@ -114,25 +114,7 @@ public class CoralGlowNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* if(tickup)
-           {
-               glowAmount += .01f;
-
-
-           }
-        else
-           {
-               glowAmount -= .01f;
-
-           }
-           if (glowAmount >= 1.0)
-           {
-               tickup = false;
-           }
-           else if (glowAmount <= 0)
-           {
-               tickup = true;
-           }*/
+       
         glowAmount = Mathf.PingPong(Time.time, 2.0f);
         rend.material.SetFloat("_Glow", glowAmount);
        
@@ -206,7 +188,7 @@ public class CoralGlowNew : MonoBehaviour
             //Our position is updated so we don't spawn coral pieces ontop of one another
             pos = inst.transform.MultiplyPoint(new Vector3(.6f, .8f, 0));
             //We multiply the scale by a random value so it is either the same or greater
-            scale *= Random.Range(1, 2.5f);
+            scale *= Random.Range(1, 1.3f);
             //Rotation values are keep small
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(0, 15), Random.Range(-15, 15));
             //We set health for the next iteration of coral
@@ -249,7 +231,7 @@ public class CoralGlowNew : MonoBehaviour
             // We generate a sidePosition to pass to our other call of the grow method
             Vector3 sidePos = inst.transform.MultiplyPoint(new Vector3(.10f, .8f, 0));
             //We multiply the scale by a random value so it is either smaller or greater
-            scale *= Random.Range(1, 1.5f);
+            scale *= Random.Range(1f, 1.2f);
             //Rotation values are keep small
             Quaternion rot1 = rot * Quaternion.Euler(0, Random.Range(-15, 15), Random.Range(-15, 15));
             //We generate another rotation quaternion for our second call to the grow method
