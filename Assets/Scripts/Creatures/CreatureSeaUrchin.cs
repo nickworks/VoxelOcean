@@ -9,9 +9,8 @@ public class CreatureSeaUrchin : MonoBehaviour
     /// </summary>
     public int iterations;
     public int iteratoinsFan;
-    public bool sideFan = false;
     /// <summary>
-    /// How the scaling of the branches are for both the skeleton set and fan set
+    /// How the scaling of the branches are for both the urchin body and spines
     /// </summary>
     public Vector3 branchScaling = new Vector3(.5f, 2f, .5f);
     public Vector3 baseScaling = new Vector3(.5f, 1f, .5f);
@@ -26,7 +25,7 @@ public class CreatureSeaUrchin : MonoBehaviour
     /// </summary>
     public void Build()
     {
-        iterations = Random.Range(4, 6);
+        iterations = Random.Range(4, 5);
         iteratoinsFan = iterations + 1;
         List<CombineInstance> meshes = new List<CombineInstance>();
         //What makes the spindles in the sea urchin
