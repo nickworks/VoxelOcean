@@ -95,7 +95,7 @@ public class SeaDragonMovement : MonoBehaviour
     {
         int randX = Random.Range(-horizontalRange, horizontalRange);
         int randZ = Random.Range(-horizontalRange, horizontalRange);
-        int randY = Random.Range(-verticalRange, verticalRange);
+        int randY = Random.Range(0, verticalRange);
 
 
         targetLocation.Set(home.x + randX, home.y + randY, home.z + randZ);
