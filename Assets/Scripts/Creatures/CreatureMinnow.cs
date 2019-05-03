@@ -80,6 +80,8 @@ public class CreatureMinnow : MonoBehaviour
 
     public static List<CreatureMinnowAttractor> attracts = new List<CreatureMinnowAttractor>();
 
+    public static List<CreatureMinnowRepulsor> repulses = new List<CreatureMinnowRepulsor>();
+
 
     // Start is called before the first frame update
     void Start()
@@ -178,21 +180,23 @@ public class CreatureMinnow : MonoBehaviour
             desire += target.normalized * (dist/100);
             
         }
-        AddForce(desire);
+        AddForce(desire * attractStrength);
 
 
 
         //handle repulsors
-        shortestDist = 100000000;
+        shortestDist = 100000;
         desire = Vector3.zero;
 
-        if (attracts.Count > 0)
+        foreach(CreatureMinnowRepulsor b in repulses)
         {
-            //desire = desire.normalized * speed;
-            //steer = (desire - veloc).normalized;
-
-            //AddForce(steer * repulsStrength * (50 / shortestDist));
-        } 
+            float dist = Vector3.Distance(transform.position, b.transform.position);
+            if (dist < shortestDist) shortestDist = dist;
+            //finds the direction towards the repulsor and goes the other way
+            target = transform.position - b.transform.position;
+            desire += target.normalized * (.001f/dist);
+        }
+        AddForce(desire * repulsStrength);
 
     }
 

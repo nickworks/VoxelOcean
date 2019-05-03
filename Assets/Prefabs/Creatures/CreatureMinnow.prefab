@@ -94,8 +94,8 @@ MonoBehaviour:
   alignWeight: 0.5
   cohesionWeight: 1
   seperateWeight: 0.25
-  attractStrength: 5
-  repulsStrength: 1
+  attractStrength: 1
+  repulsStrength: 100
   turnForce: 30
   speed: 5
   closeDist: 2

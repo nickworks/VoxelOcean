@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaca6e2b9cd45fb4490a2865f25ed16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3043662747295578792, guid: dd894e08c774b5b409b482bd483e81c7, type: 3}
+  prefabMinnow: {fileID: 3043662747295578792, guid: dd894e08c774b5b409b482bd483e81c7,
+    type: 3}
+  prefabShark: {fileID: 8840193437918954094, guid: e342d5b15032bac4f9b022d2262d6cf6,
+    type: 3}
   minnowsCount: 50
   maxMinnows: 150
 --- !u!114 &1922439924145554829
