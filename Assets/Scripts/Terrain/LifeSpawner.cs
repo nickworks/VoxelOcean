@@ -143,6 +143,10 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCoralTubeWorm;
     /// <summary>
+    /// Prefab reference for lost anchors. (Chris's "non living").
+    /// </summary>
+    public GameObject prefabOtherAnchor;
+    /// <summary>
     /// Prefab reference for Hydrothermic blind shrimp (Chris's fish).
     /// </summary>
     public GameObject prefabCreatureBlindShrimp;
@@ -237,7 +241,8 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Cameron) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralCrystal : (Random.Range(0f, 10f) > 9f) ? prefabCrystalFlower : prefabCrystalRock;
         if (biome.owner == BiomeOwner.Chris)
         {
-            prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : prefabPlantDrifter;
+            prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : (Random.Range(0f, 2f) > 1) ? prefabPlantDrifter : prefabOtherAnchor;
+            Debug.Log(prefab);
 
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
         }
