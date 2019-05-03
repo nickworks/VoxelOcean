@@ -129,6 +129,8 @@ MonoBehaviour:
     type: 3}
   prefabCoralPyramid: {fileID: 8856533629082828895, guid: 28013e49a404f4243abe910b6bb4ce60,
     type: 3}
+  prefabSeaDragon: {fileID: 6133996402698601620, guid: 473b8d477705fc54191da6191a580261,
+    type: 3}
   prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
     type: 3}
   prefabPlantLeaf: {fileID: 5078370866149129377, guid: 6846a9475805a6843b455aeb8456966e,

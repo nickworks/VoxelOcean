@@ -5,17 +5,27 @@ using UnityEditor;
 
 public class SeaDragonSpawner : MonoBehaviour
 {
+    [Tooltip("How many segments to grow")]
     public int numberOfSegments = 5;
+    [Tooltip("How big is each segment")]
     public float segmentScale = 1;
-    public float bodyWidth = .5f;
+    [Tooltip("Width of the body segments")]
+    public float bodyWidth = 2f;
+    [Tooltip("Scale of the creature")]
+    public float scale = 1;
+
     [Space]
 
+    [Tooltip("How big should the stems be?")]
     public int stemSize = 5;
+    [Tooltip("How likely to grow a second stem")]
     public float chanceForMoreStems = 50;
 
+    
+    [Tooltip("Reference to SeaDragonLeaf Mesh")]
     public Mesh leafMesh;
 
-    [Tooltip("Uncheck this to turn off randomness or use custom seed.")]
+    [Tooltip("Uncheck this to turn off randomness or use custom seed")]
     public bool randomSeed = true;
     [Tooltip("Current Seed")]
     public int seed;
@@ -25,7 +35,6 @@ public class SeaDragonSpawner : MonoBehaviour
     void Start()
     {
         Build();
-        Debug.Log("did a thing");
     }
 
     // Update is called once per frame
@@ -33,7 +42,10 @@ public class SeaDragonSpawner : MonoBehaviour
     {
 
     }
-
+    /// <summary>
+    /// function that initiates generation of the body of the creature
+    /// then combines the meshes into one
+    /// </summary>
     public void Build()
     {        
         //randomize seed
@@ -42,6 +54,7 @@ public class SeaDragonSpawner : MonoBehaviour
             seed = Random.Range(0, 50000000);
         }
         Random.InitState(seed);
+        Randomize();
 
         List<CombineInstance> meshes = new List<CombineInstance>();
         List<CombineInstance> stems = new List<CombineInstance>();
@@ -58,7 +71,7 @@ public class SeaDragonSpawner : MonoBehaviour
         CombineInstance test = new CombineInstance();
         test.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, transform.localScale);
         test.mesh = mesh;
-
+        // TODO: Apply colors of chunk
         stems.Add(test);
 
         Mesh testMesh = new Mesh();
@@ -72,15 +85,36 @@ public class SeaDragonSpawner : MonoBehaviour
         filter.mesh = testMesh;
 
     }
-
-    void GrowBody(bool firstSegment, int number, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale, bool switchDirection, List<CombineInstance> stems)
+    /// <summary>
+    /// randomize parameters for the creatuer
+    /// </summary>
+    void Randomize()
+    {
+        numberOfSegments = Random.Range(4, 8);
+        segmentScale = Random.Range(.25f, 4)+2f;
+        stemSize = Random.Range(3, 8);
+        chanceForMoreStems = Random.Range(30, 80);
+        scale = Random.Range(.2f, .7f);
+    }
+    /// <summary>
+    /// Primary recursive function used to grow segments of the body, and attached stems
+    /// </summary>
+    /// <param name="firstSegment">special modifier for the 'head' or first segment of the body</param>
+    /// <param name="number">number of segments to grow, counts down to 0</param>
+    /// <param name="meshes">reference to list of combine instances</param>
+    /// <param name="pos">where to spawn the segment</param>
+    /// <param name="rot">rotation of the segment</param>
+    /// <param name="bodyScale">how much to scale each segment</param>
+    /// <param name="switchDirection">used to change direction the segment grows in</param>
+    /// <param name="stems">reference to list of combine instances for stems and leaves</param>
+    void GrowBody(bool firstSegment, int number, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float bodyScale, bool switchDirection, List<CombineInstance> stems)
     {
         if (number <= 0) return;
 
         CombineInstance inst = new CombineInstance();
 
         inst.mesh = MeshTools.MakePentagonalCylinder();
-        inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(bodyWidth, scale, bodyWidth));
+        inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(bodyWidth, bodyScale, bodyWidth)*scale);
 
         meshes.Add(inst);
 
@@ -91,6 +125,7 @@ public class SeaDragonSpawner : MonoBehaviour
  ;
         Vector3 stemRotation = new Vector3();
 
+        //calculate which way to grow the next segment
         if (switchDirection)
         {//top side
             rot = Quaternion.Euler(-90, 0, 0);
@@ -101,18 +136,18 @@ public class SeaDragonSpawner : MonoBehaviour
             rot = Quaternion.Euler(-180, 0, 0);
             if (!firstSegment) stemRotation.Set(135, 0, 0);
         }
+        //don't spawn stems from the first segment
         if (!firstSegment)
         {
-            int numberOfBranches = 1;
+
+            //random chance for 2 stems
             if (Random.Range(0, 100) < chanceForMoreStems)
             {
-                numberOfBranches += 1;
-
                 stemRotation = new Vector3(stemRotation.x, stemRotation.y, -45);
-                GrowStem(stemSize, numberOfBranches, stems, pos, Quaternion.Euler(stemRotation), scale, switchDirection);
+                GrowStem(stemSize, stems, pos, Quaternion.Euler(stemRotation), switchDirection);
                 stemRotation = new Vector3(stemRotation.x, stemRotation.y, 45);
             }
-            GrowStem(stemSize,numberOfBranches, stems, pos, Quaternion.Euler(stemRotation), scale, switchDirection);
+            GrowStem(stemSize, stems, pos, Quaternion.Euler(stemRotation), switchDirection);
         }
 
         switchDirection = !switchDirection;
@@ -123,9 +158,17 @@ public class SeaDragonSpawner : MonoBehaviour
         number--;
 
         //grow another segment
-        GrowBody(false, number, meshes, pos, rot, scale, switchDirection, stems);
+        GrowBody(false, number, meshes, pos, rot, bodyScale, switchDirection, stems);
     }
-    void GrowStem(int number, int numberOfStems, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale, bool top)
+    /// <summary>
+    /// creates a stem, growing from a position
+    /// </summary>
+    /// <param name="number">how long should the stem be</param>
+    /// <param name="meshes">reference to list of meshes</param>
+    /// <param name="pos">where to start the stem</param>
+    /// <param name="rot">rotation of the stem</param>
+    /// <param name="top">whether or not the stem is on top of the creature, used to calculate leaf direction</param>
+    void GrowStem(int number, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, bool top)
     {
         CombineInstance inst = new CombineInstance();
 
@@ -133,11 +176,6 @@ public class SeaDragonSpawner : MonoBehaviour
         inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.2f, number, .2f));
 
         meshes.Add(inst);
-
-        //rot *= Quaternion.Euler(1, 1, rot.z - 90);
-
-        //rot = Quaternion.Euler(225, 0, 0);
-        //if(numberOfStems == 2) rot *= Quaternion.Euler(1, 0, 45);
 
         rot *= Quaternion.Euler(0, 180, 90);
 
@@ -158,23 +196,33 @@ public class SeaDragonSpawner : MonoBehaviour
                 break;
             }
             pos = inst.transform.MultiplyPoint(Vector3.up * x);
-            scale = 1 + (1 - x) * 3;
+           float scale = 1 + (1 - x) * 3;
 
             GrowLeaf(1, meshes, pos, rot, scale);
         }
 
     }
-    void GrowLeaf(int numberOfLeaves, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float scale)
+    /// <summary>
+    /// creates a leaf at the target location
+    /// </summary>
+    /// <param name="numberOfLeaves">how many leaves to grow</param>
+    /// <param name="meshes">reference to combine instance list</param>
+    /// <param name="pos">where to spawn the leaf</param>
+    /// <param name="rot">rotation of the leaf</param>
+    /// <param name="leafScale">how big is the leaf</param>
+    void GrowLeaf(int numberOfLeaves, List<CombineInstance> meshes, Vector3 pos, Quaternion rot, float leafScale)
     {
         CombineInstance inst = new CombineInstance();
         inst.mesh = leafMesh;
 
-        inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(scale, scale, scale));
+        inst.transform = Matrix4x4.TRS(pos, rot, Vector3.one * leafScale*scale);
 
         meshes.Add(inst);        
     }
 }
-
+/// <summary>
+/// Custom button for in editor testing
+/// </summary>
 #if UNITY_EDITOR
 [CustomEditor(typeof(SeaDragonSpawner))]
 public class SeaDragonSpawnerEditor : Editor

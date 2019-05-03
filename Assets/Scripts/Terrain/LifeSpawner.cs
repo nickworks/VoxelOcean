@@ -230,9 +230,8 @@ public class LifeSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("Got me a dargon");
                 prefab = prefabSeaDragon;
-            }
+            }         
         }
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
