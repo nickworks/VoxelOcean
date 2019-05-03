@@ -93,10 +93,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minArms: 5
   maxArms: 10
+  numArmSegments: 5
   minObjectScaling: 0.5
   maxObjectScaling: 1.5
-  centerScale: {x: 4, y: 1, z: 4}
-  armScale: {x: 0.6, y: 1, z: 1}
+  centerScale: {x: 6, y: 1, z: 6}
+  armScale: {x: 3, y: 1, z: 1}
   minRandomScaling: 0.5
   maxRandomScaling: 0.8
   minArmLength: 0.5

@@ -23,6 +23,8 @@ public class CreatureSeaStarMesh : MonoBehaviour
     /// </summary>
     [Range(5, 16)] public int maxArms = 8;
 
+    [Range(2, 5)] public int armSegments = 3;
+
     // Scaling Vectors:
     /// <summary>
     /// Controls the overall scale of the object.
@@ -164,11 +166,11 @@ public class CreatureSeaStarMesh : MonoBehaviour
 
         //Make center of the sea star:
         CombineInstance center = new CombineInstance();
-        center.mesh = MeshTools.MakeCylinder(8);
+        center.mesh = MeshTools.MakeCylinder(numberOfArms);
         AddColorToVertices(center.mesh);
 
         //Adjust center values:
-        Quaternion adjustRot =  Quaternion.Euler(0, 15, 0) * rot;
+        Quaternion adjustRot =  Quaternion.Euler(0, 180 / numberOfArms, 0) * rot;
         Vector3 adjustPos = pos;
         adjustPos.y += centerRiseAmount;
 
@@ -182,21 +184,27 @@ public class CreatureSeaStarMesh : MonoBehaviour
             CombineInstance arm = new CombineInstance();
             arm.mesh = MeshTools.MakeTaperCube(taperAmount);
             AddColorToVertices(arm.mesh);
-            float rotDegrees = (360 / numberOfArms) * i;
+            float rotDegrees = (i == 0) ? 0 : 360 / ((float)numberOfArms / (float)i);
             float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
-                
-            //Build out arm in that direction:
-            float armX = Mathf.Sin(rotRadians) * 1f;
-            float armZ = Mathf.Cos(rotRadians) * 1f;
+            float radius = 1f;
 
-            Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
-            Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
+            float segmentScale = 1;
 
-            // TODO: adjust arm position by scale
-                
+            for(int j = 0; j < armSegments; j++)
+            {
+                //Build out arm in that direction:
+                float armX = Mathf.Sin(rotRadians) * radius * ((j != 0) ? j : 1);
+                float armZ = Mathf.Cos(rotRadians) * radius * ((j != 0) ? j : 1);
 
-            arm.transform = Matrix4x4.TRS(armPos, armRot, tempArmScale);
-            meshes.Add(arm);
+                Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
+                Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
+                Vector3 adjustArmScale = tempArmScale * segmentScale;
+
+                arm.transform = Matrix4x4.TRS(armPos, armRot, adjustArmScale);
+                meshes.Add(arm);
+
+                segmentScale -= .2f;
+            }
         }
     }
 
