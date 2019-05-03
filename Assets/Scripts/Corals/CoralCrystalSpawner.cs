@@ -14,6 +14,10 @@ using UnityEditor;
 public class CoralCrystalSpawner : MonoBehaviour
 {
     /// <summary>
+    /// ParticleSpawner
+    /// </summary>
+    GameObject particleSpawn;
+    /// <summary>
     /// Iterations : how many times the object is repeated
     /// </summary>
     [Range(2, 6)] public int iterations = 4;// Iterations of the object
