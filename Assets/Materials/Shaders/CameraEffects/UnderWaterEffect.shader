@@ -3,10 +3,10 @@ Shader "Custom/SinWaveUnderWater"
     Properties
     {
 		_MainTex("Camera", 2D) = "white" {} // screen camera REFERENCE DO NOT GIVE ANYTHING TO THIS
-		_NoiseMap("Noise Map", 2D) = "white" {} // Normal Map 2d reference to a bump map / normal map, it is technically a height map
+		_NoiseMap("Noise Map", 2D) = "white" {} // Noise Map reference
 		_NoiseScale("NoiseScale", float) = 1 //Scale of the noise 
-		_NoiseSpeed("NoiseSpeedX", float) = 1 // speed at which the noise moves
-		_NoiseSpeed("NoiseSpeedY", float) = 1 // speed at which the noise moves
+		_NoiseSpeed("NoiseSpeedX", float) = 1 // speed at which the noise moves X 
+		_NoiseSpeed("NoiseSpeedY", float) = 1 // speed at which the noise moves Y
     }
     SubShader
     {
@@ -45,7 +45,7 @@ Shader "Custom/SinWaveUnderWater"
 			fixed4 frag(v2f i) : COLOR
 			{
 
-				float2 noiseUV = i.uv + +float2(_NoiseSpeedX, _NoiseSpeedY) * _Time.y;
+				float2 noiseUV = i.uv + float2(_NoiseSpeedX, _NoiseSpeedY) * _Time.y;
 				fixed2 warpedUV =  i.uv + (tex2D(_NoiseMap, noiseUV).gb - fixed2(.5, .5)) * _NoiseScale;
 				fixed4 col = tex2D(_MainTex, warpedUV);
 				return col;
