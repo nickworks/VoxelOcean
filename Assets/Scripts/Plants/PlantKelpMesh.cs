@@ -178,8 +178,9 @@ public class PlantKelpMesh : MonoBehaviour
             CombineInstance leaves = new CombineInstance();
             leaves.mesh = MeshTools.MakeCube();
             AddColorToVertices(leaves.mesh, num);
-            float rotAmount = 360 / (numberOfLeaves * i);
-            Quaternion leafRot = rot * Quaternion.Euler(leafOffsetAngleX, leafOffsetAngleY * rotAmount, leafOffsetAngleZ);
+            float rotDegrees = (i == 0) ? 0 : 360 / ((float)numberOfLeaves / (float)i);
+            float rotRadians = rotDegrees * (Mathf.PI / 180.0f);
+            Quaternion leafRot = rot * Quaternion.Euler(leafOffsetAngleX * Mathf.Sin(rotRadians), leafOffsetAngleY, leafOffsetAngleZ * Mathf.Cos(rotRadians));
             leaves.transform = Matrix4x4.TRS(pos, leafRot, tempLeafScaling);
             meshes.Add(leaves);
         }
