@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minArms: 5
   maxArms: 10
-  numArmSegments: 5
+  armSegments: 3
   minObjectScaling: 0.5
   maxObjectScaling: 1.5
   centerScale: {x: 6, y: 1, z: 6}

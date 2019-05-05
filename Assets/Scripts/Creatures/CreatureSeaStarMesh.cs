@@ -119,6 +119,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
         objectScaling = Random.Range(minObjectScaling, maxObjectScaling);
         taperAmount = Random.Range(minTaperAmount, maxTaperAmount);
         hue = Mathf.Lerp(hueMin, hueMax, Random.Range(0f, 1f));
+        armSegments = Random.Range(2, 5);
 
         Build();
     }
@@ -190,11 +191,11 @@ public class CreatureSeaStarMesh : MonoBehaviour
 
             float segmentScale = 1;
 
-            for(int j = 0; j < armSegments; j++)
+            for(int j = 1; j <= armSegments; j++)
             {
                 //Build out arm in that direction:
-                float armX = Mathf.Sin(rotRadians) * radius * ((j != 0) ? j : 1);
-                float armZ = Mathf.Cos(rotRadians) * radius * ((j != 0) ? j : 1);
+                float armX = (float)(Mathf.Sin(rotRadians) * radius * j);
+                float armZ = (float)(Mathf.Cos(rotRadians) * radius * j);
 
                 Vector3 armPos = pos + new Vector3(armX, 0.5f, armZ);
                 Quaternion armRot = Quaternion.Euler(0, rotDegrees, 0) * rot;
@@ -203,7 +204,7 @@ public class CreatureSeaStarMesh : MonoBehaviour
                 arm.transform = Matrix4x4.TRS(armPos, armRot, adjustArmScale);
                 meshes.Add(arm);
 
-                segmentScale -= .2f;
+                segmentScale *= .75f;
             }
         }
     }
