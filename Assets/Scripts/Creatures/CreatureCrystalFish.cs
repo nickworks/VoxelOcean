@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Creature Crystal Fish
 /// This Fish can also be a spinner
@@ -23,7 +23,7 @@ public class CreatureCrystalFish : MonoBehaviour
     /// <summary>
     /// Is the target at which it seeks an object like the player or other game objects
     /// </summary>
-    public GameObject[] targetList;
+    public GameObject player;
     /// <summary>
     /// Is the distance of detection for raycasting
     /// </summary>
@@ -36,26 +36,39 @@ public class CreatureCrystalFish : MonoBehaviour
     /// Offset for the raycasting 
     /// </summary>
     public float rayCastOffset = 2.5f;
-
+    /// <summary>
+    /// Location of the Target
+    /// </summary>
+    Vector3 targetlocation = new Vector3();
+    /// <summary>
+    /// ActIndex DEPECRATED
+    /// </summary>
     public int actIndex = 0;
-
+    Vector3 homelocation = new Vector3();
    public void Start()
     {
-
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+        homelocation = this.transform.position;
     }
 
     public void SetActObject(int aIndex)
     {
 
-        actIndex = aIndex;
-        for (int i = 0; i < targetList.Length; i++)
+    }
+
+    void Turn()
+    {
+       // print(player.transform.position);
+        Vector3 pos = player.transform.position - homelocation;
+        /*if ()
         {
-            targetList[i].SetActive(i == actIndex);
-            Vector3 targetpos = targetList[i].transform.position;
-            Vector3 pos = targetList[i].transform.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(pos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
-        }
+            findargetLocation();
+        }*/
+        Quaternion rotation = Quaternion.LookRotation(pos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
     }
     /// <summary>
     /// Update
@@ -65,11 +78,19 @@ public class CreatureCrystalFish : MonoBehaviour
     {
 
         seek();
-        SetActObject(actIndex);
+        Turn();
         Move();
 
     }
+    void findargetLocation()
+    {
+        int localX = Random.Range(-25, 25);
+        int localY = Random.Range(0, 25);
+        int localZ = Random.Range(-25, 25);
 
+        targetlocation.Set(homelocation.x + localX, homelocation.y + localY, homelocation.z + localZ);
+
+    }
     /// <summary>
     /// Move
     /// Moves forward based on acceleration and delta time
@@ -126,7 +147,7 @@ public class CreatureCrystalFish : MonoBehaviour
         }
         else
         {
-           SetActObject(actIndex);
+            Turn();
         }
     }
 }

@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13749850e84124d48b1715ee1053559a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetList: []
+  player: {fileID: 698424351451130197, guid: fbf69840fce97594990a3846ca304123, type: 3}
   detectionDist: 20
   rotationalDamp: 0.5
   rayCastOffset: 2.5
