@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /// <summary>
 /// Creature Crystal Fish
 /// This Fish can also be a spinner
@@ -19,11 +18,11 @@ public class CreatureCrystalFish : MonoBehaviour
     /// <summary>
     /// Speed in FLOAT that is capped at 5 meters per a second
     /// </summary>
-    float maxSpeed = 5f;
+    float acceleration = 5f;
     /// <summary>
     /// Is the target at which it seeks an object like the player or other game objects
     /// </summary>
-    public GameObject player;
+    public Transform target;
     /// <summary>
     /// Is the distance of detection for raycasting
     /// </summary>
@@ -36,39 +35,14 @@ public class CreatureCrystalFish : MonoBehaviour
     /// Offset for the raycasting 
     /// </summary>
     public float rayCastOffset = 2.5f;
-    /// <summary>
-    /// Location of the Target
-    /// </summary>
-    Vector3 targetlocation = new Vector3();
-    /// <summary>
-    /// ActIndex DEPECRATED
-    /// </summary>
-    public int actIndex = 0;
-    Vector3 homelocation = new Vector3();
-   public void Start()
-    {
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player");
-        }
-        homelocation = this.transform.position;
-    }
 
-    public void SetActObject(int aIndex)
+    Vector3 thisPos;
+    void Start()
     {
-
-    }
-
-    void Turn()
-    {
-       // print(player.transform.position);
-        Vector3 pos = player.transform.position - homelocation;
-        /*if ()
-        {
-            findargetLocation();
-        }*/
-        Quaternion rotation = Quaternion.LookRotation(pos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
+        thisPos = this.transform.position;
+        thisPos.y = Random.Range(45, 65);
+        thisPos.x = Random.Range(-100, 100);
+        thisPos.z = Random.Range(-100, 100);
     }
     /// <summary>
     /// Update
@@ -76,20 +50,23 @@ public class CreatureCrystalFish : MonoBehaviour
     /// </summary>
     void Update()
     {
-
         seek();
         Turn();
         Move();
-
     }
-    void findargetLocation()
+    /// <summary>
+    /// Turn
+    /// Turn toward the target position of the object
+    /// </summary>
+    void Turn()
     {
-        int localX = Random.Range(-25, 25);
-        int localY = Random.Range(0, 25);
-        int localZ = Random.Range(-25, 25);
-
-        targetlocation.Set(homelocation.x + localX, homelocation.y + localY, homelocation.z + localZ);
-
+        Vector3 targpos = target.position;
+        targpos.x += Random.Range(-25, 25);
+        targpos.y += Random.Range(-2, 45);
+        targpos.z += Random.Range(-25, 25);
+        Vector3 pos = targpos - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(pos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
     }
     /// <summary>
     /// Move
@@ -97,7 +74,7 @@ public class CreatureCrystalFish : MonoBehaviour
     /// </summary>
     void Move()
     {
-        transform.position += transform.forward * maxSpeed * Time.deltaTime;
+        transform.position += transform.forward * acceleration * Time.deltaTime;
 
     }
     /// <summary>
@@ -143,7 +120,6 @@ public class CreatureCrystalFish : MonoBehaviour
         if (offsetRay != Vector3.zero)
         {
             transform.Rotate(offsetRay * 5f * Time.deltaTime);
- //           transform.position = transform.forward * acceleration * Time.deltaTime;
         }
         else
         {
