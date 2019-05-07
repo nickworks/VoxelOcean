@@ -23,7 +23,7 @@ public class CreatureCrystalFish : MonoBehaviour
     /// <summary>
     /// Is the target at which it seeks an object like the player or other game objects
     /// </summary>
-    public GameObject[] target;
+    public GameObject[] targetList;
     /// <summary>
     /// Is the distance of detection for raycasting
     /// </summary>
@@ -38,23 +38,23 @@ public class CreatureCrystalFish : MonoBehaviour
     public float rayCastOffset = 2.5f;
 
     public int actIndex = 0;
-    
-    bool choice1 = false;
-    bool choice2 = false;
-    bool choice3 = false;
 
    public void Start()
     {
 
     }
 
-    public void SetActObject(int aIndex, Vector3 targetpos)
+    public void SetActObject(int aIndex)
     {
+
         actIndex = aIndex;
-        for (int i = 0; i < target.Length; i++)
+        for (int i = 0; i < targetList.Length; i++)
         {
-            target[i].SetActive(i == actIndex);
-            targetpos = target[i].transform.position;
+            targetList[i].SetActive(i == actIndex);
+            Vector3 targetpos = targetList[i].transform.position;
+            Vector3 pos = targetList[i].transform.position - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(pos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
         }
     }
     /// <summary>
@@ -63,34 +63,13 @@ public class CreatureCrystalFish : MonoBehaviour
     /// </summary>
     void Update()
     {
-        targetSwitch();
+
         seek();
-        Turn();
+        SetActObject(actIndex);
         Move();
 
     }
 
-    public void targetSwitch()
-    {
-
-    }
-
-    /// <summary>
-    /// Turn
-    /// Turn toward the target position of the object
-    /// </summary>
-    void Turn()
-    {
-
-        Vector3 targetpos = Vector3.zero;
-        SetActObject(actIndex, targetpos);
-        /*
-         * Target Position switch, where it switchs targets
-         */
-        Vector3 pos = targetpos - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(pos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
-    }
     /// <summary>
     /// Move
     /// Moves forward based on acceleration and delta time
@@ -147,13 +126,7 @@ public class CreatureCrystalFish : MonoBehaviour
         }
         else
         {
-            Turn();
+           SetActObject(actIndex);
         }
-    }
-    void PickRandomLocation()
-    {
-        int randomX = Random.Range(-25, 25);
-        int randomY = Random.Range( 0, 25);
-        int randomZ = Random.Range(-25, 25);   
     }
 }
