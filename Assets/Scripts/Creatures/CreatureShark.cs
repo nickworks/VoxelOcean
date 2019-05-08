@@ -62,6 +62,8 @@ public class CreatureShark : MonoBehaviour
     /// </summary>
     int ticker = 0;
 
+    ParticleSystem blood;
+
     public static List<CreatureSharkAttractor> attracts = new List<CreatureSharkAttractor>();
 
     public static List<CreatureShark> sharks = new List<CreatureShark>(); 
@@ -69,6 +71,8 @@ public class CreatureShark : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        blood = GetComponentInChildren<ParticleSystem>(); 
+
         velocity = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50));
 
         acceleration = new Vector3();
@@ -127,11 +131,15 @@ public class CreatureShark : MonoBehaviour
             {
                 CreatureMinnow m = CreatureMinnow.minnows[i];
                 float dist = Vector3.Distance(transform.position, m.transform.position);
-                if (dist <= transform.localScale.x / 2)
+                if (dist <= transform.localScale.x / 1.5f)
                 {
+                    blood.Play(); 
+
                     CreatureMinnow.minnows.Remove(m);
 
                     Destroy(m.gameObject);
+
+
                 }
             }
         }
