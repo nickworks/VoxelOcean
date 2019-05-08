@@ -35,7 +35,9 @@ public class CreatureCrystalFish : MonoBehaviour
     /// Offset for the raycasting 
     /// </summary>
     public float rayCastOffset = 2.5f;
-
+    /// <summary>
+    /// The Current Position of the object (initial spawn)
+    /// </summary>
     Vector3 thisPos;
     void Start()
     {
@@ -65,8 +67,9 @@ public class CreatureCrystalFish : MonoBehaviour
         targpos.y += Random.Range(-2, 45);
         targpos.z += Random.Range(-25, 25);
         Vector3 pos = targpos - transform.position;
+       
         Quaternion rotation = Quaternion.LookRotation(pos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Mathf.Sin(rotationalDamp*Time.deltaTime) * rotationalDamp);
     }
     /// <summary>
     /// Move
