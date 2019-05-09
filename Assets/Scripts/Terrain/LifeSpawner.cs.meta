@@ -3,7 +3,31 @@ guid: 672a511ec47a72140a70bfd070a476b4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - prefabCoralVoronoi: {instanceID: 0}
+  - prefabCoralBroccoli: {instanceID: 0}
+  - prefabCoralTree: {instanceID: 0}
+  - prefabCoralCrystal: {instanceID: 0}
+  - prefabCoralBauble: {fileID: 1751210088325410814, guid: eb1cc9c641f6c9d41978d5a7097c8881,
+      type: 3}
+  - prefabCoralFlower: {instanceID: 0}
+  - prefabCoralPurpleFan: {instanceID: 0}
+  - prefabCoralFingers: {instanceID: 0}
+  - prefabPlantKelp: {instanceID: 0}
+  - prefabCreatureSeaStar: {instanceID: 0}
+  - prefabCoralPrecious: {instanceID: 0}
+  - prefabLuminentPlankton: {instanceID: 0}
+  - prefabCoralPyramid: {instanceID: 0}
+  - prefabCoralTubeWorm: {instanceID: 0}
+  - prefabCreatureBlindShrimp: {instanceID: 0}
+  - prefabPlantDrifter: {instanceID: 0}
+  - prefabPlantLeaf: {instanceID: 0}
+  - prefabPlantSeagrass: {instanceID: 0}
+  - prefabCrystalFlower: {instanceID: 0}
+  - prefabCrystalRock: {instanceID: 0}
+  - prefabMossBall: {instanceID: 0}
+  - prefabSeaUrchin: {instanceID: 0}
+  - prefabCoralGlow: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

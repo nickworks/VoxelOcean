@@ -130,6 +130,10 @@ public class LifeSpawner : MonoBehaviour
     /// </summary>
     public GameObject prefabCreatureSeaStar;
     public GameObject prefabCoralPrecious;
+	/// <summary>
+	/// Prefab reference for Luminent Plankton (Jess P)
+	/// </summary>
+	public GameObject prefabLuminentPlankton;
     public GameObject prefabCoralPyramid;
     /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
@@ -238,7 +242,14 @@ public class LifeSpawner : MonoBehaviour
             prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
         }
 		if (biome.owner == BiomeOwner.Jess){
-			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
+			float ran = Random.Range(1, 9);
+			if(ran < 3){
+				prefab =prefabCoralBroccoli;
+			} else if (ran < 6 && ran > 3){
+				prefab =prefabPlantSeagrass;
+			} else {
+				prefab = prefabLuminentPlankton;
+			}
 		}
         if (biome.owner == BiomeOwner.Justin) prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble : prefabCoralFlower;
         if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
