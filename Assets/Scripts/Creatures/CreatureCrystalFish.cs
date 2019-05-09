@@ -39,10 +39,14 @@ public class CreatureCrystalFish : MonoBehaviour
     /// The Current Position of the object (initial spawn)
     /// </summary>
     Vector3 thisPos;
+    /// <summary>
+    /// Start
+    /// Randomly places the position of the object / parent above a random range
+    /// </summary>
     void Start()
     {
         thisPos = this.transform.position;
-        thisPos.y = Random.Range(45, 65);
+        thisPos.y = Random.Range(25, 65);
         thisPos.x = Random.Range(-100, 100);
         thisPos.z = Random.Range(-100, 100);
     }
@@ -59,6 +63,7 @@ public class CreatureCrystalFish : MonoBehaviour
     /// <summary>
     /// Turn
     /// Turn toward the target position of the object
+    /// Randomly targets the position so it is offset from its position
     /// </summary>
     void Turn()
     {

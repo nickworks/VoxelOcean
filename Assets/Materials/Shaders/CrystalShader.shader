@@ -1,5 +1,7 @@
 ﻿Shader "Custom/CrystalShader"
 {
+	///Created by Cameron Garchow from Music Visualizer Assignment
+	///Shifts color based on time
 	Properties
 	{
 		_Emission("Emission", Color) = (1,1,1,1)

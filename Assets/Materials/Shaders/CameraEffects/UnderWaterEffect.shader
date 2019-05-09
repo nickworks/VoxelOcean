@@ -1,4 +1,4 @@
-Shader "Custom/SinWaveUnderWater"
+Shader "Custom/UnderWater"
 {
     Properties
     {
@@ -11,7 +11,7 @@ Shader "Custom/SinWaveUnderWater"
     SubShader
     {
         Tags { "RenderType"="Transparent" }
-       
+       ///Creates a Noise Field
 		Pass {
 			CGPROGRAM
 			#pragma vertex vert
