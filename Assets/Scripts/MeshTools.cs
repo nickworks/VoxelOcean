@@ -269,151 +269,135 @@ public static class MeshTools
         mesh.SetTriangles(tris, 0);
         return mesh;
     }
-
     /// <summary>
-    /// Makes a mesh for a 1m tall (y-axis) pentagonal cylinder. Currently has all data except for UVs.
+    /// Generates the mesh data to make a 1m sized cylinder mesh. Anchor point in in the bottom center of the mesh.
     /// </summary>
-    /// <returns>Mesh data for a 1m tall (y-axis) cylinder.</returns>
-    public static Mesh MakePentagonalCylinder()
+    /// <param name="points">The number of points the object has.</param>
+    /// <returns></returns>
+    public static Mesh MakeCylinder(int points)
     {
         List<Vector3> verts = new List<Vector3>();
         //List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         List<int> tris = new List<int>();
-        List<Color> colors = new List<Color>();
 
-        //TOP
-        verts.Add(new Vector3(+.5f, 1, 0));
-        verts.Add(new Vector3(0, 1, -.5f));
-        verts.Add(new Vector3(-.5f, 1, -.25f));
-        verts.Add(new Vector3(-.5f, 1, +.25f));
-        verts.Add(new Vector3(0, 1, +.5f));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        //uvs?
-        tris.Add(0);
-        tris.Add(1);
-        tris.Add(2);
-        tris.Add(0);
-        tris.Add(2);
-        tris.Add(3);
-        tris.Add(0);
-        tris.Add(3);
-        tris.Add(4);
+        //Generate vertices based on number of points & set normals:
+            //Set start points in middle:
+            verts.Add(new Vector3(0, 0, 0));                //verts(0) on Bottom Center
+            normals.Add(new Vector3(0, -1, 0));                          //normals for verts(0)
+            
+            verts.Add(new Vector3(0, 1, 0));                //verts(1) on Top Center
+            normals.Add(new Vector3(0, +1, 0));              //normals for verts(1)
 
-        //BOTTOM
-        verts.Add(new Vector3(+.5f, 0, 0));
-        verts.Add(new Vector3(0, 0, -.5f));
-        verts.Add(new Vector3(-.5f, 0, -.25f));
-        verts.Add(new Vector3(-.5f, 0, +.25f));
-        verts.Add(new Vector3(0, 0, +.5f));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        //uvs?
-        tris.Add(7);
-        tris.Add(6);
-        tris.Add(5);
-        tris.Add(8);
-        tris.Add(7);
-        tris.Add(5);
-        tris.Add(9);
-        tris.Add(8);
-        tris.Add(5);
+            //Get points for all sides(bottom, then top); the sides will start at verts(2):
+            for (int i = 0; i < points; i++)
+            {       
+                //find angle to spawn verts at:
+                float angleDegrees = (i == 0) ?  0 : 360 / ((float)points / (float)i);
+                float angleRadians = angleDegrees * (Mathf.PI / 180);
+                float radius = .5f;
 
-        //FRONT
-        verts.Add(new Vector3(-.5f, 0, -.25f));
-        verts.Add(new Vector3(-.5f, 0, +.25f));
-        verts.Add(new Vector3(-.5f, 1, -.25f));
-        verts.Add(new Vector3(-.5f, 1, +.25f));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        //uvs?
-        tris.Add(10);
-        tris.Add(11);
-        tris.Add(12);
-        tris.Add(11);
-        tris.Add(13);
-        tris.Add(12);
+                //find x and z positions of created vertices:
+                float vertX = Mathf.Sin(angleRadians) * radius;
+                float vertZ = Mathf.Cos(angleRadians) * radius;
 
-        //LEFT-FRONT
-        verts.Add(new Vector3(0, 0, -.5f));
-        verts.Add(new Vector3(-.5f, 0, -.25f));
-        verts.Add(new Vector3(0, 1, -.5f));
-        verts.Add(new Vector3(-.5f, 1, -.25f));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        //uvs?
-        tris.Add(14);
-        tris.Add(15);
-        tris.Add(16);
-        tris.Add(15);
-        tris.Add(17);
-        tris.Add(16);
+                //set bottom vert & normals
+                verts.Add(new Vector3(vertX, 0, vertZ));
+                int point1Bottom =  verts.Count - 1;
+                normals.Add(Vector3.Normalize(verts[point1Bottom] - verts[0]));
+                //set top vert & normals
+                verts.Add(new Vector3(vertX, 1, vertZ));
+                int point1Top = verts.Count - 1;
+                normals.Add(Vector3.Normalize(verts[point1Top] - verts[1]));
+            }
 
-        //RIGHT-FRONT
-        verts.Add(new Vector3(-.5f, 0, +.25f));
-        verts.Add(new Vector3(0, 0, +.5f));
-        verts.Add(new Vector3(-.5f, 1, +.25f));
-        verts.Add(new Vector3(0, 1, +.5f));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        normals.Add(new Vector3(0, 1, 0));
-        //uvs?
-        tris.Add(18);
-        tris.Add(19);
-        tris.Add(20);
-        tris.Add(19);
-        tris.Add(21);
-        tris.Add(20);
+        //TODO: Generate UV values:
 
-        //LEFT-BACK
-        verts.Add(new Vector3(0, 0, -.5f));
-        verts.Add(new Vector3(+.5f, 0, 0));
-        verts.Add(new Vector3(0, 1, -.5f));
-        verts.Add(new Vector3(+.5f, 1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        //uvs?
-        tris.Add(24);
-        tris.Add(23);
-        tris.Add(22);
-        tris.Add(24);
-        tris.Add(25);
-        tris.Add(23);
+        //Generate triangles based on the created vertices
+            //Side Trianges:
+            //set up left and right index values:
+            int leftBottomIndex = 2;
+            int leftTopIndex = 3;
 
-        //RIGHT-BACK
-        verts.Add(new Vector3(+.5f, 0, 0));
-        verts.Add(new Vector3(0, 0, +.5f));
-        verts.Add(new Vector3(+.5f, 1, 0));
-        verts.Add(new Vector3(0, 1, +.5f));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        //uvs?
-        tris.Add(28);
-        tris.Add(29);
-        tris.Add(26);
-        tris.Add(26);
-        tris.Add(29);
-        tris.Add(27);
+            int rightBottomIndex;
+            int rightTopIndex;
 
+            for(int i = 1; i <= points; i++)
+            {
+                if (i != points)
+                {
+                    //set index values for the right vertices:
+                    rightBottomIndex = leftBottomIndex + 2;
+                    rightTopIndex = leftTopIndex + 2;
+
+                    
+                } else
+                {
+                    //set right vertices to loop back to the starting side vertices:
+                    rightBottomIndex = 2;
+                    rightTopIndex = 3;
+                }
+
+                //create triangles:
+                tris.Add(leftBottomIndex);
+                tris.Add(rightTopIndex);
+                tris.Add(leftTopIndex);
+
+                tris.Add(rightTopIndex);
+                tris.Add(leftBottomIndex);
+                tris.Add(rightBottomIndex);
+
+                //Set index values for next side.
+                leftBottomIndex = rightBottomIndex;
+                leftTopIndex = rightTopIndex;
+            }   
+        
+            //Bottom Triangles (Even index values):
+            for(int bv = 2; bv <= verts.Count - 2; bv += 2)
+            {
+                if (bv != verts.Count - 2)
+                {
+                    //grab vertices from index
+                        //start tri at bv (Bottom Vertex)
+                        tris.Add(bv);
+                        //Set vertex at index 0
+                        tris.Add(0);
+                        //End at vertex bv + 2;
+                        tris.Add(bv + 2);
+                } else
+                {
+                //Set last triangle using the center and point 1:
+                    tris.Add(bv);
+                    tris.Add(0);            //Bottom Center Index
+                    tris.Add(2);            //Bottom Point 1 Index
+                }
+            }
+            
+            //Top Triangles (Odd index values):
+            for(int tv = 1; tv <= verts.Count - 1; tv += 2)
+            {
+                if (tv != verts.Count  - 1)
+                {
+                    //set tris from vertices at index
+                        //Set at vertex tv + 2
+                        tris.Add(tv + 2);
+                        //Set at vertex at index 1
+                        tris.Add(1);
+                        //start tri at tv (Top Vertex)
+                        tris.Add(tv);       
+                } else
+                {
+                //Set last triangle using the center and point 1:
+                    tris.Add(3);
+                    tris.Add(1);                //Top Center Index
+                    tris.Add(tv);                //Top Point 1 Index
+                }
+            }
+
+        //Generate mesh based on verts, tris, and normals
         Mesh mesh = new Mesh();
         mesh.SetVertices(verts);
-        //mesh.SetUVs(0, uvs);
+        //mesh.SetUVs(uvs);
         mesh.SetNormals(normals);
         mesh.SetTriangles(tris, 0);
         return mesh;
