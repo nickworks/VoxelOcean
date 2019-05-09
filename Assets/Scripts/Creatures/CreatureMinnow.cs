@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class CreatureMinnow : MonoBehaviour
 {
-
+    /// <summary>
+    /// velocity of the minnow;
+    /// </summary>
     Vector3 velocity;
-
+    /// <summary>
+    /// acceleration of the minnow;
+    /// </summary>
     Vector3 acceleration;
-
-
     /// <summary>
     /// The steering velocity of this shrimp;
     /// </summary>
@@ -75,15 +77,23 @@ public class CreatureMinnow : MonoBehaviour
     /// The direction needed to move in to target the center of the school;
     /// </summary>
     Vector3 directionToCongregate;
-
+    /// <summary>
+    /// list of all the minnows;
+    /// </summary>
     public static List<CreatureMinnow> minnows = new List<CreatureMinnow>();
-
+    /// <summary>
+    /// list of all the minnow attractors;
+    /// </summary>
     public static List<CreatureMinnowAttractor> attracts = new List<CreatureMinnowAttractor>();
-
+    /// <summary>
+    /// list of all the minnow repulsors;
+    /// </summary>
     public static List<CreatureMinnowRepulsor> repulses = new List<CreatureMinnowRepulsor>();
 
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// sets vel, accel, and speed. Adds self to list of minnows;
+    /// </summary>
     void Start()
     {
         velocity = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50));
@@ -95,16 +105,21 @@ public class CreatureMinnow : MonoBehaviour
         minnows.Add(this); 
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// finds a desired direction and moves towards it;
+    /// </summary>
     void Update()
     {
         ticker++; 
+
         acceleration = Vector3.zero;
 
         pickDirection();
         Move(); 
     }
-
+    /// <summary>
+    /// finds a desired direction using a flock algorithm, align, separate, congregate, attractors, and repulsors;
+    /// </summary>
     void pickDirection()
     {
         //logic to stop this function from doing stuff every frame
@@ -125,8 +140,6 @@ public class CreatureMinnow : MonoBehaviour
             if (dist < closeDist)
             {
                 if (dist < shortestDist) shortestDist = dist;
-                //TODO:
-                // get direction away from every near boid, inversely weighted by proximity
                 target = transform.position - b.transform.position;
                 directionToSeperate += target.normalized / (dist * dist);
                 // get direction towards center of flock, weighted by distance
@@ -174,8 +187,6 @@ public class CreatureMinnow : MonoBehaviour
         {
             float dist = Vector3.Distance(transform.position, b.transform.position);
             if (dist < shortestDist) shortestDist = dist;
-            //TODO:
-            // get direction away from every near boid, inversely weighted by proximity
             target = b.transform.position - transform.position;
             desire += target.normalized * (dist/100);
             
@@ -199,10 +210,12 @@ public class CreatureMinnow : MonoBehaviour
             }
             
         }
-        AddForce(desire * repulsStrength);
+        AddForce(desire * repulsStrength * turnForce);
 
     }
-
+    /// <summary>
+    /// moves the shark;
+    /// </summary>
     void Move()
     {
         velocity += acceleration * Time.deltaTime;
@@ -211,7 +224,9 @@ public class CreatureMinnow : MonoBehaviour
 
         transform.LookAt(transform.position + velocity);
     }
-
+    /// <summary>
+    /// shortcut to add force to acceleration;
+    /// </summary>
     void AddForce(Vector3 force)
     {
         acceleration += force; 
