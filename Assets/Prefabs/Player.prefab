@@ -156,5 +156,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: f8d1229df2115d44496d41769efe42b4, type: 2}
-  _noiseScale: 0.1
+  _noiseScale: 0.009
   _noiseSpeed: {x: 0.2, y: 0.3}
