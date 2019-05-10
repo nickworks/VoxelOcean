@@ -118,23 +118,73 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCoralTree;
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
+    public GameObject prefabCoralFlower; 
     public GameObject prefabCoralPurpleFan;
     public GameObject prefabCoralFingers;
+    public GameObject prefabFishGobies;
+    public GameObject prefabObjectChest;
+    public GameObject prefabCreatureMinnow;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
     public GameObject prefabPlantKelp;
+    /// <summary>
+    /// Prefab reference for CreatureSeaStar (Kyle Lowery)
+    /// </summary>
+    public GameObject prefabCreatureSeaStar;
     public GameObject prefabCoralPrecious;
+    /// <summary>
+    /// Prefab reference for CoralPyramid
+    /// </summary>
     public GameObject prefabCoralPyramid;
+    /// <summary>
+    /// Prefab reference for Sea Dragon
+    /// </summary>
+    public GameObject prefabSeaDragon;
     /// <summary>
     /// Prefab reference for Hydrothermic Tube Worms (Chris's "coral").
     /// </summary>
     public GameObject prefabCoralTubeWorm;
+    /// <summary>
+    /// Prefab reference for lost anchors. (Chris's "non living").
+    /// </summary>
+    public GameObject prefabOtherAnchor;
+    /// <summary>
+    /// Prefab reference for Hydrothermic blind shrimp (Chris's fish).
+    /// </summary>
+    public GameObject prefabCreatureBlindShrimp;
+    /// <summary>
+    /// Prefab reference for drifting kelp (Chris's flora).
+    /// </summary>
+    public GameObject prefabPlantDrifter;
     public GameObject prefabPlantLeaf;
 	/// <summary>
 	/// Prefab reference for Seagrass (Jess P)
 	/// </summary>
 	public GameObject prefabPlantSeagrass;
+    /// <summary>
+    /// PRefab Reference for Crystal Flower (Cameron G)
+    /// </summary>
+    public GameObject prefabCrystalFlower;
+    /// <summary>
+    /// Prefab Reference for Crystal Rock (Cameron G)
+    /// </summary>
+    public GameObject prefabCrystalRock;
+
+    /// <summary>
+    /// Prefab Reference for Crystal Rock and Sea Urchin (Kaylee K)
+    /// </summary>
+    public GameObject prefabMossBall;
+    public GameObject prefabSeaUrchin;
+
+    /// <summary>
+    /// Prefab Reference for Coral Supreme (Zack G)
+    /// </summary>
+    public GameObject prefabCoralSupreme;
+    /// <summary>
+    /// Prefab Reference for CoralWillow (Zack G)
+    /// </summary>
+    public GameObject prefabCoralWillow;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -145,16 +195,15 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for Glowing coral
     /// </summary>
     public GameObject prefabCoralGlow;
-    /// <summary>
-    /// Prefab reference for Coral Supreme
-    /// </summary>
-    public GameObject prefabCoralSupreme;
 
     /// <summary>
     /// Attempt to spawn a bunch of life on this VoxelChunk
     /// </summary>
     public void SpawnSomeLife()
     {
+
+        int seed = (int)(transform.position.x + transform.position.y + transform.position.z) * 100;
+        Random.InitState(seed);
 
         mesh = GetComponent<MeshFilter>();
         if (!mesh) return;
@@ -201,29 +250,106 @@ public class LifeSpawner : MonoBehaviour
 
         GameObject prefab = null;
         if (biome.owner == BiomeOwner.Andrew) prefab = prefabCoralGlow;
-        if (biome.owner == BiomeOwner.Cameron) prefab = prefabCoralCrystal;
-        if (biome.owner == BiomeOwner.Chris) prefab = prefabCoralTubeWorm;
+        if (biome.owner == BiomeOwner.Cameron) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralCrystal : (Random.Range(0f, 10f) > 9f) ? prefabCrystalFlower : prefabCrystalRock;
+        if (biome.owner == BiomeOwner.Chris)
+        {
+            prefab = (Random.Range(0f, 5f) > 1f) ? prefabCoralTubeWorm : (Random.Range(0f, 2f) > 1) ? prefabPlantDrifter : prefabOtherAnchor;
+            if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
+        }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
         if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
         if (biome.owner == BiomeOwner.Josh){
             //chance of spawning pyramid, or plant
-            prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
+         //   prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
+            int rand = Random.Range(1, 10);
+            if (rand < 2)
+            {
+                prefab = prefabCoralPyramid;
+            }
+            else if(rand > 8)
+            {
+                prefab = prefabPlantLeaf;
+            }
+            else
+            {
+                prefab = prefabSeaDragon;
+            }         
         }
 		if (biome.owner == BiomeOwner.Jess){
 			prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBroccoli : prefabPlantSeagrass;
 		}
+
         if (biome.owner == BiomeOwner.Justin) prefab = prefabCoralBauble;
-        if (biome.owner == BiomeOwner.Jesse) prefab = prefabCoralFingers ;
-        //if (biome.owner == BiomeOwner.Josh) prefab = ;
-        if (biome.owner == BiomeOwner.Kaylee) prefab = prefabCoralPurpleFan;
-        //if (biome.owner == BiomeOwner.Keegan) prefab = ;
-        if (biome.owner == BiomeOwner.Kyle) prefab = prefabPlantKelp;
-        if (biome.owner == BiomeOwner.Zach) prefab = prefabCoralSupreme;
+        if (biome.owner == BiomeOwner.Jesse)
+        {
+            int num = Random.Range(1, 7) + Random.Range(1, 7);
+            if (num > 7)
+            {
+                prefab = prefabCoralFingers;
+            }
+            else if (num > 3)
+            {
+                prefab = prefabFishGobies;
+            }
+            else 
+            {
+                prefab = prefabObjectChest;
+            }
+        }
+
+        if (biome.owner == BiomeOwner.Justin) {
+            prefab = (Random.Range(1, 5) >= 3) ? prefabCoralBauble: prefabCoralFlower;
+
+            if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
+        }
+        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
+        if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
+        
+        if (biome.owner == BiomeOwner.Zach) prefab = (Random.Range(1, 5) > 3) ? prefabCoralSupreme : prefabCoralWillow;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
 
-        if (prefab != null) SpawnPrefab(prefab, pos, rot, 1);
+        float scale = Random.Range(.1f, .75f) + Random.Range(.1f, .75f);
 
+        if (prefab != null)
+        {
+            //spawn prefab
+            GameObject obj = SpawnPrefab(prefab, pos, rot, 1);
+
+            // instantiate Coroutine for adding mesh collider
+            IEnumerator cr = AddMeshCollider(obj);
+            StartCoroutine(cr);
+        }
         return true;
+    }
+    /// <summary>
+    /// This coroutine will add a mesh collider to the passed in gameobject when it resolves
+    /// </summary>
+    /// <param name="obj">the gameobject to be affected</param>
+    /// <returns></returns>
+    IEnumerator AddMeshCollider(GameObject obj)
+    {
+        yield return new WaitForSeconds(1f);
+        MeshCollider test = null;
+
+        test = obj.GetComponent<MeshCollider>();
+
+        //if obj doesn't have a meshcollider
+        if (test == null)
+        {
+            obj.AddComponent<BoxCollider>();
+
+          //  MeshCollider test2 = obj.GetComponent<MeshCollider>();
+          //  test2.convex = true;
+        }
+    }
+    /// <summary>
+    /// start the AddMeshCollider coroutine
+    /// </summary>
+    /// <param name="obj">the gameobject to be affected</param>
+    /// <returns>starts the AddMeshCollider courtine</returns>
+    IEnumerator StartCoroutine(GameObject obj)
+    {
+        yield return StartCoroutine("AddMeshCollider");
     }
 
     /// <summary>
@@ -233,13 +359,14 @@ public class LifeSpawner : MonoBehaviour
     /// <param name="position">The world position to spawn the prefab</param>
     /// <param name="rotation">The world rotation to use when spawning the prefab</param>
     /// <param name="scale">The local scale to spawn the prefab</param>
-    void SpawnPrefab(GameObject prefab, Vector3 position, Quaternion? rotation = null, float scale = 1)
+    GameObject SpawnPrefab(GameObject prefab, Vector3 position, Quaternion? rotation = null, float scale = 1)
     {
         Quaternion rot = (rotation != null) ? (Quaternion)rotation : Quaternion.identity;
         GameObject obj = Instantiate(prefab, position, rot, transform);
         obj.transform.localScale = Vector3.one * scale;
+        
 
         // TODO: register the coral in a list of coral?
-
+        return obj;
     }
 }
