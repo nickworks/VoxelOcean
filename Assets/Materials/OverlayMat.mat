@@ -97,7 +97,7 @@ Material:
     - _MinuteDetailScrollSpeed: 0
     - _Mode: 0
     - _NoiseFrequency: 1.77
-    - _NoiseScale: 0.01
+    - _NoiseScale: 0.009
     - _NoiseSpeed: 0.64
     - _OcclusionStrength: 1
     - _Parallax: 0.02

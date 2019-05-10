@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 071dda17dd1dbb4429f1107dad916d9e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - prefabCreatureLuminecentPlankton: {fileID: 1723109392679966492, guid: 9616651176e5d604a9e6d4e7f7caea2c,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
