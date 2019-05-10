@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40e6cc02aa8b0b42a1bc33f0ed65b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FishGobbiesPrefab: {fileID: 7365141659715445623, guid: 25f4a1e078cdf0147a7a7f605f3a8364,
+  FishGobbiesPrefab: {fileID: 559893354735377794, guid: cffba7e751bd1044991e600658972674,
     type: 3}
   spawnRadius: 1
