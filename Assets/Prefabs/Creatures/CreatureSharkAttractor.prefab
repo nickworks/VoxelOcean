@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5910721828563906287, guid: 18de8772a211c314aad2c0634ca6f76f, type: 3}
   sharkCount: 1
-  maxSharks: 1
+  maxSharks: 3
