@@ -7,6 +7,9 @@ using UnityEditor;
 public class CoralFlower : MonoBehaviour
 {
     // TODO: Please update comments to be documentation style.  You can easily do this by starting your comment with "///".
+
+    public Material mat;
+
     /// <summary>
     /// controls number of times the loop will run
     /// </summary>
@@ -120,13 +123,17 @@ public class CoralFlower : MonoBehaviour
 		MeshFilter meshFilter = GetComponent<MeshFilter>();			///change assigned mesh
 		meshFilter.mesh = mesh;
 
-		MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
+        
 
-		//Material mat = (Material)mesh.colors; 
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();	///show assigned mesh
 
-		//meshRenderer.material = mesh.colors; 
+        meshRenderer.material = mat;
 
-	}
+        //Material mat = (Material)mesh.colors; 
+
+        //meshRenderer.material = mesh.colors; 
+
+    }
     /// <summary>
     /// The iterative function that grows the coral
     /// </summary>
@@ -151,6 +158,7 @@ public class CoralFlower : MonoBehaviour
 		}
         else if(num == 1)
         {
+            
             inst.transform = Matrix4x4.TRS(pos, rot, new Vector3(.1f * length, 2 * length, .1f * length)); ///sets the transform of the first iteration
 			num++;
         }
@@ -181,7 +189,7 @@ public class CoralFlower : MonoBehaviour
 		{
 			if (num == 1)
 			{
-				lSidePos = inst.transform.MultiplyPoint(new Vector3(0f, 1f, 0f));
+				lSidePos = inst.transform.MultiplyPoint(new Vector3(0f, 1.1f, 0f));
 			}
 			else
 			{
@@ -395,6 +403,8 @@ public class CoralFlower : MonoBehaviour
             float tempHue = hue + (1/(float)iterations) * pos.y; 
 
             Color color = Color.HSVToRGB(tempHue, 1, 1);
+
+            color.a = num / (float)iterations; 
 
             colors.Add(color); 
 		}
