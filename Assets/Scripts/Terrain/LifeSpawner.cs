@@ -116,6 +116,7 @@ public class LifeSpawner : MonoBehaviour
 	/// </summary>
     public GameObject prefabCoralBroccoli;
     public GameObject prefabCoralTree;
+    public GameObject prefabCreatureJellyfish;
     public GameObject prefabCoralCrystal;
     public GameObject prefabCoralBauble;
     public GameObject prefabCoralFlower; 
@@ -180,10 +181,20 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCrystalRock;
 
     /// <summary>
-    /// Prefab Reference for Crystal Rock and Sea Urchin (Kaylee K)
+    /// Prefab Reference for MossBall, Lion Fish, and Sea Urchin (Kaylee K)
     /// </summary>
     public GameObject prefabMossBall;
     public GameObject prefabSeaUrchin;
+    public GameObject prefabLionFish;
+
+    /// <summary>
+    /// Prefab Reference for Coral Supreme (Zack G)
+    /// </summary>
+    public GameObject prefabCoralSupreme;
+    /// <summary>
+    /// Prefab Reference for CoralWillow (Zack G)
+    /// </summary>
+    public GameObject prefabCoralWillow;
 
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
@@ -256,7 +267,11 @@ public class LifeSpawner : MonoBehaviour
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureBlindShrimp, pos, rot, 1);
         }
         if (biome.owner == BiomeOwner.Dominic) prefab = prefabCoralVoronoi;
-        if (biome.owner == BiomeOwner.Eric) prefab = prefabCoralTree;
+        if (biome.owner == BiomeOwner.Eric)
+        {
+            prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralTree : prefabCreatureJellyfish;
+            if (prefab = prefabCreatureJellyfish) SpawnPrefab(prefabCreatureJellyfish, pos/8, rot, (Random.Range(0,2)));
+        }
         if (biome.owner == BiomeOwner.Josh){
             //chance of spawning pyramid, or plant
          //   prefab = (Random.Range(1, 5) > 3) ? prefabCoralPyramid : prefabPlantLeaf;
@@ -313,7 +328,7 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
         if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
         
-        //if (biome.owner == BiomeOwner.Zach) prefab = ;
+        if (biome.owner == BiomeOwner.Zach) prefab = (Random.Range(1, 5) > 3) ? prefabCoralSupreme : prefabCoralWillow;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
 
         float scale = Random.Range(.1f, .75f) + Random.Range(.1f, .75f);
