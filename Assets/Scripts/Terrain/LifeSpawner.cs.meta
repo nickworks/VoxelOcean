@@ -19,6 +19,9 @@ MonoImporter:
       type: 3}
   - prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
       type: 3}
+  - prefabFishGobies: {instanceID: 0}
+  - prefabObjectChest: {instanceID: 0}
+  - prefabCreatureMinnow: {instanceID: 0}
   - prefabPlantKelp: {fileID: 1111102048973533995, guid: d73592db77dcdf744ba98b6a5b38cddd,
       type: 3}
   - prefabCreatureSeaStar: {fileID: 338540796843315734, guid: 8c8b1bc97220f884f97ba4078cc1259a,
@@ -31,11 +34,21 @@ MonoImporter:
       type: 3}
   - prefabCoralTubeWorm: {fileID: 1778713374299121270, guid: b6f8170c4ab36f84686162f07b8e6f11,
       type: 3}
+  - prefabOtherAnchor: {instanceID: 0}
+  - prefabCreatureBlindShrimp: {instanceID: 0}
+  - prefabPlantDrifter: {instanceID: 0}
   - prefabPlantLeaf: {fileID: 5078370866149129377, guid: 6846a9475805a6843b455aeb8456966e,
       type: 3}
   - prefabPlantSeagrass: {fileID: 9184822981456748834, guid: 8ef6def96fa59974caab563f824ce1b1,
       type: 3}
+  - prefabCrystalFlower: {instanceID: 0}
+  - prefabCrystalRock: {instanceID: 0}
   - prefabMossBall: {fileID: 6755855242698053521, guid: 72b739e313ec45346ac37640e24b714f,
+      type: 3}
+  - prefabSeaUrchin: {instanceID: 0}
+  - prefabCoralSupreme: {fileID: 4802542557500494251, guid: e238a3f3b38936742b2a0f5f0e798ec8,
+      type: 3}
+  - prefabCoralWillow: {fileID: 6114320566702955979, guid: 8a37b35dba917a948801c48d8099cec4,
       type: 3}
   - prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
       type: 3}

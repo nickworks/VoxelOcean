@@ -22,7 +22,7 @@ public class CreatureCrystalFish : MonoBehaviour
     /// <summary>
     /// Is the target at which it seeks an object like the player or other game objects
     /// </summary>
-    [SerializeField]Transform target;
+    public Transform target;
     /// <summary>
     /// Is the distance of detection for raycasting
     /// </summary>
@@ -35,7 +35,21 @@ public class CreatureCrystalFish : MonoBehaviour
     /// Offset for the raycasting 
     /// </summary>
     public float rayCastOffset = 2.5f;
-
+    /// <summary>
+    /// The Current Position of the object (initial spawn)
+    /// </summary>
+    Vector3 thisPos;
+    /// <summary>
+    /// Start
+    /// Randomly places the position of the object / parent above a random range
+    /// </summary>
+    void Start()
+    {
+        thisPos = this.transform.position;
+        thisPos.y = Random.Range(25, 65);
+        thisPos.x = Random.Range(-100, 100);
+        thisPos.z = Random.Range(-100, 100);
+    }
     /// <summary>
     /// Update
     /// Calls SEek, Turn and Move in order to function
@@ -49,12 +63,18 @@ public class CreatureCrystalFish : MonoBehaviour
     /// <summary>
     /// Turn
     /// Turn toward the target position of the object
+    /// Randomly targets the position so it is offset from its position
     /// </summary>
     void Turn()
     {
-        Vector3 pos = target.position - transform.position;
+        Vector3 targpos = target.position;
+        targpos.x += Random.Range(-25, 25);
+        targpos.y += Random.Range(-2, 45);
+        targpos.z += Random.Range(-25, 25);
+        Vector3 pos = targpos - transform.position;
+       
         Quaternion rotation = Quaternion.LookRotation(pos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationalDamp * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Mathf.Sin(rotationalDamp*Time.deltaTime) * rotationalDamp);
     }
     /// <summary>
     /// Move
