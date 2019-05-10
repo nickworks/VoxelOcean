@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1149727420882278599}
   - component: {fileID: 3043662747295578792}
   - component: {fileID: 8824173363307869227}
-  - component: {fileID: 5849513412697254595}
   m_Layer: 0
   m_Name: CreatureMinnow
   m_TagString: Untagged
@@ -123,20 +122,6 @@ MonoBehaviour:
   activity: 4
   strength: 4
   speed: 1
---- !u!114 &5849513412697254595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5616946952130484667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb265921d3a94d43b812be751b91f6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 6352586778471706591}
-  output: {fileID: 0}
 --- !u!1 &6352586778471706591
 GameObject:
   m_ObjectHideFlags: 0
