@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2346822353233601552}
   - component: {fileID: 3846603162496171316}
   - component: {fileID: 853515456992765927}
-  - component: {fileID: 3732250299396219171}
+  - component: {fileID: 7683336036501874271}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: fishGobbies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3732250299396219171
+--- !u!114 &7683336036501874271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
