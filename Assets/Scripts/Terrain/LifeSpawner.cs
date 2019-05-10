@@ -132,6 +132,11 @@ public class LifeSpawner : MonoBehaviour
     /// Prefab reference for CreatureSeaStar (Kyle Lowery)
     /// </summary>
     public GameObject prefabCreatureSeaStar;
+    /// <summary>
+    /// Prefab reference for NonlivingTrident (Kyle Lowery)
+    /// </summary>
+    public GameObject prefabObjectTrident;
+
     public GameObject prefabCoralPrecious;
     /// <summary>
     /// Prefab reference for CoralPyramid
@@ -294,7 +299,21 @@ public class LifeSpawner : MonoBehaviour
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
         }
         if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
-        if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
+        if (biome.owner == BiomeOwner.Kyle)
+        {
+            int num = Random.Range(1, 10) + Random.Range(1, 10);
+            if (num > 12)
+            {
+                prefab = prefabCreatureSeaStar;
+            }
+            else if (num > 3)
+            {
+                prefab = prefabPlantKelp;
+            } else
+            {
+                prefab = prefabObjectTrident;
+            }
+        }
         
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
         if (biome.owner == BiomeOwner.Keegan) prefab = prefabCoralPrecious;
