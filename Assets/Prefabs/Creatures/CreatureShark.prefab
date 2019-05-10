@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5910721828563906287}
   - component: {fileID: 3769196714484829634}
   - component: {fileID: 4451581008932032718}
-  - component: {fileID: 4223812750154501025}
   m_Layer: 0
   m_Name: CreatureShark
   m_TagString: Untagged
@@ -95,10 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attractStrength: 3
-  repulsStrength: 1
   turnForce: 0.2
   speed: 15
-  closeDist: 20
 --- !u!114 &3769196714484829634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,20 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768f786451fc97d49bf0e0d4509ebb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4223812750154501025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28991379241866328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb265921d3a94d43b812be751b91f6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 6934927167596322949}
-  output: {fileID: 0}
 --- !u!1 &5320136316021290476
 GameObject:
   m_ObjectHideFlags: 0
