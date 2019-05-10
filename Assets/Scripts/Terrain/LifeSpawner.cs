@@ -172,11 +172,11 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabCrystalRock;
 
     /// <summary>
-    /// Prefab Reference for Crystal Rock and Sea Urchin (Kaylee K)
+    /// Prefab Reference for MossBall, Lion Fish, and Sea Urchin (Kaylee K)
     /// </summary>
     public GameObject prefabMossBall;
     public GameObject prefabSeaUrchin;
-
+    public GameObject prefabLionFish;
     /// <summary>
     /// The MeshFilter that's (hopefully) loaded onto this VoxelChunk 
     /// </summary>
@@ -293,7 +293,7 @@ public class LifeSpawner : MonoBehaviour
 
             if (Random.Range(0f, 5f) < 1f) SpawnPrefab(prefabCreatureMinnow, pos, rot, 1);
         }
-        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabMossBall : prefabSeaUrchin;
+        if (biome.owner == BiomeOwner.Kaylee) prefab = (Random.Range(0f, 5f) >= 3) ? prefabCoralPurpleFan : (Random.Range(0f, 10f) > 5f) ? prefabLionFish : prefabSeaUrchin;
         if (biome.owner == BiomeOwner.Kyle) prefab = (Random.Range(1, 5) > 3) ? prefabCreatureSeaStar : prefabPlantKelp;
         
         //if (biome.owner == BiomeOwner.Zach) prefab = ;
