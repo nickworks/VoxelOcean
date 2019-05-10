@@ -2,31 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controlls the behavior of shark type creatures.
+/// </summary>
 public class CreatureShark : MonoBehaviour
 {
-    Vector3 velocity;
-
-    Vector3 acceleration;
-
-
     /// <summary>
-    /// The steering velocity of this shrimp;
+    /// The velocity of the shark;
     /// </summary>
-    Vector3 steer;
+    Vector3 velocity;
     /// <summary>
-    /// How strongly the shrimp will favor moving towards an attractor.
+    /// The acceleration of the shark;
+    /// </summary>
+    Vector3 acceleration;
+    /// <summary>
+    /// How strongly the shark will favor moving towards an attractor.
     /// </summary>
     public float attractStrength = 1;
     /// <summary>
-    /// how strongly the shrimp will favor moving away from a repulsor.
-    /// </summary>
-    public float repulsStrength = 1;
-    /// <summary>
-    /// The degree of ability that the shrimp have to turn towards their target.  Higher number = faster turning.
+    /// The degree of ability that the shark have to turn towards their target.  Higher number = faster turning.
     /// </summary>
     public float turnForce = 25;
     /// <summary>
-    /// The basic speed at which the sprimp move.
+    /// The basic speed at which the shark move.
     /// </summary>
     public float speed = 5;
     /// <summary>
@@ -34,11 +32,7 @@ public class CreatureShark : MonoBehaviour
     /// </summary>
     Vector3 desire;
     /// <summary>
-    /// How close the shrimp are allowed to swim to one another before they push away from each other.
-    /// </summary>
-    public float closeDist = 20;
-    /// <summary>
-    /// The target position that this minnow wants to head towards.
+    /// The target position that this shark wants to head towards.
     /// </summary>
     Vector3 target;
     /// <summary>
@@ -62,13 +56,28 @@ public class CreatureShark : MonoBehaviour
     /// </summary>
     int ticker = 0;
 
+    /// <summary>
+    /// The blood which drips when a minnow is eaten.
+    /// </summary>
+    ParticleSystem blood;
+
+    /// <summary>
+    /// A list of all shark attractors.
+    /// </summary>
     public static List<CreatureSharkAttractor> attracts = new List<CreatureSharkAttractor>();
 
-    public static List<CreatureShark> sharks = new List<CreatureShark>(); 
+    /// <summary>
+    /// A list of all shark type creatures.
+    /// </summary>
+    public static List<CreatureShark> sharks = new List<CreatureShark>();
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// sets up the blood particle effect, vel, accel, speed, and adds itself to the public list of sharks;
+    /// </summary>
     void Start()
     {
+        blood = GetComponentInChildren<ParticleSystem>(); 
+
         velocity = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), Random.Range(-50, 50));
 
         acceleration = new Vector3();
@@ -77,12 +86,11 @@ public class CreatureShark : MonoBehaviour
 
         sharks.Add(this); 
 
-
-       // CreatureMinnow.minnows to access a list of the minnows
-
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// An update that uses ticker to run the sharks logic every other tick;
+    /// </summary>
     void Update()
     {
         if (ticker == 1)
@@ -96,6 +104,9 @@ public class CreatureShark : MonoBehaviour
         ticker++; 
     }
 
+    /// <summary>
+    /// Takes the information from the shark attractors and finds a force that points to that. Force is stronger the farther from the attractor;
+    /// </summary>
     void pickDirection()
     {
 
@@ -113,32 +124,37 @@ public class CreatureShark : MonoBehaviour
         {
             float dist = Vector3.Distance(transform.position, b.transform.position);
             if (dist < shortestDist) shortestDist = dist;
-            //TODO:
-            // get direction away from every near boid, inversely weighted by proximity
             target = b.transform.position - transform.position;
             desire += target.normalized * (dist / 5);
 
         }
-        AddForce(desire);
+        AddForce(desire * turnForce);
 
+        //handle eating minnows
         if (CreatureMinnow.minnows != null)
         {
             for (int i = 0; i < CreatureMinnow.minnows.Count; i++)//  CreatureMinnow m in CreatureMinnow.minnows)
             {
                 CreatureMinnow m = CreatureMinnow.minnows[i];
                 float dist = Vector3.Distance(transform.position, m.transform.position);
-                if (dist <= transform.localScale.x / 2)
+                if (dist <= transform.localScale.x / 1.5f)
                 {
+                    blood.Play(); 
+
                     CreatureMinnow.minnows.Remove(m);
 
                     Destroy(m.gameObject);
+
+
                 }
             }
         }
 
 
     }
-
+    /// <summary>
+    /// handles the movement of the shark;
+    /// </summary>
     void Move()
     {
         velocity += acceleration * Time.deltaTime;
@@ -147,7 +163,9 @@ public class CreatureShark : MonoBehaviour
 
         transform.LookAt(transform.position + velocity);
     }
-
+    /// <summary>
+    /// Shortcut to add force to the acceleration;
+    /// </summary>
     void AddForce(Vector3 force)
     {
         acceleration += force;
