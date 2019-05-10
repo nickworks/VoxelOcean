@@ -191,7 +191,9 @@ MonoBehaviour:
     type: 3}
   prefabLionFish: {fileID: 8349840289640979758, guid: edaff5d09d7ac04418424c753a3eb6a1,
     type: 3}
-  prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
-    type: 3}
   prefabCoralSupreme: {fileID: 4802542557500494251, guid: e238a3f3b38936742b2a0f5f0e798ec8,
+    type: 3}
+  prefabCoralWillow: {fileID: 6114320566702955979, guid: 8a37b35dba917a948801c48d8099cec4,
+    type: 3}
+  prefabCoralGlow: {fileID: 2570415099341971992, guid: df8f7ad905c37284582e4f6aa0483b26,
     type: 3}
