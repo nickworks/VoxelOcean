@@ -140,6 +140,10 @@ public class LifeSpawner : MonoBehaviour
 	/// Prefab reference for Luminent Plankton (Jess P)
 	/// </summary>
 	public GameObject prefabLuminentPlankton;
+	/// <summary>
+	/// Prefab reference for Nonliving Column (Jess P)
+	/// </summary>
+	public GameObject prefabColumn;
     public GameObject prefabCoralPyramid;
     /// <summary>
     /// Prefab reference for Sea Dragon
@@ -272,11 +276,13 @@ public class LifeSpawner : MonoBehaviour
         }
 		if (biome.owner == BiomeOwner.Jess){
 			float ran = Random.Range(1, 9);
-			if(ran < 3){
+			if(ran < 3 && ran !=  1){
 				prefab =prefabCoralBroccoli;
 			} else if (ran < 6 && ran > 3){
 				prefab =prefabPlantSeagrass;
-			} else {
+			} else if (ran == 1){
+				prefab = prefabColumn;
+			}else {
 				prefab = prefabLuminentPlankton;
 			}
 		}
