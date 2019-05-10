@@ -165,6 +165,8 @@ MonoBehaviour:
     type: 3}
   prefabCreatureSeaStar: {fileID: 338540796843315734, guid: 8c8b1bc97220f884f97ba4078cc1259a,
     type: 3}
+  prefabObjectTrident: {fileID: 7641726343231801413, guid: 3e7a8cf261763e044aa0dad7582fd978,
+    type: 3}
   prefabCoralPrecious: {fileID: 4215765450872021454, guid: bab0b2de72d9d3e4a98b43cbcbb2d65f,
     type: 3}
   prefabLuminentPlankton: {fileID: 1723109392679966492, guid: 9616651176e5d604a9e6d4e7f7caea2c,
