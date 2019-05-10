@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible for the generation of new minnows.
+/// </summary>
 public class CreatureMinnowSpawner : MonoBehaviour
 {
     /// <summary>

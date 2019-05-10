@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controlls the behavior of shark type creatures.
+/// </summary>
 public class CreatureShark : MonoBehaviour
 {
     /// <summary>
@@ -53,10 +56,19 @@ public class CreatureShark : MonoBehaviour
     /// </summary>
     int ticker = 0;
 
+    /// <summary>
+    /// The blood which drips when a minnow is eaten.
+    /// </summary>
     ParticleSystem blood;
 
+    /// <summary>
+    /// A list of all shark attractors.
+    /// </summary>
     public static List<CreatureSharkAttractor> attracts = new List<CreatureSharkAttractor>();
 
+    /// <summary>
+    /// A list of all shark type creatures.
+    /// </summary>
     public static List<CreatureShark> sharks = new List<CreatureShark>();
 
     /// <summary>

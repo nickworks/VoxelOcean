@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is an attractor point which influences shark movement.
+/// </summary>
 public class CreatureSharkAttractor : MonoBehaviour
 {
     /// <summary>

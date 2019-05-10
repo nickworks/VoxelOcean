@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controls the behavior of minnow type creatures.
+/// </summary>
 public class CreatureMinnow : MonoBehaviour
 {
     /// <summary>

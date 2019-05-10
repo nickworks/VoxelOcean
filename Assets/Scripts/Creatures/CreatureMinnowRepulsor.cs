@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class acts as a repulsor to minnows, controlling their movement.
+/// </summary>
 public class CreatureMinnowRepulsor : MonoBehaviour
 {
     /// <summary>
