@@ -151,7 +151,7 @@ MonoBehaviour:
     type: 3}
   prefabCoralFingers: {fileID: 8333528668977454555, guid: 7c0f04699fc4bc14aad04ae19b80af5d,
     type: 3}
-  prefabFishGobies: {fileID: 5745099137881814734, guid: 668b92fa5a3569644b1eb01f4063ded3,
+  prefabFishGobies: {fileID: 559893354735377794, guid: cffba7e751bd1044991e600658972674,
     type: 3}
   prefabObjectChest: {fileID: 5141450642061279492, guid: fdb83abc566e81544886d588e77c60ff,
     type: 3}

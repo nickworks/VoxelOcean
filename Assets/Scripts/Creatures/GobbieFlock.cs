@@ -21,7 +21,7 @@ public class GobbieFlock : MonoBehaviour
     void Start()
     {
         RandomSpeed();
-        //ZLocation();
+     
     }
     /// <summary>
     /// use all the classes to make the object move
