@@ -124,6 +124,7 @@ public class LifeSpawner : MonoBehaviour
     public GameObject prefabFishGobies;
     public GameObject prefabObjectChest;
     public GameObject prefabCreatureMinnow;
+    public GameObject prefabObjectCrowsNest;
     /// <summary>
     /// Prfab reference for PlantKelp. (Kyle Lowery)
     /// </summary>
@@ -274,17 +275,21 @@ public class LifeSpawner : MonoBehaviour
         if (biome.owner == BiomeOwner.Jesse)
         {
             int num = Random.Range(1, 7) + Random.Range(1, 7);
-            if (num > 7)
+            if (num < 4)
             {
-                prefab = prefabCoralFingers;
+                prefab = prefabObjectCrowsNest;
             }
-            else if (num > 3)
+            else if (num > 3 & num < 6 )
             {
                 prefab = prefabFishGobies;
             }
+            else if (num > 10)
+            {
+            prefab = prefabObjectChest;
+            }
             else 
             {
-                prefab = prefabObjectChest;
+                prefab = prefabCoralFingers;
             }
         }
 
