@@ -102,7 +102,19 @@ public class CoralSupreme : MonoBehaviour
         
 
         CombineInstance inst = new CombineInstance();
-        inst.mesh = MakeCube(num, maxNum);
+        //inst.mesh = MakeCube(num, maxNum);
+        inst.mesh = MeshTools.MakeCube();
+        Color[] topAndBottomColors = GetColors(num, maxNum);
+        List<Color> vertexColors = new List<Color>();
+        foreach (var vert in inst.mesh.vertices)
+        {
+            if (vert.y == 1)
+                vertexColors.Add(topAndBottomColors[1]);
+            else
+                vertexColors.Add(topAndBottomColors[0]);
+        }
+        inst.mesh.colors = vertexColors.ToArray();
+
         inst.transform = Matrix4x4.TRS(pos, rot, branchScaling * scale);
 
         meshes.Add(inst);
@@ -144,178 +156,178 @@ public class CoralSupreme : MonoBehaviour
     /// <param name="num">The current iteration in the calling Grow() function.</param>
     /// <param name="maxNum">The initial iteration in the calling Grow() function.</param>
     /// <returns></returns>
-    private Mesh MakeCube(int num, int maxNum)
-    {
-        List<Vector3> verts = new List<Vector3>();
-        List<Vector2> uvs = new List<Vector2>();
-        List<Vector3> normals = new List<Vector3>();
-        List<int> tris = new List<int>();
+    //private Mesh MakeCube(int num, int maxNum)
+    //{
+    //    List<Vector3> verts = new List<Vector3>();
+    //    List<Vector2> uvs = new List<Vector2>();
+    //    List<Vector3> normals = new List<Vector3>();
+    //    List<int> tris = new List<int>();
 
-        List<Color> vertexColors = new List<Color>();
+    //    List<Color> vertexColors = new List<Color>();
 
-        Color[] topAndBottomColors = GetColors(num, maxNum);
-        //Front (I hate you for making me tediously making me type this)
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        normals.Add(new Vector3(0, 0, -1));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(0);
-        tris.Add(1);
-        tris.Add(2);
-        tris.Add(2);
-        tris.Add(3);
-        tris.Add(0);
-
-        
-
-        //Back (I hate you for making me tediously making me type this)
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        normals.Add(new Vector3(0, 0, +1));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(4);
-        tris.Add(5);
-        tris.Add(6);
-        tris.Add(6);
-        tris.Add(7);
-        tris.Add(4);
-
-        //Left (I hate you for making me tediously making me type this)
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        normals.Add(new Vector3(-1, 0, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(8);
-        tris.Add(9);
-        tris.Add(10);
-        tris.Add(10);
-        tris.Add(11);
-        tris.Add(8);
-
-        //Right (I hate you for making me tediously making me type this)
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        normals.Add(new Vector3(+1, 0, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(12);
-        tris.Add(13);
-        tris.Add(14);
-        tris.Add(14);
-        tris.Add(15);
-        tris.Add(12);
-
-        //Top (I hate you for making me tediously making me type this)
-        verts.Add(new Vector3(-0.5f, 1, -0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(-0.5f, 1, +0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(+0.5f, 1, +0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        verts.Add(new Vector3(+0.5f, 1, -0.5f));
-        vertexColors.Add(topAndBottomColors[0]);
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        normals.Add(new Vector3(0, +1, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(16);
-        tris.Add(17);
-        tris.Add(18);
-        tris.Add(18);
-        tris.Add(19);
-        tris.Add(16);
+    //    Color[] topAndBottomColors = GetColors(num, maxNum);
+    //    //Front (I hate you for making me tediously making me type this)
+    //    verts.Add(new Vector3(-0.5f, 0, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(-0.5f, 1, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(+0.5f, 1, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(+0.5f, 0, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    normals.Add(new Vector3(0, 0, -1));
+    //    normals.Add(new Vector3(0, 0, -1));
+    //    normals.Add(new Vector3(0, 0, -1));
+    //    normals.Add(new Vector3(0, 0, -1));
+    //    uvs.Add(new Vector2(0, 0));
+    //    uvs.Add(new Vector2(0, 1));
+    //    uvs.Add(new Vector2(1, 1));
+    //    uvs.Add(new Vector2(1, 0));
+    //    tris.Add(0);
+    //    tris.Add(1);
+    //    tris.Add(2);
+    //    tris.Add(2);
+    //    tris.Add(3);
+    //    tris.Add(0);
 
         
 
+    //    //Back (I hate you for making me tediously making me type this)
+    //    verts.Add(new Vector3(-0.5f, 0, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(+0.5f, 0, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(+0.5f, 1, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(-0.5f, 1, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    normals.Add(new Vector3(0, 0, +1));
+    //    normals.Add(new Vector3(0, 0, +1));
+    //    normals.Add(new Vector3(0, 0, +1));
+    //    normals.Add(new Vector3(0, 0, +1));
+    //    uvs.Add(new Vector2(0, 0));
+    //    uvs.Add(new Vector2(0, 1));
+    //    uvs.Add(new Vector2(1, 1));
+    //    uvs.Add(new Vector2(1, 0));
+    //    tris.Add(4);
+    //    tris.Add(5);
+    //    tris.Add(6);
+    //    tris.Add(6);
+    //    tris.Add(7);
+    //    tris.Add(4);
+
+    //    //Left (I hate you for making me tediously making me type this)
+    //    verts.Add(new Vector3(-0.5f, 0, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(-0.5f, 0, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(-0.5f, 1, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(-0.5f, 1, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    normals.Add(new Vector3(-1, 0, 0));
+    //    normals.Add(new Vector3(-1, 0, 0));
+    //    normals.Add(new Vector3(-1, 0, 0));
+    //    normals.Add(new Vector3(-1, 0, 0));
+    //    uvs.Add(new Vector2(0, 0));
+    //    uvs.Add(new Vector2(0, 1));
+    //    uvs.Add(new Vector2(1, 1));
+    //    uvs.Add(new Vector2(1, 0));
+    //    tris.Add(8);
+    //    tris.Add(9);
+    //    tris.Add(10);
+    //    tris.Add(10);
+    //    tris.Add(11);
+    //    tris.Add(8);
+
+    //    //Right (I hate you for making me tediously making me type this)
+    //    verts.Add(new Vector3(+0.5f, 0, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(+0.5f, 1, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(+0.5f, 1, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(+0.5f, 0, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    normals.Add(new Vector3(+1, 0, 0));
+    //    normals.Add(new Vector3(+1, 0, 0));
+    //    normals.Add(new Vector3(+1, 0, 0));
+    //    normals.Add(new Vector3(+1, 0, 0));
+    //    uvs.Add(new Vector2(0, 0));
+    //    uvs.Add(new Vector2(0, 1));
+    //    uvs.Add(new Vector2(1, 1));
+    //    uvs.Add(new Vector2(1, 0));
+    //    tris.Add(12);
+    //    tris.Add(13);
+    //    tris.Add(14);
+    //    tris.Add(14);
+    //    tris.Add(15);
+    //    tris.Add(12);
+
+    //    //Top (I hate you for making me tediously making me type this)
+    //    verts.Add(new Vector3(-0.5f, 1, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(-0.5f, 1, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(+0.5f, 1, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    verts.Add(new Vector3(+0.5f, 1, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[0]);
+    //    normals.Add(new Vector3(0, +1, 0));
+    //    normals.Add(new Vector3(0, +1, 0));
+    //    normals.Add(new Vector3(0, +1, 0));
+    //    normals.Add(new Vector3(0, +1, 0));
+    //    uvs.Add(new Vector2(0, 0));
+    //    uvs.Add(new Vector2(0, 1));
+    //    uvs.Add(new Vector2(1, 1));
+    //    uvs.Add(new Vector2(1, 0));
+    //    tris.Add(16);
+    //    tris.Add(17);
+    //    tris.Add(18);
+    //    tris.Add(18);
+    //    tris.Add(19);
+    //    tris.Add(16);
+
+        
+
         
 
 
-        //Bottom (I hate you for making me tediously making me type this)
-        verts.Add(new Vector3(-0.5f, 0, -0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(+0.5f, 0, -0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(+0.5f, 0, +0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        verts.Add(new Vector3(-0.5f, 0, +0.5f));
-        vertexColors.Add(topAndBottomColors[1]);
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        normals.Add(new Vector3(0, -1, 0));
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
-        uvs.Add(new Vector2(1, 0));
-        tris.Add(20);
-        tris.Add(21);
-        tris.Add(22);
-        tris.Add(22);
-        tris.Add(23);
-        tris.Add(20);
+    //    //Bottom (I hate you for making me tediously making me type this)
+    //    verts.Add(new Vector3(-0.5f, 0, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(+0.5f, 0, -0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(+0.5f, 0, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    verts.Add(new Vector3(-0.5f, 0, +0.5f));
+    //    vertexColors.Add(topAndBottomColors[1]);
+    //    normals.Add(new Vector3(0, -1, 0));
+    //    normals.Add(new Vector3(0, -1, 0));
+    //    normals.Add(new Vector3(0, -1, 0));
+    //    normals.Add(new Vector3(0, -1, 0));
+    //    uvs.Add(new Vector2(0, 0));
+    //    uvs.Add(new Vector2(0, 1));
+    //    uvs.Add(new Vector2(1, 1));
+    //    uvs.Add(new Vector2(1, 0));
+    //    tris.Add(20);
+    //    tris.Add(21);
+    //    tris.Add(22);
+    //    tris.Add(22);
+    //    tris.Add(23);
+    //    tris.Add(20);
 
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(verts);
-        mesh.SetUVs(0, uvs);
-        mesh.SetNormals(normals);
-        mesh.SetTriangles(tris, 0);
-        mesh.colors = vertexColors.ToArray();
-        return mesh;
+    //    Mesh mesh = new Mesh();
+    //    mesh.SetVertices(verts);
+    //    mesh.SetUVs(0, uvs);
+    //    mesh.SetNormals(normals);
+    //    mesh.SetTriangles(tris, 0);
+    //    mesh.colors = vertexColors.ToArray();
+    //    return mesh;
 
 
 
-    }
+    //}
 
     /// <summary>
     /// Gets the colors for the vertices for the current generation. The num and maxNum arguments are used to find proportions and to Lerp the colors.
